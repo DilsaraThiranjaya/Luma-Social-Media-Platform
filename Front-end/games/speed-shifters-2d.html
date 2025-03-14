@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/games/assets/images/Speed-Shifters-logo.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/fontawesome.min.css"
+        integrity="sha512-OYtfQLIh44db+qhIErkWKrmij09a8CNwItEH4yiRIY0gZhRj2sKNIIsRrvEPdqMbgzT1opjSAJXsteTfxuJjOQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/games/assets/css/style.css">
+    <title>Speed Shifters - 2D Racing Game</title>
+</head>
+
+<body class="m-0 overflow-hidden position-relative">
+
+    <section id="dt-games-logo" class="position-absolute z-1">
+        <div class="container-fluid bg-black w-100 h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex justify-content-center align-items-center">
+                    <img class="w-50" src="/games/assets/images/DT-Games-logo.png" alt="DT-games-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+<section class="position-absolute">
+    <div id="sound-button-container" class="position-absolute d-none">
+        <button type="button" id="sound-btn" class="btn bg-transparent border-0">
+            <img class="h-100 w-100" src="/games/assets/images/UI/SoundOn/Default@2x.png" alt="sound-btn">
+        </button>
+    </div>
+</section>
+
+    <section id="speed-shifter-intro" class="position-absolute d-none z-2">
+        <div class="container-fluid w-100 h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex justify-content-center position-relative">
+                    <img class="position-absolute" src="/games/assets/images/Speed-Shifters-logo.png"
+                        alt="Speed-Shifters-logo">
+                    <div id="levels" class="position-absolute">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <button type="button"
+                                class="btn bg-transparent border-0 toggle-btn position-relative d-inline-block"
+                                id="level-1-btn" value="1">
+                                <img src="/games/assets/images/UI/Levels/Unlocked/Hover@2x.png" alt="level-1">
+                                <span class="position-absolute fw-bold fs-2 text-white m">1</span>
+                            </button>
+                            <button type="button"
+                                class="btn bg-transparent border-0 toggle-btn position-relative d-inline-block"
+                                id="level-2-btn" value="2">
+                                <img src="/games/assets/images/UI/Levels/Locked/Default@2x.png" alt="level-2">
+                                <span class="position-absolute fw-bold fs-2 text-white"></span>
+                            </button>
+                            <button type="button"
+                                class="btn bg-transparent border-0 toggle-btn position-relative d-inline-block"
+                                id="level-3-btn" value="3">
+                                <img src="/games/assets/images/UI/Levels/Locked/Default@2x.png" alt="level-3">
+                                <span class="position-absolute fw-bold fs-2 text-white"></span>
+                            </button>
+                            <button type="button"
+                                class="btn bg-transparent border-0 toggle-btn position-relative d-inline-block"
+                                id="level-4-btn" value="4">
+                                <img src="/games/assets/images/UI/Levels/Locked/Default@2x.png" alt="level-4">
+                                <span class="position-absolute fw-bold fs-2 text-white"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="play-button-container" class="position-absolute">
+                        <button type="button" id="intro-play-btn" class="btn bg-transparent border-0">
+                            <img class="h-100 w-100" src="/games/assets/images/UI/PlayText/Default@2x.png" alt="play-btn">
+                        </button>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <section id="game-play" class="position-absolute d-none z-3">
+
+        <div id="pause-button-container" class="position-absolute d-none">
+            <button type="button" id="pause-btn" class="btn bg-transparent border-0">
+                <img class="h-100 w-100" src="/games/assets/images/UI/Pause/Default@2x.png" alt="pause-btn">
+            </button>
+        </div>
+        <div id="repeat-button-container" class="position-absolute d-none">
+            <button type="button" id="repeat-btn" class="btn bg-transparent border-0" data-bs-toggle="modal"
+                data-bs-target="#playAgainModal">
+                <img class="h-100 w-100" src="/games/assets/images/UI/Repeat/Default@2x.png" alt="repeat-btn">
+            </button>
+        </div>
+
+        <div class="scoreboard bg-dark text-white p-2 position-fixed top-0 start-0">
+            <div class="d-flex justify-content-evenly">
+                <div>
+                    <span class="fw-bold">Score:</span> <span id="score">0</span>
+                </div>
+                <div class="ms-3">
+                    <span class="fw-bold">Time:</span> <span id="game-time">00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-overlay" class="position-absolute top-0 start-0 d-none"></div>
+
+        <div id="game-over-board"
+            class="position-fixed top-50 start-50 translate-middle bg-dark text-white rounded p-4 shadow-lg d-none">
+
+            <img id="game-over" src="/games/assets/images/UI/Game-over.png" alt="game-over">
+            <div class="text-center mb-3">
+                <div class="p-1 fs-5"><span class="fw-bold text-warning">Level:</span> <span id="current-level">1</span>
+                </div>
+                <div class="p-1 fs-5"><span class="fw-bold text-primary">Score:</span> <span id="final-score">0</span>
+                </div>
+                <div class="p-1 fs-5"><span class="fw-bold text-danger">Highest Score:</span> <span
+                        id="highest-score">0</span>
+                </div>
+                <div class="d-flex justify-content-center my-4">
+                    <img id="stars-0" class="d-none" src="/games/assets/images/UI/Stars/0-3@2x.png" alt="Stars-0">
+                    <img id="stars-1" class="d-none" src="/games/assets/images/UI/Stars/1-3@2x.png" alt="Stars-1">
+                    <img id="stars-2" class="d-none" src="/games/assets/images/UI/Stars/2-3@2x.png" alt="Stars-2">
+                    <img id="stars-3" class="d-none" src="/games/assets/images/UI/Stars/3-3@2x.png" alt="Stars-3">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center gap-2">
+                <button type="button" id="play-again-btn" class="button">Play Again</button>
+                <button type="button" id="main-menu-btn" class="button">Main Menu</button>
+                <button type="button" id="next-level-btn" class="button d-none">Next Level</button>
+            </div>
+        </div>
+
+        <img id="countdown" class="position-absolute top-50 start-50 translate-middle"
+            src="/games/assets/images/Countdown.gif" alt="countdown">
+
+        <img id="car-1" class="car position-absolute" src="/games/assets/images/Car-user.png" alt="Car">
+        <img id="car-2" class="car position-absolute" src="/games/assets/images/Car-other-1.png" alt="Car">
+        <img id="car-3" class="car position-absolute" src="/games/assets/images/Car-other-2.png" alt="Car">
+
+        <img id="road-1" class="road position-absolute" style="top: 0;" src="/games/assets/images/Road.png" alt="Road">
+        <img id="road-2" class="road position-absolute" style="top: 100vh;" src="/games/assets/images/Road.png" alt="Road">
+        <img id="road-3" class="road position-absolute" style="top: 200vh;" src="/games/assets/images/Road.png" alt="Road">
+    </section>
+
+    <div class="modal fade" id="playAgainModal" tabindex="-1" aria-labelledby="playAgainModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="playAgainModalLabel">Are you sure?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you want to play again? Your current progress will be lost.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="button" id="confirmPlayAgain" data-bs-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script src="/games/assets/js/script.js"></script>
+</body>
+
+</html>

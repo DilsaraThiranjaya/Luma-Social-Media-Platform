@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma Admin | Reports</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="/assets/image/Luma-logo.jpeg" />
+    <link rel="stylesheet" href="/assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <nav class="admin-sidebar">
+        <div class="sidebar-header">
+          <img src="/assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+          <h5>Luma Admin</h5>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="users.html" class="menu-item">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </a>
+          <a href="posts.html" class="menu-item">
+            <i class="bi bi-file-post"></i>
+            <span>Posts</span>
+          </a>
+          <a href="reports.html" class="menu-item active">
+            <i class="bi bi-flag-fill"></i>
+            <span>Reports</span>
+          </a>
+          <a href="settings.html" class="menu-item">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+          <div class="topbar-left">
+            <button class="btn toggle-sidebar">
+              <i class="bi bi-list"></i>
+            </button>
+            <h4>Reports Management</h4>
+          </div>
+          <div class="topbar-right">
+            <div class="dropdown">
+              <button class="btn" data-bs-toggle="dropdown">
+                <img src="/assets/image/Profile-picture.png" alt="Admin" class="admin-avatar">
+                <span>Admin User</span>
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Content -->
+        <div class="admin-content">
+          <!-- Reports Overview -->
+          <div class="row g-4 mb-4">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Reports Overview</h5>
+                </div>
+                <div class="card-body">
+                  <canvas id="reportsChart" height="300"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Quick Stats</h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Total Reports</span>
+                    <span class="badge bg-primary">156</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Pending Review</span>
+                    <span class="badge bg-warning">23</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Resolved</span>
+                    <span class="badge bg-success">98</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span>Escalated</span>
+                    <span class="badge bg-danger">35</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reports Table -->
+          <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control table-search" placeholder="Search reports...">
+                  </div>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                  <div class="btn-group">
+                    <button class="btn btn-outline-primary active" data-filter="All">All</button>
+                    <button class="btn btn-outline-primary" data-filter="Pending">Pending</button>
+                    <button class="btn btn-outline-primary" data-filter="Resolved">Resolved</button>
+                    <button class="btn btn-outline-primary" data-filter="Escalated">Escalated</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Report ID</th>
+                      <th>Type</th>
+                      <th>Reported Content</th>
+                      <th>Reporter</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-report-id="REP001">
+                      <td>#REP001</td>
+                      <td><span class="badge bg-danger">Harassment</span></td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-file-post me-2"></i>
+                          <span>Inappropriate comment on post</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="/assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="30">
+                          <span>Jane Smith</span>
+                        </div>
+                      </td>
+                      <td><span class="badge bg-warning">Pending</span></td>
+                      <td>2 hours ago</td>
+                      <td>
+                        <div class="d-flex gap-2">
+                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#reportViewModal">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-success" data-action="resolve">
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button class="btn btn-sm btn-danger" data-action="escalate">
+                            <i class="bi bi-exclamation-triangle"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Include Modals -->
+    <div id="modalsContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/admin/dashboard.js"></script>
+    <script>
+      // Load modals
+      fetch('/assets/html/admin/modals.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('modalsContainer').innerHTML = html;
+        });
+    </script>
+  </body>
+</html>

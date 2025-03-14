@@ -1,0 +1,288 @@
+/* Network Container */
+.network-container {
+  padding: 1.5rem 0;
+}
+
+/* Friend Filters */
+.friend-filters {
+  position: sticky;
+  top: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.friend-filters .list-group-item {
+  border: none;
+  padding: 0.75rem 1rem;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.friend-filters .list-group-item:hover {
+  background-color: rgba(96, 0, 151, 0.05);
+  transform: translateX(4px);
+}
+
+.friend-filters .list-group-item.active {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  color: #ffffff;
+}
+
+/* Friend Cards */
+.friend-request-card,
+.friend-suggestion-card,
+.friend-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.friend-request-card:hover,
+.friend-suggestion-card:hover,
+.friend-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.friend-profile-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.friend-info h6 {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.friend-info p {
+  font-size: 0.875rem;
+}
+
+.tab-pan .card {
+  border-radius: 10px !important;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-light {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.btn-light:hover {
+  background: #e9ecef;
+}
+
+/* Card Headers */
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card-header h5 {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .friend-filters {
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+
+  .friend-profile-img {
+    height: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .network-container {
+    padding: 1rem 0;
+  }
+
+  .friend-profile-img {
+    height: 120px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.friend-request-card,
+.friend-suggestion-card,
+.friend-card {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Grid/List Button Styling */
+.btn-group .btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.btn-group .btn:not(.active):hover {
+  background-color: rgba(96, 0, 151, 0.1);
+}
+
+/*List View Styles */
+.tab-content .row.list-view {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.tab-content .row.list-view > [class^="col-"] {
+  max-width: 100%;
+  flex: 0 0 100%;
+  padding: 0;
+}
+
+.tab-content .row.list-view .friend-card,
+.tab-content .row.list-view .friend-request-card,
+.tab-content .row.list-view .friend-suggestion-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.tab-content .row.list-view .friend-profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+  object-fit: cover;
+}
+
+.tab-content .row.list-view .friend-info {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tab-content .row.list-view .friend-info h6 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.tab-content .row.list-view .friend-info p {
+  margin-right: 40%;
+}
+
+.tab-content .row.list-view .friend-info .btn-group {
+  display: none; /* Hide extra buttons in list view */
+}
+
+.tab-content .row.list-view .friend-info .btn-light {
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 0.25rem 0.5rem;
+}
+
+.tab-content .row.list-view .friend-info .btn-light:hover {
+  background: #f8f9fa;
+}
+
+/* Grid/List Toggle Buttons */
+.btn-group .btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Search Refinements */
+.search-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(96, 0, 151, 0.25);
+}
+
+/* Badge Styles */
+.list-group-item .badge {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10%;
+  font-size: 0.65rem !important;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.35em 0.65em;
+}
+
+/* Mutual Friends Badge */
+.mutual-friends {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mutual-friends i {
+  font-size: 0.875rem;
+  margin-right: 0.25rem;
+}
+
+/* Action Buttons Hover Effects */
+.btn-action {
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Friend Card Footer */
+.friend-card-footer {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}

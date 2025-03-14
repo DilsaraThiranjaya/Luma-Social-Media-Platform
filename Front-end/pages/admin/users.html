@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma Admin | Users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="/assets/image/Luma-logo.jpeg" />
+    <link rel="stylesheet" href="/assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <nav class="admin-sidebar">
+        <div class="sidebar-header">
+          <img src="/assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+          <h5>Luma Admin</h5>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="users.html" class="menu-item active">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </a>
+          <a href="posts.html" class="menu-item">
+            <i class="bi bi-file-post"></i>
+            <span>Posts</span>
+          </a>
+          <a href="reports.html" class="menu-item">
+            <i class="bi bi-flag-fill"></i>
+            <span>Reports</span>
+          </a>
+          <a href="settings.html" class="menu-item">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+          <div class="topbar-left">
+            <button class="btn toggle-sidebar">
+              <i class="bi bi-list"></i>
+            </button>
+            <h4>Users Management</h4>
+          </div>
+          <div class="topbar-right">
+            <div class="dropdown">
+              <button class="btn" data-bs-toggle="dropdown">
+                <img src="/assets/image/Profile-picture.png" alt="Admin" class="admin-avatar">
+                <span>Admin User</span>
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Content -->
+        <div class="admin-content">
+          <!-- Users Header -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control table-search" placeholder="Search users...">
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end gap-2">
+                  <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                      <i class="bi bi-funnel"></i> Filter
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">All Users</a></li>
+                      <li><a class="dropdown-item" href="#">Active Users</a></li>
+                      <li><a class="dropdown-item" href="#">Inactive Users</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Users Table -->
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Email</th>
+                      <th>Status</th>
+                      <th>Joined Date</th>
+                      <th>Last Active</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-user-id="1">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="/assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="40">
+                          <div>
+                            <h6 class="mb-0">John Doe</h6>
+                            <small class="text-muted">@johndoe</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>john.doe@example.com</td>
+                      <td><span class="badge bg-success">Active</span></td>
+                      <td>Oct 15, 2023</td>
+                      <td>2 hours ago</td>
+                      <td>
+                        <div class="d-flex gap-2">
+                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-warning" data-action="toggle-status" data-status="active">
+                            <i class="bi bi-toggle-on"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr data-user-id="2">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="/assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="40">
+                          <div>
+                            <h6 class="mb-0">Jane Smith</h6>
+                            <small class="text-muted">@janesmith</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>jane.smith@example.com</td>
+                      <td><span class="badge bg-danger">Inactive</span></td>
+                      <td>Oct 10, 2023</td>
+                      <td>5 days ago</td>
+                      <td>
+                        <div class="d-flex gap-2">
+                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#userProfileModal">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-warning" data-action="toggle-status" data-status="inactive">
+                            <i class="bi bi-toggle-off"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Include Modals -->
+    <div id="modalsContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/admin/dashboard.js"></script>
+    <script>
+      // Load modals
+      fetch('/assets/html/admin/modals.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('modalsContainer').innerHTML = html;
+        });
+    </script>
+  </body>
+</html>

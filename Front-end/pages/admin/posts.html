@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma Admin | Posts</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="/assets/image/Luma-logo.jpeg" />
+    <link rel="stylesheet" href="/assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <nav class="admin-sidebar">
+        <div class="sidebar-header">
+          <img src="/assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+          <h5>Luma Admin</h5>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="users.html" class="menu-item">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </a>
+          <a href="posts.html" class="menu-item active">
+            <i class="bi bi-file-post"></i>
+            <span>Posts</span>
+          </a>
+          <a href="reports.html" class="menu-item">
+            <i class="bi bi-flag-fill"></i>
+            <span>Reports</span>
+          </a>
+          <a href="settings.html" class="menu-item">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+          <div class="topbar-left">
+            <button class="btn toggle-sidebar">
+              <i class="bi bi-list"></i>
+            </button>
+            <h4>Posts Management</h4>
+          </div>
+          <div class="topbar-right">
+            <div class="dropdown">
+              <button class="btn" data-bs-toggle="dropdown">
+                <img src="/assets/image/Profile-picture.png" alt="Admin" class="admin-avatar">
+                <span>Admin User</span>
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Posts Content -->
+        <div class="admin-content">
+          <!-- Posts Header -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control table-search" placeholder="Search posts...">
+                  </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end gap-2">
+                  <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                      <i class="bi bi-funnel"></i> Filter
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">All Posts</a></li>
+                      <li><a class="dropdown-item" href="#">Active Posts</a></li>
+                      <li><a class="dropdown-item" href="#">Inactive Posts</a></li>
+                      <li><a class="dropdown-item" href="#">Reported Posts</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Posts Analytics -->
+          <div class="row g-4 mb-4">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Posts Activity</h5>
+                </div>
+                <div class="card-body">
+                  <canvas id="postsAnalyticsChart" height="300"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Post Categories</h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Photos</span>
+                    <span class="badge bg-primary">45%</span>
+                  </div>
+                  <div class="progress mb-4" style="height: 8px">
+                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Videos</span>
+                    <span class="badge bg-success">30%</span>
+                  </div>
+                  <div class="progress mb-4" style="height: 8px">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Text</span>
+                    <span class="badge bg-info">25%</span>
+                  </div>
+                  <div class="progress" style="height: 8px">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Posts Table -->
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Post</th>
+                      <th>Author</th>
+                      <th>Type</th>
+                      <th>Engagement</th>
+                      <th>Status</th>
+                      <th>Posted Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-post-id="1">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://source.unsplash.com/random/100x100?1" alt="Post" class="rounded me-2" width="40" height="40" style="object-fit: cover;">
+                          <div>
+                            <h6 class="mb-0">Summer Vacation Photos</h6>
+                            <small class="text-muted">Photo Album</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="/assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="30">
+                          <span>John Doe</span>
+                        </div>
+                      </td>
+                      <td><span class="badge bg-primary">Photo</span></td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <i class="bi bi-heart-fill text-danger me-1"></i> 1.2k
+                          <i class="bi bi-chat-fill text-primary ms-2 me-1"></i> 234
+                        </div>
+                      </td>
+                      <td><span class="badge bg-success">Active</span></td>
+                      <td>2 hours ago</td>
+                      <td>
+                        <div class="d-flex gap-2">
+                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#postViewModal">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-warning" data-action="toggle-status" data-status="active">
+                            <i class="bi bi-toggle-on"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+     </div>
+
+    <!-- Include Modals -->
+    <div id="modalsContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/assets/js/admin/dashboard.js"></script>
+    <script>
+      // Load modals
+      fetch('/assets/html/admin/modals.html')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('modalsContainer').innerHTML = html;
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma Admin | Settings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="/assets/image/Luma-logo.jpeg" />
+    <link rel="stylesheet" href="/assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <nav class="admin-sidebar">
+        <div class="sidebar-header">
+          <img src="/assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+          <h5>Luma Admin</h5>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="users.html" class="menu-item">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </a>
+          <a href="posts.html" class="menu-item">
+            <i class="bi bi-file-post"></i>
+            <span>Posts</span>
+          </a>
+          <a href="reports.html" class="menu-item">
+            <i class="bi bi-flag-fill"></i>
+            <span>Reports</span>
+          </a>
+          <a href="settings.html" class="menu-item active">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+          <div class="topbar-left">
+            <button class="btn toggle-sidebar">
+              <i class="bi bi-list"></i>
+            </button>
+            <h4>Settings</h4>
+          </div>
+          <div class="topbar-right">
+            <div class="dropdown">
+              <button class="btn" data-bs-toggle="dropdown">
+                <img src="/assets/image/Profile-picture.png" alt="Admin" class="admin-avatar">
+                <span>Admin User</span>
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Content -->
+        <div class="admin-content">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card">
+                <div class="list-group list-group-flush">
+                  <a href="#general" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                    <i class="bi bi-gear me-2"></i> General
+                  </a>
+                  <a href="#security" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                    <i class="bi bi-shield-lock me-2"></i> Security
+                  </a>
+                  <a href="#notifications" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                    <i class="bi bi-bell me-2"></i> Notifications
+                  </a>
+                  <a href="#appearance" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                    <i class="bi bi-palette me-2"></i> Appearance
+                  </a>
+                  <a href="#system" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                    <i class="bi bi-cpu me-2"></i> System
+                  </a>
+                  <a href="#backup" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                    <i class="bi bi-cloud-arrow-up me-2"></i> Backup
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="tab-content">
+                <!-- General Settings -->
+                <div class="tab-pane fade show active" id="general">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">General Settings</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Site Name</label>
+                          <input type="text" class="form-control" value="Luma Social">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Site Description</label>
+                          <textarea class="form-control" rows="3">A social media platform for connecting people</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Time Zone</label>
+                          <select class="form-select">
+                            <option>UTC (GMT+0)</option>
+                            <option selected>Eastern Time (GMT-5)</option>
+                            <option>Pacific Time (GMT-8)</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Language</label>
+                          <select class="form-select">
+                            <option selected>English</option>
+                            <option>Spanish</option>
+                            <option>French</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Date Format</label>
+                          <select class="form-select">
+                            <option selected>MM/DD/YYYY</option>
+                            <option>DD/MM/YYYY</option>
+                            <option>YYYY-MM-DD</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Default Currency</label>
+                          <select class="form-select">
+                            <option selected>USD ($)</option>
+                            <option>EUR (€)</option>
+                            <option>GBP (£)</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="tab-pane fade" id="security">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Security Settings</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Current Password</label>
+                          <input type="password" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">New Password</label>
+                          <input type="password" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Confirm New Password</label>
+                          <input type="password" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="2fa">
+                            <label class="form-check-label" for="2fa">Enable Two-Factor Authentication</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="loginNotifications">
+                            <label class="form-check-label" for="loginNotifications">Login Notifications</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="securityAlerts">
+                            <label class="form-check-label" for="securityAlerts">Security Alerts</label>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Security Settings</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Notifications Settings -->
+                <div class="tab-pane fade" id="notifications">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Notification Preferences</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <h6 class="mb-3">Email Notifications</h6>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="newUserNotif" checked>
+                            <label class="form-check-label" for="newUserNotif">New User Registrations</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="newReportNotif" checked>
+                            <label class="form-check-label" for="newReportNotif">New Reports</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="systemNotif" checked>
+                            <label class="form-check-label" for="systemNotif">System Updates</label>
+                          </div>
+                        </div>
+                        
+                        <h6 class="mb-3 mt-4">Push Notifications</h6>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="pushNewUser" checked>
+                            <label class="form-check-label" for="pushNewUser">New User Alerts</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="pushReports" checked>
+                            <label class="form-check-label" for="pushReports">Report Alerts</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="pushSystem" checked>
+                            <label class="form-check-label" for="pushSystem">System Alerts</label>
+                          </div>
+                        </div>
+                        
+                        <h6 class="mb-3 mt-4">Notification Schedule</h6>
+                        <div class="mb-3">
+                          <label class="form-label">Quiet Hours</label>
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <input type="time" class="form-control" value="22:00">
+                            </div>
+                            <div class="col-md-6">
+                              <input type="time" class="form-control" value="07:00">
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Preferences</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Appearance Settings -->
+                <div class="tab-pane fade" id="appearance">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Appearance Settings</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Theme</label>
+                          <select class="form-select">
+                            <option selected>Light</option>
+                            <option>Dark</option>
+                            <option>System Default</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Primary Color</label>
+                          <input type="color" class="form-control form-control-color" value="#600097">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Font Size</label>
+                          <select class="form-select">
+                            <option>Small</option>
+                            <option selected>Medium</option>
+                            <option>Large</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Font Family</label>
+                          <select class="form-select">
+                            <option selected>System Default</option>
+                            <option>Arial</option>
+                            <option>Roboto</option>
+                            <option>Open Sans</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Apply Changes</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="tab-pane fade" id="system">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">System Settings</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Cache Duration</label>
+                          <select class="form-select">
+                            <option>1 Hour</option>
+                            <option selected>6 Hours</option>
+                            <option>12 Hours</option>
+                            <option>24 Hours</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Session Timeout</label>
+                          <select class="form-select">
+                            <option>15 Minutes</option>
+                            <option selected>30 Minutes</option>
+                            <option>1 Hour</option>
+                            <option>2 Hours</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Upload Limits</label>
+                          <select class="form-select">
+                            <option>5 MB</option>
+                            <option selected>10 MB</option>
+                            <option>20 MB</option>
+                            <option>50 MB</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="maintenance" checked>
+                            <label class="form-check-label" for="maintenance">Maintenance Mode</label>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save System Settings</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Backup Settings -->
+                <div class="tab-pane fade" id="backup">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="card-title">Backup Settings</h5>
+                    </div>
+                    <div class="card-body">
+                      <form>
+                        <div class="mb-3">
+                          <label class="form-label">Backup Schedule</label>
+                          <select class="form-select">
+                            <option>Daily</option>
+                            <option selected>Weekly</option>
+                            <option>Monthly</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Retention Period</label>
+                          <select class="form-select">
+                            <option>7 Days</option>
+                            <option selected>30 Days</option>
+                            <option>90 Days</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="autoBackup" checked>
+                            <label class="form-check-label" for="autoBackup">Automatic Backups</label>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Backup Settings</button>
+                        <button type="button" class="btn btn-secondary">Manual Backup</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/admin/dashboard.js"></script>
+  </body>
+</html>

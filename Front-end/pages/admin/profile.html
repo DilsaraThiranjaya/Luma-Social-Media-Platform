@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luma Admin | Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="icon" href="/assets/image/Luma-logo.jpeg" />
+    <link rel="stylesheet" href="/assets/css/admin/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+  </head>
+  <body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <nav class="admin-sidebar">
+        <div class="sidebar-header">
+          <img src="/assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+          <h5>Luma Admin</h5>
+        </div>
+        
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="users.html" class="menu-item">
+            <i class="bi bi-people-fill"></i>
+            <span>Users</span>
+          </a>
+          <a href="posts.html" class="menu-item">
+            <i class="bi bi-file-post"></i>
+            <span>Posts</span>
+          </a>
+          <a href="reports.html" class="menu-item">
+            <i class="bi bi-flag-fill"></i>
+            <span>Reports</span>
+          </a>
+          <a href="settings.html" class="menu-item">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+          <div class="topbar-left">
+            <button class="btn toggle-sidebar">
+              <i class="bi bi-list"></i>
+            </button>
+            <h4>Profile</h4>
+          </div>
+          <div class="topbar-right">
+            <div class="dropdown">
+              <button class="btn" data-bs-toggle="dropdown">
+                <img src="/assets/image/Profile-picture.png" alt="Admin" class="admin-avatar">
+                <span>Admin User</span>
+                <i class="bi bi-chevron-down"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person"></i> Profile</a></li>
+                <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear"></i> Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="admin-content">
+          <div class="row">
+            <!-- Profile Overview -->
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body text-center">
+                  <div class="position-relative d-inline-block mb-4">
+                    <img src="/assets/image/Profile-picture.png" alt="Admin" class="rounded-circle profile-picture">
+                    <button class="btn btn-sm btn-primary position-absolute bottom-0 end-0" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">
+                      <i class="bi bi-camera"></i>
+                    </button>
+                  </div>
+                  <h5 class="mb-1">Admin User</h5>
+                  <p class="text-muted mb-3">Senior Administrator</p>
+                  <div class="d-flex justify-content-center gap-2 mb-4">
+                    <button class="btn btn-sm btn-outline-secondary">
+                      <i class="bi bi-pencil"></i> Edit Profile
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Information -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5 class="card-title">Contact Information</h5>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label class="text-muted d-block">Email</label>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-envelope me-2"></i>
+                      <span>admin@lumasocial.com</span>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label class="text-muted d-block">Phone</label>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-phone me-2"></i>
+                      <span>+1 (555) 123-4567</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="text-muted d-block">Location</label>
+                    <div class="d-flex align-items-center">
+                      <i class="bi bi-geo-alt me-2"></i>
+                      <span>New York, USA</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Admin Stats -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5 class="card-title">Admin Statistics</h5>
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Reports Handled</span>
+                    <span class="badge bg-primary">156</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span>Users Managed</span>
+                    <span class="badge bg-success">432</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span>Active Time</span>
+                    <span class="badge bg-info">120h</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">Edit Profile</h5>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="row mb-3">
+                      <div class="col-md-6">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" value="Admin">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" value="User">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input type="email" class="form-control" value="admin@lumasocial.com">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Phone</label>
+                      <input type="tel" class="form-control" value="+1 (555) 123-4567">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Location</label>
+                      <input type="text" class="form-control" value="New York, USA">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Role</label>
+                      <input type="text" class="form-control" value="Senior Administrator" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Bio</label>
+                      <textarea class="form-control" rows="4">Experienced administrator with a focus on community management and user experience.</textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Permissions</label>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked disabled>
+                        <label class="form-check-label">User Management</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked disabled>
+                        <label class="form-check-label">Content Moderation</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked disabled>
+                        <label class="form-check-label">System Settings</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" checked disabled>
+                        <label class="form-check-label">Analytics Access</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Activity Log -->
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5 class="card-title">Recent Activity</h5>
+                </div>
+                <div class="card-body">
+                  <div class="timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-marker bg-primary">
+                        <i class="bi bi-check-lg text-white"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <h6>Report Resolved</h6>
+                        <p class="text-muted">Resolved user report #REP001</p>
+                        <small class="text-muted">2 hours ago</small>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-marker bg-warning">
+                        <i class="bi bi-person text-white"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <h6>User Account Updated</h6>
+                        <p class="text-muted">Modified permissions for user John Doe</p>
+                        <small class="text-muted">5 hours ago</small>
+                      </div>
+                    </div>
+                    <div class="timeline-item">
+                      <div class="timeline-marker bg-success">
+                        <i class="bi bi-gear text-white"></i>
+                      </div>
+                      <div class="timeline-content">
+                        <h6>System Settings Updated</h6>
+                        <p class="text-muted">Modified notification preferences</p>
+                        <small class="text-muted">1 day ago</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Upload Photo Modal -->
+    <div class="modal fade" id="uploadPhotoModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Profile Picture</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Choose Photo</label>
+              <input type="file" class="form-control" accept="image/*">
+            </div>
+            <div class="d-flex justify-content-center">
+              <img src="/assets/image/Profile-picture.png" alt="Preview" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/admin/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,476 @@
+/* Market Container */
+.market-container {
+  padding: 1.5rem 0;
+}
+
+/* Market Filters */
+.market-filters {
+  position: sticky;
+  top: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.market-filters .card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
+.market-filters .filter-section,
+.market-filters h6 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.market-filters h6 {
+  font-size: 1.2rem;
+}
+
+.market-filters .list-group-item {
+  border: none;
+  padding: 0.75rem 1rem;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.market-filters .list-group-item:hover {
+  background-color: rgba(96, 0, 151, 0.05);
+  transform: translateX(4px);
+}
+
+.market-filters .list-group-item.active {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  color: #ffffff;
+}
+
+.card {
+  border-radius: 10px !important;
+}
+
+/* Market Items */
+.market-item {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.market-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.market-item .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.market-item .card-body {
+  padding: 1rem;
+}
+
+.market-item .card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.market-item .price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.market-item .location {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Create Listing Modal */
+.image-upload-container {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.image-upload-box {
+  text-align: center;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-upload-box:hover {
+  background: #e9ecef;
+}
+
+.image-upload-box i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.image-preview-container {
+  margin-top: 1rem;
+}
+
+.image-preview {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.remove-image {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Details Modal */
+.carousel-item img {
+  border-radius: 8px;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* List View */
+/* Market List View Styles */
+.market-container .list-view .row {
+  display: block;
+}
+
+.market-container .list-view .col-md-4 {
+  width: 100%;
+  max-width: 100%;
+  flex: 0 0 100%;
+}
+
+.market-container .list-view .market-item {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.market-container .list-view .market-item .card-img-top {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin: auto;
+  margin-left: 15px;
+}
+
+.market-container .list-view .market-item .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  width: calc(100% - 120px);
+}
+
+.market-container .list-view .market-item .card-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.market-container .list-view .market-item .card-text.price {
+  font-weight: bold;
+  color: #3a3a3a;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.market-container .list-view .market-item .card-text.location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.market-container .list-view .market-item .badge {
+  margin-right: 10px;
+}
+
+/* Button styling for list view */
+.market-header .btn-group .btn.active {
+  background-color: #6200EA;
+  color: white;
+  border-color: #6200EA;
+}
+
+/* Additional styles for responsive design */
+@media (max-width: 768px) {
+  .market-container .list-view .market-item {
+    flex-direction: column;
+  }
+  
+  .market-container .list-view .market-item .card-img-top {
+    width: 100%;
+    height: 180px;
+  }
+  
+  .market-container .list-view .market-item .card-body {
+    width: 100%;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .market-filters {
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+
+  .market-item .card-img-top {
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .market-container {
+    padding: 1rem 0;
+  }
+
+  .market-item .card-img-top {
+    height: 160px;
+  }
+}
+
+/* Filter Section */
+.filter-section {
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.filter-section .form-label {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.filter-section .form-check-label {
+  color: var(--text-muted);
+}
+
+/* Market Header */
+.market-header {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-light {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.btn-light:hover {
+  background: #e9ecef;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.market-item {
+  animation: fadeIn 0.5s ease;
+}
+
+/* Enhanced Card Styles */
+.market-item {
+  background: linear-gradient(145deg, #ffffff, #f8f3ff);
+}
+
+/* Grid/List Toggle Buttons */
+.btn-group .btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+/* Search Refinements */
+.search-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(96, 0, 151, 0.25);
+}
+
+/* Badge Styles */
+.list-group-item .badge {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10%;
+  font-size: 0.65rem !important;
+}
+
+.product-info .badge {
+  font-size: 0.75rem;
+  padding: 0.35em 0.65em;
+}
+
+/* Action Buttons Hover Effects */
+.btn-action {
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Background */
+.gradient- bg {
+  background: linear-gradient(135deg, #600097, #4e54c8);
+  border: none;
+}
+
+/* Modal Styles */
+.modal-content {
+  border: none;
+  border-radius: 16px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Toast Notifications */
+.toast {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover Effects */
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Buying/Selling Items */
+.purchase-item,
+.selling-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.purchase-item img,
+.selling-item img {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.purchase-info,
+.selling-info {
+  flex: 1;
+}
+
+/* Inbox Messages */
+.message-item {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  border-bottom: 1px solid #eee;
+  transition: all 0.2s ease;
+}
+
+.message-item.unread {
+  background: rgba(96, 0, 151, 0.05);
+}
+
+.message-sender {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-preview {
+  margin-bottom: 0.25rem;
+  color: #666;
+}
+
+.message-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
