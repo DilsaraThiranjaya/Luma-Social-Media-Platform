@@ -78,6 +78,9 @@
                     </div>
                   </a>
                   <hr class="my-1">
+                  <a class="dropdown-item" href="admin/dashboard.html">
+                    <i class="fa-solid fa-user-tie me-2"></i></i> Administration
+                  </a>
                   <a class="dropdown-item" href="settings.html">
                     <i class="bi bi-gear-fill me-2"></i> Settings & Privacy
                   </a>
@@ -287,10 +290,24 @@
                           </label>
                         </div>
                         <div class="form-check form-switch mb-3">
-                          <input class="form-check-input" type="checkbox" id="showEmail">
+                          <input class="form-check-input" type="checkbox" id="showEmail" checked>
                           <label class="form-check-label" for="showEmail">
                             <span class="setting-label">Show Email Address</span>
                             <span class="setting-description">Display your email on your public profile</span>
+                          </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                          <input class="form-check-input" type="checkbox" id="showPhone" checked>
+                          <label class="form-check-label" for="showPhone">
+                            <span class="setting-label">Show Phone Number</span>
+                            <span class="setting-description">Display your phone number on your public profile</span>
+                          </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                          <input class="form-check-input" type="checkbox" id="showBirthday" checked>
+                          <label class="form-check-label" for="showBirthday">
+                            <span class="setting-label">Show Birthday</span>
+                            <span class="setting-description">Display your birthday on your public profile</span>
                           </label>
                         </div>
                         <div class="form-check form-switch">
@@ -348,6 +365,13 @@
                             <span class="setting-description">When someone comments on your post</span>
                           </label>
                         </div>
+                        <div class="form-check form-switch mb-3">
+                          <input class="form-check-input" type="checkbox" id="shares" checked>
+                          <label class="form-check-label" for="shares">
+                            <span class="setting-label">Shares</span>
+                            <span class="setting-description">When someone share your post</span>
+                          </label>
+                        </div>
                         <div class="form-check form-switch">
                           <input class="form-check-input" type="checkbox" id="directMessages" checked>
                           <label class="form-check-label" for="directMessages">
@@ -357,20 +381,13 @@
                         </div>
                       </div>
       
-                      <h5 class="section-title">Email Notifications</h5>
+                      <h5 class="section-title">Admin Push Notifications</h5>
                       <div class="mb-4">
                         <div class="form-check form-switch mb-3">
-                          <input class="form-check-input" type="checkbox" id="emailDigest" checked>
-                          <label class="form-check-label" for="emailDigest">
-                            <span class="setting-label">Weekly Digest</span>
-                            <span class="setting-description">Weekly summary of your activity</span>
-                          </label>
-                        </div>
-                        <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="emailMarketing">
-                          <label class="form-check-label" for="emailMarketing">
-                            <span class="setting-label">Marketing Emails</span>
-                            <span class="setting-description">Receive updates about new features</span>
+                          <input class="form-check-input" type="checkbox" id="reportAlerts" checked>
+                          <label class="form-check-label" for="reportAlerts">
+                            <span class="setting-label">Report Alerts</span>
+                            <span class="setting-description">Receive updates about new reports</span>
                           </label>
                         </div>
                       </div>
@@ -408,29 +425,29 @@
                         </div>
                       </div>
       
-                      <h5 class="section-title">Sessions</h5>
-                      <div class="active-sessions mb-4">
-                        <div class="session-item">
-                          <div class="session-info">
-                            <i class="fa-solid fa-laptop me-2"></i>
-                            <div>
-                              <div class="device-name">MacBook Pro - Chrome</div>
-                              <div class="device-location">San Francisco, CA - Current Session</div>
-                            </div>
-                          </div>
-                          <button class="btn btn-sm btn-outline-danger">End Session</button>
-                        </div>
-                        <div class="session-item">
-                          <div class="session-info">
-                            <i class="fa-solid fa-mobile-screen me-2"></i>
-                            <div>
-                              <div class="device-name">iPhone 13 - Luma App</div>
-                              <div class="device-location">San Francisco, CA - Active Now</div>
-                            </div>
-                          </div>
-                          <button class="btn btn-sm btn-outline-danger">End Session</button>
-                        </div>
-                      </div>
+<!--                      <h5 class="section-title">Sessions</h5>-->
+<!--                      <div class="active-sessions mb-4">-->
+<!--                        <div class="session-item">-->
+<!--                          <div class="session-info">-->
+<!--                            <i class="fa-solid fa-laptop me-2"></i>-->
+<!--                            <div>-->
+<!--                              <div class="device-name">MacBook Pro - Chrome</div>-->
+<!--                              <div class="device-location">San Francisco, CA - Current Session</div>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                          <button class="btn btn-sm btn-outline-danger">End Session</button>-->
+<!--                        </div>-->
+<!--                        <div class="session-item">-->
+<!--                          <div class="session-info">-->
+<!--                            <i class="fa-solid fa-mobile-screen me-2"></i>-->
+<!--                            <div>-->
+<!--                              <div class="device-name">iPhone 13 - Luma App</div>-->
+<!--                              <div class="device-location">San Francisco, CA - Active Now</div>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                          <button class="btn btn-sm btn-outline-danger">End Session</button>-->
+<!--                        </div>-->
+<!--                      </div>-->
       
                       <div class="danger-zone">
                         <h5 class="section-title text-danger">Danger Zone</h5>
