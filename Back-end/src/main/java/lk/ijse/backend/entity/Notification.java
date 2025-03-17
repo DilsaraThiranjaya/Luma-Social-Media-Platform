@@ -1,0 +1,58 @@
+package lk.ijse.backend.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
+@Entity
+@Table(name = "notification")
+public class Notification {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int notificationId;
+
+    @Enumerated(EnumType.STRING)
+    private NotificationType type;
+
+    @Builder.Default
+    private Boolean isRead = false;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "source_user_id")
+    private User sourceUser;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
+    @ManyToOne
+    @JoinColumn(name = "message_id")
+    private Message message;
+
+    @ManyToOne
+    @JoinColumn(name = "report_id")
+    private Report report;
+
+    public enum NotificationType {
+        FRIEND_REQUEST, POST_REACTION, COMMENT, MESSAGE,
+        SHARE, REPORT
+    }
+}
