@@ -41,8 +41,11 @@ public class UserDTO {
     @Pattern(regexp = "^\\+?[0-9\\s-]{7,}$", message = "Invalid phone number format")
     private String phoneNumber;
 
-    private Role role;
-    private Status status;
+    @Builder.Default
+    private Role role = Role.USER;
+
+    @Builder.Default
+    private Status status = Status.ACTIVE;
 
     @URL(message = "Invalid profile picture URL")
     private String profilePictureUrl;

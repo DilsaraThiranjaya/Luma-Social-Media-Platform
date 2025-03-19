@@ -44,7 +44,7 @@ public class WebSecurityConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable).cors(withDefaults()).authorizeHttpRequests(auth -> auth.requestMatchers(
                                 "/api/v1/auth/authenticate",
-                                "/api/v1/user/register",
+                                "/api/v1/auth/register",
                                 "/api/v1/auth/refreshToken",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",

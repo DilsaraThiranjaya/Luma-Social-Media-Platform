@@ -23,72 +23,38 @@ body {
 }
 
 /* Toast Styles */
-.toast-container {
-  position: fixed;
-  z-index: 9999;
-  top: 20px;
-  right: 20px;
-  max-width: 350px;
-  width: 100%;
+.colored-toast.swal2-icon-success {
+  background-color: #56f590 !important;
 }
 
-.toast {
-  position: relative;
-  padding: 15px 20px;
-  margin-bottom: 1rem;
-  border-radius: 8px;
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
   color: white;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transform: translateX(110%);
-  animation: slideIn 0.3s ease-out forwards;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.toast::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 0 0 8px 8px;
+.colored-toast .swal2-close {
+  color: white;
 }
 
-.toast.progress::after {
-  animation: progressBar 5s linear forwards;
+.colored-toast .swal2-html-container {
+  color: white;
 }
 
-.toast.success {
-  background: #600097;
-  border-left: 4px solid #4e54c8;
-}
-
-.toast.error {
-  background: #8b0c7d;
-  border-left: 4px solid #c80c4e;
-}
-
-.toast.info {
-  background: #4e54c8;
-  border-left: 4px solid #600097;
-}
-
-.toast-icon {
-  font-size: 1.5rem;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(110%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes progressBar {
-  from { width: 100%; }
-  to { width: 0; }
-}
 
 /* =========== Header =========== */
 

@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.ResponseDTO;
 import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.jwtmodels.AuthRequest;
 import lk.ijse.backend.jwtmodels.AuthResponse;
 import lk.ijse.backend.service.impl.UserServiceImpl;
 import lk.ijse.backend.util.JwtUtil;
@@ -32,27 +33,26 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserServiceImpl userService;
 
-    @PostMapping(value = "authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> authenticate(@Valid @RequestBody UserDTO userDTO) {
-        log.info("Received sign-in request for email: {}", userDTO.getEmail());
+    @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> authenticate(@Valid @RequestBody AuthRequest authRequest) {
+        log.info("Received sign-in request for email: {}", authRequest.getEmail());
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDTO.getEmail(), userDTO.getPassword()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         } catch (Exception e) {
-            log.error("Authentication failed for email: {}", userDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Invalid Credentials", e.getMessage()));
+            log.error("Authentication failed for email: {}", authRequest.getEmail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Invalid Credentials!", e.getMessage()));
         }
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDTO loadedUser = (UserDTO) authentication.getPrincipal();
+        UserDTO loadedUser = userService.loadUserDetailsByEmail(authRequest.getEmail());
         if (loadedUser == null) {
-            log.error("User not found for email: {}", userDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found", null));
+            log.error("User not found for email: {}", authRequest.getEmail());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
         }
 
         String token = jwtUtil.generateToken(loadedUser);
         if (token == null || token.isEmpty()) {
-            log.error("Token generation failed for email: {}", userDTO.getEmail());
+            log.error("Token generation failed for email: {}", authRequest.getEmail());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseDTO(VarList.Conflict, "Authorization Failure! Please Try Again", null));
         }
 
@@ -60,12 +60,12 @@ public class AuthController {
         authResponse.setEmail(loadedUser.getEmail());
         authResponse.setToken(token);
 
-        log.info("User successfully signed in with email: {}", userDTO.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "Success", authResponse));
+        log.info("User successfully signed in with email: {}", authRequest.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "User Successfully Logged In!", authResponse));
     }
 
 
-    @PostMapping(value = "register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> register(@Valid @RequestBody UserDTO userDTO) {
         log.info("Received sign-up request for email: {}", userDTO.getEmail());
 
@@ -86,20 +86,20 @@ public class AuthController {
                     authResponse.setToken(token);
 
                     log.info("User successfully signed up with email: {}", userDTO.getEmail());
-                    return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(VarList.Created, "Success", authResponse));
+                    return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(VarList.Created, "User Successfully Registered!", authResponse));
                 }
                 case VarList.Not_Acceptable -> {
                     log.error("User already exists with email: {}", userDTO.getEmail());
-                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseDTO(VarList.Not_Acceptable, "Email Already Used", null));
+                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseDTO(VarList.Not_Acceptable, "Email Already Used!", null));
                 }
                 default -> {
                     log.error("Failed to sign up user with email: {}", userDTO.getEmail());
-                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ResponseDTO(VarList.Bad_Gateway, "Failed to Sign Up", null));
+                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ResponseDTO(VarList.Bad_Gateway, "Failed to Register!", null));
                 }
             }
         } catch (Exception e) {
             log.error("Failed to sign up user with email: {}", userDTO.getEmail());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to Sign Up", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to Register!", e.getMessage()));
         }
     }
 
@@ -114,18 +114,18 @@ public class AuthController {
             UserDetails userDetails = userService.loadUserByUsername(extractedEmail);
             if (userDetails == null) {
                 log.error("User not found for email: {}", extractedEmail);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found", null));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
             }
 
             if (!jwtUtil.validateToken(refreshToken, userDetails)) {
                 log.error("Invalid refresh token for email: {}", extractedEmail);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Invalid Token", null));
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Invalid Token!", null));
             }
 
             UserDTO userDTO = userService.loadUserDetailsByEmail(extractedEmail);
             if (userDTO == null) {
                 log.error("User not found for email: {}", extractedEmail);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found", null));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
             }
 
             String newAccessToken = jwtUtil.generateToken(userDTO);
@@ -134,7 +134,7 @@ public class AuthController {
             authResponse.setToken(newAccessToken);
 
             log.info("New access token generated for email: {}", extractedEmail);
-            return ResponseEntity.ok().body(new ResponseDTO(VarList.OK, "Success", authResponse));
+            return ResponseEntity.ok().body(new ResponseDTO(VarList.OK, "Access Token Refreshed!", authResponse));
 
         } catch (JwtException | IllegalArgumentException e) {
             log.error("Token validation error: {}", e.getMessage());

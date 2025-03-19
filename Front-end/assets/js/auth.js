@@ -1,27 +1,17 @@
 // Authentication functionality
 document.addEventListener("DOMContentLoaded", function () {
-  function showToast(type, message, duration = 5000) {
-    const icons = {
-      success: '✅',
-      error: '❌',
-      info: 'ℹ️'
-    };
-
-    const toast = document.createElement('div');
-    toast.className = `toast ${type} progress`;
-    toast.innerHTML = `
-        <span class="toast-icon">${icons[type]}</span>
-        <span class="toast-message">${message}</span>
-    `;
-
-    const container = document.querySelector('.toast-container');
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.style.animation = 'slideOut 0.3s ease-in forwards';
-      setTimeout(() => toast.remove(), 300);
-    }, duration);
-  }
+//Toast Configs
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    iconColor: "white",
+    customClass: {
+      popup: "colored-toast",
+    },
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  });
 
   // Toggle password visibility
   const togglePasswordButtons = document.querySelectorAll(".toggle-password");
@@ -96,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Form validation and submission
   const BASE_URL = "http://localhost:8080/api/v1/auth";
+  const DIRECTORY_URL = "/Luma-Social-Media-Platform/Front-end/pages/timeline.html";
+
 
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
@@ -139,12 +131,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!response.ok) {
           const errorData = await response.json();
-          showToast('error', errorData.message || 'Authentication failed');
+          await Toast.fire({
+            icon: "error",
+            title: errorData.message || "Authentication failed"
+          });
           return;
         }
 
         const data = await response.json();
-        showToast('success', 'Login successful!');
+        await Toast.fire({
+          icon: data.code === 200 || data.code === 201 ? "success" : "error",
+          title: data.message
+        });
 
         // Store authentication data
         localStorage.setItem("authData", JSON.stringify({
@@ -154,10 +152,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }));
 
         // Redirect to timeline
-        window.location.href = "/timeline.html";
+        window.location.href = DIRECTORY_URL;
 
       } catch (error) {
-        showToast('error', error.message || 'Network error');
+        await Toast.fire({
+          icon: "error",
+          title: error.message || "Network error"
+        });
       } finally {
         // Reset button state
         submitBtn.disabled = false;
@@ -181,14 +182,20 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       if (response.status === 403) {
-        showToast('error', 'Access Denied! You do not have permission to login.');
+        await Toast.fire({
+          icon: "error",
+          title: "Access Denied! You do not have permission to login."
+        });
         return;
       }
 
       if (!response.ok) throw new Error("Token refresh failed");
 
       const newToken = await response.json();
-      showToast('success', 'Token refreshed successfully');
+      await Toast.fire({
+        icon: "success",
+        title: "Token refreshed successfully"
+      });
 
       localStorage.setItem("authData", JSON.stringify({
         ...authData,
@@ -196,7 +203,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }));
       return newToken.token;
     } catch (error) {
-      showToast('error', error.message);
+      await Toast.fire({
+        icon: "error",
+        title: error.message
+      });
       localStorage.removeItem("authData");
       window.location.href = "/login.html";
       return null;
