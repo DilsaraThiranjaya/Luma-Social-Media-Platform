@@ -1,9 +1,8 @@
 package lk.ijse.backend.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lk.ijse.backend.dto.UserDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +17,8 @@ import java.util.function.Function;
 
 @Component
 @PropertySource(ignoreResourceNotFound = true, value = "classpath:otherprops.properties")
+@RequiredArgsConstructor
 public class JwtUtil implements Serializable {
-
     private static final long serialVersionUID = 234234523523L;
 
     public static final long JWT_TOKEN_VALIDITY = 24 * 60 * 60 * 12;
@@ -65,7 +64,7 @@ public class JwtUtil implements Serializable {
     public String generateToken(UserDTO userDTO) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role",userDTO.getRole());
-        return doGenerateToken(claims, userDTO.getEmail());
+        return doGenerateToken(claims, userDTO.getEmail().toLowerCase());
     }
 
     //while creating the token -
@@ -83,7 +82,19 @@ public class JwtUtil implements Serializable {
 
     //validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        try {
+            // 1. Verify token signature
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token);
+
+            // 2. Validate username and expiration
+            final String username = claimsJws.getBody().getSubject();
+
+            return username.equalsIgnoreCase(userDetails.getUsername()) && !isTokenExpired(token);
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 }

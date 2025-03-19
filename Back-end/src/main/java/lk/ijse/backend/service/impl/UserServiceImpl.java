@@ -7,7 +7,6 @@ import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,8 +41,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
         return authorities;
+    }
+
+    @Override
+    public int saveUser(UserDTO userDTO) {
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            return VarList.Not_Acceptable;
+        } else {
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            userRepository.save(modelMapper.map(userDTO, User.class));
+            return VarList.Created;
+        }
     }
 
     @Override
@@ -70,15 +81,4 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public List<UserDTO> getAllUsers() {
         return List.of();
     }
-
-    @Override
-    public int saveUser(UserDTO userDTO) {
-        if (userRepository.existsByEmail(userDTO.getEmail())) {
-            return VarList.Not_Acceptable;
-        } else {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            userRepository.save(modelMapper.map(userDTO, User.class));
-            return VarList.Created;
-        }
-    }}
+}

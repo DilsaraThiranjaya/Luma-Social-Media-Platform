@@ -1,5 +1,28 @@
 // Authentication functionality
 document.addEventListener("DOMContentLoaded", function () {
+  function showToast(type, message, duration = 5000) {
+    const icons = {
+      success: '✅',
+      error: '❌',
+      info: 'ℹ️'
+    };
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type} progress`;
+    toast.innerHTML = `
+        <span class="toast-icon">${icons[type]}</span>
+        <span class="toast-message">${message}</span>
+    `;
+
+    const container = document.querySelector('.toast-container');
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.animation = 'slideOut 0.3s ease-in forwards';
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
+  }
+
   // Toggle password visibility
   const togglePasswordButtons = document.querySelectorAll(".toggle-password");
   togglePasswordButtons.forEach((button) => {
@@ -72,9 +95,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Form validation and submission
+  const BASE_URL = "http://localhost:8080/api/v1/auth";
+
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       // Add loading state
@@ -84,39 +109,99 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtn.innerHTML =
         '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...';
 
-      // Simulate API call
-      setTimeout(() => {
-        // Reset button state
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+      try {
+        let endpoint, payload;
 
-        // Store user data (demo only)
+        // Determine form type
         if (this.id === "registerForm") {
-          const firstName = document.getElementById("firstName").value;
-          const lastName = document.getElementById("lastName").value;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              name: `${firstName} ${lastName}`,
-              email: document.getElementById("email").value,
-              isLoggedIn: true,
-            })
-          );
-        } else {
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              email: document.getElementById("email").value,
-              isLoggedIn: true,
-            })
-          );
+          endpoint = `${BASE_URL}/register`;
+          payload = {
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+          };
+        } else { // loginForm
+          endpoint = `${BASE_URL}/authenticate`;
+          payload = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+          };
         }
+
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          showToast('error', errorData.message || 'Authentication failed');
+          return;
+        }
+
+        const data = await response.json();
+        showToast('success', 'Login successful!');
+
+        // Store authentication data
+        localStorage.setItem("authData", JSON.stringify({
+          email: data.email,
+          token: data.token,
+          isLoggedIn: true
+        }));
 
         // Redirect to timeline
         window.location.href = "/timeline.html";
-      }, 1500);
+
+      } catch (error) {
+        showToast('error', error.message || 'Network error');
+      } finally {
+        // Reset button state
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+
     });
   });
+
+  // Add to your main JavaScript file
+  async function refreshAuthToken() {
+    const authData = JSON.parse(localStorage.getItem("authData"));
+    if (!authData) return null;
+
+    try {
+      const response = await fetch(`${BASE_URL}/refresh`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${authData.token}`
+        }
+      });
+
+      if (response.status === 403) {
+        showToast('error', 'Access Denied! You do not have permission to login.');
+        return;
+      }
+
+      if (!response.ok) throw new Error("Token refresh failed");
+
+      const newToken = await response.json();
+      showToast('success', 'Token refreshed successfully');
+
+      localStorage.setItem("authData", JSON.stringify({
+        ...authData,
+        token: newToken.token
+      }));
+      return newToken.token;
+    } catch (error) {
+      showToast('error', error.message);
+      localStorage.removeItem("authData");
+      window.location.href = "/login.html";
+      return null;
+    }
+  }
 
   // Social login buttons animation
   const socialButtons = document.querySelectorAll(".social-btn");
