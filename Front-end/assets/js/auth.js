@@ -13,6 +13,25 @@ document.addEventListener("DOMContentLoaded", function () {
     timerProgressBar: true,
   });
 
+  handleRememberMe();
+
+  // Function to handle Remember Me functionality
+  function handleRememberMe() {
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+    const emailInput = document.getElementById('email');
+
+    // Check if there are stored credentials when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      const isRemembered = localStorage.getItem('rememberMe') === 'true';
+
+      if (isRemembered && rememberedEmail) {
+        emailInput.value = rememberedEmail;
+        rememberMeCheckbox.checked = true;
+      }
+    });
+  }
+
   // Toggle password visibility
   const togglePasswordButtons = document.querySelectorAll(".toggle-password");
   togglePasswordButtons.forEach((button) => {
@@ -114,6 +133,18 @@ document.addEventListener("DOMContentLoaded", function () {
             password: document.getElementById("password").value
           };
         } else { // loginForm
+
+          const emailInput = document.getElementById('email');
+          const rememberMeCheckbox = document.getElementById('rememberMe');
+
+          if (rememberMeCheckbox.checked) {
+            localStorage.setItem('rememberedEmail', emailInput.value);
+            localStorage.setItem('rememberMe', 'true');
+          } else {
+            localStorage.removeItem('rememberedEmail');
+            localStorage.removeItem('rememberMe');
+          }
+
           endpoint = `${BASE_URL}/authenticate`;
           payload = {
             email: document.getElementById("email").value,
@@ -138,16 +169,16 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        const data = await response.json();
+        const responseData = await response.json();
         await Toast.fire({
-          icon: data.code === 200 || data.code === 201 ? "success" : "error",
-          title: data.message
+          icon:responseData.code === 200 ||responseData.code === 201 ? "success" : "error",
+          title:responseData.message
         });
 
-        // Store authentication data
-        localStorage.setItem("authData", JSON.stringify({
-          email: data.email,
-          token: data.token,
+        // Store authenticationresponseData
+        sessionStorage.setItem("authData", JSON.stringify({
+          email:responseData.data.email,
+          token:responseData.data.token,
           isLoggedIn: true
         }));
 
@@ -167,51 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
   });
-
-  // Add to your main JavaScript file
-  async function refreshAuthToken() {
-    const authData = JSON.parse(localStorage.getItem("authData"));
-    if (!authData) return null;
-
-    try {
-      const response = await fetch(`${BASE_URL}/refresh`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${authData.token}`
-        }
-      });
-
-      if (response.status === 403) {
-        await Toast.fire({
-          icon: "error",
-          title: "Access Denied! You do not have permission to login."
-        });
-        return;
-      }
-
-      if (!response.ok) throw new Error("Token refresh failed");
-
-      const newToken = await response.json();
-      await Toast.fire({
-        icon: "success",
-        title: "Token refreshed successfully"
-      });
-
-      localStorage.setItem("authData", JSON.stringify({
-        ...authData,
-        token: newToken.token
-      }));
-      return newToken.token;
-    } catch (error) {
-      await Toast.fire({
-        icon: "error",
-        title: error.message
-      });
-      localStorage.removeItem("authData");
-      window.location.href = "/login.html";
-      return null;
-    }
-  }
 
   // Social login buttons animation
   const socialButtons = document.querySelectorAll(".social-btn");
@@ -238,184 +224,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-
-  //Forgot Password
-
-  const emailSection = document.getElementById("emailSection");
-  const otpSection = document.getElementById("otpSection");
-  const newPasswordSection = document.getElementById("newPasswordSection");
-  const stepDescription = document.getElementById("stepDescription");
-  const steps = document.querySelectorAll(".step");
-  const successMessage = document.getElementById("successMessage");
-  let timerInterval;
-
-  // OTP Input Handling
-  const otpInputs = document.querySelectorAll(".otp-inputs input");
-  otpInputs.forEach((input, index) => {
-    input.addEventListener("input", (e) => {
-      if (e.target.value) {
-        if (index < otpInputs.length - 1) {
-          otpInputs[index + 1].focus();
-        }
-      }
-    });
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Backspace" && !e.target.value && index > 0) {
-        otpInputs[index - 1].focus();
-      }
-    });
-  });
-
-  // Timer Function
-  function startTimer() {
-    let timeLeft = 60;
-    const timerDisplay = document.getElementById("timer");
-    const resendBtn = document.getElementById("resendOtpBtn");
-
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      timerDisplay.textContent = timeLeft;
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        resendBtn.disabled = false;
-      }
-    }, 1000);
-  }
-
-  // Password Requirements Check
-  function checkPasswordRequirements(password) {
-    const requirements = {
-      length: password.length >= 8,
-      uppercase: /[A-Z]/.test(password),
-      lowercase: /[a-z]/.test(password),
-      number: /[0-9]/.test(password),
-      special: /[^A-Za-z0-9]/.test(password),
-    };
-
-    Object.entries(requirements).forEach(([req, met]) => {
-      const reqElement = document.querySelector(`[data-requirement="${req}"]`);
-      const icon = reqElement.querySelector("i");
-
-      reqElement.classList.toggle("met", met);
-      reqElement.classList.toggle("unmet", !met);
-
-      if (met) {
-        icon.classList.remove("fa-times-circle");
-        icon.classList.add("fa-check-circle");
-      } else {
-        icon.classList.remove("fa-check-circle");
-        icon.classList.add("fa-times-circle");
-      }
-    });
-
-    return Object.values(requirements).every(Boolean);
-  }
-
-  // Step Navigation
-  function showStep(step) {
-    emailSection.style.display = "none";
-    otpSection.style.display = "none";
-    newPasswordSection.style.display = "none";
-
-    steps.forEach((s, i) => s.classList.toggle("active", i < step));
-
-    switch (step) {
-      case 1:
-        emailSection.style.display = "block";
-        stepDescription.textContent = "Enter your email to receive OTP";
-        break;
-      case 2:
-        otpSection.style.display = "block";
-        stepDescription.textContent = "Enter the OTP sent to your email";
-        startTimer();
-        break;
-      case 3:
-        newPasswordSection.style.display = "block";
-        stepDescription.textContent = "Create your new password";
-        break;
-    }
-  }
-
-  // Send OTP Button
-  document.getElementById("sendOtpBtn").addEventListener("click", function () {
-    const email = document.getElementById("email").value;
-    if (!email) return;
-
-    const btn = this;
-    btn.disabled = true;
-    btn.innerHTML =
-      '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Sending...';
-
-    setTimeout(() => {
-      showStep(2);
-    }, 1500);
-  });
-
-  // Verify OTP Button
-  document
-    .getElementById("verifyOtpBtn")
-    .addEventListener("click", function () {
-      const otp = Array.from(otpInputs)
-        .map((input) => input.value)
-        .join("");
-      if (otp.length !== 6) return;
-
-      const btn = this;
-      btn.disabled = true;
-      btn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Verifying...';
-
-      setTimeout(() => {
-        showStep(3);
-        btn.disabled = false;
-        btn.innerHTML = "Verify OTP";
-      }, 1500);
-    });
-
-  // Resend OTP Button
-  document
-    .getElementById("resendOtpBtn")
-    .addEventListener("click", function () {
-      this.disabled = true;
-      startTimer();
-      // Clear OTP inputs
-      otpInputs.forEach((input) => (input.value = ""));
-    });
-
-  // Password Input Validation
-  document.getElementById("newPassword").addEventListener("input", function () {
-    checkPasswordRequirements(this.value);
-  });
-
-  // Reset Password Button
-  document
-    .getElementById("resetPasswordBtn")
-    .addEventListener("click", function () {
-      const newPassword = document.getElementById("newPassword").value;
-      const confirmPassword = document.getElementById("confirmPassword").value;
-
-      if (!checkPasswordRequirements(newPassword)) return;
-      if (newPassword !== confirmPassword) {
-        alert("Passwords do not match");
-        return;
-      }
-
-      const btn = this;
-      btn.disabled = true;
-      btn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Resetting...';
-
-      setTimeout(() => {
-        successMessage.classList.remove("d-none");
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 3000);
-      }, 1500);
-    });
-
-  // Initialize
-  showStep(1);
 });
+

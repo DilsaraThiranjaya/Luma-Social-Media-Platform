@@ -7,6 +7,7 @@ import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.jwtmodels.AuthRequest;
 import lk.ijse.backend.jwtmodels.AuthResponse;
 import lk.ijse.backend.service.impl.UserServiceImpl;
+import lk.ijse.backend.util.EmailSender;
 import lk.ijse.backend.util.JwtUtil;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -32,6 +34,7 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserServiceImpl userService;
+    private final EmailSender emailSender;
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> authenticate(@Valid @RequestBody AuthRequest authRequest) {
@@ -103,7 +106,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "refresh", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/refreshToken", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> refreshToken(@RequestBody Map<String, String> request) {
         log.info("Received token refresh request");
         String refreshToken = request.get("refreshToken");
@@ -140,5 +143,43 @@ public class AuthController {
             log.error("Token validation error: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Invalid Token", e.getMessage()));
         }
+    }
+
+    @PostMapping(value = "/sendOtpCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> sendOtpCode(@RequestBody Map<String, String> request) {
+        log.info("Received senOtpCode request");
+        String email = request.get("email");
+        int otpCode = generateOTP();
+
+        String emailTitle = "OTP Code";
+        String emailContent = "Your One Time OTP Code: " + String.valueOf(otpCode);
+
+
+        try {
+            UserDetails userDetails = userService.loadUserByUsername(email);
+            if (userDetails == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            boolean isSent = emailSender.sendEmail(email, emailTitle, emailContent);
+            if (!isSent) {
+                log.error("Failed to send otp code to email: {}", email);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Failed to send otp code to email", null));
+            }
+
+            log.info("Email sent successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "OTP Sent!", otpCode));
+
+        } catch (Exception e) {
+            log.error("Failed to send email: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Failed to send email", e.getMessage()));
+        }
+    }
+
+    public static int generateOTP() {
+        Random random = new Random();
+        int otp = random.nextInt(900000) + 100000; // Generate a random number between 100000 and 999999
+        return otp;
     }
 }

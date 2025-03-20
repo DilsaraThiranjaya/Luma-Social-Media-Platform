@@ -1,21 +1,19 @@
 ${AnsiColor.MAGENTA}
-  ██╗     ██╗   ██╗███╗   ███╗ █████╗
-  ██║     ██║   ██║████╗ ████║██╔══██╗
-  ██║     ██║   ██║██╔████╔██║███████║
-  ██║     ██║   ██║██║╚██╔╝██║██╔══██║
-  ███████╗╚██████╔╝██║ ╚═╝ ██║██║  ██║
-  ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝
-
+  ┌───────────────────────────────────────┐
+  │  ██╗     ██╗   ██╗███╗   ███╗ █████╗  │
+  │  ██║     ██║   ██║████╗ ████║██╔══██╗ │
+  │  ██║     ██║   ██║██╔████╔██║███████║ │
+  │  ██║     ██║   ██║██║╚██╔╝██║██╔══██║ │
+  │  ███████╗╚██████╔╝██║ ╚═╝ ██║██║  ██║ │
+  │  ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝ │
+  └───────────────────────────────────────┘
 ${AnsiColor.BLUE}
  ••════════════════════════════════════••
-${AnsiColor.BRIGHT_MAGENTA}
-  ┌──────────────────────────────────────┐
-  │   𝕷𝖚𝖒𝖆 𝕾𝖔𝖈𝖎𝖆𝖑 𝕸𝖊𝖉𝖎𝖆 𝕻𝖑𝖆𝖙𝖋𝖔𝖗𝖒
-  │
-  │   ${AnsiColor.MAGENTA}» Version         ::  ${AnsiColor.BLUE}v1.0.0${AnsiColor.BRIGHT_MAGENTA}
-  │   ${AnsiColor.MAGENTA}» Developed by    ::  ${AnsiColor.MAGENTA}Dilsara Thiranjaya${AnsiColor.BRIGHT_MAGENTA}
-  │   ${AnsiColor.MAGENTA}» Powered by      ::  ${AnsiColor.MAGENTA}Spring Boot 3.4.3${AnsiColor.BRIGHT_MAGENTA}
-  └──────────────────────────────────────┘
+${AnsiColor.MAGENTA}
+  ┌─⊳⋅ ${AnsiColor.BRIGHT_WHITE}Version    ${AnsiColor.CYAN}»  ${AnsiColor.BRIGHT_BLUE}v1.0.0${AnsiColor.MAGENTA}
+  ├─⊳⋅ ${AnsiColor.BRIGHT_WHITE}Launched   ${AnsiColor.CYAN}»  ${AnsiColor.BRIGHT_BLUE}2024${AnsiColor.MAGENTA}
+  ├─⊳⋅ ${AnsiColor.BRIGHT_WHITE}Developer  ${AnsiColor.CYAN}»  ${AnsiColor.BRIGHT_MAGENTA}Dilsara Thiranjaya${AnsiColor.MAGENTA}
+  └─⊳⋅ ${AnsiColor.BRIGHT_WHITE}Backend    ${AnsiColor.CYAN}»  ${AnsiColor.BRIGHT_BLUE}Spring Boot 3.4.3${AnsiColor.MAGENTA}
 ${AnsiColor.BLUE}
  ••════════════════════════════════════••
 ${AnsiColor.DEFAULT}
