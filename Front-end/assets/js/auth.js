@@ -133,18 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
             password: document.getElementById("password").value
           };
         } else { // loginForm
-
-          const emailInput = document.getElementById('email');
-          const rememberMeCheckbox = document.getElementById('rememberMe');
-
-          if (rememberMeCheckbox.checked) {
-            localStorage.setItem('rememberedEmail', emailInput.value);
-            localStorage.setItem('rememberMe', 'true');
-          } else {
-            localStorage.removeItem('rememberedEmail');
-            localStorage.removeItem('rememberMe');
-          }
-
           endpoint = `${BASE_URL}/authenticate`;
           payload = {
             email: document.getElementById("email").value,
@@ -160,20 +148,24 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(payload)
         });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          await Toast.fire({
-            icon: "error",
-            title: errorData.message || "Authentication failed"
-          });
-          return;
-        }
+        if (!response.ok) throw new Error();
 
         const responseData = await response.json();
         await Toast.fire({
           icon:responseData.code === 200 ||responseData.code === 201 ? "success" : "error",
           title:responseData.message
         });
+
+        const emailInput = document.getElementById('email');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+
+        if (rememberMeCheckbox.checked) {
+          localStorage.setItem('rememberedEmail', emailInput.value);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberMe');
+        }
 
         // Store authenticationresponseData
         sessionStorage.setItem("authData", JSON.stringify({
@@ -188,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } catch (error) {
         await Toast.fire({
           icon: "error",
-          title: error.message || "Network error"
+          title: error.message || "Fail to login!"
         });
       } finally {
         // Reset button state

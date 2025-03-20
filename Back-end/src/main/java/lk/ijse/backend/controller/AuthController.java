@@ -177,6 +177,42 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/resetPassword", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> resetPassword(@RequestBody Map<String, String> request) {
+        log.info("Received resetPassword request");
+        String email = request.get("email");
+        String password = request.get("password");
+
+        try {
+            UserDTO userDTO = userService.loadUserDetailsByEmail(email);
+            if (userDTO == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            userDTO.setPassword(password);
+            int res = userService.updateUser(userDTO);
+
+            switch (res) {
+                case VarList.Created -> {
+                    log.info("Password rested successfully");
+                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "Password Rested Successfully!", null));
+                }
+                case VarList.Not_Acceptable -> {
+                    log.error("User not found for this email: {}", userDTO.getEmail());
+                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseDTO(VarList.Not_Acceptable, "User Not Found!", null));
+                }
+                default -> {
+                    log.error("Failed to reset password with email: {}", userDTO.getEmail());
+                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ResponseDTO(VarList.Bad_Gateway, "Failed to Reset Password!", null));
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to reset password: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Failed to Reset Password", e.getMessage()));
+        }
+    }
+
     public static int generateOTP() {
         Random random = new Random();
         int otp = random.nextInt(900000) + 100000; // Generate a random number between 100000 and 999999
