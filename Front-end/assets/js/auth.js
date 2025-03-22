@@ -13,6 +13,28 @@ document.addEventListener("DOMContentLoaded", function () {
     timerProgressBar: true,
   });
 
+  const BASE_URL = "http://localhost:8080/api/v1/auth";
+  const DIRECTORY_URL = "/Luma-Social-Media-Platform/Front-end/pages/timeline.html";
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const newAccessToken = urlParams.get('token');
+  const errorMessage = urlParams.get('error');
+
+  const existingAuthData = JSON.parse(sessionStorage.getItem('authData')) || {};
+
+  if (newAccessToken) {
+    // Update the stored access token
+    const newAuthData = {...existingAuthData, token: newAccessToken};
+    sessionStorage.setItem('authData', JSON.stringify(newAuthData));
+    window.location.href = DIRECTORY_URL;
+  }
+  if (errorMessage) {
+    Toast.fire({
+      icon: "error",
+      title: errorMessage
+    });
+  }
+
   handleRememberMe();
 
   // Function to handle Remember Me functionality
@@ -104,14 +126,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Form validation and submission
-  const BASE_URL = "http://localhost:8080/api/v1/auth";
-  const DIRECTORY_URL = "/Luma-Social-Media-Platform/Front-end/pages/timeline.html";
-
-
   const forms = document.querySelectorAll("form");
   forms.forEach((form) => {
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
+
+      if (this.id === "adminAccessForm") {
+        const email = document.getElementById("email").value;
+        const reason = document.getElementById("reason").value;
+
+        if (!validateEmail(email)) {
+          await Toast.fire({
+            icon: "error",
+            title: "Please enter a valid email address"
+          });
+          return;
+        }
+
+        if (reason.length < 20) {
+          await Toast.fire({
+            icon: "error",
+            title: "Reason must be at least 20 characters"
+          });
+          return;
+        }
+      }
+
+      // Add email validation function
+      function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+      }
 
       // Add loading state
       const submitBtn = this.querySelector('button[type="submit"]');
@@ -122,6 +167,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
       try {
         let endpoint, payload;
+
+        if (this.id === "adminAccessForm") {
+          endpoint = `${BASE_URL}/requestAdminAccess`;
+          payload = {
+            email: document.getElementById("email").value,
+            reason: document.getElementById("reason").value
+          };
+
+          // Special handling for admin access form
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) throw new Error("Failed to request admin access");
+
+          const responseData = await response.json();
+          await Toast.fire({
+            icon: responseData.code === 200 ? "success" : "error",
+            title: responseData.message
+          });
+
+          // Clear form after successful submission
+          if (responseData.code === 200) {
+            this.reset();
+          }
+          return; // Prevent further execution
+        }
 
         // Determine form type
         if (this.id === "registerForm") {

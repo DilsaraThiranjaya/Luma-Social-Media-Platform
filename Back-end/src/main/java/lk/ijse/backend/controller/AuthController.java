@@ -213,6 +213,47 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/requestAdminAccess", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> requestAdminAccess(@RequestBody Map<String, String> request) {
+        log.info("Received admin access request");
+        String email = request.get("email");
+        String reason = request.get("reason");
+
+        try {
+            UserDTO userDTO = userService.loadUserDetailsByEmail(email);
+            if (userDTO == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            // Send email to admin
+            String adminEmail = "sahanlearnersofficial@gmail.com";
+            String adminSubject = "New Admin Access Request";
+            String adminContent = String.format(
+                    "User %s (%s) is requesting admin access.\n\nReason: %s",
+                    userDTO.getFirstName() + " " + userDTO.getLastName(),
+                    email,
+                    reason
+            );
+            emailSender.sendEmail(adminEmail, adminSubject, adminContent);
+
+            // Send confirmation email to user
+            String userSubject = "Admin Access Request Received";
+            String userContent = "Your admin access request has been received and is under review.";
+            emailSender.sendEmail(email, userSubject, userContent);
+
+            log.info("Admin access request processed successfully");
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseDTO(VarList.OK, "Request submitted successfully!", null));
+
+        } catch (Exception e) {
+            log.error("Failed to process admin access request: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to submit request", e.getMessage()));
+        }
+    }
+
     public static int generateOTP() {
         Random random = new Random();
         int otp = random.nextInt(900000) + 100000; // Generate a random number between 100000 and 999999

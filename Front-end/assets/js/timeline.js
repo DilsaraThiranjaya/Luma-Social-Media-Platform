@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             newPost.innerHTML = `
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
+        <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
         <div>
           <h6 class="mb-0">Dilsara Thiranjaya</h6>
           <small class="text-muted">${formattedDate} • <i class="bi ${selectedPrivacy.icon}"></i> ${selectedPrivacy.text}</small>
@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         commentSection.innerHTML = `
             <div class="d-flex">
-              <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+              <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
               <div class="flex-grow-1">
                 <div class="input-group">
                   <input type="text" class="form-control comment-input" placeholder="Write a comment...">
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const time = new Intl.DateTimeFormat("en-US", options).format(now);
 
             commentElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="32" height="32">
+      <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="32" height="32">
       <div>
         <div class="comment-bubble p-2 rounded">
           <strong>Dilsara Thiranjaya</strong>
@@ -601,7 +601,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const replyBox = document.createElement("div");
                 replyBox.className = "d-flex mt-2";
                 replyBox.innerHTML = `
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
+        <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
         <div class="flex-grow-1">
           <div class="input-group input-group-sm">
             <input type="text" class="form-control reply-input" placeholder="Write a reply...">
@@ -660,7 +660,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const time = new Intl.DateTimeFormat("en-US", options).format(now);
 
             replyElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
+      <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
       <div>
         <div class="comment-bubble p-2 rounded">
           <strong>Dilsara Thiranjaya</strong>
