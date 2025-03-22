@@ -74,33 +74,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Password strength meter
+  // Password strength meter with requirements check
   const passwordInput = document.getElementById("password");
   if (passwordInput) {
     passwordInput.addEventListener("input", function () {
       const password = this.value;
       const progressBar = document.querySelector(
-        ".password-strength .progress-bar"
+          ".password-strength .progress-bar"
       );
       const strengthText = document.getElementById("strengthText");
 
       if (!progressBar || !strengthText) return;
 
+      // Check password requirements
+      const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /[0-9]/.test(password),
+        special: /[^A-Za-z0-9]/.test(password),
+      };
+
+      // Update requirement indicators
+      Object.entries(requirements).forEach(([req, met]) => {
+        const reqElement = document.querySelector(`[data-requirement="${req}"]`);
+        if (reqElement) {
+          const icon = reqElement.querySelector("i");
+
+          reqElement.classList.toggle("met", met);
+          reqElement.classList.toggle("unmet", !met);
+
+          if (met) {
+            icon.classList.remove("fa-times-circle");
+            icon.classList.add("fa-check-circle");
+          } else {
+            icon.classList.remove("fa-check-circle");
+            icon.classList.add("fa-times-circle");
+          }
+        }
+      });
+
+      // Calculate strength based on requirements
       let strength = 0;
       let status = "";
 
       // Length check
-      if (password.length >= 8) strength += 25;
+      if (requirements.length) strength += 25;
 
       // Lowercase check
-      if (password.match(/[a-z]+/)) strength += 25;
+      if (requirements.lowercase) strength += 25;
 
       // Uppercase check
-      if (password.match(/[A-Z]+/)) strength += 25;
+      if (requirements.uppercase) strength += 25;
 
       // Number/Special character check
-      if (password.match(/[0-9]+/) || password.match(/[^a-zA-Z0-9]+/))
-        strength += 25;
+      if (requirements.number || requirements.special) strength += 25;
 
       // Update progress bar
       progressBar.style.width = strength + "%";
@@ -131,31 +159,36 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      if (this.id === "adminAccessForm") {
-        const email = document.getElementById("email").value;
-        const reason = document.getElementById("reason").value;
+      if (this.id === "registerForm") {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
 
-        if (!validateEmail(email)) {
+        // Check if all password requirements are met
+        const requirements = {
+          length: password.length >= 8,
+          uppercase: /[A-Z]/.test(password),
+          lowercase: /[a-z]/.test(password),
+          number: /[0-9]/.test(password),
+          special: /[^A-Za-z0-9]/.test(password),
+        };
+
+        const allRequirementsMet = Object.values(requirements).every(Boolean);
+
+        if (!allRequirementsMet) {
           await Toast.fire({
             icon: "error",
-            title: "Please enter a valid email address"
+            title: "Password doesn't meet all requirements"
           });
           return;
         }
 
-        if (reason.length < 20) {
+        if (password !== confirmPassword) {
           await Toast.fire({
             icon: "error",
-            title: "Reason must be at least 20 characters"
+            title: "Passwords do not match"
           });
           return;
         }
-      }
-
-      // Add email validation function
-      function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(String(email).toLowerCase());
       }
 
       // Add loading state
@@ -184,22 +217,27 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(payload)
           });
 
-          if (!response.ok) throw new Error("Failed to request admin access");
-
           const responseData = await response.json();
-          await Toast.fire({
-            icon: responseData.code === 200 ? "success" : "error",
-            title: responseData.message
-          });
 
-          // Clear form after successful submission
-          if (responseData.code === 200) {
-            this.reset();
+          if (responseData.code === 200 || responseData.code === 201) {
+            await Toast.fire({
+              icon: "success",
+              title: responseData.message
+            });
+
+            if (responseData.code === 200) {
+              this.reset();
+            }
+            return;
+          } else {
+            await Toast.fire({
+              icon: "error",
+              title: responseData.message
+            });
+            return
           }
-          return; // Prevent further execution
         }
 
-        // Determine form type
         if (this.id === "registerForm") {
           endpoint = `${BASE_URL}/register`;
           payload = {
@@ -224,42 +262,46 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(payload)
         });
 
-        if (!response.ok) throw new Error();
-
         const responseData = await response.json();
-        await Toast.fire({
-          icon:responseData.code === 200 ||responseData.code === 201 ? "success" : "error",
-          title:responseData.message
-        });
 
-        const emailInput = document.getElementById('email');
-        const rememberMeCheckbox = document.getElementById('rememberMe');
+        if (responseData.code === 200 || responseData.code === 201) {
+          await Toast.fire({
+            icon: "success",
+            title: responseData.message
+          });
 
-        if (rememberMeCheckbox.checked) {
-          localStorage.setItem('rememberedEmail', emailInput.value);
-          localStorage.setItem('rememberMe', 'true');
+          if (this.id !== "registerForm") {
+            const emailInput = document.getElementById('email');
+            const rememberMeCheckbox = document.getElementById('rememberMe');
+
+            if (rememberMeCheckbox.checked) {
+              localStorage.setItem('rememberedEmail', emailInput.value);
+              localStorage.setItem('rememberMe', 'true');
+            } else {
+              localStorage.removeItem('rememberedEmail');
+              localStorage.removeItem('rememberMe');
+            }
+          }
+
+          sessionStorage.setItem("authData", JSON.stringify({
+            email:responseData.data.email,
+            token:responseData.data.token,
+          }));
+
+          window.location.href = DIRECTORY_URL;
+
         } else {
-          localStorage.removeItem('rememberedEmail');
-          localStorage.removeItem('rememberMe');
+          await Toast.fire({
+            icon: "error",
+            title: responseData.message
+          });
         }
-
-        // Store authenticationresponseData
-        sessionStorage.setItem("authData", JSON.stringify({
-          email:responseData.data.email,
-          token:responseData.data.token,
-          isLoggedIn: true
-        }));
-
-        // Redirect to timeline
-        window.location.href = DIRECTORY_URL;
-
       } catch (error) {
         await Toast.fire({
           icon: "error",
           title: error.message || "Fail to login!"
         });
       } finally {
-        // Reset button state
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
       }

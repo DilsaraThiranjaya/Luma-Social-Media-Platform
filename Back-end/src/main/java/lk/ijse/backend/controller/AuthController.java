@@ -154,10 +154,9 @@ public class AuthController {
         String emailTitle = "OTP Code";
         String emailContent = "Your One Time OTP Code: " + String.valueOf(otpCode);
 
-
         try {
-            UserDetails userDetails = userService.loadUserByUsername(email);
-            if (userDetails == null) {
+            UserDTO userDTO = userService.loadUserDetailsByEmail(email);
+            if (userDTO == null) {
                 log.error("User not found for email: {}", email);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
             }

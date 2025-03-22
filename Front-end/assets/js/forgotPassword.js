@@ -79,36 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
-    // Password Requirements Check
-    // function checkPasswordRequirements(password) {
-    //     const requirements = {
-    //         length: password.length >= 8,
-    //         uppercase: /[A-Z]/.test(password),
-    //         lowercase: /[a-z]/.test(password),
-    //         number: /[0-9]/.test(password),
-    //         special: /[^A-Za-z0-9]/.test(password),
-    //     };
-    //
-    //     Object.entries(requirements).forEach(([req, met]) => {
-    //         const reqElement = document.querySelector(`[data-requirement="${req}"]`);
-    //         const icon = reqElement.querySelector("i");
-    //
-    //         reqElement.classList.toggle("met", met);
-    //         reqElement.classList.toggle("unmet", !met);
-    //
-    //         if (met) {
-    //             icon.classList.remove("fa-times-circle");
-    //             icon.classList.add("fa-check-circle");
-    //         } else {
-    //             icon.classList.remove("fa-check-circle");
-    //             icon.classList.add("fa-times-circle");
-    //         }
-    //     });
-    //
-    //     return Object.values(requirements).every(Boolean);
-    // }
-
-    // Password strength meter
+    // Password strength meter with requirements check
     const passwordInput = document.getElementById("newPassword");
     if (passwordInput) {
         passwordInput.addEventListener("input", function () {
@@ -120,21 +91,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!progressBar || !strengthText) return;
 
+            // Check password requirements
+            const requirements = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                lowercase: /[a-z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[^A-Za-z0-9]/.test(password),
+            };
+
+            // Update requirement indicators
+            Object.entries(requirements).forEach(([req, met]) => {
+                const reqElement = document.querySelector(`[data-requirement="${req}"]`);
+                if (reqElement) {
+                    const icon = reqElement.querySelector("i");
+
+                    reqElement.classList.toggle("met", met);
+                    reqElement.classList.toggle("unmet", !met);
+
+                    if (met) {
+                        icon.classList.remove("fa-times-circle");
+                        icon.classList.add("fa-check-circle");
+                    } else {
+                        icon.classList.remove("fa-check-circle");
+                        icon.classList.add("fa-times-circle");
+                    }
+                }
+            });
+
+            // Calculate strength based on requirements
             let strength = 0;
             let status = "";
 
             // Length check
-            if (password.length >= 8) strength += 25;
+            if (requirements.length) strength += 25;
 
             // Lowercase check
-            if (password.match(/[a-z]+/)) strength += 25;
+            if (requirements.lowercase) strength += 25;
 
             // Uppercase check
-            if (password.match(/[A-Z]+/)) strength += 25;
+            if (requirements.uppercase) strength += 25;
 
             // Number/Special character check
-            if (password.match(/[0-9]+/) || password.match(/[^a-zA-Z0-9]+/))
-                strength += 25;
+            if (requirements.number || requirements.special) strength += 25;
 
             // Update progress bar
             progressBar.style.width = strength + "%";
@@ -215,19 +214,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
             });
 
-            if (!response.ok) throw new Error('OTP sending failed');
-
             const responseData = await response.json();
-            await Toast.fire({
-                icon:responseData.code === 200 ||responseData.code === 201 ? "success" : "error",
-                title:responseData.message
-            });
 
-            otpCode = responseData.data;
-            if (otpCode !== null) {
-                showStep(2);
+            if (responseData.code === 200 || responseData.code === 201) {
+                await Toast.fire({
+                    icon: "success",
+                    title: responseData.message
+                });
+
+                otpCode = responseData.data;
+                if (otpCode !== null) {
+                    showStep(2);
+                } else {
+                    throw new Error('OTP sending failed')
+                }
             } else {
-                throw new Error('OTP sending failed')
+                await Toast.fire({
+                    icon: "error",
+                    title: responseData.message
+                });
             }
         } catch (error) {
             await Toast.fire({
@@ -279,64 +284,93 @@ document.addEventListener("DOMContentLoaded", function () {
             sendOTP(email);
         });
 
-    // Reset Password Button
-    document
-        .getElementById("resetPasswordBtn")
-        .addEventListener("click", async function () {
-            const newPassword = document.getElementById("newPassword").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
+    // Reset Password Button;
+    document.getElementById("resetPasswordBtn").addEventListener("click", async function () {
 
-            if (newPassword !== confirmPassword) {
-                await Toast.fire({
-                    icon: "error",
-                    title: "Passwords do not match"
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        // Manually validate required fields
+        if (!newPassword || !confirmPassword) {
+            await Toast.fire({
+                icon: "error",
+                title: "Please fill all required fields"
+            });
+            return;
+        }
+
+        // Check if all password requirements are met
+        const requirements = {
+            length: newPassword.length >= 8,
+            uppercase: /[A-Z]/.test(newPassword),
+            lowercase: /[a-z]/.test(newPassword),
+            number: /[0-9]/.test(newPassword),
+            special: /[^A-Za-z0-9]/.test(newPassword),
+        };
+
+        const allRequirementsMet = Object.values(requirements).every(Boolean);
+
+        if (!allRequirementsMet) {
+            await Toast.fire({
+                icon: "error",
+                title: "Password doesn't meet all requirements"
+            });
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            await Toast.fire({
+                icon: "error",
+                title: "Passwords do not match"
+            });
+            return;
+        }
+
+        const btn = this;
+        btn.disabled = true;
+        btn.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Resetting...';
+
+        try {
+            let endpoint = "http://localhost:8080/api/v1/auth/resetPassword"
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Required for JSON body
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: newPassword
                 })
-                return;
-            }
+            });
 
-            const btn = this;
-            btn.disabled = true;
-            btn.innerHTML =
-                '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Resetting...';
+            const responseData = await response.json();
 
-
-            try {
-                let endpoint = "http://localhost:8080/api/v1/auth/resetPassword"
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json' // Required for JSON body
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        password: newPassword
-                    })
-                });
-
-                if (!response.ok) throw new Error('Password Reset Failed');
-
-                const responseData = await response.json();
-
+            if (responseData.code === 200 || responseData.code === 201) {
                 await Toast.fire({
-                    icon:responseData.code === 200 ||responseData.code === 201 ? "success" : "error",
-                    title:responseData.message
+                    icon: "success",
+                    title: responseData.message
                 });
 
-                if (responseData.code === 200) {
-                    setTimeout(() => {
-                        window.location.href = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
-                    },1000);
-                }
-            } catch (error) {
+                setTimeout(() => {
+                    window.location.href = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
+                }, 1000);
+            } else {
                 await Toast.fire({
                     icon: "error",
-                    title: error.message || "Password reset failed"
+                    title: responseData.message
                 });
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = "Reset Password";
             }
-        });
+        } catch (error) {
+            await Toast.fire({
+                icon: "error",
+                title: error.message || "Password reset failed"
+            });
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = "Reset Password";
+        }
+    });
 
     // Initialize
     showStep(1);

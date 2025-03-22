@@ -50,6 +50,14 @@
             </button>
           </div>
 
+          <div class="form-floating mb-4 password-field">
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+            <label for="confirmPassword">Confirm Password</label>
+            <button type="button" class="btn toggle-password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+
           <div class="password-strength mb-3">
             <div class="progress">
               <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -57,6 +65,24 @@
             <div class="strength-text">
               <span>Password strength:</span>
               <span id="strengthText">weak</span>
+            </div>
+          </div>
+
+          <div class="password-requirements mb-3">
+            <div class="requirement" data-requirement="length">
+              <i class="fas fa-times-circle"></i> At least 8 characters
+            </div>
+            <div class="requirement" data-requirement="uppercase">
+              <i class="fas fa-times-circle"></i> Contains uppercase letter
+            </div>
+            <div class="requirement" data-requirement="lowercase">
+              <i class="fas fa-times-circle"></i> Contains lowercase letter
+            </div>
+            <div class="requirement" data-requirement="number">
+              <i class="fas fa-times-circle"></i> Contains number
+            </div>
+            <div class="requirement" data-requirement="special">
+              <i class="fas fa-times-circle"></i> Contains special character
             </div>
           </div>
 
@@ -69,21 +95,21 @@
 
           <button type="submit" class="btn btn-primary w-100 mb-3">Create Account</button>
 
-<!--          <div class="divider">-->
-<!--            <span>or sign up with</span>-->
-<!--          </div>-->
+          <div class="divider">
+            <span>or sign up with</span>
+          </div>
 
-<!--          <div class="social-login">-->
-<!--            <button type="button" class="btn btn-outline-light social-btn">-->
-<!--              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google">-->
-<!--            </button>-->
-<!--            <button type="button" class="btn btn-outline-light social-btn">-->
-<!--              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook">-->
-<!--            </button>-->
-<!--            <button type="button" class="btn btn-outline-light social-btn">-->
-<!--              <i class="fab fa-apple"></i>-->
-<!--            </button>-->
-<!--          </div>-->
+          <div class="social-login">
+            <button type="button" class="btn btn-outline-light social-btn">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google">
+            </button>
+            <button type="button" class="btn btn-outline-light social-btn">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" alt="Facebook">
+            </button>
+            <button type="button" class="btn btn-outline-light social-btn">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="Github">
+            </button>
+          </div>
 
           <p class="text-center mt-4">
             Already have an account? <a href="login.html">Sign in</a>

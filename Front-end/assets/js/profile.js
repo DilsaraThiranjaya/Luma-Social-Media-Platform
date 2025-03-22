@@ -331,6 +331,121 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500);
   }
 
+  const REACTION_TYPES = {
+    LIKE: { icon: 'bi-hand-thumbs-up', fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary' },
+    LOVE: { icon: 'bi-heart', fillIcon: 'bi-heart-fill', color: 'text-danger' },
+    HAHA: { icon: 'bi-emoji-laughing', fillIcon: 'bi-emoji-laughing-fill', color: 'text-warning' },
+    WOW: { icon: 'bi-emoji-surprise', fillIcon: 'bi-emoji-surprise-fill', color: 'text-warning' },
+    SAD: { icon: 'bi-emoji-frown', fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary' },
+    ANGRY: { icon: 'bi-emoji-angry', fillIcon: 'bi-emoji-angry-fill', color: 'text-danger' }
+  };
+
+  function createReactionPopup(likeBtn) {
+    const popup = document.createElement('div');
+    popup.className = 'reaction-popup';
+    popup.style.position = 'absolute';
+    popup.style.bottom = '100%';
+    popup.style.left = '50%';
+    popup.style.transform = 'translateX(-50%)';
+    popup.style.background = 'white';
+    popup.style.padding = '8px';
+    popup.style.borderRadius = '20px';
+    popup.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+    popup.style.display = 'flex';
+    popup.style.gap = '8px';
+    popup.style.zIndex = '1000';
+
+    Object.entries(REACTION_TYPES).forEach(([type, {icon, fillIcon, color}]) => {
+      const reactionBtn = document.createElement('button');
+      reactionBtn.className = `btn btn-light reaction-option ${color}`;
+      reactionBtn.innerHTML = `<i class="bi ${fillIcon}"></i>`;
+      reactionBtn.style.padding = '4px';
+      reactionBtn.style.minWidth = '32px';
+      reactionBtn.style.height = '32px';
+      reactionBtn.style.borderRadius = '50%';
+
+      reactionBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleReaction(likeBtn, type);
+        popup.remove();
+      });
+
+      // Hover animation
+      reactionBtn.addEventListener('mouseenter', () => {
+        reactionBtn.style.transform = 'scale(1.2)';
+        reactionBtn.style.transition = 'transform 0.2s';
+      });
+
+      reactionBtn.addEventListener('mouseleave', () => {
+        reactionBtn.style.transform = 'scale(1)';
+      });
+
+      popup.appendChild(reactionBtn);
+    });
+
+    return popup;
+  }
+
+  async function handleReaction(likeBtn, reactionType) {
+    const post = likeBtn.closest('.post-card');
+    const reactionCount = post.querySelector('.post-stats span:first-child');
+    const currentType = likeBtn.dataset.reactionType;
+
+    // Remove existing reaction class and icon
+    if (currentType) {
+      likeBtn.classList.remove(REACTION_TYPES[currentType].color);
+      likeBtn.querySelector('i').classList.remove(REACTION_TYPES[currentType].fillIcon);
+      likeBtn.querySelector('i').classList.add(REACTION_TYPES[currentType].icon);
+    }
+
+    // If clicking the same reaction, remove it
+    if (currentType === reactionType) {
+      likeBtn.dataset.reactionType = '';
+      likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>';
+      updateReactionCount(reactionCount, -1);
+      return;
+    }
+
+    // Add new reaction
+    likeBtn.dataset.reactionType = reactionType;
+    likeBtn.classList.add(REACTION_TYPES[reactionType].color);
+    likeBtn.innerHTML = `
+        <i class="bi ${REACTION_TYPES[reactionType].fillIcon}"></i>
+        <span class="ms-2">${reactionType}</span>
+    `;
+
+    // If there was no previous reaction, increment the count
+    if (!currentType) {
+      updateReactionCount(reactionCount, 1);
+    }
+
+    // Create reaction animation
+    createReactionAnimation(likeBtn, reactionType);
+
+    // Send reaction to server
+    try {
+      const response = await fetch('/api/v1/profile/reaction', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+          type: reactionType,
+          postId: post.dataset.postId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save reaction');
+      }
+    } catch (error) {
+      console.error('Error saving reaction:', error);
+      // Revert the UI changes if the server request fails
+      handleReaction(likeBtn, currentType || '');
+    }
+  }
+
   // Add interactions to posts (like, comment, share)
   function addPostInteractions(postElement) {
     if (!postElement) return;
@@ -338,33 +453,52 @@ document.addEventListener("DOMContentLoaded", function () {
     // Like functionality
     const likeBtn = postElement.querySelector(".reaction-btn:first-child");
     if (likeBtn) {
-      likeBtn.addEventListener("click", function () {
-        const icon = this.querySelector("i");
-        const isLiked = icon.classList.contains("bi-hand-thumbs-up-fill");
-        const likeCountEl = postElement.querySelector(
-          ".post-stats span:first-child"
-        );
-        const likeCount = parseInt(
-          likeCountEl.textContent.match(/\d+/)[0] || "0"
-        );
+      likeBtn.addEventListener('mouseenter', () => {
+        reactionTimeout = setTimeout(() => {
+          const popup = createReactionPopup(likeBtn);
+          likeBtn.appendChild(popup);
+        }, 500);
+      });
 
-        if (isLiked) {
-          icon.classList.remove("bi-hand-thumbs-up-fill");
-          icon.classList.add("bi-hand-thumbs-up");
-          likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
-            likeCount - 1
-          }`;
-        } else {
-          icon.classList.remove("bi-hand-thumbs-up");
-          icon.classList.add("bi-hand-thumbs-up-fill");
-          likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
-            likeCount + 1
-          }`;
-
-          // Add like animation
-          createLikeAnimation(this);
+      likeBtn.addEventListener('mouseleave', () => {
+        clearTimeout(reactionTimeout);
+        const popup = likeBtn.querySelector('.reaction-popup');
+        if (popup) {
+          popup.remove();
         }
       });
+
+      likeBtn.addEventListener('click', () => {
+        handleReaction(likeBtn, 'LIKE');
+      });
+
+      // likeBtn.addEventListener("click", function () {
+      //   const icon = this.querySelector("i");
+      //   const isLiked = icon.classList.contains("bi-hand-thumbs-up-fill");
+      //   const likeCountEl = postElement.querySelector(
+      //     ".post-stats span:first-child"
+      //   );
+      //   const likeCount = parseInt(
+      //     likeCountEl.textContent.match(/\d+/)[0] || "0"
+      //   );
+      //
+      //   if (isLiked) {
+      //     icon.classList.remove("bi-hand-thumbs-up-fill");
+      //     icon.classList.add("bi-hand-thumbs-up");
+      //     likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
+      //       likeCount - 1
+      //     }`;
+      //   } else {
+      //     icon.classList.remove("bi-hand-thumbs-up");
+      //     icon.classList.add("bi-hand-thumbs-up-fill");
+      //     likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
+      //       likeCount + 1
+      //     }`;
+      //
+      //     // Add like animation
+      //     createLikeAnimation(this);
+      //   }
+      // });
     }
 
     // Comment functionality
@@ -449,6 +583,33 @@ document.addEventListener("DOMContentLoaded", function () {
     postElement.addEventListener("mouseleave", function () {
       this.classList.remove("post-hover");
     });
+  }
+
+  function createReactionAnimation(element, reactionType) {
+    const animation = document.createElement('div');
+    animation.className = 'reaction-animation';
+    animation.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i>`;
+
+    // Add animation styles
+    animation.style.position = 'absolute';
+    animation.style.pointerEvents = 'none';
+    animation.style.animation = 'reaction-float 1s ease-out forwards';
+    animation.style.fontSize = '1.5rem';
+
+    element.appendChild(animation);
+
+    // Remove after animation
+    setTimeout(() => {
+      if (element.contains(animation)) {
+        element.removeChild(animation);
+      }
+    }, 1000);
+  }
+
+  function updateReactionCount(countElement, change) {
+    const currentCount = parseInt(countElement.textContent.match(/\d+/)[0] || '0');
+    const newCount = Math.max(0, currentCount + change);
+    countElement.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${newCount}`;
   }
 
   function addComment(postElement, commentText) {

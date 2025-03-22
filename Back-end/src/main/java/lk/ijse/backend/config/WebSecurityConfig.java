@@ -60,7 +60,7 @@ public class WebSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/api/v1/user/*").authenticated()
+                        .requestMatchers("/api/v1/profile/*").authenticated()
                         .requestMatchers("/oauth2/**").permitAll()
                         .anyRequest().authenticated()).oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorization -> authorization
