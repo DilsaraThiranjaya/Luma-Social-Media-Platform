@@ -1,28 +1,32 @@
 package lk.ijse.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lk.ijse.backend.entity.Reaction.ReactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReactionDTO {
-    private int reactionId;
+public class CommentDTO {
+    private Integer commentId;
 
-    @NotNull(message = "Reaction type is required")
-    private ReactionType type;
+    @NotBlank(message = "Content cannot be empty")
+    private String content;
 
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @NotNull(message = "User must be specified")
     private UserDTO user;
-    private PostDTO post;
-    private CommentDTO comment;
+
+    private CommentDTO parentComment;
+    private List<CommentDTO> replies;
+    private List<ReactionDTO> reactions;
 }

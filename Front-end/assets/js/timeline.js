@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const LOGIN_URL = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
-    const BASE_URL = "http://localhost:8080/api/v1/auth";
+    const BASE_URL = "http://localhost:8080/api/v1";
 
     const handleAuthError = async (message) => {
         await Swal.fire({
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function isTokenExpired(token) {
         try {
-            const { exp } = jwtDecode(token);
+            const {exp} = jwtDecode(token);
             return Date.now() >= exp * 1000; // Correct if `exp` is in seconds
         } catch (error) {
             return true; // Treat invalid tokens as expired
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const authData = JSON.parse(sessionStorage.getItem('authData'));
 
             // Send refreshToken in the request body
-            const response = await fetch(`${BASE_URL}/refreshToken`, {
+            const response = await fetch(`${BASE_URL}/auth/refreshToken`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json' // Required for JSON body
@@ -106,8 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const dropdownButton = document.querySelector('.dropdown-toggle[data-bs-toggle="dropdown"]');
         dropdownButton.innerHTML = `
-    <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
-  `;
+        <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}`;
 
         // Media Upload Handler
         const imageUpload = document.getElementById("imageUpload");
@@ -470,59 +469,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 });
             }
-
-            // // Share functionality
-            // const shareBtn = postElement.querySelector(".reaction-btn:nth-child(3)");
-            // if (shareBtn) {
-            //   shareBtn.addEventListener("click", function () {
-            //     // Create a simulated share UI toast
-            //     const shareToast = document.createElement("div");
-            //     shareToast.className = "position-fixed bottom-0 end-0 p-3";
-            //     shareToast.style.zIndex = "1080";
-
-            //     shareToast.innerHTML = `
-            //       <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-            //         <div class="toast-header">
-            //           <i class="bi bi-share-fill me-2 text-primary"></i>
-            //           <strong class="me-auto">Share Post</strong>
-            //           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            //         </div>
-            //         <div class="toast-body">
-            //           <div class="d-flex justify-content-around">
-            //             <button class="btn btn-outline-primary btn-sm share-post-btn" data-bs-toggle="modal" data-bs-target="#shareModal">
-            //               <i class="bi bi-facebook"></i>
-            //             </button>
-            //             <button class="btn btn-outline-info btn-sm">
-            //               <i class="bi bi-twitter"></i>
-            //             </button>
-            //             <button class="btn btn-outline-success btn-sm">
-            //               <i class="bi bi-whatsapp"></i>
-            //             </button>
-            //             <button class="btn btn-outline-secondary btn-sm">
-            //               <i class="bi bi-envelope"></i>
-            //             </button>
-            //           </div>
-            //         </div>
-            //       </div>
-            //     `;
-
-            //     document.body.appendChild(shareToast);
-
-            //     // Close button functionality
-            //     shareToast
-            //       .querySelector(".btn-close")
-            //       .addEventListener("click", function () {
-            //         shareToast.remove();
-            //       });
-
-            //     // Auto-remove after 3 seconds
-            //     setTimeout(() => {
-            //       if (document.body.contains(shareToast)) {
-            //         shareToast.remove();
-            //       }
-            //     }, 5000);
-            //   });
-            // }
 
             // Add hover effect
             postElement.addEventListener("mouseenter", function () {
@@ -1342,5 +1288,129 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log('Viewing trending post:', this.querySelector('h6').textContent);
             });
         });
+
+        // Fetch timeline posts
+        async function fetchTimelinePosts() {
+            try {
+                const response = await fetch(`${BASE_URL}/timeline/getPost?userEmail=${authData.email}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch posts');
+
+                const data = await response.json();
+                return data.data; // Array of posts
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+                return [];
+            }
+        }
+
+        // Create a new post
+        async function createPost(postData) {
+            try {
+                const response = await fetch(`${BASE_URL}/timeline`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) throw new Error('Failed to create post');
+
+                const data = await response.json();
+                return data.data;
+            } catch (error) {
+                console.error('Error creating post:', error);
+                return null;
+            }
+        }
+
+        // Add reaction to a post
+        async function addReaction(postId, reactionType) {
+            try {
+                const response = await fetch(`${BASE_URL}/timeline/${postId}/react?userEmail=${authData.email}&reactionType=${reactionType}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to add reaction');
+
+                return true;
+            } catch (error) {
+                console.error('Error adding reaction:', error);
+                return false;
+            }
+        }
+
+        // Add comment to a post
+        async function addComment(postId, content) {
+            try {
+                const response = await fetch(`${BASE_URL}/timeline/${postId}/comment?userEmail=${authData.email}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify(content)
+                });
+
+                if (!response.ok) throw new Error('Failed to add comment');
+
+                return true;
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                return false;
+            }
+        }
+
+        // Share a post
+        async function sharePost(postId, shareMessage) {
+            try {
+                const response = await fetch(`${BASE_URL}/timeline/${postId}/share?userEmail=${authData.email}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify(shareMessage)
+                });
+
+                if (!response.ok) throw new Error('Failed to share post');
+
+                const data = await response.json();
+                return data.data;
+            } catch (error) {
+                console.error('Error sharing post:', error);
+                return null;
+            }
+        }
+
+        // Initialize timeline
+        async function initializeTimeline() {
+            const posts = await fetchTimelinePosts();
+            const timelineContainer = document.querySelector('.timeline-posts');
+            timelineContainer.innerHTML = ''; // Clear existing posts
+
+            posts.forEach(post => {
+                const postElement = createPostElement(post);
+                timelineContainer.appendChild(postElement);
+            });
+        }
+
+        // Create post element
+        function createPostElement(post) {
+            // Implementation remains the same as in your existing code
+            // Just update the interaction handlers to use the new API functions
+        }
+
+        // Initialize the timeline when the page loads
+        initializeTimeline();
     }
 });

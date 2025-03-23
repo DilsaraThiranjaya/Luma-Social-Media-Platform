@@ -1,68 +1,391 @@
 // Settings Page Functionality
 document.addEventListener("DOMContentLoaded", function () {
-  // Form Submissions
-  const accountForm = document.getElementById("accountForm");
-  const passwordForm = document.getElementById("passwordForm");
+  const BASE_URL = "http://localhost:8080/api/v1/settings";
+  const authData = JSON.parse(sessionStorage.getItem('authData')) || {};
 
+// Toast configuration
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "bottom-end",
+    iconColor: "white",
+    customClass: {
+      popup: "colored-toast",
+    },
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  });
+
+  // Load user data
+  async function loadUserData() {
+    try {
+      const response = await fetch(`${BASE_URL}/account`, {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+      const data = await response.json();
+
+      if (data.code === 200) {
+        const user = data.data;
+        // Populate form fields
+        document.getElementById('firstName').value = user.firstName;
+        document.getElementById('lastName').value = user.lastName;
+        document.getElementById('email').value = user.email;
+        document.getElementById('phone').value = user.phoneNumber;
+        document.getElementById('location').value = user.location;
+        document.getElementById('bio').value = user.bio;
+        document.getElementById('gender').value = user.gender?.toLowerCase();
+        document.getElementById('birthday').value = user.birthday;
+
+        // Set privacy toggles
+        document.getElementById('profileVisibility').checked = user.isProfilePublic;
+        document.getElementById('showEmail').checked = user.isDisplayEmail;
+        document.getElementById('showPhone').checked = user.isDisplayPhone;
+        document.getElementById('showBirthday').checked = user.isDisplayBirthdate;
+        document.getElementById('showActivity').checked = user.isShowActivity;
+        document.getElementById('defaultPostPrivacy').checked = user.isPostPublic;
+        document.getElementById('allowSharing').checked = user.isShareAllowed;
+
+        // Set notification toggles
+        document.getElementById('newFollower').checked = user.isPushNewFollowers;
+        document.getElementById('postLikes').checked = user.isPushPostLikes;
+        document.getElementById('comments').checked = user.isPushPostComments;
+        document.getElementById('shares').checked = user.isPushPostShares;
+        document.getElementById('directMessages').checked = user.isPushMessages;
+        document.getElementById('reportAlerts').checked = user.isPushReports;
+
+        // Set 2FA toggle
+        document.getElementById('twoFactor').checked = user.enable2fa;
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+      await Toast.fire({
+        icon: "error",
+        title: "Failed to load user data"
+      });
+    }
+  }
+
+  // Initialize page
+  loadUserData();
+
+  // Account Settings Form
+  const accountForm = document.getElementById("accountForm");
   if (accountForm) {
-    accountForm.addEventListener("submit", function (e) {
+    accountForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
 
-      // Add loading state
       submitBtn.disabled = true;
-      submitBtn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...';
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving...';
 
-      // Simulate API call
-      setTimeout(() => {
-        // Reset button state
+      try {
+        const response = await fetch(`${BASE_URL}/account`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phoneNumber: document.getElementById('phone').value,
+            location: document.getElementById('location').value,
+            bio: document.getElementById('bio').value,
+            gender: document.getElementById('gender').value.toUpperCase(),
+            birthday: document.getElementById('birthday').value
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200) {
+          await Toast.fire({
+            icon: "success",
+            title: "Settings updated successfully"
+          });
+        } else {
+          await Toast.fire({
+            icon: "error",
+            title: data.message
+          });
+        }
+      } catch (error) {
+        console.error('Error updating account settings:', error);
+        await Toast.fire({
+          icon: "error",
+          title: "Failed to update settings"
+        });
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
-
-        // Show success message
-        const toast = new bootstrap.Toast(document.createElement("div"));
-        toast.show();
-      }, 1500);
+      }
     });
   }
 
+  // Privacy Settings
+  const privacyToggles = document.querySelectorAll("#privacy .form-check-input");
+  privacyToggles.forEach(toggle => {
+    toggle.addEventListener("change", async function() {
+      try {
+        const response = await fetch(`${BASE_URL}/privacy`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            isProfilePublic: document.getElementById('profileVisibility').checked,
+            isDisplayEmail: document.getElementById('showEmail').checked,
+            isDisplayPhone: document.getElementById('showPhone').checked,
+            isDisplayBirthdate: document.getElementById('showBirthday').checked,
+            isShowActivity: document.getElementById('showActivity').checked,
+            isPostPublic: document.getElementById('defaultPostPrivacy').checked,
+            isShareAllowed: document.getElementById('allowSharing').checked
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200) {
+          await Toast.fire({
+            icon: "success",
+            title: "Privacy settings updated"
+          });
+        } else {
+          await Toast.fire({
+            icon: "error",
+            title: data.message
+          });
+        }
+      } catch (error) {
+        console.error('Error updating privacy settings:', error);
+        await Toast.fire({
+          icon: "error",
+          title: "Failed to update privacy settings"
+        });
+      }
+    });
+  });
+
+  // Notification Settings
+  const notificationToggles = document.querySelectorAll("#notifications .form-check-input");
+  notificationToggles.forEach(toggle => {
+    toggle.addEventListener("change", async function() {
+      try {
+        const response = await fetch(`${BASE_URL}/notifications`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            isPushNewFollowers: document.getElementById('newFollower').checked,
+            isPushMessages: document.getElementById('directMessages').checked,
+            isPushPostLikes: document.getElementById('postLikes').checked,
+            isPushPostComments: document.getElementById('comments').checked,
+            isPushPostShares: document.getElementById('shares').checked,
+            isPushReports: document.getElementById('reportAlerts').checked
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200) {
+          await Toast.fire({
+            icon: "success",
+            title: "Notification settings updated"
+          });
+        } else {
+          await Toast.fire({
+            icon: "error",
+            title: data.message
+          });
+        }
+      } catch (error) {
+        console.error('Error updating notification settings:', error);
+        await Toast.fire({
+          icon: "error",
+          title: "Failed to update notification settings"
+        });
+      }
+    });
+  });
+
+  // Password Update Form
+  const passwordForm = document.getElementById("passwordForm");
   if (passwordForm) {
-    passwordForm.addEventListener("submit", function (e) {
+    passwordForm.addEventListener("submit", async function(e) {
       e.preventDefault();
 
       const newPassword = document.getElementById("newPassword").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
 
       if (newPassword !== confirmPassword) {
-        alert("Passwords do not match!");
+        await Toast.fire({
+          icon: "error",
+          title: "Passwords do not match"
+        });
         return;
       }
 
       const submitBtn = this.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
 
-      // Add loading state
       submitBtn.disabled = true;
-      submitBtn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Updating...';
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Updating...';
 
-      // Simulate API call
-      setTimeout(() => {
-        // Reset button state
+      try {
+        const response = await fetch(`${BASE_URL}/security/password`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            currentPassword: document.getElementById("currentPassword").value,
+            newPassword: newPassword
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200) {
+          this.reset();
+          await Toast.fire({
+            icon: "success",
+            title: "Password updated successfully"
+          });
+        } else {
+          await Toast.fire({
+            icon: "error",
+            title: data.message
+          });
+        }
+      } catch (error) {
+        console.error('Error updating password:', error);
+        await Toast.fire({
+          icon: "error",
+          title: "Failed to update password"
+        });
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
-
-        // Clear form
-        this.reset();
-
-        // Show success message
-        alert("Password updated successfully!");
-      }, 1500);
+      }
     });
   }
+
+  // Two-Factor Authentication Toggle
+  const twoFactorToggle = document.getElementById("twoFactor");
+  if (twoFactorToggle) {
+    twoFactorToggle.addEventListener("change", async function() {
+      try {
+        const response = await fetch(`${BASE_URL}/security/2fa`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            enabled: this.checked
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200) {
+          await Toast.fire({
+            icon: "success",
+            title: `2FA ${this.checked ? 'enabled' : 'disabled'}`
+          });
+        } else {
+          this.checked = !this.checked; // Revert the toggle
+          await Toast.fire({
+            icon: "error",
+            title: data.message
+          });
+        }
+      } catch (error) {
+        console.error('Error updating 2FA settings:', error);
+        this.checked = !this.checked; // Revert the toggle
+        await Toast.fire({
+          icon: "error",
+          title: "Failed to update 2FA settings"
+        });
+      }
+    });
+  }
+
+  // Account Deactivation
+  const deactivateBtn = document.querySelector(".danger-zone button");
+  if (deactivateBtn) {
+    deactivateBtn.addEventListener("click", async function() {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, deactivate it!'
+      });
+
+      if (result.isConfirmed) {
+        this.disabled = true;
+        this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Deactivating...';
+
+        try {
+          const response = await fetch(`${BASE_URL}/deactivate`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${authData.token}`
+            }
+          });
+
+          const data = await response.json();
+
+          if (data.code === 200) {
+            sessionStorage.removeItem('authData');
+            window.location.href = '/login.html';
+          } else {
+            await Toast.fire({
+              icon: "error",
+              title: data.message
+            });
+          }
+        } catch (error) {
+          console.error('Error deactivating account:', error);
+          await Toast.fire({
+            icon: "error",
+            title: "Failed to deactivate account"
+          });
+        } finally {
+          this.disabled = false;
+          this.innerHTML = 'Deactivate Account';
+        }
+      }
+    });
+  }
+
+  // Initialize date pickers
+  flatpickr("#birthday", {
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+  });
+
+  flatpickr(".education-date", {
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+  });
+
+  flatpickr(".work-date", {
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+  });
 
   // Session Management
   const sessionButtons = document.querySelectorAll(".session-item button");
@@ -85,76 +408,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
       }
     });
-  });
-
-  // Danger Zone - Account Deactivation
-  const deactivateBtn = document.querySelector(".danger-zone button");
-  if (deactivateBtn) {
-    deactivateBtn.addEventListener("click", function () {
-      if (
-        confirm(
-          "Are you sure you want to deactivate your account? This action cannot be undone."
-        )
-      ) {
-        this.disabled = true;
-        this.innerHTML =
-          '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Deactivating...';
-
-        // Simulate API call
-        setTimeout(() => {
-          window.location.href = "/login.html";
-        }, 2000);
-      }
-    });
-  }
-
-  // Two-Factor Authentication Toggle
-  const twoFactorToggle = document.getElementById("twoFactor");
-  if (twoFactorToggle) {
-    twoFactorToggle.addEventListener("change", function () {
-      if (this.checked) {
-        // Simulate 2FA setup process
-        this.disabled = true;
-        const setupModal = new bootstrap.Modal(document.createElement("div"));
-        setupModal.show();
-
-        // In a real implementation, you would show a QR code and verification process here
-        setTimeout(() => {
-          this.disabled = false;
-        }, 1500);
-      }
-    });
-  }
-
-  // Save notification preferences
-  const notificationToggles = document.querySelectorAll(
-    "#notifications .form-check-input"
-  );
-  notificationToggles.forEach((toggle) => {
-    toggle.addEventListener("change", function () {
-      const settingName = this.id;
-      const isEnabled = this.checked;
-
-      // Simulate saving preference
-      console.log(`Saving ${settingName}: ${isEnabled}`);
-    });
-  });
-
-  // Initialize date pickers
-  flatpickr("#birthday", {
-    dateFormat: "Y-m-d",
-    maxDate: "today",
-    yearRange: [1900, new Date().getFullYear()],
-  });
-
-  flatpickr(".education-date", {
-    dateFormat: "Y-m-d",
-    maxDate: "today",
-  });
-
-  flatpickr(".work-date", {
-    dateFormat: "Y-m-d",
-    maxDate: "today",
   });
 
   // Phone verification

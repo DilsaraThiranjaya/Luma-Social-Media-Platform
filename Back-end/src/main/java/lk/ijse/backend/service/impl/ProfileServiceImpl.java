@@ -91,7 +91,7 @@ public class ProfileServiceImpl implements ProfileService {
         Post sharedPost = Post.builder()
                 .content(shareDTO.getMessage())
                 .privacy(shareDTO.getPrivacy())
-                .user(shareDTO.getUser())
+                .user(modelMapper.map(shareDTO.getUser(), User.class))
                 .build();
 
         Post savedPost = postRepository.save(sharedPost);

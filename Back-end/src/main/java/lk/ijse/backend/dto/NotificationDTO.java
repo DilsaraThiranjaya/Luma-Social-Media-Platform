@@ -1,7 +1,7 @@
 package lk.ijse.backend.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lk.ijse.backend.entity.Reaction.ReactionType;
+import lk.ijse.backend.entity.Notification.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,16 +13,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReactionDTO {
-    private int reactionId;
+public class NotificationDTO {
+    private Integer notificationId;
 
-    @NotNull(message = "Reaction type is required")
-    private ReactionType type;
+    @NotNull(message = "Notification type must be specified")
+    private NotificationType type;
 
+    private Boolean isRead;
     private LocalDateTime createdAt;
 
     @NotNull(message = "User must be specified")
     private UserDTO user;
+
+    private UserDTO sourceUser;
     private PostDTO post;
     private CommentDTO comment;
+    private MessageDTO message;
+    private ReportDTO report;
 }
