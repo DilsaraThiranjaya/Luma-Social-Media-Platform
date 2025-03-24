@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class SettingsController {
     private final SettingsServiceImpl settingsService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updateAccountSettings(@Valid @RequestBody UserDTO userDTO, Authentication authentication) {
         log.info("Received account settings update request for user: {}", authentication.getName());
@@ -57,6 +59,7 @@ public class SettingsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(value = "/privacy", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updatePrivacySettings(@RequestBody PrivacySettingsDTO settings, Authentication authentication) {
         log.info("Received privacy settings update request for user: {}", authentication.getName());
@@ -79,6 +82,7 @@ public class SettingsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(value = "/notifications", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updateNotificationSettings(@RequestBody NotificationSettingsDTO settings, Authentication authentication) {
         log.info("Received notification settings update request for user: {}", authentication.getName());
@@ -101,6 +105,7 @@ public class SettingsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(value = "/security/password", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> updatePassword(@RequestBody PasswordUpdateDTO passwordUpdate, Authentication authentication) {
         log.info("Received password update request for user: {}", authentication.getName());
@@ -131,6 +136,7 @@ public class SettingsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping(value = "/security/2fa", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> toggle2FA(@RequestBody TwoFactorDTO twoFactorDTO, Authentication authentication) {
         log.info("Received 2FA toggle request for user: {}", authentication.getName());
@@ -153,6 +159,7 @@ public class SettingsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping(value = "/deactivate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> deactivateAccount(Authentication authentication) {
         log.info("Received account deactivation request for user: {}", authentication.getName());

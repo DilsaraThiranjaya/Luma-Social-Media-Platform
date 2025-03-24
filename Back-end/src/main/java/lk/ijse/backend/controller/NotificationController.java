@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class NotificationController {
     private final NotificationServiceImpl notificationService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getNotifications(@RequestParam String userEmail) {
         log.info("Fetching notifications for user: {}", userEmail);
@@ -38,6 +40,7 @@ public class NotificationController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(value = "/unread", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getUnreadNotifications(@RequestParam String userEmail) {
         log.info("Fetching unread notifications for user: {}", userEmail);
@@ -54,6 +57,7 @@ public class NotificationController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/mark-read/{notificationId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> markAsRead(@PathVariable Integer notificationId) {
         log.info("Marking notification as read: {}", notificationId);
@@ -76,6 +80,7 @@ public class NotificationController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/mark-all-read", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> markAllAsRead(@RequestParam String userEmail) {
         log.info("Marking all notifications as read for user: {}", userEmail);
@@ -98,6 +103,7 @@ public class NotificationController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping(value = "/{notificationId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> deleteNotification(@PathVariable Integer notificationId) {
         log.info("Deleting notification: {}", notificationId);

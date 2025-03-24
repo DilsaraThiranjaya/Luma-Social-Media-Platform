@@ -25,6 +25,7 @@ public class MarketplaceMessage {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+    private LocalDateTime readAt;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)

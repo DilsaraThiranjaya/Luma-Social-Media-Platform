@@ -56,8 +56,10 @@ public class UserDTO {
     @Size(max = 1000, message = "Bio cannot exceed 1000 characters")
     private String bio;
 
-    // Read-only fields (should be ignored in requests)
+    @Null
     private LocalDateTime createdAt;
+
+    @Null
     private LocalDateTime lastLogin;
 
     // Privacy and notification settings with defaults

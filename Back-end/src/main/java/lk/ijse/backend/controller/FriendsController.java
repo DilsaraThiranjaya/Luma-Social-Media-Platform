@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.List;
 public class FriendsController {
     private final FriendsServiceImpl friendsService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/requests")
     public ResponseEntity<ResponseDTO> getFriendRequests(Authentication authentication) {
         log.info("Received friend requests fetch request for user: {}", authentication.getName());
@@ -36,6 +38,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/all")
     public ResponseEntity<ResponseDTO> getAllFriends(Authentication authentication) {
         log.info("Received all friends fetch request for user: {}", authentication.getName());
@@ -50,6 +53,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/suggestions")
     public ResponseEntity<ResponseDTO> getFriendSuggestions(Authentication authentication) {
         log.info("Received friend suggestions fetch request for user: {}", authentication.getName());
@@ -64,6 +68,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/request")
     public ResponseEntity<ResponseDTO> sendFriendRequest(@Valid @RequestBody FriendshipDTO friendshipDTO, Authentication authentication) {
         log.info("Received friend request from {} to {}", authentication.getName(), friendshipDTO.getUser2Email());
@@ -85,6 +90,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/accept/{requestId}")
     public ResponseEntity<ResponseDTO> acceptFriendRequest(@PathVariable int requestId, Authentication authentication) {
         log.info("Received friend request acceptance for request ID: {}", requestId);
@@ -105,6 +111,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/reject/{requestId}")
     public ResponseEntity<ResponseDTO> rejectFriendRequest(@PathVariable int requestId, Authentication authentication) {
         log.info("Received friend request rejection for request ID: {}", requestId);
@@ -125,6 +132,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @DeleteMapping("/unfriend/{friendId}")
     public ResponseEntity<ResponseDTO> unfriend(@PathVariable int friendId, Authentication authentication) {
         log.info("Received unfriend request for friend ID: {}", friendId);
@@ -145,6 +153,7 @@ public class FriendsController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PutMapping("/block/{userId}")
     public ResponseEntity<ResponseDTO> blockUser(@PathVariable int userId, Authentication authentication) {
         log.info("Received block request for user ID: {}", userId);

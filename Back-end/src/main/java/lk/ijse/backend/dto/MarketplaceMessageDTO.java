@@ -3,13 +3,11 @@ package lk.ijse.backend.dto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
-import lk.ijse.backend.entity.Message.MediaType;
+import lk.ijse.backend.entity.MarketplaceMessage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.URL;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,26 +15,23 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MessageDTO {
-    private int messageId;
+public class MarketplaceMessageDTO {
+    private int mkMsgId;
 
     @Size(max = 1000, message = "Content must be less than or equal to 1000 characters")
     private String content;
 
-    private MediaType mediaType;
-
-    @URL(message = "Invalid media URL")
-    private String mediaUrl;
-
     @Null
-    private LocalDateTime sentAt;
+    private LocalDateTime createdAt;
     private LocalDateTime readAt;
 
-    @NotNull(message = "Chat cannot be null")
-    private ChatDTO chat;
+    @NotNull(message = "Marketplace item cannot be null")
+    private MarketplaceItemDTO item;
 
     @NotNull(message = "Sender cannot be null")
     private UserDTO sender;
 
-    private List<NotificationDTO> notifications;
+    private MarketplaceMessageDTO parentMessage;
+
+    private List<MarketplaceMessageDTO> replies;
 }

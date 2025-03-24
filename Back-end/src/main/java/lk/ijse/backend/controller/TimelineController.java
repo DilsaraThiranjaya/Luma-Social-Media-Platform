@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class TimelineController {
     private final TimelineService timelineService;
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
         log.info("Creating new post for user: {}", postDTO.getUser().getEmail());
@@ -44,6 +46,7 @@ public class TimelineController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping(value = "/getPost", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getTimelinePosts(@RequestParam String userEmail) {
         log.info("Fetching timeline posts for user: {}", userEmail);
@@ -60,6 +63,7 @@ public class TimelineController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/{postId}/react", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> reactToPost(
             @PathVariable Integer postId,
@@ -85,6 +89,7 @@ public class TimelineController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/{postId}/comment", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> addComment(
             @PathVariable Integer postId,
@@ -110,6 +115,7 @@ public class TimelineController {
         }
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping(value = "/{postId}/share", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> sharePost(
             @PathVariable Integer postId,

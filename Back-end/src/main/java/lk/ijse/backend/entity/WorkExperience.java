@@ -2,8 +2,10 @@ package lk.ijse.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +24,9 @@ public class WorkExperience {
     private LocalDate startDate;
     private LocalDate endDate;
     private String description;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
