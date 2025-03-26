@@ -48,9 +48,7 @@ public class AccountSettingsDTO {
     private Boolean isPushReports;
     private Boolean enable2fa;
 
-    @Valid
     private List<EducationDTO> education;
 
-    @Valid
     private List<WorkExperienceDTO> workExperience;
 }

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function isTokenExpired(token) {
         try {
-            const {exp} = jwtDecode(token);
+            const {exp} = jwt_decode(token);
             return Date.now() >= exp * 1000; // Correct if `exp` is in seconds
         } catch (error) {
             return true; // Treat invalid tokens as expired

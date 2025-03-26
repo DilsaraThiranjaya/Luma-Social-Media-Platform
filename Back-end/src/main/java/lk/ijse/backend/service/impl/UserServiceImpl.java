@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
@@ -43,7 +41,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDTO loadUserDetailsByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        return modelMapper.map(user,UserDTO.class);
+        return modelMapper.map(user, UserDTO.class);
     }
 
     @Override
@@ -71,8 +69,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void deleteUser(String email) {
-
+    public int deleteUser(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            userRepository.delete(user);
+            return VarList.OK;
+        }
+        return VarList.Not_Found;
     }
 
     @Override

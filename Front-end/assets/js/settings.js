@@ -17,10 +17,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function isTokenExpired(token) {
         try {
-            const {exp} = jwtDecode(token);
+            const {exp} = jwt_decode(token);
             return Date.now() >= exp * 1000; // Correct if `exp` is in seconds
         } catch (error) {
             return true; // Treat invalid tokens as expired
+        }
+    }
+
+    function getRoleFromToken(token) {
+        try {
+            const decoded = jwt_decode(token);
+
+            // Check different possible claim names for role
+            return decoded.role ||
+                decoded.roles?.[0] || // if it's an array
+                decoded.authorities?.[0]?.replace('ROLE_', '') || // Spring format
+                null;
+        } catch (error) {
+            throw error;
         }
     }
 
@@ -31,6 +45,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await refreshAuthToken();
             }
             initializeUI();
+            initializeRoleBasedAccess(getRoleFromToken(authData.token));
+            initializeLogout();
         } catch (error) {
             await handleAuthError("Session expired. Please log in again.");
         }
@@ -69,6 +85,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function initializeRoleBasedAccess(roleFromToken) {
+        if (roleFromToken !== 'ADMIN') {
+            document.getElementById('adminButton').classList.add('d-none');
+            document.getElementById('adminPushNotificationsTitle').classList.add('d-none');
+            document.getElementById('adminPushNotificationsItem').classList.add('d-none');
+        }
+    }
+
+    function initializeLogout() {
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', async () => {
+            try {
+                sessionStorage.removeItem('authData');
+                window.location.href = LOGIN_URL;
+            } catch (error) {
+                Toast.fire({
+                    icon: "error",
+                    title: "Logout Failed",
+                    text: error.message
+                });
+            }
+        });
+    }
+
     function initializeUI() {
 
 // Toast configuration
@@ -84,6 +124,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             timerProgressBar: true,
         });
 
+        // Initialize page
+        loadUserData();
+
+        let initialEmail = null;
+
+        // Verify Email Button Appearance
+        document.getElementById('email').addEventListener('input', function() {
+            const verifyButton = document.querySelector('.verify-button');
+            if (this.value !== initialEmail) {
+                verifyButton.classList.remove('d-none');
+                verifyButton.disabled = false;
+                verifyButton.innerHTML = 'Verify';
+                document.getElementById('email').classList.remove('is-valid');
+            } else {
+                verifyButton.classList.add('d-none');
+                verifyButton.disabled = true;
+                document.getElementById('email').classList.add('is-valid');
+            }
+        });
+
         // Load user data
         async function loadUserData() {
             try {
@@ -97,6 +157,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (responseData.code === 200 || responseData.code === 201) {
                     const user = responseData.data;
 
+                    initialEmail = user.email;
+                    const verifyButton = document.querySelector('.verify-button');
+                    verifyButton.classList.add('d-none');
+                    verifyButton.disabled = true;
+                    document.getElementById('email').classList.add('is-valid');
+
                     // Populate form fields
                     document.getElementById('firstName').value = user.firstName;
                     document.getElementById('lastName').value = user.lastName;
@@ -108,18 +174,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.getElementById('birthday').value = user.birthday;
 
                     // Clear existing entries first
-                    const educationEntrieOriginal = document.getElementById('educationContainer').innerHTML;
-                    const workEntriesOriginal = document.getElementById('workContainer').innerHTML;
                     document.getElementById('educationContainer').innerHTML = '';
                     document.getElementById('workContainer').innerHTML = '';
 
                     // Populate Education
                     if (user.education && user.education.length > 0) {
-                        user.education.forEach(edu => {
+                        user.education.forEach((edu, index) => {
                             const educationEntry = document.createElement("div");
                             educationEntry.classList.add("education-entry");
+
+                            // Only add close button if it's not the first entry
+                            const closeButton = index === 0 ? '' : `<i class="fas fa-times remove-entry"></i>`;
+
                             educationEntry.innerHTML = `
-                        <i class="fas fa-times remove-entry"></i>
+                        ${closeButton}
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -166,18 +234,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                             });
                         });
                     } else {
-                        const educationEntry = document.createElement("div");
-                        educationEntry.classList.add("education-entry");
-                        educationEntry.innerHTML = educationEntrieOriginal;
+                        document.getElementById("educationContainer").innerHTML = `
+        <div class="education-entry">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="School/University name" />
+                        <label>School/University</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Degree/Field of study" />
+                        <label>Degree/Field of Study</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control education-date" placeholder="Start date" />
+                        <label>Start Date</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control education-date" placeholder="End date" />
+                        <label>End Date</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
                     }
 
                     // Populate Work Experience
                     if (user.workExperience && user.workExperience.length > 0) {
-                        user.workExperience.forEach(work => {
+                        user.workExperience.forEach((work, index) => {
                             const workEntry = document.createElement("div");
                             workEntry.classList.add("work-entry");
+
+                            // Only add close button if it's not the first entry
+                            const closeButton = index === 0 ? '' : `<i class="fas fa-times remove-entry"></i>`;
+
                             workEntry.innerHTML = `
-                        <i class="fas fa-times remove-entry"></i>
+                        ${closeButton}
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -231,9 +330,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                             });
                         });
                     } else {
-                        const workEntry = document.createElement("div");
-                        workEntry.classList.add("work-entry");
-                        workEntry.innerHTML = workEntriesOriginal;
+                        document.getElementById("workContainer").innerHTML = `
+        <div class="work-entry">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Company name" />
+                        <label>Company</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Job title" />
+                        <label>Job Title</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control work-date" placeholder="Start date" />
+                        <label>Start Date</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control work-date" placeholder="End date" />
+                        <label>End Date</label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-floating">
+                        <textarea class="form-control" style="height: 100px" placeholder="Description"></textarea>
+                        <label>Description</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
                     }
 
                     // Set privacy toggles
@@ -267,14 +399,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             } catch (error) {
                 await Toast.fire({
                     icon: "error",
-                    title: "Failed to load user data"
+                    title: error.message || "Failed to load user data"
                 });
             }
         }
-
-
-        // Initialize page
-        loadUserData();
 
         // Account Settings Form
         const accountForm = document.getElementById("accountForm");
@@ -378,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         privacyToggles.forEach(toggle => {
             toggle.addEventListener("change", async function () {
                 try {
-                    const response = await fetch(`${BASE_URL}/privacy`, {
+                    const response = await fetch(`${BASE_URL}/settings/privacy`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -395,24 +523,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                         })
                     });
 
-                    const data = await response.json();
+                    const responseData = await response.json();
 
-                    if (data.code === 200) {
+                    if (responseData.code === 200 || responseData.code === 201) {
                         await Toast.fire({
                             icon: "success",
-                            title: "Privacy settings updated"
+                            title: responseData.message
                         });
+                        return;
                     } else {
                         await Toast.fire({
                             icon: "error",
-                            title: data.message
+                            title: responseData.message
                         });
+                        return
                     }
                 } catch (error) {
-                    console.error('Error updating privacy settings:', error);
+                    this.checked = !this.checked;
                     await Toast.fire({
                         icon: "error",
-                        title: "Failed to update privacy settings"
+                        title: error.message || "Failed to update privacy settings"
                     });
                 }
             });
@@ -420,10 +550,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Notification Settings
         const notificationToggles = document.querySelectorAll("#notifications .form-check-input");
+
         notificationToggles.forEach(toggle => {
             toggle.addEventListener("change", async function () {
                 try {
-                    const response = await fetch(`${BASE_URL}/notifications`, {
+                    const response = await fetch(`${BASE_URL}/settings/notifications`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -439,28 +570,129 @@ document.addEventListener('DOMContentLoaded', async () => {
                         })
                     });
 
-                    const data = await response.json();
+                    const responseData = await response.json();
 
-                    if (data.code === 200) {
+                    if (responseData.code === 200 || responseData.code === 201) {
                         await Toast.fire({
                             icon: "success",
-                            title: "Notification settings updated"
+                            title: responseData.message
                         });
+                        return;
                     } else {
                         await Toast.fire({
                             icon: "error",
-                            title: data.message
+                            title: responseData.message
                         });
+                        return
                     }
                 } catch (error) {
-                    console.error('Error updating notification settings:', error);
+                    this.checked = !this.checked;
                     await Toast.fire({
                         icon: "error",
-                        title: "Failed to update notification settings"
+                        title: error.message || "Failed to update notification settings"
                     });
                 }
             });
         });
+
+        // Toggle password visibility
+        const togglePasswordButtons = document.querySelectorAll(".toggle-password");
+        togglePasswordButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const passwordInput =
+                    this.closest(".password-field").querySelector("input");
+                const icon = this.querySelector("i");
+
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                } else {
+                    passwordInput.type = "password";
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+            });
+        });
+
+        // Password strength meter with requirements check
+        const passwordInput = document.getElementById("newPassword");
+        if (passwordInput) {
+            passwordInput.addEventListener("input", function () {
+                const password = this.value;
+                const progressBar = document.querySelector(
+                    ".password-strength .progress-bar"
+                );
+                const strengthText = document.getElementById("strengthText");
+
+                if (!progressBar || !strengthText) return;
+
+                // Check password requirements
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password),
+                };
+
+                // Update requirement indicators
+                Object.entries(requirements).forEach(([req, met]) => {
+                    const reqElement = document.querySelector(`[data-requirement="${req}"]`);
+                    if (reqElement) {
+                        const icon = reqElement.querySelector("i");
+
+                        reqElement.classList.toggle("met", met);
+                        reqElement.classList.toggle("unmet", !met);
+
+                        if (met) {
+                            icon.classList.remove("fa-times-circle");
+                            icon.classList.add("fa-check-circle");
+                        } else {
+                            icon.classList.remove("fa-check-circle");
+                            icon.classList.add("fa-times-circle");
+                        }
+                    }
+                });
+
+                // Calculate strength based on requirements
+                let strength = 0;
+                let status = "";
+
+                // Length check
+                if (requirements.length) strength += 25;
+
+                // Lowercase check
+                if (requirements.lowercase) strength += 25;
+
+                // Uppercase check
+                if (requirements.uppercase) strength += 25;
+
+                // Number/Special character check
+                if (requirements.number || requirements.special) strength += 25;
+
+                // Update progress bar
+                progressBar.style.width = strength + "%";
+
+                // Update progress bar color and text
+                if (strength <= 25) {
+                    progressBar.className = "progress-bar bg-danger";
+                    status = "weak";
+                } else if (strength <= 50) {
+                    progressBar.className = "progress-bar bg-warning";
+                    status = "fair";
+                } else if (strength <= 75) {
+                    progressBar.className = "progress-bar bg-info";
+                    status = "good";
+                } else {
+                    progressBar.className = "progress-bar bg-success";
+                    status = "strong";
+                }
+
+                strengthText.textContent = status;
+                strengthText.className = `strength-${status}`;
+            });
+        }
 
         // Password Update Form
         const passwordForm = document.getElementById("passwordForm");
@@ -479,6 +711,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
 
+                // Check if all password requirements are met
+                const requirements = {
+                    length: newPassword.length >= 8,
+                    uppercase: /[A-Z]/.test(newPassword),
+                    lowercase: /[a-z]/.test(newPassword),
+                    number: /[0-9]/.test(newPassword),
+                    special: /[^A-Za-z0-9]/.test(newPassword),
+                };
+
+                const allRequirementsMet = Object.values(requirements).every(Boolean);
+
+                if (!allRequirementsMet) {
+                    await Toast.fire({
+                        icon: "error",
+                        title: "Password doesn't meet all requirements"
+                    });
+                    return;
+                }
+
                 const submitBtn = this.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
 
@@ -486,7 +737,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Updating...';
 
                 try {
-                    const response = await fetch(`${BASE_URL}/security/password`, {
+                    const response = await fetch(`${BASE_URL}/settings/security/changePassword`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -498,25 +749,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                         })
                     });
 
-                    const data = await response.json();
+                    const responseData = await response.json();
 
-                    if (data.code === 200) {
-                        this.reset();
+                    if (responseData.code === 200 || responseData.code === 201) {
                         await Toast.fire({
                             icon: "success",
-                            title: "Password updated successfully"
+                            title: responseData.message
                         });
+                        this.reset();
+                        return
                     } else {
                         await Toast.fire({
                             icon: "error",
-                            title: data.message
+                            title: responseData.message
                         });
+                        return
                     }
                 } catch (error) {
-                    console.error('Error updating password:', error);
                     await Toast.fire({
                         icon: "error",
-                        title: "Failed to update password"
+                        title: error.message || "Failed to change password"
                     });
                 } finally {
                     submitBtn.disabled = false;
@@ -530,7 +782,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (twoFactorToggle) {
             twoFactorToggle.addEventListener("change", async function () {
                 try {
-                    const response = await fetch(`${BASE_URL}/security/2fa`, {
+                    const response = await fetch(`${BASE_URL}/settings/security/2fa`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -541,26 +793,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                         })
                     });
 
-                    const data = await response.json();
+                    const responseData = await response.json();
 
-                    if (data.code === 200) {
+                    if (responseData.code === 200 || responseData.code === 201) {
                         await Toast.fire({
                             icon: "success",
-                            title: `2FA ${this.checked ? 'enabled' : 'disabled'}`
+                            title: responseData.message
                         });
+                        return
                     } else {
-                        this.checked = !this.checked; // Revert the toggle
                         await Toast.fire({
                             icon: "error",
-                            title: data.message
+                            title: responseData.message
                         });
+                        return
                     }
                 } catch (error) {
-                    console.error('Error updating 2FA settings:', error);
-                    this.checked = !this.checked; // Revert the toggle
+                    this.checked = !this.checked;
                     await Toast.fire({
                         icon: "error",
-                        title: "Failed to update 2FA settings"
+                        title: error.message || "Failed to update 2FA settings"
                     });
                 }
             });
@@ -568,6 +820,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Account Deactivation
         const deactivateBtn = document.querySelector(".danger-zone button");
+
         if (deactivateBtn) {
             deactivateBtn.addEventListener("click", async function () {
                 const result = await Swal.fire({
@@ -585,29 +838,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                     this.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Deactivating...';
 
                     try {
-                        const response = await fetch(`${BASE_URL}/deactivate`, {
+                        const response = await fetch(`${BASE_URL}/settings/security/deactivate`, {
                             method: 'DELETE',
                             headers: {
                                 'Authorization': `Bearer ${authData.token}`
                             }
                         });
 
-                        const data = await response.json();
+                        const responseData = await response.json();
 
-                        if (data.code === 200) {
-                            sessionStorage.removeItem('authData');
-                            window.location.href = '/login.html';
+                        if (responseData.code === 200 || responseData.code === 201) {
+                            sessionStorage.removeItem('authData'); // Clear session data
+                            window.location.href = LOGIN_URL; // Redirect to login
                         } else {
                             await Toast.fire({
                                 icon: "error",
-                                title: data.message
+                                title: responseData.message
                             });
                         }
                     } catch (error) {
-                        console.error('Error deactivating account:', error);
                         await Toast.fire({
                             icon: "error",
-                            title: "Failed to deactivate account"
+                            title: error.message || "Failed to deactivate account"
                         });
                     } finally {
                         this.disabled = false;
@@ -616,6 +868,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         }
+
 
         // Initialize date pickers
         flatpickr("#birthday", {
@@ -657,22 +910,135 @@ document.addEventListener('DOMContentLoaded', async () => {
         // });
 
         // Email verification
-        document
-            .querySelector(".verify-button")
-            .addEventListener("click", function () {
-                const email = document.getElementById("email").value;
-                if (email) {
-                    this.disabled = true;
-                    this.innerHTML =
-                        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        let timerInterval;
+        let otpCode = null;
+        let emailToVerify = null;
 
-                    // Simulate verification process
-                    setTimeout(() => {
-                        this.classList.add("d-none");
-                        document.getElementById("email").classList.add("is-valid");
-                    }, 2000);
+// OTP Input Handling for modal
+        const otpInputs = document.querySelectorAll("#otpModal .otp-inputs input");
+        otpInputs.forEach((input, index) => {
+            input.addEventListener("input", (e) => {
+                if (e.target.value) {
+                    if (index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
                 }
             });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+
+// Timer Function
+        function startTimer() {
+            let timeLeft = 60;
+            const timerDisplay = document.getElementById("timer");
+            const resendBtn = document.getElementById("resendOtpBtn");
+
+            clearInterval(timerInterval);
+            resendBtn.disabled = true;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendBtn.disabled = false;
+                }
+            }, 1000);
+        }
+
+//Verify Button Handler
+        document.querySelector(".verify-button").addEventListener("click", function () {
+            const email = document.getElementById("email").value;
+            if (!email) return;
+
+            emailToVerify = email;
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+
+            sendOTP(email)
+                .then(() => {
+                    const otpModal = new bootstrap.Modal('#otpModal');
+                    otpModal.show();
+                    otpInputs[0].focus();
+                })
+                .catch((error) => {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Verify';
+                    Toast.fire({icon: 'error', title: error.message});
+                });
+        });
+
+// Send OTP Function
+        async function sendOTP(email) {
+            console.log(email)
+            try {
+                const response = await fetch("http://localhost:8080/api/v1/settings/sendOtpCode", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify({email})
+                });
+
+                const data = await response.json();
+                if (data.code === 200 || data.code === 201) {
+                    Toast.fire({icon: 'success', title: data.message});
+                    otpCode = data.data;
+                    startTimer();
+                    return true;
+                }
+                throw new Error(data.message || "Failed to send OTP");
+            } catch (error) {
+                throw new Error(error.message || "OTP sending failed");
+            }
+        }
+
+// Verify OTP Handler
+        document.getElementById("verifyOtpBtn").addEventListener("click", async function () {
+            const enteredOtp = Array.from(otpInputs).map(input => input.value).join('');
+            if (enteredOtp.length !== 6) return;
+
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+
+            if (enteredOtp == otpCode) {
+                Toast.fire({icon: 'success', title: 'Email verified!'});
+                document.getElementById('email').classList.add('is-valid');
+                document.querySelector('.verify-button').classList.add('d-none');
+                initialEmail = document.getElementById('email').value;
+                bootstrap.Modal.getInstance('#otpModal').hide();
+            } else {
+                Toast.fire({icon: 'error', title: 'Invalid OTP'});
+                otpInputs.forEach(input => input.value = "");
+            }
+            btn.disabled = false;
+            btn.innerHTML = 'Verify OTP';
+        });
+
+// Resend OTP Handler
+        document.getElementById("resendOtpBtn").addEventListener("click", function () {
+            if (!emailToVerify) return;
+            this.disabled = true;
+            otpInputs.forEach(input => input.value = "");
+            sendOTP(emailToVerify);
+        });
+
+        // Reset Verify Button State When Closing Modal
+        document.getElementById('otpModal').addEventListener('hidden.bs.modal', function () {
+            const verifyBtn = document.querySelector('.verify-button');
+            if (verifyBtn && verifyBtn.disabled) {
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = 'Verify';
+            }
+        });
 
         // Add education entry
         document

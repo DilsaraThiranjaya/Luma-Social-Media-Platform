@@ -86,7 +86,7 @@ public class User {
     @Builder.Default
     private Boolean isPushPostShares = true;
     @Builder.Default
-    private Boolean isPushReports = true;
+    private Boolean isPushReports = false;
     @Builder.Default
     private Boolean enable2fa = false;
 

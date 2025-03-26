@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TwoFactorDTO {
-    @NotBlank(message = "Action is required")
     private boolean enabled;
 }
