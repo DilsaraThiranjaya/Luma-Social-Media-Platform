@@ -39,11 +39,12 @@ public class JWTFilter extends OncePerRequestFilter {
         if (authorization != null && authorization.startsWith("Bearer ")) {
             try {
                 token = authorization.substring(7);
-                email = jwtUtil.getUsernameFromToken(token);
-                Claims claims=jwtUtil.getUserRoleCodeFromToken(token);
+                Claims claims = jwtUtil.getUserRoleCodeFromToken(token);
+                email = claims.getSubject();
+                String role = "ROLE_" + claims.get("role", String.class); // Add ROLE_ prefix
                 request.setAttribute("email", email);
-                request.setAttribute("role", claims.get("role"));
-            } catch (ExpiredJwtException e) {
+                request.setAttribute("role", role);
+            }  catch (ExpiredJwtException e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("{\"error\": \"token_invalid\", \"message\": \"The token has expired.\"}");
                 response.getWriter().flush();

@@ -286,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Reset Password Button;
     document.getElementById("resetPasswordBtn").addEventListener("click", async function () {
+        event.preventDefault();
 
         const newPassword = document.getElementById("newPassword").value;
         const confirmPassword = document.getElementById("confirmPassword").value;

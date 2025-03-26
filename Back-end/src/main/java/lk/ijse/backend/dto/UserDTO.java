@@ -1,5 +1,6 @@
 package lk.ijse.backend.dto;
 
+import jakarta.validation.Valid;
 import lk.ijse.backend.entity.User.Gender;
 import lk.ijse.backend.entity.User.Role;
 import lk.ijse.backend.entity.User.Status;
@@ -9,6 +10,7 @@ import org.hibernate.validator.constraints.URL;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor

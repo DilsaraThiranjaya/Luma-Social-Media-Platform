@@ -1,5 +1,6 @@
 package lk.ijse.backend.config;
 
+import lk.ijse.backend.service.impl.CustomOAuth2UserService;
 import lk.ijse.backend.service.impl.UserServiceImpl;
 import lk.ijse.backend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -25,6 +27,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @EnableWebSecurity
 @Configuration
@@ -33,7 +37,8 @@ import java.util.Arrays;
 public class WebSecurityConfig {
     private final UserServiceImpl userService;
     private final JWTFilter jwtFilter;
-    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final ClientRegistrationRepository clientRegistrationRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,6 +49,21 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public OAuth2AuthorizationRequestResolver authorizationRequestResolver() {
+        DefaultOAuth2AuthorizationRequestResolver resolver =
+                new DefaultOAuth2AuthorizationRequestResolver(clientRegistrationRepository, "/oauth2/authorization");
+        resolver.setAuthorizationRequestCustomizer(
+                request -> {
+                    Map<String, Object> additionalParams = new HashMap<>();
+                    additionalParams.put("prompt", "consent");
+                    request.additionalParameters(additionalParams);
+                }
+        );
+        return resolver;
+    }
+
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http, JwtUtil jwtUtil) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -60,29 +80,41 @@ public class WebSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/api/v1/profile/*").authenticated()
-                        .requestMatchers("/oauth2/**").permitAll()
-                        .anyRequest().authenticated()).oauth2Login(oauth2 -> oauth2
+                        .requestMatchers("/api/v1/profile/*",
+                                "api/v1/settings/*").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/oauth2/**", "/login/**").permitAll()
+                        .anyRequest().authenticated())
+                .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorization -> authorization
-                                .baseUri("/oauth2/authorization/*")
+                                .baseUri("/oauth2/authorization")
+                                .authorizationRequestResolver(authorizationRequestResolver())
                         )
-                        // Use the default redirection endpoint format:
                         .redirectionEndpoint(redirection -> redirection
-                                .baseUri("/api/v1/auth/oauth2/code/*")
+                                .baseUri("/login/oauth2/code/*")
                         )
                         .userInfoEndpoint(userInfo -> userInfo
-                                .userService(oAuth2UserService)
+                                .userService(customOAuth2UserService)
                         )
                         .successHandler((request, response, authentication) -> {
-                            // Get email or username from the authentication object.
-                            String email = authentication.getName();
-                            // Generate a JWT token for the authenticated user.
+                            OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+                            String email = oAuth2User.getAttribute("email");
                             String token = jwtUtil.generateToken(userService.loadUserDetailsByEmail(email));
-                            // Redirect to the frontend with the token.
-                            response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/login.html?token=" + token);
+                            if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                                response.setContentType("application/json");
+                                response.setStatus(200);
+                                response.getWriter().write("{\"token\": \"" + token + "\", \"message\": \"Login successful\"}");
+                            } else {
+                                response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline/timeline.html?token=" + token);
+                            }
                         })
                         .failureHandler((request, response, exception) -> {
-                            response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/login.html?error=" + exception.getMessage());
+                            if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+                                response.setContentType("application/json");
+                                response.setStatus(401);
+                                response.getWriter().write("{\"error\": \"" + exception.getMessage() + "\"}");
+                            } else {
+                                response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/login.html?error=" + exception.getMessage());
+                            }
                         })
                 )
                 .sessionManagement(sess -> sess

@@ -29,9 +29,5 @@ public class EducationDTO {
     @NotNull(message = "Start date cannot be null")
     private LocalDate startDate;
 
-    @NotNull(message = "End date cannot be null")
     private LocalDate endDate;
-
-    @NotNull(message = "User cannot be null")
-    private UserDTO user;
 }

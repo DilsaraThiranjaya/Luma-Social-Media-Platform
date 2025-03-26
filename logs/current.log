@@ -1,25 +1,25 @@
-2025-03-23 08:12:17.061 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-03-23 08:12:17.154 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12272 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
-2025-03-23 08:12:17.155 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-23 08:12:17.762 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
-2025-03-23 08:12:18.664 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-03-23 08:12:18.789 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 112 ms. Found 9 JPA repository interfaces.
-2025-03-23 08:12:19.562 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-03-23 08:12:19.581 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-03-23 08:12:19.582 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-03-23 08:12:19.583 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
-2025-03-23 08:12:19.662 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-03-23 08:12:19.663 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2455 ms
-2025-03-23 08:12:19.843 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-03-23 08:12:19.921 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
-2025-03-23 08:12:19.959 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-03-23 08:12:20.368 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-03-23 08:12:20.409 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-03-23 08:12:20.893 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@772cf46b
-2025-03-23 08:12:20.895 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-03-23 08:12:20.971 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-03-23 08:12:20.972 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-03-23 08:12:20.989 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-03-26 06:41:06.752 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 06:41:06.833 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 3304 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 06:41:06.834 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 06:41:07.417 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 06:41:08.327 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 06:41:08.425 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 86 ms. Found 9 JPA repository interfaces.
+2025-03-26 06:41:09.155 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 06:41:09.169 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 06:41:09.171 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 06:41:09.171 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 06:41:09.263 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 06:41:09.263 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2375 ms
+2025-03-26 06:41:09.472 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 06:41:09.558 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 06:41:09.605 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 06:41:09.969 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 06:41:10.004 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 06:41:10.486 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6e668322
+2025-03-26 06:41:10.487 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 06:41:10.587 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 06:41:10.589 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 06:41:10.611 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -27,53 +27,52 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-03-23 08:12:22.726 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-03-23 08:12:23.080 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-03-23 08:12:23.734 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
-2025-03-23 08:12:23.789 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-03-23 08:12:26.453 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-03-23 08:12:26.471 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-03-23 08:12:26.481 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 10.236 seconds (process running for 11.526)
-2025-03-23 08:12:41.904 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-03-23 08:12:41.904 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-03-23 08:12:41.908 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-2025-03-23 08:12:42.192 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
-2025-03-23 08:12:42.612 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
-2025-03-23 08:12:44.519 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received token refresh request
-2025-03-23 08:12:44.575 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya3@gmail.com
-2025-03-23 08:12:44.657 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Fetching timeline posts for user: dilsarathiranjaya3@gmail.com
-2025-03-23 08:12:44.710 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully fetched 0 timeline posts
-2025-03-23 08:14:20.255 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received token refresh request
-2025-03-23 08:14:20.281 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya3@gmail.com
-2025-03-23 08:14:20.319 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Fetching timeline posts for user: dilsarathiranjaya3@gmail.com
-2025-03-23 08:14:20.328 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully fetched 0 timeline posts
-2025-03-23 08:16:00.183 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-03-23 08:16:00.196 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-03-23 08:16:00.201 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-03-23 08:16:00.206 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-03-23 08:16:00.217 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-03-23 19:08:38.263 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-03-23 19:08:38.352 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 1504 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
-2025-03-23 19:08:38.353 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
-2025-03-23 19:08:38.928 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
-2025-03-23 19:08:39.865 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-03-23 19:08:39.949 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 9 JPA repository interfaces.
-2025-03-23 19:08:40.551 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-03-23 19:08:40.563 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-03-23 19:08:40.564 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-03-23 19:08:40.564 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
-2025-03-23 19:08:40.641 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-03-23 19:08:40.642 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2228 ms
-2025-03-23 19:08:40.836 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-03-23 19:08:40.908 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
-2025-03-23 19:08:40.947 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-03-23 19:08:41.264 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-03-23 19:08:41.296 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-03-23 19:08:41.676 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@22604c7e
-2025-03-23 19:08:41.677 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-03-23 19:08:41.739 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-03-23 19:08:41.740 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-03-23 19:08:41.760 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-03-26 06:41:12.314 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 06:41:12.691 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 06:41:13.340 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 06:41:13.921 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 06:41:14.481 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 06:41:15.721 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 06:41:15.740 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 06:41:15.751 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 9.718 seconds (process running for 11.067)
+2025-03-26 06:41:20.616 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 06:41:20.616 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 06:41:20.619 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-26 06:41:21.129 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-26 06:41:21.960 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-26 06:41:23.979 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 06:41:24.043 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya3@gmail.com
+2025-03-26 06:41:24.078 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 06:41:30.027 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 06:41:30.056 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya3@gmail.com
+2025-03-26 06:41:30.095 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 06:43:34.914 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 06:43:34.928 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 06:43:35.089 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 06:43:35.093 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 06:43:35.107 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 06:43:41.416 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 06:43:41.483 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 5068 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 06:43:41.485 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 06:43:41.876 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 06:43:42.664 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 06:43:42.782 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 9 JPA repository interfaces.
+2025-03-26 06:43:43.407 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 06:43:43.416 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 06:43:43.418 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 06:43:43.418 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 06:43:43.502 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 06:43:43.502 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1957 ms
+2025-03-26 06:43:43.702 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 06:43:43.763 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 06:43:43.815 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 06:43:44.107 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 06:43:44.138 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 06:43:44.452 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@64688978
+2025-03-26 06:43:44.454 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 06:43:44.497 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 06:43:44.499 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 06:43:44.513 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 8.0
@@ -81,15 +80,302 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-03-23 19:08:43.340 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-03-23 19:08:43.647 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-03-23 19:08:44.286 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
-2025-03-23 19:08:44.331 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-03-23 19:08:46.545 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-03-23 19:08:46.587 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-03-23 19:08:46.603 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 9.147 seconds (process running for 10.642)
-2025-03-23 19:31:59.552 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-03-23 19:31:59.560 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-03-23 19:31:59.560 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-03-23 19:31:59.560 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-03-23 19:31:59.576 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 06:43:46.063 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 06:43:46.337 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 06:43:46.856 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 06:43:47.371 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 06:43:47.833 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 06:43:48.869 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 06:43:48.885 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 06:43:48.894 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 8.075 seconds (process running for 9.051)
+2025-03-26 06:48:11.070 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 06:48:11.070 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 06:48:11.074 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-03-26 06:48:12.159 [http-nio-8080-exec-2] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<lk.ijse.backend.dto.ResponseDTO> lk.ijse.backend.controller.SettingsController.updateAccountSettings(lk.ijse.backend.dto.AccountSettingsDTO,org.springframework.security.core.Authentication) with 5 errors: [Field error in object 'accountSettingsDTO' on field 'workExperience[0].endDate': rejected value [null]; codes [NotNull.accountSettingsDTO.workExperience[0].endDate,NotNull.accountSettingsDTO.workExperience.endDate,NotNull.workExperience[0].endDate,NotNull.workExperience.endDate,NotNull.endDate,NotNull.java.time.LocalDate,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.workExperience[0].endDate,workExperience[0].endDate]; arguments []; default message [workExperience[0].endDate]]; default message [End date is required]] [Field error in object 'accountSettingsDTO' on field 'workExperience[0].user': rejected value [null]; codes [NotNull.accountSettingsDTO.workExperience[0].user,NotNull.accountSettingsDTO.workExperience.user,NotNull.workExperience[0].user,NotNull.workExperience.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.workExperience[0].user,workExperience[0].user]; arguments []; default message [workExperience[0].user]]; default message [User must be specified]] [Field error in object 'accountSettingsDTO' on field 'education[1].user': rejected value [null]; codes [NotNull.accountSettingsDTO.education[1].user,NotNull.accountSettingsDTO.education.user,NotNull.education[1].user,NotNull.education.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.education[1].user,education[1].user]; arguments []; default message [education[1].user]]; default message [User cannot be null]] [Field error in object 'accountSettingsDTO' on field 'workExperience[1].user': rejected value [null]; codes [NotNull.accountSettingsDTO.workExperience[1].user,NotNull.accountSettingsDTO.workExperience.user,NotNull.workExperience[1].user,NotNull.workExperience.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.workExperience[1].user,workExperience[1].user]; arguments []; default message [workExperience[1].user]]; default message [User must be specified]] [Field error in object 'accountSettingsDTO' on field 'education[0].user': rejected value [null]; codes [NotNull.accountSettingsDTO.education[0].user,NotNull.accountSettingsDTO.education.user,NotNull.education[0].user,NotNull.education.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.education[0].user,education[0].user]; arguments []; default message [education[0].user]]; default message [User cannot be null]] 
+2025-03-26 07:55:58.975 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 07:55:58.991 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 07:55:59.067 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 07:55:59.122 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 07:55:59.131 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 07:56:06.643 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 07:56:06.758 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 6884 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 07:56:06.759 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 07:56:07.177 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 07:56:07.927 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 07:56:08.041 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 100 ms. Found 9 JPA repository interfaces.
+2025-03-26 07:56:08.667 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 07:56:08.681 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 07:56:08.683 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 07:56:08.684 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 07:56:08.759 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 07:56:08.759 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1953 ms
+2025-03-26 07:56:08.927 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 07:56:09.000 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 07:56:09.038 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 07:56:09.328 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 07:56:09.364 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 07:56:09.712 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@283bb8b7
+2025-03-26 07:56:09.714 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 07:56:09.758 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 07:56:09.759 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 07:56:09.777 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-26 07:56:11.337 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 07:56:11.609 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 07:56:12.470 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 07:56:13.018 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 07:56:13.455 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 07:56:14.493 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 07:56:14.507 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 07:56:14.517 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 8.511 seconds (process running for 9.429)
+2025-03-26 07:56:24.688 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 07:56:24.700 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 07:56:24.704 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-26 07:56:25.199 [http-nio-8080-exec-2] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<lk.ijse.backend.dto.ResponseDTO> lk.ijse.backend.controller.SettingsController.updateAccountSettings(lk.ijse.backend.dto.AccountSettingsDTO,org.springframework.security.core.Authentication) with 4 errors: [Field error in object 'accountSettingsDTO' on field 'workExperience[0].user': rejected value [null]; codes [NotNull.accountSettingsDTO.workExperience[0].user,NotNull.accountSettingsDTO.workExperience.user,NotNull.workExperience[0].user,NotNull.workExperience.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.workExperience[0].user,workExperience[0].user]; arguments []; default message [workExperience[0].user]]; default message [User must be specified]] [Field error in object 'accountSettingsDTO' on field 'workExperience[1].user': rejected value [null]; codes [NotNull.accountSettingsDTO.workExperience[1].user,NotNull.accountSettingsDTO.workExperience.user,NotNull.workExperience[1].user,NotNull.workExperience.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.workExperience[1].user,workExperience[1].user]; arguments []; default message [workExperience[1].user]]; default message [User must be specified]] [Field error in object 'accountSettingsDTO' on field 'education[0].user': rejected value [null]; codes [NotNull.accountSettingsDTO.education[0].user,NotNull.accountSettingsDTO.education.user,NotNull.education[0].user,NotNull.education.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.education[0].user,education[0].user]; arguments []; default message [education[0].user]]; default message [User cannot be null]] [Field error in object 'accountSettingsDTO' on field 'education[1].user': rejected value [null]; codes [NotNull.accountSettingsDTO.education[1].user,NotNull.accountSettingsDTO.education.user,NotNull.education[1].user,NotNull.education.user,NotNull.user,NotNull.lk.ijse.backend.dto.UserDTO,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [accountSettingsDTO.education[1].user,education[1].user]; arguments []; default message [education[1].user]]; default message [User cannot be null]] 
+2025-03-26 08:06:10.106 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 08:06:10.120 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 08:06:10.128 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 08:06:10.131 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 08:06:10.139 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 08:06:16.283 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 08:06:16.348 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11984 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 08:06:16.349 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 08:06:16.712 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 08:06:17.420 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 08:06:17.510 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 82 ms. Found 9 JPA repository interfaces.
+2025-03-26 08:06:18.118 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 08:06:18.128 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 08:06:18.130 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 08:06:18.130 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 08:06:18.195 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 08:06:18.195 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1797 ms
+2025-03-26 08:06:18.344 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 08:06:18.403 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 08:06:18.434 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 08:06:18.676 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 08:06:18.703 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 08:06:19.009 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@21c99abf
+2025-03-26 08:06:19.011 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 08:06:19.049 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 08:06:19.050 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 08:06:19.064 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-26 08:06:20.489 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 08:06:20.754 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 08:06:21.251 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 08:06:21.976 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 08:06:22.393 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 08:06:23.514 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 08:06:23.529 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 08:06:23.538 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 7.849 seconds (process running for 8.669)
+2025-03-26 08:06:41.243 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 08:06:41.243 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 08:06:41.246 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-03-26 08:06:41.720 [http-nio-8080-exec-2] INFO  l.i.b.controller.SettingsController - Received account settings update request for user: dilsarathiranjaya3@gmail.com
+2025-03-26 08:06:42.097 [http-nio-8080-exec-2] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 1048, SQLState: 23000
+2025-03-26 08:06:42.098 [http-nio-8080-exec-2] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Column 'user_id' cannot be null
+2025-03-26 08:06:42.105 [http-nio-8080-exec-2] ERROR l.i.b.controller.SettingsController - Error updating account settings: Transaction silently rolled back because it has been marked as rollback-only
+2025-03-26 08:08:05.696 [http-nio-8080-exec-4] INFO  l.i.b.controller.SettingsController - Received account settings update request for user: dilsarathiranjaya3@gmail.com
+2025-03-26 08:08:05.775 [http-nio-8080-exec-4] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 1048, SQLState: 23000
+2025-03-26 08:08:05.775 [http-nio-8080-exec-4] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - Column 'user_id' cannot be null
+2025-03-26 08:08:05.777 [http-nio-8080-exec-4] ERROR l.i.b.controller.SettingsController - Error updating account settings: Transaction silently rolled back because it has been marked as rollback-only
+2025-03-26 08:09:02.873 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 08:09:02.886 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 08:09:02.894 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 08:09:02.896 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 08:09:02.906 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 08:09:08.095 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 08:09:08.158 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12240 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 08:09:08.160 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 08:09:08.513 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 08:09:09.236 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 08:09:09.314 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 70 ms. Found 9 JPA repository interfaces.
+2025-03-26 08:09:09.847 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 08:09:09.857 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 08:09:09.859 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 08:09:09.859 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 08:09:09.937 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 08:09:09.937 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1728 ms
+2025-03-26 08:09:10.079 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 08:09:10.134 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 08:09:10.163 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 08:09:10.394 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 08:09:10.419 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 08:09:10.702 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e8c84eb
+2025-03-26 08:09:10.705 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 08:09:10.742 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 08:09:10.743 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 08:09:10.758 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-26 08:09:12.209 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 08:09:12.472 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 08:09:12.960 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 08:09:13.474 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 08:09:13.874 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 08:09:14.869 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 08:09:14.884 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 08:09:14.893 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 7.374 seconds (process running for 8.235)
+2025-03-26 08:09:20.749 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 08:09:20.750 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 08:09:20.752 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-26 08:09:21.371 [http-nio-8080-exec-2] INFO  l.i.b.controller.SettingsController - Received account settings update request for user: dilsarathiranjaya3@gmail.com
+2025-03-26 08:09:21.630 [http-nio-8080-exec-2] INFO  l.i.b.controller.SettingsController - Successfully updated account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-26 08:13:14.465 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:13:14.482 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Cannot invoke "lk.ijse.backend.entity.User.getEmail()" because "user" is null
+2025-03-26 08:13:19.182 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-26 08:13:19.315 [http-nio-8080-exec-6] ERROR l.i.b.controller.AuthController - Authentication failed for email: dilsarathiranjaya3@gmail.com
+2025-03-26 08:13:24.340 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:24.449 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:26.071 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:13:26.098 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:26.187 [http-nio-8080-exec-1] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:13:34.510 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:13:34.534 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:34.562 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:13:51.772 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:51.888 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:53.480 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:13:53.504 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:53.546 [http-nio-8080-exec-9] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:13:57.331 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:13:57.350 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:13:57.392 [http-nio-8080-exec-2] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:14:13.380 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:14:13.487 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:14:15.127 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:14:15.152 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:14:15.245 [http-nio-8080-exec-8] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:14:17.527 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:14:17.544 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:15:40.734 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:15:40.751 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:15:40.781 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:16:18.933 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:16:19.055 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:16:20.795 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:16:20.813 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:16:20.926 [http-nio-8080-exec-9] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:16:23.899 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:16:23.920 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:16:24.024 [http-nio-8080-exec-2] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:18:02.664 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:18:02.820 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:18:04.588 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:18:04.605 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:18:04.767 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:18:09.500 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:18:09.517 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:20:44.541 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:20:44.677 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:20:46.449 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:20:46.472 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:20:46.593 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:20:53.666 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:20:53.683 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:20:53.780 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:22:04.853 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:05.029 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:06.776 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:22:06.793 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:06.912 [http-nio-8080-exec-8] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:22:09.870 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:22:09.892 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:10.013 [http-nio-8080-exec-1] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:22:45.495 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:45.640 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:47.369 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:22:47.384 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:22:47.511 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 08:22:50.814 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:22:50.829 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:27:59.933 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:27:59.954 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:28:00.093 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:29:36.629 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:29:36.652 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:29:36.821 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:30:06.863 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:30:06.885 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:30:07.049 [http-nio-8080-exec-7] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 08:35:17.478 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 08:35:17.506 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 08:35:17.653 [http-nio-8080-exec-1] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-03-26 09:31:05.893 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 09:31:05.913 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 09:31:05.935 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 09:31:05.953 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 09:31:05.973 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-26 09:31:13.226 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-26 09:31:13.283 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 2424 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-26 09:31:13.284 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-26 09:31:13.709 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-26 09:31:14.356 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-26 09:31:14.443 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 80 ms. Found 9 JPA repository interfaces.
+2025-03-26 09:31:15.007 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-26 09:31:15.019 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-26 09:31:15.020 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-26 09:31:15.021 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-26 09:31:15.087 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-26 09:31:15.087 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1754 ms
+2025-03-26 09:31:15.241 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-26 09:31:15.329 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-26 09:31:15.368 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-26 09:31:15.636 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-26 09:31:15.667 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-26 09:31:16.023 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@25e95af1
+2025-03-26 09:31:16.025 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-26 09:31:16.066 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-26 09:31:16.067 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-26 09:31:16.082 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-26 09:31:17.844 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-26 09:31:18.148 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 09:31:18.712 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-26 09:31:19.303 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-26 09:31:19.700 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-26 09:31:20.878 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-26 09:31:20.895 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-26 09:31:20.905 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 8.257 seconds (process running for 9.142)
+2025-03-26 09:31:34.719 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-26 09:31:34.720 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-26 09:31:34.722 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-03-26 09:31:34.904 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-26 09:31:35.279 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-26 09:31:36.933 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 09:31:36.997 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 09:31:37.026 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-26 09:31:43.664 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received token refresh request
+2025-03-26 09:31:43.685 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - New access token generated for email: dilsarathiranjaya4@gmail.com
+2025-03-26 09:31:43.741 [http-nio-8080-exec-10] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-26 09:31:43.772 [http-nio-8080-exec-10] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya4@gmail.com
+2025-03-26 09:35:21.210 [http-nio-8080-exec-3] INFO  l.i.b.controller.SettingsController - Received account settings update request for user: dilsarathiranjaya4@gmail.com
+2025-03-26 09:35:21.376 [http-nio-8080-exec-3] INFO  l.i.b.controller.SettingsController - Successfully updated account settings for user: dilsarathiranjaya4@gmail.com
+2025-03-26 09:36:38.680 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-26 09:36:38.696 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-26 09:36:38.701 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-26 09:36:38.703 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-26 09:36:38.709 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

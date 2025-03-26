@@ -1,7 +1,10 @@
 package lk.ijse.backend.config;
 
+import lk.ijse.backend.dto.EducationDTO;
+import lk.ijse.backend.dto.WorkExperienceDTO;
+import lk.ijse.backend.entity.Education;
+import lk.ijse.backend.entity.WorkExperience;
 import lk.ijse.backend.util.EmailSender;
-import lk.ijse.backend.util.FileUploadUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +21,4 @@ public class AppConfig {
         return new EmailSender();
     }
 
-    @Bean
-    public FileUploadUtil fileUploadUtil() {
-        return new FileUploadUtil();
-    }
 }

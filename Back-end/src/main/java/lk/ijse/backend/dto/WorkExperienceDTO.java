@@ -27,13 +27,9 @@ public class WorkExperienceDTO {
     @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
-    @NotNull(message = "End date is required")
     private LocalDate endDate;
     private String description;
 
     @Null
     private LocalDateTime createdAt;
-
-    @NotNull(message = "User must be specified")
-    private UserDTO user;
 }

@@ -16,24 +16,30 @@ document.addEventListener("DOMContentLoaded", function () {
   const BASE_URL = "http://localhost:8080/api/v1/auth";
   const DIRECTORY_URL = "/Luma-Social-Media-Platform/Front-end/pages/timeline.html";
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const newAccessToken = urlParams.get('token');
-  const errorMessage = urlParams.get('error');
-
-  const existingAuthData = JSON.parse(sessionStorage.getItem('authData')) || {};
-
-  if (newAccessToken) {
-    // Update the stored access token
-    const newAuthData = {...existingAuthData, token: newAccessToken};
-    sessionStorage.setItem('authData', JSON.stringify(newAuthData));
-    window.location.href = DIRECTORY_URL;
-  }
-  if (errorMessage) {
-    Toast.fire({
-      icon: "error",
-      title: errorMessage
-    });
-  }
+  // function handleGoogleCallback() {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const token = urlParams.get("token");
+  //   const error = urlParams.get("error");
+  //
+  //   const existingAuthData = JSON.parse(sessionStorage.getItem('authData')) || {};
+  //
+  //   if (token) {
+  //     const newAuthData = {...existingAuthData, token: token};
+  //     sessionStorage.setItem('authData', JSON.stringify(newAuthData));
+  //     Toast.fire({
+  //       icon: "success",
+  //       title: "Successfully logged in."
+  //     })
+  //     window.location.href = DIRECTORY_URL;
+  //   } else if (error) {
+  //     Toast.fire({
+  //       icon: "error",
+  //       title: error
+  //     });
+  //   }
+  // }
+  //
+  // handleGoogleCallback();
 
   handleRememberMe();
 

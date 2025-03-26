@@ -1,12 +1,13 @@
 package lk.ijse.backend.controller;
 
 import io.jsonwebtoken.JwtException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.ResponseDTO;
 import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.jwtmodels.AuthRequest;
 import lk.ijse.backend.jwtmodels.AuthResponse;
-import lk.ijse.backend.service.impl.UserServiceImpl;
+import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.EmailSender;
 import lk.ijse.backend.util.JwtUtil;
 import lk.ijse.backend.util.VarList;
@@ -17,11 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 
@@ -33,7 +34,8 @@ import java.util.Random;
 public class AuthController {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
-    private final UserServiceImpl userService;
+    private final UserService userService;
+    private final UserDetailsService userDetailsService;
     private final EmailSender emailSender;
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -114,7 +116,7 @@ public class AuthController {
         try {
             String extractedEmail = jwtUtil.getUsernameFromToken(refreshToken);
 
-            UserDetails userDetails = userService.loadUserByUsername(extractedEmail);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(extractedEmail);
             if (userDetails == null) {
                 log.error("User not found for email: {}", extractedEmail);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
