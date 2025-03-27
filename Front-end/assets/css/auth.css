@@ -201,21 +201,21 @@
   a:hover {
     color: #4e54c8;
   }
-  
-  /* Buttons */
-  .btn-primary {
-    background: linear-gradient(135deg, #600097 0%, #4e54c8 100%);
-    border: none;
-    border-radius: 12px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #600097 0%, #4e54c8 100%);
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
 
 .otp-inputs {
   display: flex;
@@ -294,6 +294,37 @@
 
 .requirement.unmet i {
   color: #dc3545;
+}
+
+.otp-inputs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+/* Otp Input Styles */
+.otp-inputs input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.2rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--input-bg);
+}
+
+.otp-inputs input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(94, 0, 151, 0.2);
+  outline: none;
+}
+
+.resend-timer {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
 }
   
   /* Animations */

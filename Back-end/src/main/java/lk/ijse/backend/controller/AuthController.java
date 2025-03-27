@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
@@ -65,8 +66,27 @@ public class AuthController {
         authResponse.setEmail(loadedUser.getEmail());
         authResponse.setToken(token);
 
+
         log.info("User successfully signed in with email: {}", authRequest.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "User Successfully Logged In!", authResponse));
+    }
+
+    @GetMapping("/2fa")
+    public ResponseEntity<ResponseDTO> check2faStatus(@RequestParam String email) {
+        log.info("Checking 2FA status for email: {}", email);
+
+        try {
+            UserDTO loadedUser = userService.loadUserDetailsByEmail(email);
+            if (loadedUser == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            return ResponseEntity.ok().body(new ResponseDTO(VarList.OK, "2FA status retrieved", loadedUser.getEnable2fa()));
+        } catch (Exception e) {
+            log.error("Error checking 2FA status", e);
+            return ResponseEntity.internalServerError().body(new ResponseDTO(VarList.Internal_Server_Error, "Error checking 2FA status", null));
+        }
     }
 
 

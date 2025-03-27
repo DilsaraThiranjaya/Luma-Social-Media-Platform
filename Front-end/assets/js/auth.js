@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const BASE_URL = "http://localhost:8080/api/v1/auth";
   const DIRECTORY_URL = "/Luma-Social-Media-Platform/Front-end/pages/timeline.html";
 
+  // Initialize
+  handleRememberMe();
+  setupOTPInputs();
+  setupFormSubmissions();
+
   // function handleGoogleCallback() {
   //   const urlParams = new URLSearchParams(window.location.search);
   //   const token = urlParams.get("token");
@@ -40,8 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // }
   //
   // handleGoogleCallback();
-
-  handleRememberMe();
 
   // Function to handle Remember Me functionality
   function handleRememberMe() {
@@ -159,160 +162,306 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Form validation and submission
-  const forms = document.querySelectorAll("form");
-  forms.forEach((form) => {
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+// Global variables
+  let otpCode = null;
+  let emailToVerify = null;
+  let tempAuthData = null;
+  let timerInterval = null;
 
-      if (this.id === "registerForm") {
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
+// Setup OTP input handling
+  function setupOTPInputs() {
+    const otpInputs = document.querySelectorAll("#otpModal .otp-inputs input");
 
-        // Check if all password requirements are met
-        const requirements = {
-          length: password.length >= 8,
-          uppercase: /[A-Z]/.test(password),
-          lowercase: /[a-z]/.test(password),
-          number: /[0-9]/.test(password),
-          special: /[^A-Za-z0-9]/.test(password),
-        };
-
-        const allRequirementsMet = Object.values(requirements).every(Boolean);
-
-        if (!allRequirementsMet) {
-          await Toast.fire({
-            icon: "error",
-            title: "Password doesn't meet all requirements"
-          });
-          return;
-        }
-
-        if (password !== confirmPassword) {
-          await Toast.fire({
-            icon: "error",
-            title: "Passwords do not match"
-          });
-          return;
-        }
-      }
-
-      // Add loading state
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML =
-        '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...';
-
-      try {
-        let endpoint, payload;
-
-        if (this.id === "adminAccessForm") {
-          endpoint = `${BASE_URL}/requestAdminAccess`;
-          payload = {
-            email: document.getElementById("email").value,
-            reason: document.getElementById("reason").value
-          };
-
-          // Special handling for admin access form
-          const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload)
-          });
-
-          const responseData = await response.json();
-
-          if (responseData.code === 200 || responseData.code === 201) {
-            await Toast.fire({
-              icon: "success",
-              title: responseData.message
-            });
-
-            if (responseData.code === 200) {
-              this.reset();
-            }
-            return;
-          } else {
-            await Toast.fire({
-              icon: "error",
-              title: responseData.message
-            });
-            return
+    otpInputs.forEach((input, index) => {
+      input.addEventListener("input", (e) => {
+        if (e.target.value) {
+          if (index < otpInputs.length - 1) {
+            otpInputs[index + 1].focus();
           }
         }
+      });
 
-        if (this.id === "registerForm") {
-          endpoint = `${BASE_URL}/register`;
-          payload = {
-            firstName: document.getElementById("firstName").value,
-            lastName: document.getElementById("lastName").value,
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-          };
-        } else { // loginForm
-          endpoint = `${BASE_URL}/authenticate`;
-          payload = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-          };
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !e.target.value && index > 0) {
+          otpInputs[index - 1].focus();
         }
-
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const responseData = await response.json();
-
-        if (responseData.code === 200 || responseData.code === 201) {
-          await Toast.fire({
-            icon: "success",
-            title: responseData.message
-          });
-
-          if (this.id !== "registerForm") {
-            const emailInput = document.getElementById('email');
-            const rememberMeCheckbox = document.getElementById('rememberMe');
-
-            if (rememberMeCheckbox.checked) {
-              localStorage.setItem('rememberedEmail', emailInput.value);
-              localStorage.setItem('rememberMe', 'true');
-            } else {
-              localStorage.removeItem('rememberedEmail');
-              localStorage.removeItem('rememberMe');
-            }
-          }
-
-          sessionStorage.setItem("authData", JSON.stringify({
-            email:responseData.data.email,
-            token:responseData.data.token,
-          }));
-
-          window.location.href = DIRECTORY_URL;
-
-        } else {
-          await Toast.fire({
-            icon: "error",
-            title: responseData.message
-          });
-        }
-      } catch (error) {
-        await Toast.fire({
-          icon: "error",
-          title: error.message || "Fail to login!"
-        });
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-      }
-
+      });
     });
+  }
+
+// Setup form submissions
+  function setupFormSubmissions() {
+    const forms = document.querySelectorAll("form");
+
+    forms.forEach((form) => {
+      form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+
+        try {
+          // Set loading state
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+
+          // Handle different form types
+          if (this.id === "loginForm") {
+            await handleLoginForm(this);
+          } else if (this.id === "registerForm") {
+            await handleRegisterForm(this);
+          } else if (this.id === "adminAccessForm") {
+            await handleAdminAccessForm(this);
+          }
+        } catch (error) {
+          await Toast.fire({
+            icon: "error",
+            title: error.message || "An error occurred"
+          });
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
+    });
+  }
+
+// Handle login form submission
+  async function handleLoginForm(form) {
+    const email = form.querySelector("#email").value;
+    const password = form.querySelector("#password").value;
+
+    // Authenticate user
+    const response = await fetch(`${BASE_URL}/authenticate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.code !== 200) {
+      throw new Error(responseData.message || "Login failed");
+    }
+
+    // Store temporary auth data
+    tempAuthData = {
+      email: responseData.data.email,
+      token: responseData.data.token
+    };
+
+    // Check 2FA status
+    const twoFAResponse = await fetch(`${BASE_URL}/2fa?email=${encodeURIComponent(email)}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    const twoFAData = await twoFAResponse.json();
+
+    if (twoFAData.code !== 200) {
+      throw new Error(twoFAData.message || "Failed to check 2FA status");
+    }
+
+    if (twoFAData.data) {
+      // 2FA is enabled - show OTP modal
+      emailToVerify = email;
+      await sendOTP(email);
+
+      const otpModal = new bootstrap.Modal('#otpModal');
+      otpModal.show();
+      document.querySelector("#otpModal .otp-inputs input").focus();
+
+      // Wait for OTP verification
+      await new Promise((resolve) => {
+        const verifyBtn = document.getElementById("verifyOtpBtn");
+
+        function otpHandler() {
+          verifyOTP().then(resolve).catch(() => {
+            // Re-attach handler if verification fails
+            verifyBtn.addEventListener("click", otpHandler);
+          });
+        }
+
+        verifyBtn.addEventListener("click", otpHandler);
+      });
+    } else {
+      Toast.fire({
+        icon: "success",
+        title: "Login successful"
+      })
+
+      // Proceed with login
+      sessionStorage.setItem("authData", JSON.stringify(tempAuthData));
+      window.location.href = DIRECTORY_URL;
+    }
+  }
+
+// Send OTP function
+  async function sendOTP(email) {
+    const response = await fetch(`${BASE_URL}/sendOtpCode`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.code !== 200) {
+      throw new Error(responseData.message || "Failed to send OTP");
+    }
+
+    otpCode = responseData.data;
+    startTimer();
+  }
+
+// Verify OTP function
+  async function verifyOTP() {
+    const otpInputs = document.querySelectorAll("#otpModal .otp-inputs input");
+    const enteredOtp = Array.from(otpInputs).map(input => input.value).join('');
+
+    const verifyBtn = document.getElementById("verifyOtpBtn");
+    verifyBtn.disabled = true;
+    verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+
+    try {
+      if (enteredOtp != String(otpCode)) {
+        otpInputs.forEach(input => input.value = ""); // Clear on failure
+        throw new Error("Invalid OTP");
+      }
+
+      await Toast.fire({
+        icon: "success",
+        title: "OTP verified successfully"
+      });
+
+      // Clear inputs and hide modal
+      otpInputs.forEach(input => input.value = "");
+      bootstrap.Modal.getInstance('#otpModal').hide();
+
+      // Proceed with login
+      sessionStorage.setItem("authData", JSON.stringify(tempAuthData));
+      window.location.href = DIRECTORY_URL;
+    } catch (error) {
+      await Toast.fire({
+        icon: "error",
+        title: error.message
+      });
+    } finally {
+      verifyBtn.disabled = false;
+      verifyBtn.innerHTML = 'Verify OTP';
+    }
+  }
+
+// Timer functions
+  function startTimer() {
+    let timeLeft = 60;
+    const timerDisplay = document.getElementById("timer");
+    const resendBtn = document.getElementById("resendOtpBtn");
+
+    clearInterval(timerInterval);
+    resendBtn.disabled = true;
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      timerDisplay.textContent = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        resendBtn.disabled = false;
+      }
+    }, 1000);
+  }
+
+// Resend OTP handler
+  document.getElementById("resendOtpBtn").addEventListener("click", function() {
+    if (!emailToVerify) return;
+
+    this.disabled = true;
+    document.querySelectorAll("#otpModal .otp-inputs input").forEach(input => {
+      input.value = "";
+    });
+
+    sendOTP(emailToVerify);
+  });
+
+// Handle register form
+  async function handleRegisterForm(form) {
+    // Validate password
+    const password = form.querySelector("#password").value;
+    const confirmPassword = form.querySelector("#confirmPassword").value;
+
+    if (password !== confirmPassword) {
+      throw new Error("Passwords do not match");
+    }
+
+    // Submit registration
+    const response = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: form.querySelector("#firstName").value,
+        lastName: form.querySelector("#lastName").value,
+        email: form.querySelector("#email").value,
+        password: password
+      })
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.code !== 200 && responseData.code !== 201) {
+      throw new Error(responseData.message || "Registration failed");
+    }
+
+    const AuthData = {
+      email: responseData.data.email,
+      token: responseData.data.token
+    };
+
+    await Toast.fire({
+      icon: "success",
+      title: responseData.message
+    });
+
+    form.reset();
+    sessionStorage.setItem("authData", JSON.stringify(AuthData));
+    window.location.href = DIRECTORY_URL;
+  }
+
+// Handle admin access form
+  async function handleAdminAccessForm(form) {
+    const response = await fetch(`${BASE_URL}/requestAdminAccess`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: form.querySelector("#email").value,
+        reason: form.querySelector("#reason").value
+      })
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.code !== 200 && responseData.code !== 201) {
+      throw new Error(responseData.message || "Request failed");
+    }
+
+    await Toast.fire({
+      icon: "success",
+      title: responseData.message
+    });
+
+    form.reset();
+  }
+
+  // Reset Verify Button State When Closing Modal
+  document.getElementById('otpModal').addEventListener('hidden.bs.modal', function () {
+    const signInBtn = document.querySelector("#loginForm button[type='submit']");
+    if (signInBtn && signInBtn.disabled) {
+      signInBtn.disabled = false;
+      signInBtn.innerHTML = 'Sign In';
+    }
   });
 
   // Social login buttons animation

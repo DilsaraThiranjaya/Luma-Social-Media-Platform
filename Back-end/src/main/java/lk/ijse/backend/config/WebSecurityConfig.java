@@ -70,6 +70,7 @@ public class WebSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/api/v1/auth/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/auth/2fa").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/auth/authenticate",
                                 "/api/v1/auth/register",
@@ -80,9 +81,12 @@ public class WebSecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/api/v1/profile/*",
+                        .requestMatchers(
+                                "/api/v1/profile/*",
                                 "api/v1/settings/*").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers(
+                                "/oauth2/**",
+                                "/login/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(authorization -> authorization
@@ -104,7 +108,7 @@ public class WebSecurityConfig {
                                 response.setStatus(200);
                                 response.getWriter().write("{\"token\": \"" + token + "\", \"message\": \"Login successful\"}");
                             } else {
-                                response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline/timeline.html?token=" + token);
+                                response.sendRedirect("http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline.html?token=" + token);
                             }
                         })
                         .failureHandler((request, response, exception) -> {

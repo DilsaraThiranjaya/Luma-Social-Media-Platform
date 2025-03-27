@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function initializeUI() {
 
-// Toast configuration
+        // Toast configuration
         const Toast = Swal.mixin({
             toast: true,
             position: "bottom-end",
@@ -124,13 +124,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             timerProgressBar: true,
         });
 
-        // Initialize page
+        // Initialize
         loadUserData();
+        initLocationAutocomplete();
+        setupFormValidation();
 
         let initialEmail = null;
 
         // Verify Email Button Appearance
-        document.getElementById('email').addEventListener('input', function() {
+        document.getElementById('email').addEventListener('input', function () {
             const verifyButton = document.querySelector('.verify-button');
             if (this.value !== initialEmail) {
                 verifyButton.classList.remove('d-none');
@@ -410,12 +412,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             accountForm.addEventListener("submit", async function (e) {
                 e.preventDefault();
 
+                // 1. First check email verification
                 if (!document.getElementById('email').classList.contains("is-valid")) {
                     await Toast.fire({
                         icon: "error",
                         title: "Email is not verified!"
                     });
-                    return
+                    return;
+                }
+
+                // 2. Then validate all fields
+                if (!validateAllFields()) {
+                    scrollToFirstError();
+                    showErrorSummary();
+                    return;
                 }
 
                 const submitBtn = this.querySelector('button[type="submit"]');
@@ -463,7 +473,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         education: educationEntries,
                         workExperience: workEntries
                     };
-
                     const response = await fetch(`${BASE_URL}/settings/account`, {
                         method: 'PUT',
                         headers: {
@@ -480,15 +489,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                             icon: "success",
                             title: responseData.message
                         });
-                        return;
                     } else {
                         await Toast.fire({
                             icon: "error",
                             title: responseData.message
                         });
-                        return
                     }
-
                 } catch (error) {
                     await Toast.fire({
                         icon: "error",
@@ -499,6 +505,63 @@ document.addEventListener('DOMContentLoaded', async () => {
                     submitBtn.innerHTML = originalText;
                 }
             });
+        }
+
+        function validateAllFields() {
+            let isValid = true;
+
+            // Validate static fields
+            const staticFields = ['firstName', 'lastName', 'email', 'phone', 'location', 'bio', 'gender'];
+            staticFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    const event = { target: field };
+                    if (!validateField(event)) {
+                        isValid = false;
+                    }
+                }
+            });
+
+            // Validate dynamic fields (education/work)
+            document.querySelectorAll('#educationContainer input, #workContainer input').forEach(field => {
+                if (field.value.trim() && !validateDynamicField(field)) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        function validateDynamicField(field) {
+            // Add specific validation for dynamic fields if needed
+            return true; // Default to valid if no special validation
+        }
+
+        function scrollToFirstError() {
+            const firstError = document.querySelector('.input-error');
+            if (firstError) {
+                firstError.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                firstError.focus();
+            }
+        }
+
+        function showErrorSummary() {
+            const errorMessages = [];
+            document.querySelectorAll('.validation-message').forEach(el => {
+                if (el.style.display === 'block') {
+                    errorMessages.push(el.textContent);
+                }
+            });
+
+            if (errorMessages.length > 0) {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Form Errors'
+                })
+            }
         }
 
         // Privacy Settings
@@ -886,29 +949,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             maxDate: "today"
         });
 
-        // Session Management
-        // const sessionButtons = document.querySelectorAll(".session-item button");
-        // sessionButtons.forEach((button) => {
-        //     button.addEventListener("click", function () {
-        //         const sessionItem = this.closest(".session-item");
-        //         const deviceName = sessionItem.querySelector(".device-name").textContent;
-        //
-        //         if (
-        //             confirm(`Are you sure you want to end the session for ${deviceName}?`)
-        //         ) {
-        //             sessionItem.style.opacity = "0.5";
-        //             this.disabled = true;
-        //             this.innerHTML =
-        //                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-        //
-        //             // Simulate API call
-        //             setTimeout(() => {
-        //                 sessionItem.remove();
-        //             }, 1500);
-        //         }
-        //     });
-        // });
-
         // Email verification
         let timerInterval;
         let otpCode = null;
@@ -1174,24 +1214,268 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        // Location autocomplete (simulated)
-        const locationInput = document.getElementById("location");
-        let timeoutId;
+        function initLocationAutocomplete() {
+            const locationInput = document.getElementById("location");
+            let timeoutId;
+            let resultsContainer;
 
-        locationInput.addEventListener("input", function () {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                // Simulate location API call
-                if (this.value.length > 2) {
-                    // Add loading indicator
-                    this.style.backgroundImage =
-                        "url('data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23999' d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z'/%3E%3C/svg%3E')";
-                    this.style.backgroundRepeat = "no-repeat";
-                    this.style.backgroundPosition = "right 10px center";
-                    this.style.backgroundSize = "20px";
+            // Create results container
+            function createResultsContainer() {
+                if (!resultsContainer) {
+                    resultsContainer = document.createElement("div");
+                    resultsContainer.className = "autocomplete-results";
+                    locationInput.parentNode.appendChild(resultsContainer);
                 }
-            }, 300);
-        });
+            }
+
+            // Show loading state
+            function showLoading() {
+                locationInput.classList.add("loading");
+            }
+
+            // Hide loading state
+            function hideLoading() {
+                locationInput.classList.remove("loading");
+            }
+
+            // Show suggestions
+            function showSuggestions(suggestions) {
+                createResultsContainer();
+                resultsContainer.innerHTML = suggestions
+                    .map(location => `<div class="autocomplete-item">${location}</div>`)
+                    .join("");
+                resultsContainer.style.display = "block";
+            }
+
+            // Hide suggestions
+            function hideSuggestions() {
+                if (resultsContainer) {
+                    resultsContainer.innerHTML = "";
+                    resultsContainer.style.display = "none";
+                }
+            }
+
+            // Fetch locations from OpenStreetMap API
+            async function fetchLocations(query) {
+                try {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=5`);
+                    const data = await response.json();
+
+                    return data.map(place => formatLocation(place.display_name));
+                } catch (error) {
+                    console.error("Error fetching location data:", error);
+                    return [];
+                }
+            }
+
+            // Format location string
+            function formatLocation(fullAddress) {
+                const parts = fullAddress.split(",");
+                if (parts.length >= 3) {
+                    // Take first, second, and last parts (City, District, Country)
+                    return `${parts[0].trim()}, ${parts[1].trim()}, ${parts[parts.length - 1].trim()}`;
+                }
+                return fullAddress; // If format doesn't match, return original
+            }
+
+            // Handle input event
+            locationInput.addEventListener("input", function (e) {
+                clearTimeout(timeoutId);
+                const value = e.target.value.trim();
+
+                if (value.length < 2) {
+                    hideSuggestions();
+                    return;
+                }
+
+                timeoutId = setTimeout(async () => {
+                    showLoading();
+
+                    // Fetch locations from API
+                    const suggestions = await fetchLocations(value);
+
+                    hideLoading();
+
+                    if (suggestions.length > 0) {
+                        showSuggestions(suggestions);
+                    } else {
+                        hideSuggestions();
+                    }
+                }, 300);
+            });
+
+            // Handle clicks on suggestions
+            document.addEventListener("click", function (e) {
+                if (e.target.classList.contains("autocomplete-item")) {
+                    locationInput.value = e.target.textContent;
+                    hideSuggestions();
+                }
+            });
+
+            // Close suggestions when clicking outside
+            document.addEventListener("click", function (e) {
+                if (!locationInput.contains(e.target)) {
+                    hideSuggestions();
+                }
+            });
+
+            // Handle keyboard navigation
+            locationInput.addEventListener("keydown", function (e) {
+                if (e.key === "Escape") {
+                    hideSuggestions();
+                }
+            });
+        }
+
+        // Validation Functions
+        function setupFormValidation() {
+            // Add validation message containers
+            addValidationContainers();
+
+            // Real-time validation for all fields except dates
+            document.querySelectorAll('#accountForm input:not(.education-date):not(.work-date), #accountForm select, #accountForm textarea').forEach(input => {
+                input.addEventListener('input', validateField);
+                input.addEventListener('blur', validateField);
+            });
+
+            // Form submission validation
+            document.getElementById('accountForm').addEventListener('submit', function(e) {
+                if (!validateForm()) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        function addValidationContainers() {
+            const fields = [
+                'firstName', 'lastName', 'email', 'phone', 'location', 'bio', 'gender'
+            ];
+
+            fields.forEach(id => {
+                const field = document.getElementById(id);
+                if (field) {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'validation-message';
+                    field.parentNode.appendChild(messageDiv);
+                }
+            });
+        }
+
+        function validateField(e) {
+            const field = e.target;
+            const value = field.value.trim();
+            const fieldName = field.id;
+            let isValid = true;
+            let errorMessage = '';
+
+            // Skip validation for email field if it's already verified
+            if (fieldName === 'email' && field.classList.contains('email-verified')) {
+                return true;
+            }
+
+            // Common validations
+            switch(fieldName) {
+                case 'firstName':
+                case 'lastName':
+                    if (!value) {
+                        errorMessage = 'This field is required';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'email':
+                    if (!value) {
+                        errorMessage = 'Email is required';
+                        isValid = false;
+                    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+                        errorMessage = 'Invalid email format';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'phone':
+                    if (value && !/^\+?[0-9\s-]{7,}$/.test(value)) {
+                        errorMessage = 'Invalid phone number format';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'location':
+                    if (value && !/^[A-Za-z\s]+,\s*[A-Za-z\s]+$/.test(value)) {
+                        errorMessage = 'Location should be in "City, Country" format';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'bio':
+                    if (value.length > 1000) {
+                        errorMessage = 'Bio cannot exceed 1000 characters';
+                        isValid = false;
+                    }
+                    break;
+            }
+
+            updateFieldValidation(field, isValid, errorMessage);
+            return isValid;
+        }
+
+        function updateFieldValidation(field, isValid, errorMessage) {
+            const messageDiv = field.parentNode.querySelector('.validation-message');
+
+            if (messageDiv) {
+                if (!isValid) {
+                    field.classList.add('input-error');
+                    messageDiv.textContent = errorMessage;
+                    messageDiv.style.display = 'block';
+                } else {
+                    field.classList.remove('input-error');
+                    messageDiv.style.display = 'none';
+
+                    // Special handling for email verification
+                    if (field.id === 'email' && field.classList.contains('email-verified')) {
+                        return; // Don't modify verified email field styling
+                    }
+                }
+            }
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            // Validate all fields except dates
+            document.querySelectorAll('#accountForm input:not(.education-date):not(.work-date), #accountForm select, #accountForm textarea').forEach(field => {
+                const event = { target: field };
+                if (!validateField(event)) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        // Session Management
+        // const sessionButtons = document.querySelectorAll(".session-item button");
+        // sessionButtons.forEach((button) => {
+        //     button.addEventListener("click", function () {
+        //         const sessionItem = this.closest(".session-item");
+        //         const deviceName = sessionItem.querySelector(".device-name").textContent;
+        //
+        //         if (
+        //             confirm(`Are you sure you want to end the session for ${deviceName}?`)
+        //         ) {
+        //             sessionItem.style.opacity = "0.5";
+        //             this.disabled = true;
+        //             this.innerHTML =
+        //                 '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+        //
+        //             // Simulate API call
+        //             setTimeout(() => {
+        //                 sessionItem.remove();
+        //             }, 1500);
+        //         }
+        //     });
+        // });
+
     }
 });
 

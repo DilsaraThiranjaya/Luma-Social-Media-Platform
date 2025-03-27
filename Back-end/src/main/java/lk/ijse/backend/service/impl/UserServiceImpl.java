@@ -60,7 +60,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public int updateUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+            // Check if password is NOT already BCrypt-encrypted
+            if (!userDTO.getPassword().startsWith("$2a$")) {  // BCrypt prefix
+                userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            }
+
             userRepository.save(modelMapper.map(userDTO, User.class));
             return VarList.Created;
         } else {

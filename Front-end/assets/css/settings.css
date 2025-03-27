@@ -257,6 +257,7 @@
     background: var(--input-bg) !important;
   }
 
+  /* OTP Input Fields */
 .otp-inputs {
   display: flex;
   gap: 10px;
