@@ -261,6 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     showStep(3);
                     btn.disabled = false;
                     btn.innerHTML = "Verify OTP";
+                    otpCode = null;
                 }, 1000)
             } else {
                 otpInputs.forEach((input) => (input.value = ""));

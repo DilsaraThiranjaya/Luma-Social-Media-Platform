@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   handleRememberMe();
   setupOTPInputs();
   setupFormSubmissions();
+  setupFormValidation();
 
   // function handleGoogleCallback() {
   //   const urlParams = new URLSearchParams(window.location.search);
@@ -276,13 +277,19 @@ document.addEventListener("DOMContentLoaded", function () {
       await new Promise((resolve) => {
         const verifyBtn = document.getElementById("verifyOtpBtn");
 
+        // Use named function for proper removal
         function otpHandler() {
-          verifyOTP().then(resolve).catch(() => {
-            // Re-attach handler if verification fails
-            verifyBtn.addEventListener("click", otpHandler);
-          });
+          verifyOTP()
+              .then(resolve)
+              .catch(() => {
+                // Re-attach only after cleaning up
+                verifyBtn.removeEventListener("click", otpHandler);
+                verifyBtn.addEventListener("click", otpHandler);
+              });
         }
 
+        // Clean up previous listeners first
+        verifyBtn.removeEventListener("click", otpHandler);
         verifyBtn.addEventListener("click", otpHandler);
       });
     } else {
@@ -340,6 +347,16 @@ document.addEventListener("DOMContentLoaded", function () {
       // Clear inputs and hide modal
       otpInputs.forEach(input => input.value = "");
       bootstrap.Modal.getInstance('#otpModal').hide();
+      otpCode = null;
+
+      if (!tempAuthData) {
+        await Toast.fire({
+          icon: "error",
+          title: "Session expired. Please login again."
+        });
+        bootstrap.Modal.getInstance('#otpModal').hide();
+        return;
+      }
 
       // Proceed with login
       sessionStorage.setItem("authData", JSON.stringify(tempAuthData));
@@ -389,6 +406,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Handle register form
   async function handleRegisterForm(form) {
+    // 1. First check email verification
+    if (!document.getElementById('email').classList.contains("is-valid")) {
+      await Toast.fire({
+        icon: "error",
+        title: "Email is not verified!"
+      });
+      return;
+    }
+
+    // 2. Then validate all fields
+    if (!validateAllFields()) {
+      scrollToFirstError();
+      showErrorSummary();
+      return;
+    }
+
     // Validate password
     const password = form.querySelector("#password").value;
     const confirmPassword = form.querySelector("#confirmPassword").value;
@@ -455,12 +488,63 @@ document.addEventListener("DOMContentLoaded", function () {
     form.reset();
   }
 
+  function validateAllFields() {
+    let isValid = true;
+
+    // Validate static fields
+    const staticFields = ['firstName', 'lastName', 'email','password', 'confirmPassword'];
+    staticFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        const event = {target: field};
+        if (!validateField(event)) {
+          isValid = false;
+        }
+      }
+    });
+    return isValid;
+  }
+
+  function scrollToFirstError() {
+    const firstError = document.querySelector('.input-error');
+    if (firstError) {
+      firstError.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+      firstError.focus();
+    }
+  }
+
+  function showErrorSummary() {
+    const errorMessages = [];
+    document.querySelectorAll('.validation-message').forEach(el => {
+      if (el.style.display === 'block') {
+        errorMessages.push(el.textContent);
+      }
+    });
+
+    if (errorMessages.length > 0) {
+      Toast.fire({
+        icon: 'error',
+        title: 'Form Errors'
+      })
+    }
+  }
+
   // Reset Verify Button State When Closing Modal
   document.getElementById('otpModal').addEventListener('hidden.bs.modal', function () {
     const signInBtn = document.querySelector("#loginForm button[type='submit']");
     if (signInBtn && signInBtn.disabled) {
       signInBtn.disabled = false;
       signInBtn.innerHTML = 'Sign In';
+      otpCode = null;
+    }
+    const verifyBtn = document.querySelector('.verify-button');
+    if (verifyBtn && verifyBtn.disabled) {
+      verifyBtn.disabled = false;
+      verifyBtn.innerHTML = 'Verify';
+      otpCode = null;
     }
   });
 
@@ -489,5 +573,197 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  // Register Form Email Verification
+
+//Verify Button Handler
+  document.querySelector(".verify-button").addEventListener("click", function () {
+    const email = document.getElementById("email").value;
+    if (!email) return;
+
+    emailToVerify = email;
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+
+    sendOTPRegister(email)
+        .then(() => {
+          const otpModal = new bootstrap.Modal('#otpModal');
+          otpModal.show();
+          otpInputs[0].focus();
+        })
+        .catch((error) => {
+          btn.disabled = false;
+          btn.innerHTML = 'Verify';
+          otpCode = null;
+          Toast.fire({icon: 'error', title: error.message});
+        });
+  });
+
+  async function sendOTPRegister(email) {
+    const response = await fetch(`${BASE_URL}/sendOtpCodeRegister`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email })
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.code !== 200) {
+      throw new Error(responseData.message || "Failed to send OTP");
+    }
+
+    otpCode = responseData.data;
+    startTimer();
+  }
+
+// Verify OTP Handler
+  document.getElementById("verifyOtpBtn").addEventListener("click", async function () {
+    const enteredOtp = Array.from(otpInputs).map(input => input.value).join('');
+    if (enteredOtp.length !== 6) return;
+
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
+
+    if (enteredOtp == otpCode) {
+      Toast.fire({icon: 'success', title: 'Email verified!'});
+      document.getElementById('email').classList.add('is-valid');
+      document.querySelector('.verify-button').classList.add('d-none');
+      initialEmail = document.getElementById('email').value;
+      bootstrap.Modal.getInstance('#otpModal').hide();
+      otpCode = null;
+    } else {
+      Toast.fire({icon: 'error', title: 'Invalid OTP'});
+      otpInputs.forEach(input => input.value = "");
+    }
+    btn.disabled = false;
+    btn.innerHTML = 'Verify OTP';
+  });
+
+  // Validation Functions
+  function setupFormValidation() {
+    // Add validation message containers
+    addValidationContainers();
+
+    // Real-time validation for all fields except dates
+    document.querySelectorAll('#registerForm input').forEach(input => {
+      input.addEventListener('input', validateField);
+      input.addEventListener('blur', validateField);
+    });
+
+    // Form submission validation
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      if (!validateForm()) {
+        e.preventDefault();
+      }
+    });
+  }
+
+  function addValidationContainers() {
+    const fields = [
+      'firstName', 'lastName', 'email','password', 'confirmPassword'
+    ];
+
+    fields.forEach(id => {
+      const field = document.getElementById(id);
+      if (field) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'validation-message';
+        field.parentNode.appendChild(messageDiv);
+      }
+    });
+  }
+
+  function validateField(e) {
+    const field = e.target;
+    const value = field.value.trim();
+    const fieldName = field.id;
+    let isValid = true;
+    let errorMessage = '';
+
+    // Skip validation for email field if it's already verified
+    if (fieldName === 'email' && field.classList.contains('is-valid')) {
+      return true;
+    }
+
+    // Common validations
+    switch(fieldName) {
+      case 'firstName':
+      case 'lastName':
+        if (!value) {
+          errorMessage = 'This field is required';
+          isValid = false;
+        }
+        break;
+
+      case 'email':
+        if (!value) {
+          errorMessage = 'Email is required';
+          isValid = false;
+        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+          errorMessage = 'Invalid email format';
+          isValid = false;
+        }
+        break;
+
+      case 'password':
+      case 'confirmPassword':
+        if (!value) {
+          errorMessage = 'Password is required';
+          isValid = false;
+        } else if (value.length < 8) {
+          errorMessage = 'Password must be at least 8 characters';
+          isValid = false;
+        }
+        break;
+    }
+
+    updateFieldValidation(field, isValid, errorMessage);
+    return isValid;
+  }
+
+  function updateFieldValidation(field, isValid, errorMessage) {
+    const messageDiv = field.parentNode.querySelector('.validation-message');
+
+    if (messageDiv) {
+      if (!isValid) {
+        if (field.id === 'email') {
+          document.querySelector('.verify-button').classList.add('d-none');
+        }
+
+        field.classList.add('input-error');
+        messageDiv.textContent = errorMessage;
+        messageDiv.style.display = 'block';
+      } else {
+        if (field.id === 'email') {
+          document.querySelector('.verify-button').classList.remove('d-none');
+        }
+        field.classList.remove('input-error');
+        messageDiv.style.display = 'none';
+
+        // Special handling for email verification
+        if (field.id === 'email' && field.classList.contains('is-valid')) {
+          return; // Don't modify verified email field styling
+        }
+      }
+    }
+  }
+
+  function validateForm() {
+    let isValid = true;
+
+    // Validate all fields except dates
+    document.querySelectorAll('#registerForm input').forEach(field => {
+      const event = { target: field };
+      if (!validateField(event)) {
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  }
 });
 

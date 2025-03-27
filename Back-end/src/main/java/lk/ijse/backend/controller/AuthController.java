@@ -198,6 +198,37 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/sendOtpCodeRegister", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> sendOtpCodeRegister(@RequestBody Map<String, String> request) {
+        log.info("Received senOtpCode request");
+        String email = request.get("email");
+        int otpCode = generateOTP();
+
+        String emailTitle = "OTP Code";
+        String emailContent = "Your One Time OTP Code: " + String.valueOf(otpCode);
+
+        try {
+            UserDTO userDTO = userService.loadUserDetailsByEmail(email);
+            if (userDTO != null) {
+                log.error("User already exists for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Already Exists!", null));
+            }
+
+            boolean isSent = emailSender.sendEmail(email, emailTitle, emailContent);
+            if (!isSent) {
+                log.error("Failed to send otp code to email: {}", email);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Failed to send otp code to email", null));
+            }
+
+            log.info("Email sent successfully");
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "OTP Sent!", otpCode));
+
+        } catch (Exception e) {
+            log.error("Failed to send email: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "Failed to send email", e.getMessage()));
+        }
+    }
+
     @PostMapping(value = "/resetPassword", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> resetPassword(@RequestBody Map<String, String> request) {
         log.info("Received resetPassword request");

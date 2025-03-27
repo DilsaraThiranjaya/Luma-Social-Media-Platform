@@ -31,17 +31,23 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
-        );
+        if (user != null) {
+            return new org.springframework.security.core.userdetails.User(
+                    user.getEmail(),
+                    user.getPassword(),
+                    Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
+            );
+        }
+        return null;
     }
 
     @Override
     public UserDTO loadUserDetailsByEmail(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
-        return modelMapper.map(user, UserDTO.class);
+        if (user != null) {
+            return modelMapper.map(user, UserDTO.class);
+        }
+        return null;
     }
 
     @Override

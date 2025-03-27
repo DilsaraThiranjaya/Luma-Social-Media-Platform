@@ -76,6 +76,7 @@ public class WebSecurityConfig {
                                 "/api/v1/auth/register",
                                 "/api/v1/auth/refreshToken",
                                 "/api/v1/auth/sendOtpCode",
+                                "/api/v1/auth/sendOtpCodeRegister",
                                 "/api/v1/auth/resetPassword",
                                 "/api/v1/auth/requestAdminAccess",
                                 "/v3/api-docs/**",

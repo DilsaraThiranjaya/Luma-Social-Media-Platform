@@ -524,17 +524,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             // Validate dynamic fields (education/work)
             document.querySelectorAll('#educationContainer input, #workContainer input').forEach(field => {
-                if (field.value.trim() && !validateDynamicField(field)) {
+                if (field.value.trim() === '') {
                     isValid = false;
                 }
             });
 
             return isValid;
-        }
-
-        function validateDynamicField(field) {
-            // Add specific validation for dynamic fields if needed
-            return true; // Default to valid if no special validation
         }
 
         function scrollToFirstError() {
@@ -589,10 +584,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const responseData = await response.json();
 
                     if (responseData.code === 200 || responseData.code === 201) {
-                        await Toast.fire({
-                            icon: "success",
-                            title: responseData.message
-                        });
                         return;
                     } else {
                         await Toast.fire({
@@ -636,10 +627,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const responseData = await response.json();
 
                     if (responseData.code === 200 || responseData.code === 201) {
-                        await Toast.fire({
-                            icon: "success",
-                            title: responseData.message
-                        });
                         return;
                     } else {
                         await Toast.fire({
@@ -859,10 +846,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const responseData = await response.json();
 
                     if (responseData.code === 200 || responseData.code === 201) {
-                        await Toast.fire({
-                            icon: "success",
-                            title: responseData.message
-                        });
                         return
                     } else {
                         await Toast.fire({
@@ -1010,6 +993,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .catch((error) => {
                     btn.disabled = false;
                     btn.innerHTML = 'Verify';
+                    otpCode = null;
                     Toast.fire({icon: 'error', title: error.message});
                 });
         });
@@ -1055,6 +1039,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 document.querySelector('.verify-button').classList.add('d-none');
                 initialEmail = document.getElementById('email').value;
                 bootstrap.Modal.getInstance('#otpModal').hide();
+                otpCode = null;
             } else {
                 Toast.fire({icon: 'error', title: 'Invalid OTP'});
                 otpInputs.forEach(input => input.value = "");
@@ -1077,6 +1062,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (verifyBtn && verifyBtn.disabled) {
                 verifyBtn.disabled = false;
                 verifyBtn.innerHTML = 'Verify';
+                otpCode = null;
             }
         });
 
@@ -1369,7 +1355,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let errorMessage = '';
 
             // Skip validation for email field if it's already verified
-            if (fieldName === 'email' && field.classList.contains('email-verified')) {
+            if (fieldName === 'email' && field.classList.contains('is-valid')) {
                 return true;
             }
 
@@ -1422,19 +1408,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         function updateFieldValidation(field, isValid, errorMessage) {
             const messageDiv = field.parentNode.querySelector('.validation-message');
 
-            if (messageDiv) {
-                if (!isValid) {
-                    field.classList.add('input-error');
-                    messageDiv.textContent = errorMessage;
-                    messageDiv.style.display = 'block';
-                } else {
-                    field.classList.remove('input-error');
-                    messageDiv.style.display = 'none';
+            if (!isValid) {
+                if (field.id === 'email') {
+                    document.querySelector('.verify-button').classList.add('d-none');
+                }
 
-                    // Special handling for email verification
-                    if (field.id === 'email' && field.classList.contains('email-verified')) {
-                        return; // Don't modify verified email field styling
-                    }
+                field.classList.add('input-error');
+                messageDiv.textContent = errorMessage;
+                messageDiv.style.display = 'block';
+            } else {
+                if (field.id === 'email') {
+                    document.querySelector('.verify-button').classList.remove('d-none');
+                }
+                field.classList.remove('input-error');
+                messageDiv.style.display = 'none';
+
+                // Special handling for email verification
+                if (field.id === 'email' && field.classList.contains('is-valid')) {
+                    return; // Don't modify verified email field styling
                 }
             }
         }
