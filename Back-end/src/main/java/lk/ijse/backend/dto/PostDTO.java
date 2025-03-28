@@ -4,7 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
+import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.Post.PrivacyLevel;
+import lk.ijse.backend.entity.Post.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,17 +23,17 @@ import java.util.List;
 public class PostDTO {
     private int postId;
 
-    @NotBlank(message = "Content cannot be blank")
     @Size(max = 5000, message = "Content must be less than or equal to 5000 characters")
     private String content;
 
-    @Null
     private LocalDateTime createdAt;
 
-    @NotNull(message = "Privacy level cannot be null")
-    private PrivacyLevel privacy;
+    @Builder.Default
+    private PrivacyLevel privacy = PrivacyLevel.PUBLIC;
 
-    @NotNull(message = "User cannot be null")
+    @Builder.Default
+    private Status status = Status.ACTIVE;
+
     private UserDTO user;
 
     private List<PostMediaDTO> media = new ArrayList<>();
@@ -39,6 +41,4 @@ public class PostDTO {
     private List<CommentDTO> comments = new ArrayList<>();
 
     private List<ReactionDTO> reactions = new ArrayList<>();
-
-    private EventDTO event;
 }

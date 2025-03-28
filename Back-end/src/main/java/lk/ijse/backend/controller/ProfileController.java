@@ -1,8 +1,10 @@
 package lk.ijse.backend.controller;
 
+import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import lk.ijse.backend.service.AccountService;
 import lk.ijse.backend.service.CloudinaryService;
+import lk.ijse.backend.service.PostService;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import java.io.IOException;
 public class ProfileController {
     private final UserService userService;
     private final AccountService accountService;
+    private final PostService postService;
     private final CloudinaryService cloudinaryService;
 
 
@@ -114,6 +117,35 @@ public class ProfileController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping(value = "/posts/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createPost(@Valid @RequestBody PostDTO postDTO, Authentication authentication) {
+        String email = authentication.getName();
+        log.info("Received request to create post for email: {}", email);
+
+        try {
+            UserDTO userDTO = userService.loadUserDetailsByEmail(email);
+            if (userDTO == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            postDTO.setUser(userDTO);
+            int res = postService.createPost(postDTO);
+
+            if (res != VarList.OK) {
+                log.error("Failed to create post for email: {}", email);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(VarList.Internal_Server_Error, "Error creating post", null));
+            }
+            log.info("Successfully created post for email: {}", email);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(VarList.Created, "Post created successfully", null));
+        } catch (Exception e) {
+            log.error("Error creating post for email: {}", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error creating post", e.getMessage()));
+        }
+    }
+
     //    @PreAuthorize("hasAuthority('USER')")
 //    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> getProfile(@PathVariable Integer userId) {
@@ -141,22 +173,6 @@ public class ProfileController {
 //            log.error("Error updating profile for user ID: {}", userDTO.getUserId(), e);
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 //                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating profile", e.getMessage()));
-//        }
-//    }
-
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> createPost(@Valid @RequestBody PostDTO postDTO) {
-//        log.info("Received request to create post for user ID: {}", postDTO.getUser().getUserId());
-//        try {
-//            PostDTO savedPost = profileService.createPost(postDTO);
-//            log.info("Successfully created post for user ID: {}", postDTO.getUser().getUserId());
-//            return ResponseEntity.status(HttpStatus.CREATED)
-//                    .body(new ResponseDTO(VarList.Created, "Post created successfully", savedPost));
-//        } catch (Exception e) {
-//            log.error("Error creating post for user ID: {}", postDTO.getUser().getUserId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error creating post", e.getMessage()));
 //        }
 //    }
 //

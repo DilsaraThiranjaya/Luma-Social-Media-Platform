@@ -22,7 +22,7 @@ public class  Event {
     private LocalDate endDate;
     private String location;
 
-    @OneToOne
-    @JoinColumn(name = "post_id", unique = true, nullable = false)
-    private Post post;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

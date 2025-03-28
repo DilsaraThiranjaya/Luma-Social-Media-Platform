@@ -382,7 +382,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           success: function(response) {
             if (response.code === 200) {
               $("#coverImage").attr("src", response.data + "?t=" + new Date().getTime());
-              return
+
+              createProfileAndCoverPicPost(response.data, "Updated my cover photo!");
             } else {
               Toast.fire({
                 icon: "error",
@@ -454,7 +455,8 @@ document.addEventListener('DOMContentLoaded', async () => {
               $("#profileImage").attr("src", response.data + "?t=" + new Date().getTime());
               $("#navBarProfileImg").attr("src", response.data + "?t=" + new Date().getTime());
               $("#navProfileImg").attr("src", response.data + "?t=" + new Date().getTime());
-              return
+
+              createProfileAndCoverPicPost(response.data, "Updated my profile picture!");
             } else {
               Toast.fire({
                 icon: "error",
@@ -478,6 +480,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       }
     });
+
+    // Function to create a post when profile picture is updated
+    function createProfileAndCoverPicPost(imageUrl, content) {
+      const postData = {
+        content: content,
+        privacy: "PUBLIC",
+        media: [{
+          mediaUrl: imageUrl,
+          mediaType: "IMAGE"
+        }]
+      };
+
+      $.ajax({
+        url: BASE_URL + "/profile/posts/create",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(postData),
+        headers: {
+          "Authorization": "Bearer " + authData.token
+        },
+        success: function(response) {
+
+        },
+        error: function(error) {
+          Toast.fire({
+            icon: "error",
+            title: error.message
+          })
+        }
+      });
+    }
 
     // Photo overlay effect
     $(".photo-card").hover(

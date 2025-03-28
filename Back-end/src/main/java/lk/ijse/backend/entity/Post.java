@@ -20,7 +20,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int postId;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @CreationTimestamp
@@ -29,6 +29,10 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private PrivacyLevel privacy = PrivacyLevel.PUBLIC;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status = Status.ACTIVE;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -52,8 +56,7 @@ public class Post {
     @OneToMany(mappedBy = "targetPost", cascade = CascadeType.ALL)
     private List<AdminAction> adminActions = new ArrayList<>();
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
-    private Event event;
-
     public enum PrivacyLevel { PUBLIC, FRIENDS, PRIVATE }
+
+    public enum Status { ACTIVE, INACTIVE }
 }

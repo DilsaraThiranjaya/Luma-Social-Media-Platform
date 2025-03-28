@@ -22,7 +22,4 @@ public class PostMediaDTO {
 
     @NotNull(message = "Media type cannot be null")
     private MediaType mediaType;
-
-    @NotNull(message = "Post cannot be null")
-    private PostDTO post;
 }

@@ -33,6 +33,5 @@ public class EventDTO {
     @Pattern(regexp = "^[A-Za-z\\s]+,\\s*[A-Za-z\\s]+$", message = "Location should be valid")
     private String location;
 
-    @NotNull(message = "Post cannot be null")
-    private PostDTO post;
+    private UserDTO user;
 }
