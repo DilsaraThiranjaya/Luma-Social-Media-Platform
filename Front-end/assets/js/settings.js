@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             initializeUI();
             initializeRoleBasedAccess(getRoleFromToken(authData.token));
+            initializeNavbarUserInfo();
             initializeLogout();
         } catch (error) {
             await handleAuthError("Session expired. Please log in again.");
@@ -107,6 +108,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         });
+    }
+
+    async function initializeNavbarUserInfo() {
+        try {
+            const response = await fetch(`${BASE_URL}/profile/profileInfo`, {
+                headers: {
+                    'Authorization': `Bearer ${authData.token}`
+                }
+            });
+            const responseData = await response.json();
+
+            if (responseData.code === 200 || responseData.code === 201) {
+                const user = responseData.data;
+
+                // Update Profile Name in Navigation
+                document.getElementById('navProfileName').textContent = `${user.firstName} ${user.lastName}`;
+
+                // Set Navbar Profile Picture
+                if (user.profilePictureUrl) {
+                    document.getElementById('navProfileImg').src = user.profilePictureUrl;
+                    document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
+                }
+            } else {
+                await Toast.fire({
+                    icon: "error",
+                    title: responseData.message
+                });
+                return;
+            }
+        } catch (error) {
+            await Toast.fire({
+                icon: "error",
+                title: error.message || "Failed to load user data"
+            });
+        }
     }
 
     function initializeUI() {
@@ -195,7 +231,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="form-floating">
                                     <input type="text" class="form-control" 
                                            value="${edu.institution || ''}" 
-                                           placeholder="School/University name" />
+                                           placeholder="School/University name"
+                                            ${index === 0 ? 'required' : ''}/>
                                     <label>School/University</label>
                                 </div>
                             </div>
@@ -203,8 +240,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="form-floating">
                                     <input type="text" class="form-control" 
                                            value="${edu.fieldOfStudy || ''}" 
-                                           placeholder="Degree/Field of study" />
+                                           placeholder="Degree/Field of study"
+                                            ${index === 0 ? 'required' : ''}/>
                                     <label>Degree/Field of Study</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -213,6 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                            value="${edu.startDate || ''}" 
                                            placeholder="Start date" />
                                     <label>Start Date</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -221,6 +261,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                            value="${edu.endDate || ''}" 
                                            placeholder="End date" />
                                     <label>End Date</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                         </div>
@@ -243,24 +284,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="form-floating">
                         <input type="text" class="form-control" placeholder="School/University name" />
                         <label>School/University</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" placeholder="Degree/Field of study" />
                         <label>Degree/Field of Study</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control education-date" placeholder="Start date" />
                         <label>Start Date</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control education-date" placeholder="End date" />
                         <label>End Date</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
             </div>
@@ -284,16 +329,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="form-floating">
                                     <input type="text" class="form-control" 
                                            value="${work.company || ''}" 
-                                           placeholder="Company name" />
+                                           placeholder="Company name" 
+                                           ${index === 0 ? 'required' : ''}/>
                                     <label>Company</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" 
                                            value="${work.jobTitle || ''}" 
-                                           placeholder="Job title" />
+                                           placeholder="Job title" 
+                                           ${index === 0 ? 'required' : ''}/>
                                     <label>Job Title</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -302,6 +351,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                            value="${work.startDate || ''}" 
                                            placeholder="Start date" />
                                     <label>Start Date</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -310,6 +360,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                            value="${work.endDate || ''}" 
                                            placeholder="End date" />
                                     <label>End Date</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -317,6 +368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     <textarea class="form-control" style="height: 100px" 
                                               placeholder="Description">${work.description || ''}</textarea>
                                     <label>Description</label>
+                                    <div class="validation-message" style="display: none"></div>
                                 </div>
                             </div>
                         </div>
@@ -339,30 +391,35 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="form-floating">
                         <input type="text" class="form-control" placeholder="Company name" />
                         <label>Company</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control" placeholder="Job title" />
                         <label>Job Title</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control work-date" placeholder="Start date" />
                         <label>Start Date</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <input type="text" class="form-control work-date" placeholder="End date" />
                         <label>End Date</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-floating">
                         <textarea class="form-control" style="height: 100px" placeholder="Description"></textarea>
                         <label>Description</label>
+                        <div class="validation-message" style="display: none"></div>
                     </div>
                 </div>
             </div>
@@ -511,7 +568,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let isValid = true;
 
             // Validate static fields
-            const staticFields = ['firstName', 'lastName', 'email', 'phone', 'location', 'bio', 'gender'];
+            const staticFields = ['firstName', 'lastName', 'email', 'phone', 'location', 'bio'];
             staticFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
                 if (field) {
@@ -522,9 +579,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
 
-            // Validate dynamic fields (education/work)
-            document.querySelectorAll('#educationContainer input, #workContainer input').forEach(field => {
-                if (field.value.trim() === '') {
+            // Validate dynamic fields
+            document.querySelectorAll('.education-entry, .work-entry').forEach(entry => {
+                let hasContent = false;
+                let entryValid = true;
+
+                entry.querySelectorAll('input:not(.remove-entry), textarea').forEach(field => {
+                    const value = field.value.trim();
+                    if (value) hasContent = true;
+
+                    // Trigger validation for each field
+                    const event = { target: field };
+                    if (!validateField(event)) {
+                        entryValid = false;
+                    }
+                });
+
+                if (hasContent && !entryValid) {
                     isValid = false;
                 }
             });
@@ -1082,24 +1153,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="form-floating">
                                   <input type="text" class="form-control" placeholder="School/University name" />
                                   <label>School/University</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control" placeholder="Degree/Field of study" />
                                   <label>Degree/Field of Study</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control education-date" placeholder="Start date" />
                                   <label>Start Date</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control education-date" placeholder="End date" />
                                   <label>End Date</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                             </div>
@@ -1115,13 +1190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         maxDate: "today",
                     });
                 });
-
-                // Add event listener to remove button
-                educationEntry
-                    .querySelector(".remove-education")
-                    .addEventListener("click", function () {
-                        educationEntry.remove();
-                    });
             });
 
         // Add work entry
@@ -1138,30 +1206,35 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="form-floating">
                                   <input type="text" class="form-control" placeholder="Company name" />
                                   <label>Company</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control" placeholder="Job title" />
                                   <label>Job Title</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control work-date" placeholder="Start date" />
                                   <label>Start Date</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
                                   <input type="text" class="form-control work-date" placeholder="End date" />
                                   <label>End Date</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="form-floating">
                                   <textarea class="form-control" style="height: 100px" placeholder="Description"></textarea>
                                   <label>Description</label>
+                                  <div class="validation-message" style="display: none"></div>
                                 </div>
                               </div>
                             </div>
@@ -1177,13 +1250,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     maxDate: "today",
                 });
             });
-
-            // Add event listener to remove button
-            workEntry
-                .querySelector(".remove-work")
-                .addEventListener("click", function () {
-                    workEntry.remove();
-                });
         });
 
         // Remove entry functionality
@@ -1258,8 +1324,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             function formatLocation(fullAddress) {
                 const parts = fullAddress.split(",");
                 if (parts.length >= 3) {
-                    // Take first, second, and last parts (City, District, Country)
-                    return `${parts[0].trim()}, ${parts[1].trim()}, ${parts[parts.length - 1].trim()}`;
+                    // Take first, and last parts (City, Country)
+                    return `${parts[0].trim()}, ${parts[parts.length - 1].trim()}`;
                 }
                 return fullAddress; // If format doesn't match, return original
             }
@@ -1315,33 +1381,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Validation Functions
         function setupFormValidation() {
-            // Add validation message containers
-            addValidationContainers();
+            // Add validation to all existing and future inputs
+            const addValidationToField = (field) => {
+                field.addEventListener('input', validateField);
+                field.addEventListener('blur', validateField);
+                field.addEventListener('change', validateField);
+            };
 
-            // Real-time validation for all fields except dates
-            document.querySelectorAll('#accountForm input:not(.education-date):not(.work-date), #accountForm select, #accountForm textarea').forEach(input => {
-                input.addEventListener('input', validateField);
-                input.addEventListener('blur', validateField);
+            // Initial setup for static fields
+            document.querySelectorAll('#accountForm input:not(.education-date):not(.work-date), #accountForm textarea').forEach(addValidationToField);
+
+            // Observe DOM changes to apply validation to dynamically added fields
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1) { // Element node
+                            node.querySelectorAll('input, textarea').forEach(addValidationToField);
+                        }
+                    });
+                });
             });
+
+            observer.observe(document.getElementById('educationContainer'), { childList: true, subtree: true });
+            observer.observe(document.getElementById('workContainer'), { childList: true, subtree: true });
 
             // Form submission validation
             document.getElementById('accountForm').addEventListener('submit', function(e) {
                 if (!validateForm()) {
                     e.preventDefault();
+                    scrollToFirstError();
+                    showErrorSummary();
                 }
             });
         }
 
         function addValidationContainers() {
-            const fields = [
-                'firstName', 'lastName', 'email', 'phone', 'location', 'bio', 'gender'
+            const allFields = [
+                '#firstName', '#lastName', '#email', '#phone',
+                '#location', '#bio', '#gender', '#birthday',
+                '.education-entry input', '.work-entry input'
             ];
 
-            fields.forEach(id => {
-                const field = document.getElementById(id);
-                if (field) {
+            document.querySelectorAll(allFields.join(',')).forEach(field => {
+                if (!field.parentNode.querySelector('.validation-message')) {
                     const messageDiv = document.createElement('div');
                     messageDiv.className = 'validation-message';
+                    messageDiv.style.display = 'none';
                     field.parentNode.appendChild(messageDiv);
                 }
             });
@@ -1350,55 +1435,69 @@ document.addEventListener('DOMContentLoaded', async () => {
         function validateField(e) {
             const field = e.target;
             const value = field.value.trim();
-            const fieldName = field.id;
+            const fieldName = field.id || field.name;
             let isValid = true;
             let errorMessage = '';
 
-            // Skip validation for email field if it's already verified
-            if (fieldName === 'email' && field.classList.contains('is-valid')) {
-                return true;
+            // Create validation container if missing
+            if (!field.parentNode.querySelector('.validation-message')) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'validation-message';
+                messageDiv.style.display = 'none';
+                field.parentNode.appendChild(messageDiv);
             }
 
-            // Common validations
-            switch(fieldName) {
-                case 'firstName':
-                case 'lastName':
-                    if (!value) {
-                        errorMessage = 'This field is required';
+            // Common validations for all fields
+            if (field.closest('.education-entry') || field.closest('.work-entry')) {
+                // Dynamic field validation
+                if (field.classList.contains('education-date') || field.classList.contains('work-date')) {
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(value) && value !== '') {
+                        errorMessage = 'Invalid date format (YYYY-MM-DD)';
                         isValid = false;
                     }
-                    break;
-
-                case 'email':
-                    if (!value) {
-                        errorMessage = 'Email is required';
-                        isValid = false;
-                    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
-                        errorMessage = 'Invalid email format';
-                        isValid = false;
-                    }
-                    break;
-
-                case 'phone':
-                    if (value && !/^\+?[0-9\s-]{7,}$/.test(value)) {
-                        errorMessage = 'Invalid phone number format';
-                        isValid = false;
-                    }
-                    break;
-
-                case 'location':
-                    if (value && !/^[A-Za-z\s]+,\s*[A-Za-z\s]+$/.test(value)) {
-                        errorMessage = 'Location should be in "City, Country" format';
-                        isValid = false;
-                    }
-                    break;
-
-                case 'bio':
-                    if (value.length > 1000) {
-                        errorMessage = 'Bio cannot exceed 1000 characters';
-                        isValid = false;
-                    }
-                    break;
+                } else if (field.tagName === 'TEXTAREA' && value.length > 1000) {
+                    errorMessage = 'Description cannot exceed 1000 characters';
+                    isValid = false;
+                } else if (value === '' && field.required) {
+                    errorMessage = 'This field is required';
+                    isValid = false;
+                }
+            } else {
+                // Static field validation (existing logic)
+                switch(fieldName) {
+                    case 'firstName':
+                    case 'lastName':
+                        isValid = !!value;
+                        errorMessage = isValid ? '' : 'This field is required';
+                        break;
+                    case 'email':
+                        if (!value) {
+                            errorMessage = 'Email is required';
+                            isValid = false;
+                        } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+                            errorMessage = 'Invalid email format';
+                            isValid = false;
+                        }
+                        break;
+                    case 'phone':
+                        if (value && !/^\+?[0-9\s-]{7,}$/.test(value)) {
+                            errorMessage = 'Invalid phone number format';
+                            isValid = false;
+                        }
+                        break;
+                    case 'location':
+                        if (value && !/^[A-Za-z\s]+,\s*[A-Za-z\s]+$/.test(value)) {
+                            errorMessage = 'Location should be in "City, Country" format';
+                            isValid = false;
+                        }
+                        break;
+                    case 'bio':
+                        if (value.length > 1000) {
+                            errorMessage = 'Bio cannot exceed 1000 characters';
+                            isValid = false;
+                        }
+                        break;
+                }
             }
 
             updateFieldValidation(field, isValid, errorMessage);

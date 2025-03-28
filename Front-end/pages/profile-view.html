@@ -92,7 +92,7 @@
                 data-bs-toggle="dropdown"
                 title="Profile"
               >
-                <img id="navBarProfileImg"
+                <img id="nav-profile-img"
                   src="../assets/image/Profile-picture.png"
                   alt="Profile"
                   class="profile-img"
@@ -107,14 +107,14 @@
               >
                 <a href="profile.html">
                   <div class="d-flex align-items-center px-3 py-2">
-                    <img id="navProfileImg"
+                    <img
                       src="../assets/image/Profile-picture.png"
                       alt="Profile"
                       class="rounded-circle me-2"
                       width="40"
                     />
                     <div>
-                      <h6 class="mb-0" id="navProfileName">Name</h6>
+                      <h6 class="mb-0">Dilsara Thiranjaya</h6>
                     </div>
                   </div>
                 </a>
@@ -138,25 +138,11 @@
           <!-- Cover Image Section -->
           <div class="cover-image-container">
             <img
-                    id="coverImage"
               src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809"
               alt="Cover"
               class="cover-image"
               id="coverImage"
             />
-            <div class="cover-image-overlay">
-              <label id="coverImageInputLabel" class="change-cover-btn" for="coverImageInput">
-                <i class="bi bi-camera-fill" id="cameraIconCoverImage"></i>
-                <span class="spinner-border spinner-border-sm" id="uploadCoverImageInputSpinner" style="display: none;"></span>
-                 Change Cover
-              </label>
-              <input
-                type="file"
-                id="coverImageInput"
-                accept="image/*"
-                style="display: none"
-              />
-            </div>
           </div>
 
           <!-- Profile Info Section -->
@@ -166,25 +152,15 @@
                 <div class="col-md-8">
                   <div class="profile-header">
                     <div class="profile-picture-container">
-                      <img id="profileImage"
+                      <img
                               src="../assets/image/Profile-picture.png"
                               alt="Profile Picture"
                               class="profile-picture"
                               id="profileImage"
                       />
-                      <label id="profileImageInputLabel" class="change-profile-btn" for="profileImageInput">
-                        <i class="bi bi-camera-fill" id="cameraIconProfileImage"></i>
-                        <span class="spinner-border spinner-border-sm" id="uploadProfileImageSpinner" style="display: none;"></span>
-                      </label>
-                      <input
-                              type="file"
-                              id="profileImageInput"
-                              accept="image/*"
-                              style="display: none"
-                      />
                     </div>
                     <div class="profile-info">
-                      <h1 id="profileName">Name</h1>
+                      <h1>Dilsara Thiranjaya</h1>
                       <div class="profile-stats">
                         <div class="stat-item">
                           <span class="stat-number">245</span>
@@ -199,6 +175,41 @@
                           <span class="stat-label">Following</span>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="profile-actions">
+                    <button class="btn btn-primary btn-lg">
+                      <i class="bi bi-person-plus-fill"></i> Add Friend
+                    </button>
+                    <button class="btn btn-outline-primary btn-lg">
+                      <i class="bi bi-chat-dots"></i> Message
+                    </button>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-light btn-lg"
+                        data-bs-toggle="dropdown"
+                      >
+                        <i class="bi bi-three-dots"></i>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <i class="bi bi-share"></i> Share Profile
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <i class="bi bi-flag"></i> Report Profile
+                          </a>
+                        </li>
+                        <li>
+                          <a class="dropdown-item" href="#">
+                            <i class="bi bi-block"></i> Block User
+                          </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -253,33 +264,6 @@
                 <div class="tab-pane fade show active" id="posts">
                   <div class="row">
                     <div class="col-md-8">
-                      <!-- Create Post -->
-                      <div class="card mb-3 create-post">
-                        <div class="card-body">
-                          <div class="post-composer">
-                            <div class="d-flex">
-                              <div
-                                class="form-control post-input"
-                                data-bs-toggle="modal"
-                                data-bs-target="#postModal"
-                              >
-                                Start a post
-                              </div>
-                            </div>
-                            <div class="post-actions mt-3">
-                              <button class="btn btn-light" data-action="upload">
-                                <i class="bi bi-image text-primary"></i> Photo
-                              </button>
-                              <button class="btn btn-light">
-                                <i class="bi bi-camera-video text-success"></i> Video
-                              </button>
-                              <button class="btn btn-light">
-                                <i class="bi bi-calendar-event text-warning"></i> Event
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
 
                       <!-- Posts List -->
                       <div class="posts-container">
@@ -363,28 +347,28 @@
                       <!-- About Card -->
                       <div class="card mb-4">
                         <div class="card-body">
-                          <h5 class="card-title mb-2">About</h5>
-                          <p class="text-muted mb-2" id="profileBio">
+                          <h5 class="card-title">About</h5>
+                          <p class="text-muted">
                             Passionate software developer with a love for
                             creating innovative solutions. Always learning,
                             always growing.
                           </p>
                           <div class="about-info">
-                            <div class="info-item profile-work-item">
+                            <div class="info-item">
                               <i class="bi bi-briefcase"></i>
-                              <span id="profileWork">Works at Tech Solutions Ltd</span>
+                              <span>Works at Tech Solutions Ltd</span>
                             </div>
-                            <div class="info-item profile-education-item">
+                            <div class="info-item">
                               <i class="bi bi-mortarboard"></i>
-                              <span id="profileEducation">Studied at University of Colombo</span>
+                              <span>Studied at University of Colombo</span>
                             </div>
-                            <div class="info-item profile-location-item">
+                            <div class="info-item">
                               <i class="bi bi-house"></i>
-                              <span id="profileLocation">Lives in Galle, Sri Lanka</span>
+                              <span>Lives in Galle, Sri Lanka</span>
                             </div>
                             <div class="info-item">
                               <i class="bi bi-calendar"></i>
-                              <span id="profileJoined">Joined October 2023</span>
+                              <span>Joined October 2023</span>
                             </div>
                           </div>
                         </div>
@@ -478,35 +462,35 @@
                               <i class="bi bi-person"></i>
                               <div>
                                 <label>Name</label>
-                                <span id="aboutName">Name</span>
+                                <span>Dilsara Thiranjaya</span>
                               </div>
                             </div>
-                            <div class="info-item about-email-item">
+                            <div class="info-item">
                               <i class="bi bi-envelope"></i>
                               <div>
                                 <label>Email</label>
-                                <span id="aboutEmail">temp@example.com</span>
+                                <span>dilsara@example.com</span>
                               </div>
                             </div>
-                            <div class="info-item about-phone-item">
+                            <div class="info-item">
                               <i class="bi bi-phone"></i>
                               <div>
                                 <label>Phone</label>
-                                <span id="aboutPhone">+94 71 234 5678</span>
+                                <span>+94 71 234 5678</span>
                               </div>
                             </div>
-                            <div class="info-item about-birthday-item">
+                            <div class="info-item">
                               <i class="bi bi-calendar"></i>
                               <div>
                                 <label>Birthday</label>
-                                <span id="aboutBirthday">January 15, 1995</span>
+                                <span>January 15, 1995</span>
                               </div>
                             </div>
-                            <div class="info-item about-location-item">
+                            <div class="info-item">
                               <i class="bi bi-geo-alt"></i>
                               <div>
                                 <label>Location</label>
-                                <span id="aboutLocation">Galle, Sri Lanka</span>
+                                <span>Galle, Sri Lanka</span>
                               </div>
                             </div>
                           </div>
@@ -516,8 +500,8 @@
                     <div class="col-md-8">
                       <div class="card mb-4">
                         <div class="card-body">
-                          <h5 class="section-title mb-3">Work Experience</h5>
-                          <div class="timeline" id="workTimeline">
+                          <h5 class="section-title">Work Experience</h5>
+                          <div class="timeline">
                             <div class="timeline-item">
                               <div class="timeline-marker"></div>
                               <div class="timeline-content">
@@ -536,8 +520,8 @@
                       </div>
                       <div class="card">
                         <div class="card-body">
-                          <h5 class="section-title mb-3">Education</h5>
-                          <div class="timeline" id="educationTimeline">
+                          <h5 class="section-title">Education</h5>
+                          <div class="timeline">
                             <div class="timeline-item">
                               <div class="timeline-marker"></div>
                               <div class="timeline-content">
@@ -844,6 +828,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../assets/js/profile.js"></script>
+    <script src="../assets/js/profile-view.js"></script>
   </body>
 </html>

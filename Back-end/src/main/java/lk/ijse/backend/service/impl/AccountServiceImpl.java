@@ -1,9 +1,6 @@
 package lk.ijse.backend.service.impl;
 
-import lk.ijse.backend.dto.AccountSettingsDTO;
-import lk.ijse.backend.dto.EducationDTO;
-import lk.ijse.backend.dto.UserDTO;
-import lk.ijse.backend.dto.WorkExperienceDTO;
+import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Education;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.entity.WorkExperience;
@@ -28,6 +25,34 @@ public class AccountServiceImpl implements AccountService {
     private final EducationRepository educationRepository;
     private final WorkExperienceRepository workExperienceRepository;
     private final ModelMapper modelMapper;
+
+    @Override
+    public ProfileInfoDTO getProfileInfo(String email) {
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            ProfileInfoDTO responseDTO = modelMapper.map(user, ProfileInfoDTO.class);
+
+            // Load education entries
+            List<Education> educations = educationRepository.findByUser(user);
+            responseDTO.setEducation(
+                    educations.stream()
+                            .map(edu -> modelMapper.map(edu, EducationDTO.class))
+                            .collect(Collectors.toList())
+            );
+
+            // Load work experience entries
+            List<WorkExperience> works = workExperienceRepository.findByUser(user);
+            responseDTO.setWorkExperience(
+                    works.stream()
+                            .map(work -> modelMapper.map(work, WorkExperienceDTO.class))
+                            .collect(Collectors.toList())
+            );
+
+            return responseDTO;
+        }
+        return null;
+    }
 
     @Override
     public AccountSettingsDTO getSettings(String email) {

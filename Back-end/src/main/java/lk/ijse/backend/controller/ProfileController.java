@@ -1,6 +1,7 @@
 package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.*;
+import lk.ijse.backend.service.AccountService;
 import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,37 +24,31 @@ import java.io.IOException;
 @Slf4j
 public class ProfileController {
     private final UserService userService;
+    private final AccountService accountService;
     private final CloudinaryService cloudinaryService;
 
-//    @PreAuthorize("hasAuthority('USER')")
-//    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> getProfile(@PathVariable Integer userId) {
-//        log.info("Received request to get profile for user ID: {}", userId);
-//        try {
-//            UserDTO userDTO = profileService.getProfile(userId);
-//            log.info("Successfully retrieved profile for user ID: {}", userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile retrieved successfully", userDTO));
-//        } catch (Exception e) {
-//            log.error("Error retrieving profile for user ID: {}", userId, e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving profile", e.getMessage()));
-//        }
-//    }
-//
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> updateProfile(@Valid @RequestBody UserDTO userDTO) {
-//        log.info("Received request to update profile for user ID: {}", userDTO.getUserId());
-//        try {
-//            UserDTO updatedUser = profileService.updateProfile(userDTO);
-//            log.info("Successfully updated profile for user ID: {}", userDTO.getUserId());
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile updated successfully", updatedUser));
-//        } catch (Exception e) {
-//            log.error("Error updating profile for user ID: {}", userDTO.getUserId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating profile", e.getMessage()));
-//        }
-//    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/profileInfo")
+    public ResponseEntity<ResponseDTO> getProfileInfo(Authentication authentication) {
+        log.info("Received profile info fetch request for user: {}", authentication.getName());
+        try {
+            String email = authentication.getName();
+
+            ProfileInfoDTO profileInfoDTO = accountService.getProfileInfo(email);
+
+            if (profileInfoDTO == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            log.info("Successfully retrieved profile info for user: {}", email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile info retrieved", profileInfoDTO));
+        } catch (Exception e) {
+            log.error("Error retrieving profile info: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -117,6 +113,36 @@ public class ProfileController {
                     .body(new ResponseDTO(VarList.Internal_Server_Error, "Fail to upload cover picture", null));
         }
     }
+
+    //    @PreAuthorize("hasAuthority('USER')")
+//    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<ResponseDTO> getProfile(@PathVariable Integer userId) {
+//        log.info("Received request to get profile for user ID: {}", userId);
+//        try {
+//            UserDTO userDTO = profileService.getProfile(userId);
+//            log.info("Successfully retrieved profile for user ID: {}", userId);
+//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile retrieved successfully", userDTO));
+//        } catch (Exception e) {
+//            log.error("Error retrieving profile for user ID: {}", userId, e);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving profile", e.getMessage()));
+//        }
+//    }
+//
+//    @PreAuthorize("hasAuthority('USER')")
+//    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<ResponseDTO> updateProfile(@Valid @RequestBody UserDTO userDTO) {
+//        log.info("Received request to update profile for user ID: {}", userDTO.getUserId());
+//        try {
+//            UserDTO updatedUser = profileService.updateProfile(userDTO);
+//            log.info("Successfully updated profile for user ID: {}", userDTO.getUserId());
+//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile updated successfully", updatedUser));
+//        } catch (Exception e) {
+//            log.error("Error updating profile for user ID: {}", userDTO.getUserId(), e);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating profile", e.getMessage()));
+//        }
+//    }
 
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/post", consumes = MediaType.APPLICATION_JSON_VALUE)

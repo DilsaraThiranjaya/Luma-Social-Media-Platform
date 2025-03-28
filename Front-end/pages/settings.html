@@ -65,15 +65,15 @@
                   </a>
                 </div> -->
                 <a class="nav-link profile-link active" href="#" id="profileDropdown" data-bs-toggle="dropdown" title="Profile">
-                  <img src="../assets/image/Profile-picture.png" alt="Profile" class="profile-img">
+                  <img id="navBarProfileImg" src="../assets/image/Profile-picture.png" alt="Profile" class="profile-img">
                   <span id="profile-down-arrow"><i class="fa-solid fa-circle-chevron-down"></i></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                   <a href="profile.html">
                     <div class="d-flex align-items-center px-3 py-2">
-                      <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="40">
+                      <img id="navProfileImg" src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="40">
                       <div>
-                        <h6 class="mb-0">Dilsara Thiranjaya</h6>
+                        <h6 class="mb-0" id="navProfileName">Dilsara Thiranjaya</h6>
                       </div>
                     </div>
                   </a>
@@ -132,13 +132,13 @@
                         <div class="row g-3 mb-3">
                           <div class="col-6">
                             <div class="form-floating">
-                              <input type="text" class="form-control" id="firstName" value="John" />
+                              <input type="text" class="form-control" id="firstName" />
                               <label for="firstName">First Name</label>
                             </div>
                           </div>
                           <div class="col-6">
                             <div class="form-floating">
-                              <input type="text" class="form-control" id="lastName" value="Doe" />
+                              <input type="text" class="form-control" id="lastName" />
                               <label for="lastName">Last Name</label>
                             </div>
                           </div>
@@ -166,18 +166,18 @@
                         </div>
                   
                         <div class="form-floating mb-3">
-                          <input type="email" class="form-control" id="email" value="john.doe@example.com" />
+                          <input type="email" class="form-control" id="email" />
                           <label for="email">Email address</label>
                           <button type="button" class="btn btn-outline-primary btn-sm verify-button">Verify</button>
                         </div>
                   
                         <div class="form-floating mb-3 position-relative">
-                          <input type="tel" class="form-control" id="phone" placeholder="Phone number" />
+                          <input type="tel" class="form-control" id="phone" />
                           <label for="phone">Phone Number</label>
                         </div>
                   
                         <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="location" placeholder="Location" />
+                          <input type="text" class="form-control" id="location" />
                           <label for="location">Location</label>
                         </div>
                   
@@ -190,25 +190,25 @@
                             <div class="row g-3">
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control" placeholder="School/University name" />
+                                  <input type="text" class="form-control"  />
                                   <label>School/University</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control" placeholder="Degree/Field of study" />
+                                  <input type="text" class="form-control"/>
                                   <label>Degree/Field of Study</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control education-date" placeholder="Start date" />
+                                  <input type="text" class="form-control education-date" />
                                   <label>Start Date</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control education-date" placeholder="End date" />
+                                  <input type="text" class="form-control education-date" />
                                   <label>End Date</label>
                                 </div>
                               </div>
@@ -229,31 +229,31 @@
                             <div class="row g-3">
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control" placeholder="Company name" />
+                                  <input type="text" class="form-control"/>
                                   <label>Company</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control" placeholder="Job title" />
+                                  <input type="text" class="form-control" />
                                   <label>Job Title</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control work-date" placeholder="Start date" />
+                                  <input type="text" class="form-control work-date"/>
                                   <label>Start Date</label>
                                 </div>
                               </div>
                               <div class="col-md-6">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control work-date" placeholder="End date" />
+                                  <input type="text" class="form-control work-date"/>
                                   <label>End Date</label>
                                 </div>
                               </div>
                               <div class="col-12">
                                 <div class="form-floating">
-                                  <textarea class="form-control" style="height: 100px" placeholder="Description"></textarea>
+                                  <textarea class="form-control" style="height: 100px"></textarea>
                                   <label>Description</label>
                                 </div>
                               </div>
@@ -401,7 +401,7 @@
                       <form id="passwordForm" class="mb-4">
 
                         <div class="form-floating mb-3 password-field">
-                          <input type="password" class="form-control" id="currentPassword" placeholder="Current Password" required>
+                          <input type="password" class="form-control" id="currentPassword" required>
                           <label for="currentPassword">Current Password</label>
                           <button type="button" class="btn toggle-password">
                             <i class="fa-regular fa-eye"></i>
@@ -409,7 +409,7 @@
                         </div>
 
                         <div class="form-floating mb-3 password-field">
-                          <input type="password" class="form-control" id="newPassword" placeholder="New Password" required>
+                          <input type="password" class="form-control" id="newPassword" required>
                           <label for="newPassword">New Password</label>
                           <button type="button" class="btn toggle-password">
                             <i class="fa-regular fa-eye"></i>
@@ -417,7 +417,7 @@
                         </div>
 
                         <div class="form-floating mb-4 password-field">
-                          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                          <input type="password" class="form-control" id="confirmPassword" required>
                           <label for="confirmPassword">Confirm Password</label>
                           <button type="button" class="btn toggle-password">
                             <i class="fa-regular fa-eye"></i>

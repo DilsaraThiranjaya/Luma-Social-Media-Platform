@@ -1,17 +1,16 @@
 package lk.ijse.backend.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lk.ijse.backend.entity.User;
-import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class AccountSettingsDTO {
+public class ProfileInfoDTO {
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
@@ -33,24 +32,19 @@ public class AccountSettingsDTO {
     @Pattern(regexp = "^\\+?[0-9\\s-]{7,}$", message = "Invalid phone number format")
     private String phoneNumber;
 
+    @URL(message = "Invalid profile picture URL")
+    private String profilePictureUrl;
+
+    @URL(message = "Invalid cover photo URL")
+    private String coverPhotoUrl;
+
     @Size(max = 1000, message = "Bio cannot exceed 1000 characters")
     private String bio;
-    
-    private Boolean isOnline;
-    private Boolean isProfilePublic;
+
+    private LocalDateTime createdAt;
     private Boolean isDisplayEmail;
     private Boolean isDisplayPhone;
     private Boolean isDisplayBirthdate;
-    private Boolean isShowActivity;
-    private Boolean isPostPublic;
-    private Boolean isShareAllowed;
-    private Boolean isPushNewFollowers;
-    private Boolean isPushMessages;
-    private Boolean isPushPostLikes;
-    private Boolean isPushPostComments;
-    private Boolean isPushPostShares;
-    private Boolean isPushReports;
-    private Boolean enable2fa;
 
     private List<EducationDTO> education;
 
