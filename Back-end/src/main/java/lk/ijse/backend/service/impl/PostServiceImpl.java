@@ -3,12 +3,15 @@ package lk.ijse.backend.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import lk.ijse.backend.dto.PostDTO;
 import lk.ijse.backend.dto.PostMediaDTO;
+import lk.ijse.backend.dto.ReactionDTO;
 import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.PostMedia;
+import lk.ijse.backend.entity.Reaction;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.PostMediaRepository;
 import lk.ijse.backend.repository.PostRepository;
+import lk.ijse.backend.repository.ReactionRepository;
 import lk.ijse.backend.repository.UserRepository;
 import lk.ijse.backend.service.PostService;
 import lk.ijse.backend.util.VarList;
@@ -29,6 +32,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final PostMediaRepository postMediaRepository;
+    private final ReactionRepository reactionRepository;
     private final ModelMapper modelMapper;
 
     @Transactional
@@ -65,7 +69,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostDTO> getPosts(String email, PageRequest pageRequest) {
+    public Page<PostDTO> getProfilePosts(String email, PageRequest pageRequest) {
         User currentUser = userRepository.findByEmail(email);
         if (currentUser == null) {
             throw new EntityNotFoundException("User not found");
@@ -77,6 +81,30 @@ public class PostServiceImpl implements PostService {
         );
 
         return posts.map(this::convertToDTO);
+    }
+
+    @Override
+    public String addReaction(int postId, ReactionDTO reactionDTO, String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        Reaction reaction = modelMapper.map(reactionDTO, Reaction.class);
+        reaction.setUser(user);
+        reaction.setPost(post);
+
+        Reaction byUserAndPost = reactionRepository.findByUserAndPost(user, post);
+        if (byUserAndPost != null) {
+            reactionRepository.delete(byUserAndPost);
+            return "Removed";
+        }
+
+        Reaction savedReaction = reactionRepository.save(reaction);
+        return "Added";
     }
 
     private PostDTO convertToDTO(Post post) {

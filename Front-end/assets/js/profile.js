@@ -962,6 +962,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         return "";
       }).join("");
 
+      // Group reactions by type from the list of ReactionDTOs
+      const groupedReactions = {};
+      if (postData.reactions && Array.isArray(postData.reactions)) {
+        postData.reactions.forEach(reaction => {
+          const type = reaction.type; // Reaction type, e.g., "LIKE", "LOVE"
+          groupedReactions[type] = (groupedReactions[type] || 0) + 1;
+        });
+      }
+
+      // Build the reaction display HTML for reaction counts
+      let reactionDisplay = "";
+      Object.entries(groupedReactions)
+          .filter(([type, count]) => count > 0)
+          .forEach(([type, count]) => {
+            const icon = REACTION_TYPES[type]?.fillIcon || "bi-hand-thumbs-up-fill";
+            const color = REACTION_TYPES[type]?.color || "text-primary";
+            reactionDisplay += `<span class="reaction-icon me-1">
+                            <i class="bi ${icon} ${color}"></i> ${count}
+                          </span>`;
+          });
+
+      // For the like button, check if the user has reacted and show the reaction type if available
+      const likeButtonIcon = postData.liked && postData.reactionType
+          ? `bi ${REACTION_TYPES[postData.reactionType].fillIcon} ${REACTION_TYPES[postData.reactionType].color}`
+          : "bi-hand-thumbs-up";
+      const likeButtonText = postData.liked && postData.reactionType ? postData.reactionType : "Like";
+
       newPost.innerHTML = `
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
@@ -970,7 +997,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div>
           <h6 class="mb-0">${postData.user.firstName} ${postData.user.lastName}</h6>
           <small class="text-muted">
-        ${new Date(postData.createdAt || Date.now()).toLocaleDateString("en-US", {
+            ${new Date(postData.createdAt || Date.now()).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric"
@@ -980,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           </small>
         </div>
         <div class="ms-auto dropdown">
-            ${generatePostDropdown()}
+          ${generatePostDropdown()}
         </div>
       </div>
     </div>
@@ -988,15 +1015,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p>${postData.content.replace(/\n/g, "<br>")}</p>
       ${mediaContent}
       <div class="post-stats d-flex align-items-center text-muted">
-        <span><i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${postData.reactions}</span>
+        <!-- Display multiple reaction types with counts -->
+        ${reactionDisplay}
         <span class="ms-auto">${postData.comments} Comments • ${postData.shares} Shares</span>
       </div>
     </div>
     <div class="card-footer bg-transparent">
       <div class="post-actions d-flex justify-content-around">
         <button class="btn btn-light reaction-btn like-btn" data-post-id="${postData.postId}">
-          <i class="bi ${postData.liked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}"></i>
-          <span class="ms-2">${postData.liked ? 'Liked' : 'Like'}</span>
+          <i class="bi ${likeButtonIcon}"></i>
+          <span class="ms-2">${likeButtonText}</span>
         </button>
         <button class="btn btn-light reaction-btn">
           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
@@ -1014,6 +1042,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       addPostInteractions(newPost);
       return newPost;
     }
+
 
 // Helper functions
     function getPrivacyIcon(privacy) {
@@ -1048,6 +1077,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   `;
     }
 
+    // Add new reaction constants at top
     const REACTION_TYPES = {
       LIKE: { icon: 'bi-hand-thumbs-up', fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary' },
       LOVE: { icon: 'bi-heart', fillIcon: 'bi-heart-fill', color: 'text-danger' },
@@ -1056,6 +1086,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       SAD: { icon: 'bi-emoji-frown', fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary' },
       ANGRY: { icon: 'bi-emoji-angry', fillIcon: 'bi-emoji-angry-fill', color: 'text-danger' }
     };
+
+// Replace old handleReaction with:
+    async function handleReaction(likeBtn, reactionType) {
+      const postId = likeBtn.dataset.postId;
+      try {
+        const response = await fetch(`${BASE_URL}/profile/posts/${postId}/reactions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({ type: reactionType })
+        });
+
+        if (!response.ok) throw new Error('Failed to save reaction');
+
+        const result = await response.json();
+        const reactionCount = likeBtn.closest('.post-card').querySelector('.post-stats span:first-child');
+
+        if (result.message === "Added") {
+          reactionCount.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${parseInt(reactionCount.textContent) + 1}`;
+          likeBtn.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i> <span>${reactionType}</span>`;
+          createReactionAnimation(likeBtn, reactionType);
+        } else {
+          reactionCount.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${parseInt(reactionCount.textContent) - 1}`;
+          likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span>Like</span>';
+        }
+      } catch (error) {
+        Toast.fire({ icon: 'error', title: 'Failed to save reaction' });
+      }
+    }
 
     function createReactionPopup(likeBtn) {
       const popup = document.createElement('div');
@@ -1101,66 +1162,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       return popup;
-    }
-
-    async function handleReaction(likeBtn, reactionType) {
-      const post = likeBtn.closest('.post-card');
-      const reactionCount = post.querySelector('.post-stats span:first-child');
-      const currentType = likeBtn.dataset.reactionType;
-
-      // Remove existing reaction class and icon
-      if (currentType) {
-        likeBtn.classList.remove(REACTION_TYPES[currentType].color);
-        likeBtn.querySelector('i').classList.remove(REACTION_TYPES[currentType].fillIcon);
-        likeBtn.querySelector('i').classList.add(REACTION_TYPES[currentType].icon);
-      }
-
-      // If clicking the same reaction, remove it
-      if (currentType === reactionType) {
-        likeBtn.dataset.reactionType = '';
-        likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>';
-        updateReactionCount(reactionCount, -1);
-        return;
-      }
-
-      // Add new reaction
-      likeBtn.dataset.reactionType = reactionType;
-      likeBtn.classList.add(REACTION_TYPES[reactionType].color);
-      likeBtn.innerHTML = `
-        <i class="bi ${REACTION_TYPES[reactionType].fillIcon}"></i>
-        <span class="ms-2">${reactionType}</span>
-    `;
-
-      // If there was no previous reaction, increment the count
-      if (!currentType) {
-        updateReactionCount(reactionCount, 1);
-      }
-
-      // Create reaction animation
-      createReactionAnimation(likeBtn, reactionType);
-
-      // Send reaction to server
-      try {
-        const response = await fetch('/api/v1/profile/reaction', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
-          },
-          body: JSON.stringify({
-            type: reactionType,
-            postId: post.dataset.postId
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to save reaction');
-        }
-      } catch (error) {
-        console.error('Error saving reaction:', error);
-        // Revert the UI changes if the server request fails
-        handleReaction(likeBtn, currentType || '');
-      }
     }
 
     // Add interactions to posts (like, comment, share)
@@ -1293,12 +1294,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           element.removeChild(animation);
         }
       }, 1000);
-    }
-
-    function updateReactionCount(countElement, change) {
-      const currentCount = parseInt(countElement.textContent.match(/\d+/)[0] || '0');
-      const newCount = Math.max(0, currentCount + change);
-      countElement.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${newCount}`;
     }
 
     function addComment(postElement, commentText) {
@@ -1534,7 +1529,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           document.body.style.overflow = ""; // Ensures scrolling is allowed
         });
     }
-
 });
 
 

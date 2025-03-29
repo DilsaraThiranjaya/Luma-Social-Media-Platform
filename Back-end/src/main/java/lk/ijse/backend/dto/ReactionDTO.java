@@ -19,10 +19,8 @@ public class ReactionDTO {
     @NotNull(message = "Reaction type cannot be null")
     private ReactionType type;
 
-    @Null
     private LocalDateTime createdAt;
 
-    @NotNull(message = "User cannot be null")
     private UserDTO user;
 
     private PostDTO post;

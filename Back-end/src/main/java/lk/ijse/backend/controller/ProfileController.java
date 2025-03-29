@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.PostMedia;
+import lk.ijse.backend.entity.Reaction;
 import lk.ijse.backend.service.AccountService;
 import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.PostService;
@@ -208,7 +209,7 @@ public class ProfileController {
                     Sort.by(Sort.Direction.DESC, "createdAt") // Add this line
             );
 
-            Page<PostDTO> posts = postService.getPosts(email, pageable);
+            Page<PostDTO> posts = postService.getProfilePosts(email, pageable);
 
             List<PostResponseDTO> postDTOs = posts.getContent().stream()
                     .map(this::convertToPostResponseDTO)
@@ -229,7 +230,22 @@ public class ProfileController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/posts/{postId}/reactions")
+    public ResponseEntity<ResponseDTO> addReaction(@PathVariable Integer postId, @Valid @RequestBody ReactionDTO reactionDTO, Authentication authentication) {
+        log.info("Received request to add reaction for post ID: {}", postId);
 
+        try {
+            String email = authentication.getName();
+            String res = postService.addReaction(postId, reactionDTO, email);
+
+            log.info("Successfully added reaction for post ID: {}", postId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, res, null));
+        } catch (Exception e) {
+            log.error("Error adding reaction for post ID: {}", postId, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
 
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -330,11 +346,55 @@ public class ProfileController {
         dto.setContent(post.getContent());
         dto.setPrivacy(String.valueOf(post.getPrivacy()));
         dto.setCreatedAt(post.getCreatedAt());
-        dto.setReactions(post.getReactions().size());
-        dto.setComments(post.getComments().size());
+//        dto.setReactions(post.getReactions());
+//        dto.setComments(post.getComments());
+
+        dto.setReactions(post.getReactions().stream()
+                .map(reaction -> {
+                    ReactionDTO reactionDTO = new ReactionDTO();
+                    reactionDTO.setReactionId(reaction.getReactionId());
+                    reactionDTO.setType(reaction.getType());
+                    reactionDTO.setCreatedAt(reaction.getCreatedAt());
+
+                    // Convert and set user
+                    UserDTO reactionUserDTO = new UserDTO();
+                    reactionUserDTO.setUserId(reaction.getUser().getUserId());
+                    reactionUserDTO.setFirstName(reaction.getUser().getFirstName());
+                    reactionUserDTO.setLastName(reaction.getUser().getLastName());
+                    reactionUserDTO.setProfilePictureUrl(reaction.getUser().getProfilePictureUrl());
+                    reactionDTO.setUser(reactionUserDTO);
+
+                    return reactionDTO;
+                })
+                .collect(Collectors.toList()));
+
+        dto.setComments(post.getComments().stream()
+                .map(comment -> {
+                    CommentDTO commentDTO = new CommentDTO();
+                    commentDTO.setCommentId(comment.getCommentId());
+                    commentDTO.setContent(comment.getContent());
+                    commentDTO.setCreatedAt(comment.getCreatedAt());
+
+                    // Convert and set user
+                    UserDTO commentUserDTO = new UserDTO();
+                    commentUserDTO.setUserId(comment.getUser().getUserId());
+                    commentUserDTO.setFirstName(comment.getUser().getFirstName());
+                    commentUserDTO.setLastName(comment.getUser().getLastName());
+                    commentUserDTO.setProfilePictureUrl(comment.getUser().getProfilePictureUrl());
+                    commentDTO.setUser(commentUserDTO);
+
+                    return commentDTO;
+                })
+                .collect(Collectors.toList()));
+
         dto.setShares(post.getShares().size());
         dto.setLiked(post.getReactions().stream()
                 .anyMatch(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId())));
+        dto.setReactionType(post.getReactions().stream()
+                .filter(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId()))
+                .findFirst()
+                .map(ReactionDTO::getType)
+                .orElse(null));
 
         // Convert user
         UserDTO userDTO = new UserDTO();
