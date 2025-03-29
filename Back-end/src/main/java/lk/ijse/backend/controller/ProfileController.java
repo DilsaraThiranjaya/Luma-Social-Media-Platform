@@ -2,6 +2,8 @@ package lk.ijse.backend.controller;
 
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
+import lk.ijse.backend.entity.Post;
+import lk.ijse.backend.entity.PostMedia;
 import lk.ijse.backend.service.AccountService;
 import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.PostService;
@@ -9,6 +11,9 @@ import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/profile")
@@ -118,6 +127,42 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping(value = "/posts/upload-media", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO> uploadPostMedia(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("type") String mediaType,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+        log.info("Received request to upload media for email: {}", email);
+
+        try {
+            UserDTO user = userService.loadUserDetailsByEmail(email);
+            if (user == null) {
+                log.error("User not found for email: {}", email);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "User not found", null));
+            }
+
+            String mediaUrl = cloudinaryService.uploadMedia(file, mediaType, user.getUserId());
+            Map<String, String> responseData = new HashMap<>();
+            responseData.put("mediaUrl", mediaUrl);
+            responseData.put("mediaType", mediaType);
+
+            log.info("Successfully uploaded media for email: {}", email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Media uploaded", responseData));
+        } catch (IOException e) {
+            log.error("Error uploading media for email: {}", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Media upload failed", null));
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid media type for email: {}", email, e);
+            return ResponseEntity.badRequest()
+                    .body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/posts/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> createPost(@Valid @RequestBody PostDTO postDTO, Authentication authentication) {
         String email = authentication.getName();
@@ -133,9 +178,9 @@ public class ProfileController {
             postDTO.setUser(userDTO);
             int res = postService.createPost(postDTO);
 
-            if (res != VarList.OK) {
+            if (res != VarList.Created) {
                 log.error("Failed to create post for email: {}", email);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(VarList.Internal_Server_Error, "Error creating post", null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(VarList.Bad_Request, "Error creating post", null));
             }
             log.info("Successfully created post for email: {}", email);
             return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(VarList.Created, "Post created successfully", null));
@@ -146,21 +191,46 @@ public class ProfileController {
         }
     }
 
-    //    @PreAuthorize("hasAuthority('USER')")
-//    @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> getProfile(@PathVariable Integer userId) {
-//        log.info("Received request to get profile for user ID: {}", userId);
-//        try {
-//            UserDTO userDTO = profileService.getProfile(userId);
-//            log.info("Successfully retrieved profile for user ID: {}", userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile retrieved successfully", userDTO));
-//        } catch (Exception e) {
-//            log.error("Error retrieving profile for user ID: {}", userId, e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving profile", e.getMessage()));
-//        }
-//    }
-//
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping(value = "/posts")
+    public ResponseEntity<ResponseDTO> getPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication) {
+        String email = authentication.getName();
+        log.info("Received request to get posts for email: {}", email);
+
+        try {
+            // Add sorting by createdAt DESC
+            PageRequest pageable = PageRequest.of(
+                    page,
+                    size,
+                    Sort.by(Sort.Direction.DESC, "createdAt") // Add this line
+            );
+
+            Page<PostDTO> posts = postService.getPosts(email, pageable);
+
+            List<PostResponseDTO> postDTOs = posts.getContent().stream()
+                    .map(this::convertToPostResponseDTO)
+                    .collect(Collectors.toList());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("posts", postDTOs);
+            response.put("currentPage", posts.getNumber());
+            response.put("totalItems", posts.getTotalElements());
+            response.put("totalPages", posts.getTotalPages());
+
+            log.info("Successfully retrieved posts for email: {}", email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Posts retrieved", response));
+        } catch (Exception e) {
+            log.error("Error retrieving posts for email: {}", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving posts", null));
+        }
+    }
+
+
+
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> updateProfile(@Valid @RequestBody UserDTO userDTO) {
@@ -237,39 +307,7 @@ public class ProfileController {
 //                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving photos", e.getMessage()));
 //        }
 //    }
-//
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PostMapping(value = "/work-experience", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> addWorkExperience(@Valid @RequestBody WorkExperienceDTO workExperienceDTO) {
-//        log.info("Received request to add work experience for user ID: {}", workExperienceDTO.getUser().getUserId());
-//        try {
-//            WorkExperienceDTO savedExperience = profileService.addWorkExperience(workExperienceDTO);
-//            log.info("Successfully added work experience for user ID: {}", workExperienceDTO.getUser().getUserId());
-//            return ResponseEntity.status(HttpStatus.CREATED)
-//                    .body(new ResponseDTO(VarList.Created, "Work experience added successfully", savedExperience));
-//        } catch (Exception e) {
-//            log.error("Error adding work experience for user ID: {}", workExperienceDTO.getUser().getUserId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error adding work experience", e.getMessage()));
-//        }
-//    }
-//
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PostMapping(value = "/education", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> addEducation(@Valid @RequestBody EducationDTO educationDTO) {
-//        log.info("Received request to add education for user ID: {}", educationDTO.getUser().getUserId());
-//        try {
-//            EducationDTO savedEducation = profileService.addEducation(educationDTO);
-//            log.info("Successfully added education for user ID: {}", educationDTO.getUser().getUserId());
-//            return ResponseEntity.status(HttpStatus.CREATED)
-//                    .body(new ResponseDTO(VarList.Created, "Education added successfully", savedEducation));
-//        } catch (Exception e) {
-//            log.error("Error adding education for user ID: {}", educationDTO.getUser().getUserId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error adding education", e.getMessage()));
-//        }
-//    }
-//
+
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/event", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> createEvent(@Valid @RequestBody EventDTO eventDTO) {
@@ -285,4 +323,37 @@ public class ProfileController {
 //                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error creating event", e.getMessage()));
 //        }
 //    }
+
+    private PostResponseDTO convertToPostResponseDTO(PostDTO post) {
+        PostResponseDTO dto = new PostResponseDTO();
+        dto.setPostId(post.getPostId());
+        dto.setContent(post.getContent());
+        dto.setPrivacy(String.valueOf(post.getPrivacy()));
+        dto.setCreatedAt(post.getCreatedAt());
+        dto.setReactions(post.getReactions().size());
+        dto.setComments(post.getComments().size());
+        dto.setShares(post.getShares().size());
+        dto.setLiked(post.getReactions().stream()
+                .anyMatch(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId())));
+
+        // Convert user
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(post.getUser().getUserId());
+        userDTO.setFirstName(post.getUser().getFirstName());
+        userDTO.setLastName(post.getUser().getLastName());
+        userDTO.setProfilePictureUrl(post.getUser().getProfilePictureUrl());
+        dto.setUser(userDTO);
+
+        // Convert media
+        dto.setMedia(post.getMedia().stream()
+                .map(media -> {
+                    PostMediaDTO mediaDTO = new PostMediaDTO();
+                    mediaDTO.setMediaUrl(media.getMediaUrl());
+                    mediaDTO.setMediaType(PostMedia.MediaType.valueOf(media.getMediaType().toString()));
+                    return mediaDTO;
+                })
+                .collect(Collectors.toList()));
+
+        return dto;
+    }
 }

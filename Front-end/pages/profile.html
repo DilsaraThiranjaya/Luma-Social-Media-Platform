@@ -267,13 +267,15 @@
                               </div>
                             </div>
                             <div class="post-actions mt-3">
-                              <button class="btn btn-light" data-action="upload">
+                              <button id="addPhotos" class="btn btn-light">
                                 <i class="bi bi-image text-primary"></i> Photo
                               </button>
-                              <button class="btn btn-light">
+                              <button id="addVideos" class="btn btn-light">
                                 <i class="bi bi-camera-video text-success"></i> Video
                               </button>
-                              <button class="btn btn-light">
+                              <button class="btn btn-light"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#eventModal">
                                 <i class="bi bi-calendar-event text-warning"></i> Event
                               </button>
                             </div>
@@ -301,10 +303,25 @@
                                   <i class="bi bi-globe"></i> Public</small
                                 >
                               </div>
-                              <div class="ms-auto">
-                                <button class="btn btn-light btn-sm">
+                              <div class="ms-auto dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                   <i class="bi bi-three-dots"></i>
                                 </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                  <li><a class="dropdown-item" href="#">
+                                    <i class="bi bi-pencil-square me-2"></i>Edit
+                                  </a></li>
+                                  <li><a class="dropdown-item text-danger" href="#">
+                                    <i class="bi bi-trash me-2"></i>Delete
+                                  </a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">
+                                    <i class="bi bi-flag me-2"></i>Report
+                                  </a></li>
+                                </ul>
                               </div>
                             </div>
                           </div>
@@ -350,6 +367,79 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#shareModal"
                               >
+                                <i class="bi bi-share"></i>
+                                <span class="ms-2">Share</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Event Item -->
+                        <div class="card post-card mb-3">
+                          <div class="card-header bg-transparent">
+                            <div class="d-flex align-items-center timline-post-item">
+                              <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
+                              <div>
+                                <h6 class="mb-0">Event Host Name</h6>
+                                <small class="text-muted">Created October 25, 2023 • <i class="bi bi-globe"></i> Public</small>
+                              </div>
+                              <div class="ms-auto dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                  <i class="bi bi-three-dots"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                  <li><a class="dropdown-item" href="#">
+                                    <i class="bi bi-pencil-square me-2"></i>Edit
+                                  </a></li>
+                                  <li><a class="dropdown-item text-danger" href="#">
+                                    <i class="bi bi-trash me-2"></i>Delete
+                                  </a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">
+                                    <i class="bi bi-flag me-2"></i>Report
+                                  </a></li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-body">
+                            <h5 class="mb-3">Tech Conference 2024</h5>
+                            <div class="row g-3 mb-3">
+                              <div class="col-6">
+                                <div class="text-muted"><i class="bi bi-calendar-event me-1"></i>Date</div>
+                                <div>Nov 15-17, 2024</div>
+                              </div>
+                              <div class="col-6">
+                                <div class="text-muted"><i class="bi bi-clock me-1"></i>Time</div>
+                                <div>9:00 AM - 6:00 PM</div>
+                              </div>
+                              <div class="col-12">
+                                <div class="text-muted"><i class="bi bi-geo-alt me-1"></i>Location</div>
+                                <div>Convention Center, Silicon Valley</div>
+                              </div>
+                            </div>
+                            <div class="badge bg-primary">Upcoming Event</div>
+                            <div class="mt-3">
+                              <button class="btn btn-primary w-100">
+                                <i class="bi bi-chat-dots"></i> Message
+                              </button>
+                            </div>
+                          </div>
+                          <div class="card-footer bg-transparent">
+                            <div class="post-actions d-flex justify-content-around">
+                              <button class="btn btn-light reaction-btn">
+                                <i class="bi bi-hand-thumbs-up"></i>
+                                <span class="ms-2">Like</span>
+                              </button>
+                              <button class="btn btn-light reaction-btn">
+                                <i class="bi bi-chat-text"></i>
+                                <span class="ms-2">Comment</span>
+                              </button>
+                              <button class="btn btn-light reaction-btn"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#shareModal">
                                 <i class="bi bi-share"></i>
                                 <span class="ms-2">Share</span>
                               </button>
@@ -655,7 +745,7 @@
                 <h6 class="mb-0">Dilsara Thiranjaya</h6>
                 <div class="dropdown d-inline-block">
                   <button
-                    class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                    class="btn btn-sm btn-outline-secondary privacy-dropdown dropdown-toggle"
                     type="button"
                     data-bs-toggle="dropdown"
                   >
@@ -685,7 +775,7 @@
                         class="dropdown-item"
                         href="#"
                         data-icon="bi-lock"
-                        data-text="Only Me"
+                        data-text="Private"
                         ><i class="bi bi-lock me-2"></i>Only Me</a
                       >
                     </li>
@@ -756,6 +846,45 @@
             ></button>
           </div>
           <div class="modal-body">
+            <div class="dropdown d-inline-block mb-3">
+              <button
+
+                      class="btn btn-sm btn-outline-secondary privacy-dropdown dropdown-toggle"
+                      type="button"
+                      data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-globe me-1"></i>Public
+              </button>
+              <ul class="dropdown-menu shadow-sm">
+                <li>
+                  <a
+                          class="dropdown-item"
+                          href="#"
+                          data-icon="bi-globe"
+                          data-text="Public"
+                  ><i class="bi bi-globe me-2"></i>Public</a
+                  >
+                </li>
+                <li>
+                  <a
+                          class="dropdown-item"
+                          href="#"
+                          data-icon="bi-people"
+                          data-text="Friends"
+                  ><i class="bi bi-people me-2"></i>Friends</a
+                  >
+                </li>
+                <li>
+                  <a
+                          class="dropdown-item"
+                          href="#"
+                          data-icon="bi-lock"
+                          data-text="Private"
+                  ><i class="bi bi-lock me-2"></i>Only Me</a
+                  >
+                </li>
+              </ul>
+            </div>
             <div class="mb-3">
               <label class="form-label">Event Name</label>
               <input type="text" class="form-control" />

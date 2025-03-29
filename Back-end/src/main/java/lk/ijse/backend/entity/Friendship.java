@@ -20,13 +20,11 @@ public class Friendship {
     private FriendshipId id;
 
     @ManyToOne
-    @MapsId("user1Id")
-    @JoinColumn(name = "user1_id")
+    @JoinColumn(name = "user1_id", insertable = false, updatable = false)
     private User user1;
 
     @ManyToOne
-    @MapsId("user2Id")
-    @JoinColumn(name = "user2_id")
+    @JoinColumn(name = "user2_id", insertable = false, updatable = false)
     private User user2;
 
     @Enumerated(EnumType.STRING)
@@ -43,7 +41,10 @@ public class Friendship {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class FriendshipId implements Serializable {
+        @Column(name = "user1_id")
         private int user1Id;
+
+        @Column(name = "user2_id")
         private int user2Id;
     }
 

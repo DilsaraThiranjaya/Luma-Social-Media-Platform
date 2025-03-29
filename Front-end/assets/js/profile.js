@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize
     loadProfileInfo();
+    loadPosts();
 
     // Initialize tooltips
     const tooltipTriggerList = document.querySelectorAll(
@@ -501,7 +502,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           "Authorization": "Bearer " + authData.token
         },
         success: function(response) {
-
+          loadPosts();
         },
         error: function(error) {
           Toast.fire({
@@ -524,6 +525,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Post Modal Functionality
     const postModal = document.getElementById("postModal");
+    const bsPostModal = new bootstrap.Modal(postModal);
     const postTextarea = document.querySelector(".post-content-input");
     const postButton = document.querySelector(".btn-post");
     const mediaPreviewContainer = document.querySelector(
@@ -536,7 +538,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const dropdownButton = document.querySelector(
-        '.dropdown-toggle[data-bs-toggle="dropdown"]'
+        '.privacy-dropdown[data-bs-toggle="dropdown"]'
     );
     dropdownButton.innerHTML = `
     <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
@@ -556,41 +558,154 @@ document.addEventListener('DOMContentLoaded', async () => {
       handleMediaUpload(e.target.files, "video");
     });
 
+    // Initialize instant add photo button
+    document.getElementById('addPhotos').addEventListener('click', function() {
+      bsPostModal.show();
+
+      postModal.addEventListener('shown.bs.modal', function modalShown() {
+        imageUpload.click();
+        postModal.removeEventListener('shown.bs.modal', modalShown);
+      });
+    });
+
+    // Initialize instant add video button
+    document.getElementById('addVideos').addEventListener('click', function() {
+      bsPostModal.show();
+
+      postModal.addEventListener('shown.bs.modal', function modalShown() {
+        videoUpload.click();
+        postModal.removeEventListener('shown.bs.modal', modalShown);
+      });
+    });
+
     // Media upload function
+    const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
+    const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+    let mediaFiles = [];
+
     function handleMediaUpload(files, type) {
+      const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
+      const validVideoTypes = ["video/mp4", "video/quicktime"];
+
       Array.from(files).forEach((file) => {
+        // Validation checks
+        if (type === "image" && !validImageTypes.includes(file.type)) {
+          Toast.fire({ icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)" });
+          return;
+        }
+
+        if (type === "video" && !validVideoTypes.includes(file.type)) {
+          Toast.fire({ icon: "error", title: "Invalid video format (MP4, MOV only)" });
+          return;
+        }
+
+        if (type === "image" && file.size > MAX_IMAGE_SIZE) {
+          Toast.fire({ icon: "error", title: "Image size exceeds 20MB limit" });
+          return;
+        }
+
+        if (type === "video" && file.size > MAX_VIDEO_SIZE) {
+          Toast.fire({ icon: "error", title: "Video size exceeds 100MB limit" });
+          return;
+        }
+
         const reader = new FileReader();
         reader.onload = function (e) {
           const mediaElement = document.createElement("div");
           mediaElement.className = "media-preview-item position-relative mb-3";
+          mediaElement.dataset.type = type;
+          mediaElement.dataset.filename = file.name;
+
+          // Store file reference
+          mediaElement.fileData = file;
 
           if (type === "image") {
             mediaElement.innerHTML = `
-            <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
-            <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-          `;
-          } else if (type === "video") {
+          <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+          } else {
             mediaElement.innerHTML = `
-            <video src="${e.target.result}" class="img-fluid rounded" controls></video>
-            <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-          `;
+          <video src="${e.target.result}" class="img-fluid rounded" controls></video>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
           }
 
           mediaPreviewContainer.appendChild(mediaElement);
 
-          // Remove button functionality
-          mediaElement
-              .querySelector(".btn-close")
-              .addEventListener("click", function () {
-                mediaElement.remove();
-                updatePostButtonState();
-              });
+          // Store in mediaFiles array
+          mediaFiles.push({
+            element: mediaElement,
+            file: file,
+            type: type
+          });
+
+          // Remove button handler
+          mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+            mediaFiles = mediaFiles.filter(item => item.element !== mediaElement);
+            mediaElement.remove();
+            updatePostButtonState();
+          });
 
           updatePostButtonState();
         };
         reader.readAsDataURL(file);
       });
     }
+
+    // Reset function
+    function resetPostModal() {
+      // Clear text content
+      postTextarea.value = "";
+
+      // Clear media previews
+      mediaPreviewContainer.innerHTML = "";
+      mediaFiles = [];
+
+      // Reset privacy to default
+      selectedPrivacy = { icon: "bi-globe", text: "Public" };
+      updatePrivacyDropdown();
+
+      // Reset button state
+      postButton.disabled = true;
+
+      // Clear file inputs (important for allowing same file to be re-selected)
+      imageUpload.value = "";
+      videoUpload.value = "";
+    }
+
+// Event listeners for modal close
+    postModal.addEventListener('hide.bs.modal', function(event) {
+      const hasContent = postTextarea.value.trim() || mediaFiles.length > 0;
+
+      if (hasContent) {
+        event.preventDefault(); // Prevent immediate closing
+
+        Swal.fire({
+          title: 'Unsaved Changes',
+          text: "You have unsaved changes. Are you sure you want to discard them?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, discard',
+          cancelButtonText: 'No, keep editing',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resetPostModal();
+            bsPostModal.hide(); // Close after reset
+          }
+        });
+      }
+    });
+
+// Optional: Also reset when opening (in case modal was closed improperly)
+    postModal.addEventListener('show.bs.modal', function() {
+      // Only reset if there's no existing content
+      if (!postTextarea.value.trim() && mediaFiles.length === 0) {
+        resetPostModal();
+      }
+    });
 
     // Update post button state based on content
     function updatePostButtonState() {
@@ -687,25 +802,91 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Create Post Functionality
-    postButton.addEventListener("click", function () {
+    postButton.addEventListener("click", async function () {
       const postText = postTextarea.value.trim();
-      const mediaItems = Array.from(mediaPreviewContainer.children);
+      const OriginalPostButtonText = postButton.innerHTML;
+      if (!postText && mediaFiles.length === 0) return;
 
-      if (postText || mediaItems.length > 0) {
-        createNewPost(postText, mediaItems);
+      postButton.disabled = true;
+      postButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
+      const bsModal = bootstrap.Modal.getInstance(postModal);
 
-        // Reset form
-        postTextarea.value = "";
-        mediaPreviewContainer.innerHTML = "";
-        postButton.disabled = true;
+      try {
+        // Upload media files
+        const mediaUploads = mediaFiles.map(async ({ file, type }) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("type", type.toUpperCase());
 
-        // Close modal
-        const bsModal = bootstrap.Modal.getInstance(postModal);
-        if (bsModal) {
+          const response = await $.ajax({
+            url: BASE_URL + "/profile/posts/upload-media",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+              "Authorization": "Bearer " + authData.token
+            }
+          });
+
+          if (response.code !== 200) throw new Error(response.message);
+          return response.data;
+        });
+
+        // Wait for all media uploads
+        const mediaResults = await Promise.all(mediaUploads);
+
+        // Prepare post data
+        const postData = {
+          content: postText,
+          privacy: selectedPrivacy.text.toUpperCase(),
+          media: mediaResults.map(result => ({
+            mediaUrl: result.mediaUrl,
+            mediaType: result.mediaType
+          }))
+        };
+
+        // Create the post
+        const postResponse = await $.ajax({
+          url: BASE_URL + "/profile/posts/create",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(postData),
+          headers: {
+            "Authorization": "Bearer " + authData.token
+          }
+        });
+
+        if (postResponse.code === 200 || postResponse.code === 201) {
+          loadPosts();
+
+          // Reset form
+          postTextarea.value = "";
+          mediaPreviewContainer.innerHTML = "";
+          mediaFiles = [];
+          selectedPrivacy = { icon: "bi-globe", text: "Public" };
+          updatePrivacyDropdown();
           bsModal.hide();
+          Toast.fire({ icon: "success", title: "Post created!" });
         }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error.responseJSON?.message || "Failed to create post"
+        });
+      } finally {
+        postButton.disabled = false;
+        postButton.innerHTML = OriginalPostButtonText;
       }
     });
+
+// Helper function to update privacy dropdown display
+    function updatePrivacyDropdown() {
+      const dropdownButton = document.querySelector('.privacy-dropdown');
+      dropdownButton.innerHTML = `
+    <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+  `;
+    }
 
     document.querySelectorAll(".dropdown-item[data-icon]").forEach((item) => {
       item.addEventListener("click", function (e) {
@@ -716,7 +897,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Update dropdown button display
         const dropdownButton = document.querySelector(
-            '.dropdown-toggle[data-bs-toggle="dropdown"]'
+            '.privacy-dropdown[data-bs-toggle="dropdown"]'
         );
         dropdownButton.innerHTML = `
         <i class="bi ${icon} me-1"></i>${text}
@@ -724,78 +905,147 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    function createNewPost(text, mediaItems) {
-      const timelineContainer = document.querySelector(".posts-container");
+    // Function to load posts from backend
+    async function loadPosts() {
+      try {
+        const loader = `<div class="loading-spinner">Loading posts...</div>`;
+        document.querySelector(".posts-container").innerHTML = loader;
+
+        const response = await $.ajax({
+          url: BASE_URL + "/profile/posts",
+          type: "GET",
+          headers: {
+            "Authorization": "Bearer " + authData.token
+          }
+        });
+
+        if (response.code === 200) {
+          const postsContainer = document.querySelector(".posts-container");
+          postsContainer.innerHTML = "";
+
+          if (response.data.posts.length === 0) {
+            postsContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="bi bi-newspaper"></i>
+                    <p>No posts to show</p>
+                </div>
+             `;
+            return;
+          }
+
+          response.data.posts.forEach(post => {
+            const postElement = generatePostElement(post);
+            postsContainer.appendChild(postElement);
+          });
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error.responseJSON?.message || "Failed to load posts"
+        });
+      }
+    }
+
+// Modified post creation function (generic version)
+    function generatePostElement(postData) {
       const newPost = document.createElement("div");
-      newPost.className = "card post-card mb-3 new-post-animation";
+      newPost.className = "card post-card mb-3";
 
       // Format media content
-      const mediaContent = mediaItems
-          .map((item) => {
-            const media = item.querySelector("img, video");
-            return media
-                ? media.outerHTML.replace('class="', 'class="img-fluid rounded mb-3 ')
-                : "";
-          })
-          .join("");
-
-      // Current date
-      const formattedDate = new Date().toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      });
+      const mediaContent = (postData.media || []).map(media => {
+        if (media.mediaType === 'IMAGE') {
+          return `<img src="${media.mediaUrl}" class="img-fluid rounded mb-3" alt="Post media">`;
+        }
+        if (media.mediaType === 'VIDEO') {
+          return `<video src="${media.mediaUrl}" class="img-fluid rounded mb-3" controls></video>`;
+        }
+        return "";
+      }).join("");
 
       newPost.innerHTML = `
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
+        <img src="${postData.user.profilePictureUrl || '/assets/image/Profile-picture.png'}" 
+             alt="Profile" class="rounded-circle me-2" style="width: 40px; height: 40px;">
         <div>
-          <h6 class="mb-0">Dilsara Thiranjaya</h6>
-          <small class="text-muted">${formattedDate} • <i class="bi ${
-          selectedPrivacy.icon
-      }"></i> ${selectedPrivacy.text}</small>
+          <h6 class="mb-0">${postData.user.firstName} ${postData.user.lastName}</h6>
+          <small class="text-muted">
+        ${new Date(postData.createdAt || Date.now()).toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      })} • 
+            <i class="bi ${getPrivacyIcon(postData.privacy)}"></i> 
+            ${postData.privacy.charAt(0) + postData.privacy.slice(1).toLowerCase()}
+          </small>
         </div>
-        <div class="ms-auto">
-          <button class="btn btn-light btn-sm">
-            <i class="bi bi-three-dots"></i>
-          </button>
+        <div class="ms-auto dropdown">
+            ${generatePostDropdown()}
         </div>
       </div>
     </div>
     <div class="card-body">
-      <p>${text.replace(/\n/g, "<br>")}</p>
+      <p>${postData.content.replace(/\n/g, "<br>")}</p>
       ${mediaContent}
       <div class="post-stats d-flex align-items-center text-muted">
-        <span><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 0</span>
-        <span class="ms-auto">0 Comments • 0 Shares</span>
+        <span><i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${postData.reactions}</span>
+        <span class="ms-auto">${postData.comments} Comments • ${postData.shares} Shares</span>
       </div>
     </div>
     <div class="card-footer bg-transparent">
       <div class="post-actions d-flex justify-content-around">
-        <button class="btn btn-light reaction-btn">
-          <i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>
+        <button class="btn btn-light reaction-btn like-btn" data-post-id="${postData.postId}">
+          <i class="bi ${postData.liked ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'}"></i>
+          <span class="ms-2">${postData.liked ? 'Liked' : 'Like'}</span>
         </button>
         <button class="btn btn-light reaction-btn">
           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
         </button>
-        <button class="btn btn-light reaction-btn share-post-btn" data-bs-toggle="modal" data-bs-target="#shareModal>
+        <button class="btn btn-light reaction-btn share-post-btn" 
+                data-bs-toggle="modal" 
+                data-bs-target="#shareModal"
+                data-post-id="${postData.postId}">
           <i class="bi bi-share"></i> <span class="ms-2">Share</span>
         </button>
       </div>
     </div>
   `;
 
-      // Add the new post to the timeline
-      timelineContainer.prepend(newPost);
-
-      // Add reaction event listeners to the new post
       addPostInteractions(newPost);
+      return newPost;
+    }
 
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        newPost.classList.remove("new-post-animation");
-      }, 500);
+// Helper functions
+    function getPrivacyIcon(privacy) {
+      const icons = {
+        PUBLIC: 'bi-globe',
+        FRIENDS: 'bi-people-fill',
+        PRIVATE: 'bi-lock-fill'
+      };
+      return icons[privacy] || 'bi-globe';
+    }
+
+    function generatePostDropdown() {
+      return `
+    <button class="btn btn-light btn-sm dropdown-toggle" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+      <i class="bi bi-three-dots"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" href="#" data-action="edit">
+        <i class="bi bi-pencil-square me-2"></i>Edit
+      </a></li>
+      <li><a class="dropdown-item text-danger" href="#" data-action="delete">
+        <i class="bi bi-trash me-2"></i>Delete
+      </a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="#" data-action="report">
+        <i class="bi bi-flag me-2"></i>Report
+      </a></li>
+    </ul>
+  `;
     }
 
     const REACTION_TYPES = {
@@ -1208,22 +1458,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           this.innerHTML = "Like";
         }
       });
-    }
-
-    // Create like animation
-    function createLikeAnimation(element) {
-      const likeBubble = document.createElement("div");
-      likeBubble.className = "like-animation";
-      likeBubble.innerHTML = `<i class="bi bi-heart-fill text-danger"></i>`;
-
-      element.appendChild(likeBubble);
-
-      // Remove after animation completes
-      setTimeout(() => {
-        if (element.contains(likeBubble)) {
-          element.removeChild(likeBubble);
-        }
-      }, 1000);
     }
 
     // Add interactions to existing posts

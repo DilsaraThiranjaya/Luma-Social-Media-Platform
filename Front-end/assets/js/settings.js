@@ -160,6 +160,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             timerProgressBar: true,
         });
 
+        // Initialize date pickers
+        flatpickr("#birthday", {
+            dateFormat: "Y-m-d",
+            maxDate: "today"
+        });
+
+        flatpickr(".education-date", {
+            dateFormat: "Y-m-d",
+            maxDate: "today"
+        });
+
+        flatpickr(".work-date", {
+            dateFormat: "Y-m-d",
+            maxDate: "today"
+        });
+
         // Initialize
         loadUserData();
         initLocationAutocomplete();
@@ -311,6 +327,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         </div>
     `;
+                        document.querySelectorAll(".education-date").forEach((input) => {
+                            flatpickr(input, {
+                                dateFormat: "Y-m-d",
+                                maxDate: "today",
+                            });
+                        });
                     }
 
                     // Populate Work Experience
@@ -425,6 +447,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         </div>
     `;
+                        document.querySelectorAll(".work-date").forEach((input) => {
+                            flatpickr(input, {
+                                dateFormat: "Y-m-d",
+                                maxDate: "today",
+                            });
+                        });
                     }
 
                     // Set privacy toggles
@@ -985,23 +1013,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         }
-
-
-        // Initialize date pickers
-        flatpickr("#birthday", {
-            dateFormat: "Y-m-d",
-            maxDate: "today"
-        });
-
-        flatpickr(".education-date", {
-            dateFormat: "Y-m-d",
-            maxDate: "today"
-        });
-
-        flatpickr(".work-date", {
-            dateFormat: "Y-m-d",
-            maxDate: "today"
-        });
 
         // Email verification
         let timerInterval;

@@ -38,6 +38,13 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_post_id")
+    private Post parentPost;
+
+    @OneToMany(mappedBy = "parentPost")
+    private List<Post> shares = new ArrayList<>();
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostMedia> media = new ArrayList<>();
 

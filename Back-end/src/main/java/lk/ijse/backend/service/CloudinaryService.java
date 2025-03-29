@@ -10,4 +10,6 @@ public interface CloudinaryService {
     String uploadProfilePicture(MultipartFile file, String userId) throws IOException;
 
     String uploadCoverPicture(MultipartFile file, String userId) throws IOException;
+
+    String uploadMedia(MultipartFile file, String mediaType, Integer userId) throws IOException;
 }
