@@ -6,7 +6,6 @@ import lk.ijse.backend.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -185,5 +184,45 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
         Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadOptions);
         return (String) uploadResult.get("secure_url");
+    }
+
+    @Override
+    public void deleteMedia(String publicUrl) {
+        try {
+            String publicId = extractPublicId(publicUrl);
+            Map<String, String> options = new HashMap<>();
+            options.put("invalidate", "true");
+            cloudinary.uploader().destroy(publicId, options);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete media from Cloudinary", e);
+        }
+    }
+
+    private String extractPublicId(String url) {
+        // Split URL after "/upload/"
+        String[] parts = url.split("/upload/");
+        if (parts.length < 2) {
+            throw new IllegalArgumentException("Invalid Cloudinary URL format");
+        }
+
+        // Get everything after "/upload/"
+        String path = parts[1];
+
+        // Split into components [version, folder, filename]
+        String[] pathComponents = path.split("/");
+        if (pathComponents.length < 3) {
+            throw new IllegalArgumentException("Invalid Cloudinary URL path");
+        }
+
+        // Extract public ID (skip version and first slash)
+        String publicId = String.join("/", Arrays.copyOfRange(pathComponents, 1, pathComponents.length));
+
+        // Remove file extension
+        int lastDotIndex = publicId.lastIndexOf('.');
+        if (lastDotIndex != -1) {
+            publicId = publicId.substring(0, lastDotIndex);
+        }
+
+        return publicId;
     }
 }

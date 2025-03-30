@@ -1,10 +1,7 @@
 package lk.ijse.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import lk.ijse.backend.dto.PostDTO;
-import lk.ijse.backend.dto.PostMediaDTO;
-import lk.ijse.backend.dto.ReactionDTO;
-import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.PostMedia;
 import lk.ijse.backend.entity.Reaction;
@@ -13,9 +10,11 @@ import lk.ijse.backend.repository.PostMediaRepository;
 import lk.ijse.backend.repository.PostRepository;
 import lk.ijse.backend.repository.ReactionRepository;
 import lk.ijse.backend.repository.UserRepository;
+import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.PostService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +33,7 @@ public class PostServiceImpl implements PostService {
     private final PostMediaRepository postMediaRepository;
     private final ReactionRepository reactionRepository;
     private final ModelMapper modelMapper;
+    private final CloudinaryService cloudinaryService;
 
     @Transactional
     @Override
@@ -84,40 +84,136 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String addReaction(int postId, ReactionDTO reactionDTO, String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new EntityNotFoundException("User not found");
+    @Transactional  // Explicit annotation to ensure transactional context
+    public ResponseDTO addReaction(int postId, ReactionDTO reactionDTO, String email) {
+        try {
+            User user = userRepository.findByEmail(email);
+            if (user == null) throw new EntityNotFoundException("User not found");
+
+            Post post = postRepository.findById(postId)
+                    .orElseThrow(() -> new RuntimeException("Post not found"));
+
+            Reaction byUserAndPost = reactionRepository.findByUserAndPost(user, post);
+
+            if (byUserAndPost != null) {
+                if (byUserAndPost.getType() != reactionDTO.getType()) {
+                    // Update existing reaction
+                    System.out.println("Update" + byUserAndPost.getReactionId());
+                    byUserAndPost.setType(reactionDTO.getType());
+                    reactionRepository.save(byUserAndPost);
+                    return new ResponseDTO(VarList.OK, "Updated", convertToDTO(post));
+                } else {
+                    // Delete reaction
+                    System.out.println("Remove" + byUserAndPost.getReactionId());
+                    // Delete using custom query
+                    reactionRepository.deleteByUserAndPost(user, post); // Use the custom query
+                    return new ResponseDTO(VarList.OK, "Removed", convertToDTO(post));
+                }
+            } else {
+                // Add new reaction
+                System.out.println("Add");
+                Reaction reaction = modelMapper.map(reactionDTO, Reaction.class);
+                reaction.setUser(user);
+                reaction.setPost(post);
+                reactionRepository.save(reaction);
+                return new ResponseDTO(VarList.OK, "Added", convertToDTO(post));
+            }
+        } catch (Exception e) {
+            // Log the exception to identify issues
+            e.printStackTrace();
+            throw new RuntimeException("Transaction failed", e);
         }
-
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-
-        Reaction reaction = modelMapper.map(reactionDTO, Reaction.class);
-        reaction.setUser(user);
-        reaction.setPost(post);
-
-        Reaction byUserAndPost = reactionRepository.findByUserAndPost(user, post);
-        if (byUserAndPost != null) {
-            reactionRepository.delete(byUserAndPost);
-            return "Removed";
-        }
-
-        Reaction savedReaction = reactionRepository.save(reaction);
-        return "Added";
     }
 
+//    @Transactional
+//    @Override
+//    public PostResponseDTO updatePost(int postId, String email, PostUpdateDTO postUpdateDTO) {
+//        User user = userRepository.findByEmail(email);
+//        if (user == null){
+//            new EntityNotFoundException("User not found");
+//        }
+//
+//        Post post = postRepository.findById(postId)
+//                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+//
+//        if (!(post.getUser().getUserId() == user.getUserId())) {
+//            throw new SecurityException("Unauthorized to update this post");
+//        }
+//
+//        // Update basic fields
+//        post.setContent(postUpdateDTO.getContent());
+//        post.setPrivacy(Post.PrivacyLevel.valueOf(postUpdateDTO.getPrivacy().toUpperCase()));
+//
+//        // Handle media updates
+//        processMediaUpdates(post, postUpdateDTO);
+//
+//        Post updatedPost = postRepository.save(post);
+//        return convertToPostResponseDTO(updatedPost);
+//    }
+//
+//    private void processMediaUpdates(Post post, PostUpdateDTO updateDTO) {
+//        // Delete removed media
+//        updateDTO.getMediaToDelete().forEach(mediaUrl -> {
+//            cloudinaryService.deleteMedia(mediaUrl);
+//            post.getMedia().removeIf(m -> m.getMediaUrl().equals(mediaUrl));
+//        });
+//
+//        // Add new media
+//        updateDTO.getNewMedia().forEach(mediaFile -> {
+//            try {
+//                String mediaType = mediaFile.getContentType().startsWith("image") ? "IMAGE" : "VIDEO";
+//                String mediaUrl = cloudinaryService.uploadMedia(
+//                        mediaFile,
+//                        mediaType,
+//                        post.getUser().getUserId()
+//                );
+//
+//                PostMedia newMedia = new PostMedia();
+//                newMedia.setMediaUrl(mediaUrl);
+//                newMedia.setMediaType(PostMedia.MediaType.valueOf(mediaType));
+//                post.setMedia((List<PostMedia>) newMedia);
+//            } catch (IOException e) {
+//                throw new RuntimeException("Failed to upload media", e);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+//    }
+
+//    private PostResponseDTO convertToPostResponseDTO(Post post) {
+//        PostResponseDTO dto = modelMapper.map(post, PostResponseDTO.class);
+//        dto.setUser(modelMapper.map(post.getUser(), UserDTO.class));
+//        dto.setMedia(post.getMedia().stream()
+//                .map(media -> modelMapper.map(media, PostMediaDTO.class))
+//                .collect(Collectors.toList()));
+//        return dto;
+//    }
+
+    // Delete post implementation
+    @Override
+    public void deletePost(int postId) throws Exception {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new Exception("Post not found or unauthorized"));
+        postRepository.delete(post);
+    }
+
+    // Get single post for editing
+    @Override
+    public PostDTO getPost(int postId, String userEmail) throws Exception {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new Exception("Post not found"));
+        return convertToDTO(post);
+    }
+
+    // Ensure media is eagerly fetched in Post entity
     private PostDTO convertToDTO(Post post) {
+        // Initialize lazy-loaded collections before leaving transactional context
+        Hibernate.initialize(post.getMedia());
         PostDTO postDTO = modelMapper.map(post, PostDTO.class);
-
-        // Convert user
         postDTO.setUser(modelMapper.map(post.getUser(), UserDTO.class));
-
-        // Convert media
         postDTO.setMedia(post.getMedia().stream()
                 .map(media -> modelMapper.map(media, PostMediaDTO.class))
                 .collect(Collectors.toList()));
-
         return postDTO;
     }
 }

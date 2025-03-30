@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,6 +231,65 @@ public class ProfileController {
         }
     }
 
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//    @PutMapping(value = "/posts/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<ResponseDTO> updatePost(
+//            @PathVariable int postId,
+//            @RequestPart("content") String content,
+//            @RequestPart("privacy") String privacy,
+//            @RequestPart(value = "mediaToDelete", required = false) List<String> mediaToDelete,
+//            @RequestPart(value = "newMedia", required = false) List<MultipartFile> newMedia,
+//            Authentication authentication) {
+//
+//        String email = authentication.getName();
+//        try {
+//            PostUpdateDTO updateDTO = new PostUpdateDTO();
+//            updateDTO.setContent(content);
+//            updateDTO.setPrivacy(privacy);
+//            updateDTO.setMediaToDelete(mediaToDelete != null ? mediaToDelete : new ArrayList<>());
+//            updateDTO.setNewMedia(newMedia != null ? newMedia : new ArrayList<>());
+//
+//            PostDTO updatedPost = postService.updatePost(postId, email, updateDTO);
+//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post updated", updatedPost));
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating post", null));
+//        }
+//    }
+
+    // DELETE POST
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<ResponseDTO> deletePost(@PathVariable int postId,
+                                                  Authentication authentication) {
+        String email = authentication.getName();
+        log.info("Received request to delete post with ID: {}", postId);
+        try {
+            postService.deletePost(postId);
+
+            log.info("Successfully deleted post with ID: {}", postId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post deleted", null));
+        } catch (Exception e) {
+            log.error("Error deleting post with ID: {}", postId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error deleting post", null));
+        }
+    }
+
+    // GET SINGLE POST (for edit modal pre-population)
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("posts/{postId}")
+    public ResponseEntity<ResponseDTO> getPost(@PathVariable int postId, Authentication authentication) {
+        String email = authentication.getName();
+        try {
+            PostDTO post = postService.getPost(postId, email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post retrieved", post));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving post", null));
+        }
+    }
+
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/posts/{postId}/reactions")
     public ResponseEntity<ResponseDTO> addReaction(@PathVariable Integer postId, @Valid @RequestBody ReactionDTO reactionDTO, Authentication authentication) {
@@ -237,10 +297,11 @@ public class ProfileController {
 
         try {
             String email = authentication.getName();
-            String res = postService.addReaction(postId, reactionDTO, email);
+            ResponseDTO res = postService.addReaction(postId, reactionDTO, email);
+            res.setData(convertToPostResponseDTO((PostDTO) res.getData()));
 
             log.info("Successfully added reaction for post ID: {}", postId);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, res, null));
+            return ResponseEntity.status(HttpStatus.OK).body(res);
         } catch (Exception e) {
             log.error("Error adding reaction for post ID: {}", postId, e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
@@ -346,8 +407,6 @@ public class ProfileController {
         dto.setContent(post.getContent());
         dto.setPrivacy(String.valueOf(post.getPrivacy()));
         dto.setCreatedAt(post.getCreatedAt());
-//        dto.setReactions(post.getReactions());
-//        dto.setComments(post.getComments());
 
         dto.setReactions(post.getReactions().stream()
                 .map(reaction -> {

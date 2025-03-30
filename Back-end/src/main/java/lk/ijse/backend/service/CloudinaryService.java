@@ -12,4 +12,6 @@ public interface CloudinaryService {
     String uploadCoverPicture(MultipartFile file, String userId) throws IOException;
 
     String uploadMedia(MultipartFile file, String mediaType, Integer userId) throws IOException;
+
+    void deleteMedia(String publicUrl);
 }

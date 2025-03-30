@@ -973,15 +973,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Build the reaction display HTML for reaction counts
       let reactionDisplay = "";
-      Object.entries(groupedReactions)
-          .filter(([type, count]) => count > 0)
-          .forEach(([type, count]) => {
-            const icon = REACTION_TYPES[type]?.fillIcon || "bi-hand-thumbs-up-fill";
-            const color = REACTION_TYPES[type]?.color || "text-primary";
-            reactionDisplay += `<span class="reaction-icon me-1">
-                            <i class="bi ${icon} ${color}"></i> ${count}
-                          </span>`;
-          });
+      if (Object.keys(groupedReactions).length > 0) {
+        reactionDisplay = Object.entries(groupedReactions)
+            .map(([type, count]) => `
+      <span class="reaction-icon me-1">
+        <i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}
+      </span>
+    `)
+            .join('');
+      }
 
       // For the like button, check if the user has reacted and show the reaction type if available
       const likeButtonIcon = postData.liked && postData.reactionType
@@ -1007,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           </small>
         </div>
         <div class="ms-auto dropdown">
-          ${generatePostDropdown()}
+          ${generatePostDropdown(postData.postId)}
         </div>
       </div>
     </div>
@@ -1015,9 +1015,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p>${postData.content.replace(/\n/g, "<br>")}</p>
       ${mediaContent}
       <div class="post-stats d-flex align-items-center text-muted">
-        <!-- Display multiple reaction types with counts -->
+        <span class="reaction-container">
         ${reactionDisplay}
-        <span class="ms-auto">${postData.comments} Comments • ${postData.shares} Shares</span>
+      </span>
+      <span class="ms-auto">
+        ${postData.comments.length} Comments • ${postData.shares} Shares
+      </span>
       </div>
     </div>
     <div class="card-footer bg-transparent">
@@ -1054,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return icons[privacy] || 'bi-globe';
     }
 
-    function generatePostDropdown() {
+    function generatePostDropdown(postId) {
       return `
     <button class="btn btn-light btn-sm dropdown-toggle" 
             type="button" 
@@ -1063,19 +1066,281 @@ document.addEventListener('DOMContentLoaded', async () => {
       <i class="bi bi-three-dots"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" href="#" data-action="edit">
+      <li><a class="dropdown-item edit-post-btn" data-post-id="${postId}">
         <i class="bi bi-pencil-square me-2"></i>Edit
       </a></li>
-      <li><a class="dropdown-item text-danger" href="#" data-action="delete">
+      <li><a class="dropdown-item text-danger delete-post-btn" data-post-id="${postId}">
         <i class="bi bi-trash me-2"></i>Delete
       </a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="#" data-action="report">
+      <li><a class="dropdown-item" data-post-id="${postId}">
         <i class="bi bi-flag me-2"></i>Report
       </a></li>
     </ul>
   `;
     }
+
+// // Get Edit Modal elements (assumed to be defined in your HTML similar to your create post modal)
+//     const editPostModal = document.getElementById("editPostModal");
+//     const bsEditPostModal = new bootstrap.Modal(editPostModal);
+//     const editPostTextarea = editPostModal.querySelector(".edit-post-content-input");
+//     const editPostButton = editPostModal.querySelector("#saveEditPostBtn");
+//     const editMediaPreviewContainer = editPostModal.querySelector(".media-preview-container");
+//
+// // File inputs for edit modal
+//     const editImageUpload = editPostModal.querySelector("#editImageUpload");
+//     const editVideoUpload = editPostModal.querySelector("#editVideoUpload");
+//
+// // Array to store media files for the edit modal
+//     let editMediaFiles = [];
+//
+// // When an edit button is clicked on a post, load post details (including existing media) into the edit modal.
+//     document.addEventListener("click", function(e) {
+//       if (e.target.closest(".edit-post-btn")) {
+//         const postId = e.target.closest(".edit-post-btn").getAttribute("data-post-id");
+//         $.ajax({
+//           url: BASE_URL + "/profile/posts/" + postId,
+//           type: "GET",
+//           headers: { "Authorization": "Bearer " + authData.token },
+//           success: function(response) {
+//             // Assume response.data contains the post details including content and media
+//             const postData = response.data;
+//             editPostTextarea.value = postData.content;
+//             editMediaPreviewContainer.innerHTML = "";
+//             editMediaFiles = []; // Reset the edit media files array
+//
+//             // Pre-populate existing media (if any)
+//             if (postData.media && postData.media.length > 0) {
+//               postData.media.forEach((media) => {
+//                 const mediaElement = document.createElement("div");
+//                 mediaElement.className = "media-preview-item position-relative mb-3";
+//                 mediaElement.dataset.type = media.mediaType === "IMAGE" ? "image" : "video";
+//                 mediaElement.dataset.filename = media.mediaUrl;
+//                 if (media.mediaType === "IMAGE") {
+//                   mediaElement.innerHTML = `
+//                 <img src="${media.mediaUrl}" class="img-fluid rounded" alt="Media Preview">
+//                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+//               `;
+//                 } else {
+//                   mediaElement.innerHTML = `
+//                 <video src="${media.mediaUrl}" class="img-fluid rounded" controls></video>
+//                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+//               `;
+//                 }
+//                 editMediaPreviewContainer.appendChild(mediaElement);
+//                 // Save as an "existing" media item (not a File object)
+//                 editMediaFiles.push({
+//                   element: mediaElement,
+//                   file: null,
+//                   url: media.mediaUrl,
+//                   type: media.mediaType === "IMAGE" ? "image" : "video",
+//                   existing: true
+//                 });
+//                 // Add remove handler for each media item
+//                 mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+//                   editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+//                   mediaElement.remove();
+//                   updateEditPostButtonState();
+//                 });
+//               });
+//             }
+//             // Save the postId in a data attribute on the Save button.
+//             editPostButton.setAttribute("data-post-id", postId);
+//             bsEditPostModal.show();
+//           },
+//           error: function(error) {
+//             Toast.fire({
+//               icon: "error",
+//               title: error.responseJSON?.message || "Failed to load post details"
+//             });
+//           }
+//         });
+//       }
+//     });
+//
+// // Handle file selection for images and videos in the edit modal.
+//     editImageUpload.addEventListener("change", function(e) {
+//       handleEditMediaUpload(e.target.files, "image");
+//     });
+//
+//     editVideoUpload.addEventListener("change", function(e) {
+//       handleEditMediaUpload(e.target.files, "video");
+//     });
+//
+//     function handleEditMediaUpload(files, type) {
+//       const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
+//       const validVideoTypes = ["video/mp4", "video/quicktime"];
+//       const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
+//       const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+//
+//       Array.from(files).forEach((file) => {
+//         // Validation checks
+//         if (type === "image" && !validImageTypes.includes(file.type)) {
+//           Toast.fire({ icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)" });
+//           return;
+//         }
+//         if (type === "video" && !validVideoTypes.includes(file.type)) {
+//           Toast.fire({ icon: "error", title: "Invalid video format (MP4, MOV only)" });
+//           return;
+//         }
+//         if (type === "image" && file.size > MAX_IMAGE_SIZE) {
+//           Toast.fire({ icon: "error", title: "Image size exceeds 20MB limit" });
+//           return;
+//         }
+//         if (type === "video" && file.size > MAX_VIDEO_SIZE) {
+//           Toast.fire({ icon: "error", title: "Video size exceeds 100MB limit" });
+//           return;
+//         }
+//
+//         const reader = new FileReader();
+//         reader.onload = function(e) {
+//           const mediaElement = document.createElement("div");
+//           mediaElement.className = "media-preview-item position-relative mb-3";
+//           mediaElement.dataset.type = type;
+//           mediaElement.dataset.filename = file.name;
+//           mediaElement.fileData = file;
+//
+//           if (type === "image") {
+//             mediaElement.innerHTML = `
+//           <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
+//           <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+//         `;
+//           } else {
+//             mediaElement.innerHTML = `
+//           <video src="${e.target.result}" class="img-fluid rounded" controls></video>
+//           <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+//         `;
+//           }
+//           editMediaPreviewContainer.appendChild(mediaElement);
+//           editMediaFiles.push({
+//             element: mediaElement,
+//             file: file,
+//             type: type,
+//             existing: false
+//           });
+//           mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+//             editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+//             mediaElement.remove();
+//             updateEditPostButtonState();
+//           });
+//           updateEditPostButtonState();
+//         };
+//         reader.readAsDataURL(file);
+//       });
+//     }
+//
+//     function updateEditPostButtonState() {
+//       // Enable the Save Changes button if there's any content or media
+//       if (editPostTextarea.value.trim() || editMediaFiles.length > 0) {
+//         editPostButton.disabled = false;
+//       } else {
+//         editPostButton.disabled = true;
+//       }
+//     }
+//
+// // Confirm unsaved changes on modal close (similar to your create modal)
+//     editPostModal.addEventListener("hide.bs.modal", function(event) {
+//       const hasContent = editPostTextarea.value.trim() || editMediaFiles.length > 0;
+//       if (hasContent) {
+//         event.preventDefault();
+//         Swal.fire({
+//           title: 'Unsaved Changes',
+//           text: "You have unsaved changes. Are you sure you want to discard them?",
+//           icon: 'warning',
+//           showCancelButton: true,
+//           confirmButtonColor: '#d33',
+//           cancelButtonColor: '#3085d6',
+//           confirmButtonText: 'Yes, discard',
+//           cancelButtonText: 'No, keep editing'
+//         }).then((result) => {
+//           if (result.isConfirmed) {
+//             resetEditPostModal();
+//             bsEditPostModal.hide();
+//           }
+//         });
+//       }
+//     });
+//
+//     function resetEditPostModal() {
+//       editPostTextarea.value = "";
+//       editMediaPreviewContainer.innerHTML = "";
+//       editMediaFiles = [];
+//       editPostButton.disabled = true;
+//       editImageUpload.value = "";
+//       editVideoUpload.value = "";
+//     }
+//
+//     // Edit Post
+//     editPostButton.addEventListener("click", function() {
+//       const postId = editPostButton.getAttribute("data-post-id");
+//       const updatedContent = editPostTextarea.value.trim();
+//       const formData = new FormData();
+//       formData.append("content", updatedContent);
+//
+//       // Append details of existing media (that haven't been removed)
+//       editMediaFiles.forEach((media, index) => {
+//         if (media.existing) {
+//           formData.append(`existingMedia[${index}].mediaUrl`, media.url);
+//           formData.append(`existingMedia[${index}].mediaType`, media.type.toUpperCase());
+//         }
+//       });
+//       // Append new media files
+//       editMediaFiles.forEach(media => {
+//         if (!media.existing) {
+//           formData.append("newMedia", media.file);
+//         }
+//       });
+//
+//       $.ajax({
+//         url: BASE_URL + "/profile/posts/" + postId,
+//         type: "PUT",
+//         headers: { "Authorization": "Bearer " + authData.token },
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function(response) {
+//           Toast.fire({ icon: "success", title: "Post updated successfully" });
+//           loadPosts();
+//           bsEditPostModal.hide();
+//           resetEditPostModal();
+//         },
+//         error: function(error) {
+//           Toast.fire({ icon: "error", title: error.responseJSON?.message || "Failed to update post" });
+//         }
+//       });
+//     });
+
+    // Delete Post
+    document.addEventListener("click", function(e) {
+      if (e.target.closest(".delete-post-btn")) {
+        const postId = e.target.closest(".delete-post-btn").getAttribute("data-post-id");
+        console.log(postId)
+        Swal.fire({
+          title: "Are you sure?",
+          text: "This action cannot be undone!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "Cancel"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: BASE_URL + "/profile/posts/" + postId,
+              type: "DELETE",
+              headers: { "Authorization": "Bearer " + authData.token },
+              success: function(response) {
+                Toast.fire({ icon: "success", title: "Post deleted successfully" });
+                loadPosts();
+              },
+              error: function(error) {
+                Toast.fire({ icon: "error", title: error.responseJSON?.message || "Failed to delete post" });
+              }
+            });
+          }
+        });
+      }
+    });
+
 
     // Add new reaction constants at top
     const REACTION_TYPES = {
@@ -1103,20 +1368,55 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!response.ok) throw new Error('Failed to save reaction');
 
         const result = await response.json();
-        const reactionCount = likeBtn.closest('.post-card').querySelector('.post-stats span:first-child');
-
-        if (result.message === "Added") {
-          reactionCount.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${parseInt(reactionCount.textContent) + 1}`;
-          likeBtn.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i> <span>${reactionType}</span>`;
-          createReactionAnimation(likeBtn, reactionType);
-        } else {
-          reactionCount.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${parseInt(reactionCount.textContent) - 1}`;
-          likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span>Like</span>';
-        }
+        updatePostReactions(likeBtn, result.data,result.message, reactionType);
       } catch (error) {
         Toast.fire({ icon: 'error', title: 'Failed to save reaction' });
       }
     }
+
+    function updatePostReactions(likeBtn, postData, action, reactionType) {
+      const reactionStats = likeBtn.closest('.post-card').querySelector('.post-stats .reaction-container');
+
+      // Step 1: Count the existing reactions from the response (post before update)
+      const reactionCounts = {};
+      postData.reactions.forEach(reaction => {
+        reactionCounts[reaction.type] = (reactionCounts[reaction.type] || 0) + 1;
+      });
+
+      // Step 2: Manually adjust counts because backend does NOT return updated post
+      switch (action) {
+        case "Added":
+          reactionCounts[reactionType] = (reactionCounts[reactionType] || 0);
+          break;
+        case "Removed":
+          reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) - 1;
+          break;
+        case "Updated":
+          reactionCounts[postData.reactionType] = (reactionCounts[postData.reactionType] || 0) - 1;
+          reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) + 1;
+          break;
+        default:
+          return;
+      }
+
+      // Ensure the count does not go negative
+      if (reactionCounts[reactionType] <= 0) {
+        delete reactionCounts[reactionType];
+      }
+
+    // Step 3: Update the reaction stats UI (e.g., 👍 2 ❤️ 3)
+      reactionStats.innerHTML = Object.entries(reactionCounts)
+          .map(([type, count]) => `<i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}`)
+          .join(' • ');
+
+    // Step 4: Update the button UI (change icon and text)
+    if (action === "Added" || action === "Updated" ) {
+      likeBtn.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i> <span>${reactionType}</span>`;
+      createReactionAnimation(likeBtn, reactionType);
+    } else {
+      likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span>Like</span>';
+    }
+  }
 
     function createReactionPopup(likeBtn) {
       const popup = document.createElement('div');
@@ -1187,8 +1487,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         likeBtn.addEventListener('click', () => {
-          handleReaction(likeBtn, 'LIKE');
+          const iconElement = likeBtn.querySelector('i'); // Get the <i> element inside the button
+          if (!iconElement) return handleReaction(likeBtn, 'LIKE'); // Default to LIKE if no icon is found
+
+          // Find the reaction type by checking which icon class is applied
+          let currentReaction = 'LIKE'; // Default reaction
+          for (const [reaction, data] of Object.entries(REACTION_TYPES)) {
+            if (iconElement.classList.contains(data.fillIcon) || iconElement.classList.contains(data.icon)) {
+              currentReaction = reaction;
+              break; // Found the reaction, no need to continue checking
+            }
+          }
+
+          handleReaction(likeBtn, currentReaction);
         });
+
       }
 
       // Comment functionality

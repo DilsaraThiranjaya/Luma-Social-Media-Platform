@@ -833,6 +833,48 @@
       </div>
     </div>
 
+    <!-- Edit Post Modal -->
+    <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header gradient-bg">
+            <h5 class="modal-title text-white" id="editPostModalLabel">Edit Post</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Author Section -->
+            <div class="d-flex align-items-center mb-4 timline-post-item">
+              <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-3 profile-img-lg" />
+              <div>
+                <h6 class="mb-0">Your Name</h6>
+              </div>
+            </div>
+            <!-- Post Content -->
+            <textarea class="form-control edit-post-content-input" rows="4" placeholder="Edit your post..."></textarea>
+
+            <!-- Media Preview -->
+            <div class="media-preview-container mt-3"></div>
+
+            <!-- Action Buttons for media -->
+            <div class="d-flex gap-2 mt-2">
+              <input type="file" id="editImageUpload" accept="image/*" hidden />
+              <input type="file" id="editVideoUpload" accept="video/*" hidden />
+              <button class="btn btn-media" onclick="document.getElementById('editImageUpload').click()">
+                <i class="bi bi-image-fill me-2"></i> Photo
+              </button>
+              <button class="btn btn-media" onclick="document.getElementById('editVideoUpload').click()">
+                <i class="bi bi-camera-video-fill me-2"></i> Video
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-post" id="saveEditPostBtn">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Event Modal (Nested) -->
     <div class="modal fade" id="eventModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
