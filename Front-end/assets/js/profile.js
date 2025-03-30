@@ -718,88 +718,140 @@ document.addEventListener('DOMContentLoaded', async () => {
     postTextarea.addEventListener("input", updatePostButtonState);
 
     // Emoji Picker Functionality
-    function initEmojiPicker(targetInput, emojiButton) {
-      let emojiContainer = document.querySelector(".emoji-container");
+    async function initEmojiPicker(targetInput, emojiButton, isEditModal = false) {
+      const containerClass = isEditModal ? 'emoji-container-edit' : 'emoji-container';
+      let emojiContainer = document.querySelector(`.${containerClass}`);
 
-      if (!emojiContainer) {
-        emojiContainer = document.createElement("div");
-        emojiContainer.className =
-            "emoji-container p-2 border rounded shadow bg-white";
-        emojiContainer.style.position = "absolute";
-        emojiContainer.style.zIndex = "1050";
-        emojiContainer.style.width = "250px";
-        emojiContainer.style.bottom = "0";
-        emojiContainer.style.right = "0";
+      // If container already exists, remove it
+      if (emojiContainer) {
+        emojiContainer.remove();
+        return;
+      }
 
-        const commonEmojis = [
-          "😀",
-          "😂",
-          "😊",
-          "😍",
-          "🥰",
-          "😎",
-          "😇",
-          "🤔",
-          "😄",
-          "😅",
-          "😉",
-          "😋",
-          "😘",
-          "🥳",
-          "😮",
-          "😢",
-          "😡",
-          "👍",
-          "👎",
-          "❤️",
-          "🔥",
-          "✨",
-          "🎉",
-          "👏",
-          "🙏",
-          "💯",
-          "💪",
-          "🤝",
-          "🫡",
-          "🙌",
-        ];
-        emojiContainer.innerHTML = `<div class="d-flex flex-wrap">${commonEmojis
-            .map((e) => `<div class="emoji-item p-1 fs-4">${e}</div>`)
-            .join("")}</div>`;
+      // Create new container
+      emojiContainer = document.createElement("div");
+      emojiContainer.className = `${containerClass} p-2 border rounded shadow bg-white`;
+      emojiContainer.style.position = "absolute";
+      emojiContainer.style.zIndex = "1050";
+      emojiContainer.style.width = "300px";
+      emojiContainer.style.maxHeight = "400px";
+      emojiContainer.style.overflowY = "auto";
+      emojiContainer.style.bottom = "0";
+      emojiContainer.style.right = "0";
+      emojiContainer.style.fontFamily = "'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif";
 
-        emojiButton.parentNode.appendChild(emojiContainer);
+      // Show loading state
+      const originalButtonHTML = emojiButton.innerHTML;
+      emojiButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Loading emojis...';
+      emojiButton.disabled = true;
 
-        emojiContainer.querySelectorAll(".emoji-item").forEach((item) => {
-          item.addEventListener("click", () =>
-              insertAtCursor(targetInput, item.textContent)
-          );
+      try {
+        // Fetch emojis from EmojiHub API
+        const response = await fetch('https://emojihub.yurace.pro/api/all');
+        if (!response.ok) throw new Error('Failed to fetch emojis');
+        const allEmojis = await response.json();
+
+        // Group emojis by category
+        const categories = {};
+        allEmojis.forEach(emoji => {
+          if (!categories[emoji.category]) {
+            categories[emoji.category] = [];
+          }
+          categories[emoji.category].push(emoji);
         });
 
-        document.addEventListener("click", function closePicker(e) {
+        // Build HTML structure
+        let emojiHTML = '';
+        for (const [category, emojis] of Object.entries(categories)) {
+          emojiHTML += `
+        <div class="emoji-category mb-3">
+          <h6 class="category-title text-muted mb-2">${category}</h6>
+          <div class="d-flex flex-wrap">
+            ${emojis.slice(0, 30).map(emoji => `
+              <div class="emoji-item p-1 fs-4" 
+                   title="${emoji.name}" 
+                   data-emoji="${emoji.htmlCode[0]}">
+                ${emoji.htmlCode[0]}
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+        }
+
+        emojiContainer.innerHTML = emojiHTML;
+        emojiButton.parentNode.appendChild(emojiContainer);
+
+        // Add click handler for emoji items
+        emojiContainer.querySelectorAll(".emoji-item").forEach(item => {
+          item.addEventListener("click", () => {
+            const emoji = item.getAttribute("data-emoji");
+            insertAtCursor(targetInput, emoji);
+            emojiContainer.remove();
+          });
+        });
+
+        // Close picker when clicking outside
+        const closePicker = (e) => {
           if (!emojiContainer.contains(e.target) && e.target !== emojiButton) {
             emojiContainer.remove();
             document.removeEventListener("click", closePicker);
           }
-        });
-      } else {
-        emojiContainer.remove();
+        };
+        document.addEventListener("click", closePicker);
+
+      } catch (error) {
+        console.error("Emoji loading failed:", error);
+        // Fallback to basic emojis if API fails
+        emojiContainer.innerHTML = `
+      <div class="text-center p-3 text-muted">
+        <i class="bi bi-emoji-frown fs-4"></i>
+        <p class="mb-0">Couldn't load emojis</p>
+        <small>Using basic selection</small>
+      </div>
+      <div class="d-flex flex-wrap p-2">
+        ${["😀","😂","😊","😍","🥰","😎","😇","🤔","😄","😅","😉","😋","😘","🥳","😮","😢","😡","👍","👎","❤️"]
+            .map(e => `<div class="emoji-item p-1 fs-4">${e}</div>`).join("")}
+      </div>
+    `;
+        emojiButton.parentNode.appendChild(emojiContainer);
+      } finally {
+        // Restore button state
+        emojiButton.innerHTML = originalButtonHTML;
+        emojiButton.disabled = false;
       }
     }
 
     // Helper function to insert emoji at cursor position
-    function insertAtCursor(textarea, text) {
+    function insertAtCursor(textarea, emoji) {
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       textarea.value =
-          textarea.value.substring(0, start) + text + textarea.value.substring(end);
-      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+          textarea.value.substring(0, start) +
+          emoji +
+          textarea.value.substring(end);
+      textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
       textarea.focus();
     }
 
-    // Post Modal Emoji Picker
-    document.querySelector(".btn-emoji").addEventListener("click", () => {
-      initEmojiPicker(postTextarea, document.querySelector(".btn-emoji"));
+    // Post (Create) Modal Emoji Picker
+    document.querySelector("#postModal .btn-emoji").addEventListener("click", (e) => {
+      e.stopPropagation();
+      initEmojiPicker(
+          document.querySelector("#postModal .post-content-input"),
+          document.querySelector("#postModal .btn-emoji")
+      );
     });
+
+// Edit Modal Emoji Picker
+    document.querySelector("#editPostModal .btn-emoji").addEventListener("click", (e) => {
+      e.stopPropagation();
+      initEmojiPicker(
+          document.querySelector("#editPostModal .edit-post-content-input"),
+          document.querySelector("#editPostModal .btn-emoji"),
+          true // This flag helps differentiate between modals
+      );
+    })
 
     // Create Post Functionality
     postButton.addEventListener("click", async function () {
@@ -867,7 +919,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           selectedPrivacy = { icon: "bi-globe", text: "Public" };
           updatePrivacyDropdown();
           bsModal.hide();
-          Toast.fire({ icon: "success", title: "Post created!" });
         }
       } catch (error) {
         Toast.fire({
@@ -880,14 +931,44 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-// Helper function to update privacy dropdown display
-    function updatePrivacyDropdown() {
-      const dropdownButton = document.querySelector('.privacy-dropdown');
-      dropdownButton.innerHTML = `
-    <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
-  `;
+// // Helper function to update privacy dropdown display
+//     function updatePrivacyDropdown() {
+//       const dropdownButton = document.querySelector('.privacy-dropdown');
+//       dropdownButton.innerHTML = `
+//     <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+//   `;
+//     }
+//
+//     document.querySelectorAll(".dropdown-item[data-icon]").forEach((item) => {
+//       item.addEventListener("click", function (e) {
+//         e.preventDefault();
+//         const icon = this.dataset.icon;
+//         const text = this.dataset.text;
+//         selectedPrivacy = { icon, text };
+//
+//         // Update dropdown button display
+//         const dropdownButton = document.querySelector(
+//             '.privacy-dropdown[data-bs-toggle="dropdown"]'
+//         );
+//         dropdownButton.innerHTML = `
+//         <i class="bi ${icon} me-1"></i>${text}
+//       `;
+//       });
+//     });
+
+    // Update privacy dropdown display for both modals
+    function updatePrivacyDropdown(modalType = 'create') {
+      const dropdownButton = document.querySelector(
+          `${modalType === 'create' ? '#postModal' : '#editPostModal'} .privacy-dropdown`
+      );
+      if (dropdownButton) {
+        dropdownButton.innerHTML = `
+      <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+    `;
+      }
     }
 
+// Handle privacy selection for both modals
     document.querySelectorAll(".dropdown-item[data-icon]").forEach((item) => {
       item.addEventListener("click", function (e) {
         e.preventDefault();
@@ -895,13 +976,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const text = this.dataset.text;
         selectedPrivacy = { icon, text };
 
-        // Update dropdown button display
-        const dropdownButton = document.querySelector(
-            '.privacy-dropdown[data-bs-toggle="dropdown"]'
-        );
-        dropdownButton.innerHTML = `
-        <i class="bi ${icon} me-1"></i>${text}
-      `;
+        // Determine which modal we're in
+        const modalType = this.closest('.modal')?.id === 'editPostModal' ? 'edit' : 'create';
+        updatePrivacyDropdown(modalType);
       });
     });
 
@@ -989,6 +1066,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           : "bi-hand-thumbs-up";
       const likeButtonText = postData.liked && postData.reactionType ? postData.reactionType : "Like";
 
+      const formattedPrivacy = postData.privacy.charAt(0).toUpperCase() + postData.privacy.slice(1).toLowerCase();
+      const output = formattedPrivacy === "Private" ? "Only Me" : formattedPrivacy;
+
       newPost.innerHTML = `
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
@@ -1003,7 +1083,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         year: "numeric"
       })} • 
             <i class="bi ${getPrivacyIcon(postData.privacy)}"></i> 
-            ${postData.privacy.charAt(0) + postData.privacy.slice(1).toLowerCase()}
+            ${output}
           </small>
         </div>
         <div class="ms-auto dropdown">
@@ -1080,235 +1160,258 @@ document.addEventListener('DOMContentLoaded', async () => {
   `;
     }
 
-// // Get Edit Modal elements (assumed to be defined in your HTML similar to your create post modal)
-//     const editPostModal = document.getElementById("editPostModal");
-//     const bsEditPostModal = new bootstrap.Modal(editPostModal);
-//     const editPostTextarea = editPostModal.querySelector(".edit-post-content-input");
-//     const editPostButton = editPostModal.querySelector("#saveEditPostBtn");
-//     const editMediaPreviewContainer = editPostModal.querySelector(".media-preview-container");
-//
-// // File inputs for edit modal
-//     const editImageUpload = editPostModal.querySelector("#editImageUpload");
-//     const editVideoUpload = editPostModal.querySelector("#editVideoUpload");
-//
-// // Array to store media files for the edit modal
-//     let editMediaFiles = [];
-//
-// // When an edit button is clicked on a post, load post details (including existing media) into the edit modal.
-//     document.addEventListener("click", function(e) {
-//       if (e.target.closest(".edit-post-btn")) {
-//         const postId = e.target.closest(".edit-post-btn").getAttribute("data-post-id");
-//         $.ajax({
-//           url: BASE_URL + "/profile/posts/" + postId,
-//           type: "GET",
-//           headers: { "Authorization": "Bearer " + authData.token },
-//           success: function(response) {
-//             // Assume response.data contains the post details including content and media
-//             const postData = response.data;
-//             editPostTextarea.value = postData.content;
-//             editMediaPreviewContainer.innerHTML = "";
-//             editMediaFiles = []; // Reset the edit media files array
-//
-//             // Pre-populate existing media (if any)
-//             if (postData.media && postData.media.length > 0) {
-//               postData.media.forEach((media) => {
-//                 const mediaElement = document.createElement("div");
-//                 mediaElement.className = "media-preview-item position-relative mb-3";
-//                 mediaElement.dataset.type = media.mediaType === "IMAGE" ? "image" : "video";
-//                 mediaElement.dataset.filename = media.mediaUrl;
-//                 if (media.mediaType === "IMAGE") {
-//                   mediaElement.innerHTML = `
-//                 <img src="${media.mediaUrl}" class="img-fluid rounded" alt="Media Preview">
-//                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-//               `;
-//                 } else {
-//                   mediaElement.innerHTML = `
-//                 <video src="${media.mediaUrl}" class="img-fluid rounded" controls></video>
-//                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-//               `;
-//                 }
-//                 editMediaPreviewContainer.appendChild(mediaElement);
-//                 // Save as an "existing" media item (not a File object)
-//                 editMediaFiles.push({
-//                   element: mediaElement,
-//                   file: null,
-//                   url: media.mediaUrl,
-//                   type: media.mediaType === "IMAGE" ? "image" : "video",
-//                   existing: true
-//                 });
-//                 // Add remove handler for each media item
-//                 mediaElement.querySelector(".btn-close").addEventListener("click", () => {
-//                   editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
-//                   mediaElement.remove();
-//                   updateEditPostButtonState();
-//                 });
-//               });
-//             }
-//             // Save the postId in a data attribute on the Save button.
-//             editPostButton.setAttribute("data-post-id", postId);
-//             bsEditPostModal.show();
-//           },
-//           error: function(error) {
-//             Toast.fire({
-//               icon: "error",
-//               title: error.responseJSON?.message || "Failed to load post details"
-//             });
-//           }
-//         });
-//       }
-//     });
-//
-// // Handle file selection for images and videos in the edit modal.
-//     editImageUpload.addEventListener("change", function(e) {
-//       handleEditMediaUpload(e.target.files, "image");
-//     });
-//
-//     editVideoUpload.addEventListener("change", function(e) {
-//       handleEditMediaUpload(e.target.files, "video");
-//     });
-//
-//     function handleEditMediaUpload(files, type) {
-//       const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
-//       const validVideoTypes = ["video/mp4", "video/quicktime"];
-//       const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
-//       const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
-//
-//       Array.from(files).forEach((file) => {
-//         // Validation checks
-//         if (type === "image" && !validImageTypes.includes(file.type)) {
-//           Toast.fire({ icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)" });
-//           return;
-//         }
-//         if (type === "video" && !validVideoTypes.includes(file.type)) {
-//           Toast.fire({ icon: "error", title: "Invalid video format (MP4, MOV only)" });
-//           return;
-//         }
-//         if (type === "image" && file.size > MAX_IMAGE_SIZE) {
-//           Toast.fire({ icon: "error", title: "Image size exceeds 20MB limit" });
-//           return;
-//         }
-//         if (type === "video" && file.size > MAX_VIDEO_SIZE) {
-//           Toast.fire({ icon: "error", title: "Video size exceeds 100MB limit" });
-//           return;
-//         }
-//
-//         const reader = new FileReader();
-//         reader.onload = function(e) {
-//           const mediaElement = document.createElement("div");
-//           mediaElement.className = "media-preview-item position-relative mb-3";
-//           mediaElement.dataset.type = type;
-//           mediaElement.dataset.filename = file.name;
-//           mediaElement.fileData = file;
-//
-//           if (type === "image") {
-//             mediaElement.innerHTML = `
-//           <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
-//           <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-//         `;
-//           } else {
-//             mediaElement.innerHTML = `
-//           <video src="${e.target.result}" class="img-fluid rounded" controls></video>
-//           <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-//         `;
-//           }
-//           editMediaPreviewContainer.appendChild(mediaElement);
-//           editMediaFiles.push({
-//             element: mediaElement,
-//             file: file,
-//             type: type,
-//             existing: false
-//           });
-//           mediaElement.querySelector(".btn-close").addEventListener("click", () => {
-//             editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
-//             mediaElement.remove();
-//             updateEditPostButtonState();
-//           });
-//           updateEditPostButtonState();
-//         };
-//         reader.readAsDataURL(file);
-//       });
-//     }
-//
-//     function updateEditPostButtonState() {
-//       // Enable the Save Changes button if there's any content or media
-//       if (editPostTextarea.value.trim() || editMediaFiles.length > 0) {
-//         editPostButton.disabled = false;
-//       } else {
-//         editPostButton.disabled = true;
-//       }
-//     }
-//
-// // Confirm unsaved changes on modal close (similar to your create modal)
-//     editPostModal.addEventListener("hide.bs.modal", function(event) {
-//       const hasContent = editPostTextarea.value.trim() || editMediaFiles.length > 0;
-//       if (hasContent) {
-//         event.preventDefault();
-//         Swal.fire({
-//           title: 'Unsaved Changes',
-//           text: "You have unsaved changes. Are you sure you want to discard them?",
-//           icon: 'warning',
-//           showCancelButton: true,
-//           confirmButtonColor: '#d33',
-//           cancelButtonColor: '#3085d6',
-//           confirmButtonText: 'Yes, discard',
-//           cancelButtonText: 'No, keep editing'
-//         }).then((result) => {
-//           if (result.isConfirmed) {
-//             resetEditPostModal();
-//             bsEditPostModal.hide();
-//           }
-//         });
-//       }
-//     });
-//
-//     function resetEditPostModal() {
-//       editPostTextarea.value = "";
-//       editMediaPreviewContainer.innerHTML = "";
-//       editMediaFiles = [];
-//       editPostButton.disabled = true;
-//       editImageUpload.value = "";
-//       editVideoUpload.value = "";
-//     }
-//
-//     // Edit Post
-//     editPostButton.addEventListener("click", function() {
-//       const postId = editPostButton.getAttribute("data-post-id");
-//       const updatedContent = editPostTextarea.value.trim();
-//       const formData = new FormData();
-//       formData.append("content", updatedContent);
-//
-//       // Append details of existing media (that haven't been removed)
-//       editMediaFiles.forEach((media, index) => {
-//         if (media.existing) {
-//           formData.append(`existingMedia[${index}].mediaUrl`, media.url);
-//           formData.append(`existingMedia[${index}].mediaType`, media.type.toUpperCase());
-//         }
-//       });
-//       // Append new media files
-//       editMediaFiles.forEach(media => {
-//         if (!media.existing) {
-//           formData.append("newMedia", media.file);
-//         }
-//       });
-//
-//       $.ajax({
-//         url: BASE_URL + "/profile/posts/" + postId,
-//         type: "PUT",
-//         headers: { "Authorization": "Bearer " + authData.token },
-//         data: formData,
-//         processData: false,
-//         contentType: false,
-//         success: function(response) {
-//           Toast.fire({ icon: "success", title: "Post updated successfully" });
-//           loadPosts();
-//           bsEditPostModal.hide();
-//           resetEditPostModal();
-//         },
-//         error: function(error) {
-//           Toast.fire({ icon: "error", title: error.responseJSON?.message || "Failed to update post" });
-//         }
-//       });
-//     });
+// Get Edit Modal elements (assumed to be defined in your HTML similar to your create post modal)
+    const editPostModal = document.getElementById("editPostModal");
+    const bsEditPostModal = new bootstrap.Modal(editPostModal);
+    const editPostTextarea = editPostModal.querySelector(".edit-post-content-input");
+    const editPostButton = editPostModal.querySelector("#saveEditPostBtn");
+    const editMediaPreviewContainer = editPostModal.querySelector(".media-preview-container");
+
+// File inputs for edit modal
+    const editImageUpload = editPostModal.querySelector("#editImageUpload");
+    const editVideoUpload = editPostModal.querySelector("#editVideoUpload");
+
+// Array to store media files for the edit modal
+    let editMediaFiles = [];
+
+// When an edit button is clicked on a post, load post details (including existing media) into the edit modal.
+    document.addEventListener("click", function(e) {
+      if (e.target.closest(".edit-post-btn")) {
+        const postId = e.target.closest(".edit-post-btn").getAttribute("data-post-id");
+        $.ajax({
+          url: BASE_URL + "/profile/posts/" + postId,
+          type: "GET",
+          headers: { "Authorization": "Bearer " + authData.token },
+          success: function(response) {
+            // Assume response.data contains the post details including content and media
+            const postData = response.data;
+            window.currentPostData = response.data;
+            editPostTextarea.value = postData.content;
+            editMediaPreviewContainer.innerHTML = "";
+            editMediaFiles = []; // Reset the edit media files array
+
+            // Pre-populate existing media (if any)
+            if (postData.media && postData.media.length > 0) {
+              postData.media.forEach((media) => {
+                const mediaElement = document.createElement("div");
+                mediaElement.className = "media-preview-item position-relative mb-3";
+                mediaElement.dataset.type = media.mediaType === "IMAGE" ? "image" : "video";
+                mediaElement.dataset.filename = media.mediaUrl;
+                if (media.mediaType === "IMAGE") {
+                  mediaElement.innerHTML = `
+                <img src="${media.mediaUrl}" class="img-fluid rounded" alt="Media Preview">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+              `;
+                } else {
+                  mediaElement.innerHTML = `
+                <video src="${media.mediaUrl}" class="img-fluid rounded" controls></video>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+              `;
+                }
+                editMediaPreviewContainer.appendChild(mediaElement);
+                // Save as an "existing" media item (not a File object)
+                editMediaFiles.push({
+                  element: mediaElement,
+                  file: null,
+                  url: media.mediaUrl,
+                  type: media.mediaType === "IMAGE" ? "image" : "video",
+                  existing: true
+                });
+                // Add remove handler for each media item
+                mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+                  editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+                  mediaElement.remove();
+                  updateEditPostButtonState();
+                });
+              });
+            }
+            // Save the postId in a data attribute on the Save button.
+            editPostButton.setAttribute("data-post-id", postId);
+            bsEditPostModal.show();
+          },
+          error: function(error) {
+            Toast.fire({
+              icon: "error",
+              title: error.responseJSON?.message || "Failed to load post details"
+            });
+          }
+        });
+      }
+    });
+
+// Handle file selection for images and videos in the edit modal.
+    editImageUpload.addEventListener("change", function(e) {
+      handleEditMediaUpload(e.target.files, "image");
+    });
+
+    editVideoUpload.addEventListener("change", function(e) {
+      handleEditMediaUpload(e.target.files, "video");
+    });
+
+    function handleEditMediaUpload(files, type) {
+      const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
+      const validVideoTypes = ["video/mp4", "video/quicktime"];
+      const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
+      const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+
+      Array.from(files).forEach((file) => {
+        // Validation checks
+        if (type === "image" && !validImageTypes.includes(file.type)) {
+          Toast.fire({ icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)" });
+          return;
+        }
+        if (type === "video" && !validVideoTypes.includes(file.type)) {
+          Toast.fire({ icon: "error", title: "Invalid video format (MP4, MOV only)" });
+          return;
+        }
+        if (type === "image" && file.size > MAX_IMAGE_SIZE) {
+          Toast.fire({ icon: "error", title: "Image size exceeds 20MB limit" });
+          return;
+        }
+        if (type === "video" && file.size > MAX_VIDEO_SIZE) {
+          Toast.fire({ icon: "error", title: "Video size exceeds 100MB limit" });
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const mediaElement = document.createElement("div");
+          mediaElement.className = "media-preview-item position-relative mb-3";
+          mediaElement.dataset.type = type;
+          mediaElement.dataset.filename = file.name;
+          mediaElement.fileData = file;
+
+          if (type === "image") {
+            mediaElement.innerHTML = `
+          <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+          } else {
+            mediaElement.innerHTML = `
+          <video src="${e.target.result}" class="img-fluid rounded" controls></video>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+          }
+          editMediaPreviewContainer.appendChild(mediaElement);
+          editMediaFiles.push({
+            element: mediaElement,
+            file: file,
+            type: type,
+            existing: false
+          });
+          mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+            editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+            mediaElement.remove();
+            updateEditPostButtonState();
+          });
+          updateEditPostButtonState();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function updateEditPostButtonState() {
+      // Enable the Save Changes button if there's any content or media
+      if (editPostTextarea.value.trim() || editMediaFiles.length > 0) {
+        editPostButton.disabled = false;
+      } else {
+        editPostButton.disabled = true;
+      }
+    }
+
+    editPostModal.addEventListener('show.bs.modal', function() {
+      if (window.currentPostData) {
+        const currentPrivacy = window.currentPostData.privacy;
+        selectedPrivacy = {
+          icon: getPrivacyIcon(currentPrivacy),
+          text: currentPrivacy.charAt(0) + currentPrivacy.slice(1).toLowerCase()
+        };
+        updatePrivacyDropdown('edit');
+      }
+    });
+
+// Confirm unsaved changes on modal close (similar to your create modal)
+    editPostModal.addEventListener("hide.bs.modal", function(event) {
+      const hasContent = editPostTextarea.value.trim() || editMediaFiles.length > 0;
+      if (hasContent) {
+        event.preventDefault();
+        Swal.fire({
+          title: 'Unsaved Changes',
+          text: "You have unsaved changes. Are you sure you want to discard them?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, discard',
+          cancelButtonText: 'No, keep editing'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resetEditPostModal();
+            bsEditPostModal.hide();
+          }
+        });
+      }
+    });
+
+    function resetEditPostModal() {
+      editPostTextarea.value = "";
+      editMediaPreviewContainer.innerHTML = "";
+      editMediaFiles = [];
+      editPostButton.disabled = true;
+      editImageUpload.value = "";
+      editVideoUpload.value = "";
+    }
+
+    // Edit Post
+    editPostButton.addEventListener("click", async function () {
+      const postId = editPostButton.getAttribute("data-post-id");
+      const updatedContent = editPostTextarea.value.trim();
+      const OriginalEditPostButtonText = editPostButton.innerHTML;
+
+      editPostButton.disabled = true;
+      editPostButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>';
+
+      try {
+        const formData = new FormData();
+        formData.append("content", updatedContent);
+        formData.append("privacy", selectedPrivacy.text.toUpperCase());
+
+        // Add media to delete
+        editMediaFiles.forEach(media => {
+          if (media.existing && media.element === null) { // If existing media was removed
+            formData.append("mediaToDelete", media.url);
+          }
+        });
+        // Add new media files
+        editMediaFiles.forEach(media => {
+          if (!media.existing) {
+            formData.append("newMedia", media.file);
+          }
+        });
+
+        const postResponse = await $.ajax({
+          url: BASE_URL + "/profile/posts/" + postId,
+          type: "PUT",
+          headers: {"Authorization": "Bearer " + authData.token},
+          data: formData,
+          processData: false,
+          contentType: false
+        });
+
+        if (postResponse.code === 200) {
+          loadPosts();
+          resetEditPostModal();
+          bsEditPostModal.hide();
+          selectedPrivacy = { icon: "bi-globe", text: "Public" };
+          updatePrivacyDropdown('edit');
+        }
+      } catch (error) {
+        Toast.fire({ icon: "error", title: error.responseJSON?.message || "Failed to update post" });
+      } finally {
+        editPostButton.disabled = false;
+        editPostButton.innerHTML = OriginalEditPostButtonText;
+      }
+    });
 
     // Delete Post
     document.addEventListener("click", function(e) {

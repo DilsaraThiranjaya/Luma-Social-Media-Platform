@@ -498,3 +498,60 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Emoji Picker Styling */
+
+.emoji-container, .emoji-container-edit {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.emoji-category {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.category-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 4px;
+}
+
+.emoji-item {
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-item:hover {
+  transform: scale(1.2);
+  background-color: #f0f2f5;
+}
+
+/* Scrollbar styling */
+.emoji-container::-webkit-scrollbar,
+.emoji-container-edit::-webkit-scrollbar {
+  width: 6px;
+}
+
+.emoji-container::-webkit-scrollbar-track,
+.emoji-container-edit::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.emoji-container::-webkit-scrollbar-thumb,
+.emoji-container-edit::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}

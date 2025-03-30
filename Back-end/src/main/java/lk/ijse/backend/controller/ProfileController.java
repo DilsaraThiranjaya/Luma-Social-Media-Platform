@@ -231,38 +231,40 @@ public class ProfileController {
         }
     }
 
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    @PutMapping(value = "/posts/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<ResponseDTO> updatePost(
-//            @PathVariable int postId,
-//            @RequestPart("content") String content,
-//            @RequestPart("privacy") String privacy,
-//            @RequestPart(value = "mediaToDelete", required = false) List<String> mediaToDelete,
-//            @RequestPart(value = "newMedia", required = false) List<MultipartFile> newMedia,
-//            Authentication authentication) {
-//
-//        String email = authentication.getName();
-//        try {
-//            PostUpdateDTO updateDTO = new PostUpdateDTO();
-//            updateDTO.setContent(content);
-//            updateDTO.setPrivacy(privacy);
-//            updateDTO.setMediaToDelete(mediaToDelete != null ? mediaToDelete : new ArrayList<>());
-//            updateDTO.setNewMedia(newMedia != null ? newMedia : new ArrayList<>());
-//
-//            PostDTO updatedPost = postService.updatePost(postId, email, updateDTO);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post updated", updatedPost));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating post", null));
-//        }
-//    }
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PutMapping(value = "/posts/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO> updatePost(
+            @PathVariable int postId,
+            @RequestPart("content") String content,
+            @RequestPart("privacy") String privacy,
+            @RequestPart(value = "mediaToDelete", required = false) List<String> mediaToDelete,
+            @RequestPart(value = "newMedia", required = false) List<MultipartFile> newMedia,
+            Authentication authentication) {
+
+        String email = authentication.getName();
+        log.info("Received request to update post with ID: {} for email: {}", postId, email);
+        try {
+            PostUpdateDTO updateDTO = new PostUpdateDTO();
+            updateDTO.setContent(content);
+            updateDTO.setPrivacy(privacy);
+            updateDTO.setMediaToDelete(mediaToDelete != null ? mediaToDelete : new ArrayList<>());
+            updateDTO.setNewMedia(newMedia != null ? newMedia : new ArrayList<>());
+
+            PostDTO updatedPost = postService.updatePost(postId, email, updateDTO);
+            log.info("Successfully updated post with ID: {}", postId);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "Post updated", convertToPostResponseDTO(updatedPost)));
+        } catch (Exception e) {
+            log.error("Error updating post with ID: {}", postId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating post: " + e.getMessage(), null));
+        }
+    }
 
     // DELETE POST
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<ResponseDTO> deletePost(@PathVariable int postId,
                                                   Authentication authentication) {
-        String email = authentication.getName();
         log.info("Received request to delete post with ID: {}", postId);
         try {
             postService.deletePost(postId);
@@ -281,10 +283,13 @@ public class ProfileController {
     @GetMapping("posts/{postId}")
     public ResponseEntity<ResponseDTO> getPost(@PathVariable int postId, Authentication authentication) {
         String email = authentication.getName();
+        log.info("Received request to get post with ID: {}", postId);
         try {
             PostDTO post = postService.getPost(postId, email);
+            log.info("Successfully retrieved post with ID: {}", postId);
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post retrieved", post));
         } catch (Exception e) {
+            log.error("Error retrieving post with ID: {}", postId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving post", null));
         }

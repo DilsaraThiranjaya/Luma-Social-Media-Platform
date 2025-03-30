@@ -20,7 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,75 +127,78 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-//    @Transactional
-//    @Override
-//    public PostResponseDTO updatePost(int postId, String email, PostUpdateDTO postUpdateDTO) {
-//        User user = userRepository.findByEmail(email);
-//        if (user == null){
-//            new EntityNotFoundException("User not found");
-//        }
-//
-//        Post post = postRepository.findById(postId)
-//                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
-//
-//        if (!(post.getUser().getUserId() == user.getUserId())) {
-//            throw new SecurityException("Unauthorized to update this post");
-//        }
-//
-//        // Update basic fields
-//        post.setContent(postUpdateDTO.getContent());
-//        post.setPrivacy(Post.PrivacyLevel.valueOf(postUpdateDTO.getPrivacy().toUpperCase()));
-//
-//        // Handle media updates
-//        processMediaUpdates(post, postUpdateDTO);
-//
-//        Post updatedPost = postRepository.save(post);
-//        return convertToPostResponseDTO(updatedPost);
-//    }
-//
-//    private void processMediaUpdates(Post post, PostUpdateDTO updateDTO) {
-//        // Delete removed media
-//        updateDTO.getMediaToDelete().forEach(mediaUrl -> {
-//            cloudinaryService.deleteMedia(mediaUrl);
-//            post.getMedia().removeIf(m -> m.getMediaUrl().equals(mediaUrl));
-//        });
-//
-//        // Add new media
-//        updateDTO.getNewMedia().forEach(mediaFile -> {
-//            try {
-//                String mediaType = mediaFile.getContentType().startsWith("image") ? "IMAGE" : "VIDEO";
-//                String mediaUrl = cloudinaryService.uploadMedia(
-//                        mediaFile,
-//                        mediaType,
-//                        post.getUser().getUserId()
-//                );
-//
-//                PostMedia newMedia = new PostMedia();
-//                newMedia.setMediaUrl(mediaUrl);
-//                newMedia.setMediaType(PostMedia.MediaType.valueOf(mediaType));
-//                post.setMedia((List<PostMedia>) newMedia);
-//            } catch (IOException e) {
-//                throw new RuntimeException("Failed to upload media", e);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//    }
+    @Transactional
+    @Override
+    public PostDTO updatePost(int postId, String email, PostUpdateDTO postUpdateDTO) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
 
-//    private PostResponseDTO convertToPostResponseDTO(Post post) {
-//        PostResponseDTO dto = modelMapper.map(post, PostResponseDTO.class);
-//        dto.setUser(modelMapper.map(post.getUser(), UserDTO.class));
-//        dto.setMedia(post.getMedia().stream()
-//                .map(media -> modelMapper.map(media, PostMediaDTO.class))
-//                .collect(Collectors.toList()));
-//        return dto;
-//    }
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+
+        if (post.getUser().getUserId() != user.getUserId()) {
+            throw new SecurityException("Unauthorized to update this post");
+        }
+
+        // Update basic fields
+        post.setContent(postUpdateDTO.getContent());
+        post.setPrivacy(Post.PrivacyLevel.valueOf(postUpdateDTO.getPrivacy().toUpperCase()));
+
+        // Handle media updates
+        processMediaUpdates(post, postUpdateDTO);
+
+        Post updatedPost = postRepository.save(post);
+        return convertToDTO(updatedPost);
+    }
+
+    private void processMediaUpdates(Post post, PostUpdateDTO updateDTO) {
+        // Delete removed media
+        List<String> mediaToDelete = updateDTO.getMediaToDelete();
+        if (mediaToDelete != null) {
+            mediaToDelete.forEach(mediaUrl -> {
+                System.out.println(mediaUrl);
+                cloudinaryService.deleteMedia(mediaUrl);
+                post.getMedia().removeIf(m -> m.getMediaUrl().equals(mediaUrl));
+            });
+        }
+
+        // Add new media
+        List<MultipartFile> newMedia = updateDTO.getNewMedia();
+        if (newMedia != null) {
+            newMedia.forEach(mediaFile -> {
+                try {
+                    String mediaType = mediaFile.getContentType().startsWith("image") ? "IMAGE" : "VIDEO";
+                    String mediaUrl = cloudinaryService.uploadMedia(
+                            mediaFile,
+                            mediaType,
+                            post.getUser().getUserId()
+                    );
+
+                    PostMedia newMediaEntity = new PostMedia();
+                    newMediaEntity.setMediaUrl(mediaUrl);
+                    newMediaEntity.setMediaType(PostMedia.MediaType.valueOf(mediaType));
+                    newMediaEntity.setPost(post);
+                    post.getMedia().add(newMediaEntity);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to upload media", e);
+                }
+            });
+        }
+    }
 
     // Delete post implementation
     @Override
+    @Transactional
     public void deletePost(int postId) throws Exception {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new Exception("Post not found or unauthorized"));
+        if (post != null) {
+            post.getMedia().stream().map(PostMedia::getMediaUrl).forEach(mediaUrl -> {
+                cloudinaryService.deleteMedia(mediaUrl);
+            });
+        }
         postRepository.delete(post);
     }
 

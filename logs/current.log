@@ -7765,3 +7765,362 @@
 2025-03-30 11:52:57.309 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-03-30 11:52:57.310 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-03-30 11:52:57.316 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-30 19:09:42.555 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-30 19:09:42.722 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11836 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-30 19:09:42.723 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-30 19:09:43.778 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-30 19:09:45.095 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-30 19:09:45.293 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 192 ms. Found 10 JPA repository interfaces.
+2025-03-30 19:09:46.704 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-30 19:09:46.727 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-30 19:09:46.729 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-30 19:09:46.730 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-30 19:09:46.952 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-30 19:09:46.954 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3971 ms
+2025-03-30 19:09:47.244 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-30 19:09:47.361 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-30 19:09:47.435 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-30 19:09:48.023 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-30 19:09:48.084 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-30 19:09:48.908 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@51d88c38
+2025-03-30 19:09:48.911 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-30 19:09:49.006 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-30 19:09:49.008 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-30 19:09:49.041 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-30 19:09:52.063 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-30 19:09:52.626 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 19:09:53.821 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-30 19:09:54.000 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-30 19:10:00.737 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-30 19:10:02.009 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-30 19:10:02.056 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-30 19:10:02.072 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 21.118 seconds (process running for 22.931)
+2025-03-30 19:14:22.368 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-30 19:14:22.368 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-30 19:14:22.368 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-03-30 19:14:22.552 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-30 19:14:23.002 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-30 19:14:23.020 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-30 19:14:23.522 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-30 20:06:11.161 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-30 20:06:11.175 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-30 20:06:11.182 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 20:06:11.403 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-30 20:06:11.584 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-30 20:06:20.868 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-30 20:06:20.942 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12440 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-30 20:06:20.943 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-30 20:06:21.371 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-30 20:06:22.263 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-30 20:06:22.342 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 76 ms. Found 10 JPA repository interfaces.
+2025-03-30 20:06:23.029 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-30 20:06:23.063 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-30 20:06:23.066 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-30 20:06:23.066 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-30 20:06:23.137 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-30 20:06:23.137 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2135 ms
+2025-03-30 20:06:23.316 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-30 20:06:23.387 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-30 20:06:23.419 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-30 20:06:23.670 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-30 20:06:23.701 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-30 20:06:23.984 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@148b6f95
+2025-03-30 20:06:23.984 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-30 20:06:24.016 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-30 20:06:24.016 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-30 20:06:24.031 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-30 20:06:25.746 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-30 20:06:26.076 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 20:06:26.644 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-30 20:06:26.723 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-30 20:06:31.509 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-30 20:06:32.150 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-30 20:06:32.166 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-30 20:06:32.174 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 11.953 seconds (process running for 13.342)
+2025-03-30 20:12:43.581 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-30 20:12:43.581 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-30 20:12:43.584 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-30 20:12:43.827 [http-nio-8080-exec-1] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-30 20:12:45.270 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-30 20:12:47.856 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:12:47.859 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:12:48.022 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:12:48.225 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:04.395 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:04.403 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:04.408 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:04.512 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:37.025 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:37.037 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:37.037 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:15:37.148 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:21:47.551 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:21:47.555 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:21:47.569 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:21:47.654 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:35:54.375 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:35:54.382 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:35:54.394 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:35:54.480 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:16.177 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to upload media for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:19.882 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully uploaded media for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:20.024 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:20.091 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:20.118 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:36:20.211 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:41:19.790 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:41:19.792 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:41:19.804 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:41:19.887 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:42:39.214 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:42:39.224 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:42:39.235 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:42:39.320 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:47:30.792 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:47:30.793 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:47:30.801 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:47:30.875 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:49:58.237 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:49:58.248 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:49:58.261 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:49:58.331 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:56:20.647 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:56:20.657 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:56:20.662 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:56:20.733 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:57:41.339 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:57:41.339 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 20:57:41.348 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 20:57:41.529 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:11.324 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:11.378 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:27.526 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:27.528 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:27.536 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:00:27.620 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:17.382 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:17.442 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:30.679 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:30.681 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:30.687 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:30.751 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:45.674 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to delete post with ID: 18
+2025-03-30 21:01:45.758 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully deleted post with ID: 18
+2025-03-30 21:01:45.779 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:01:45.825 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:11:12.000 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:11:12.000 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:11:12.014 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:11:12.121 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:11:43.285 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to upload media for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:12:19.128 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully uploaded media for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:12:19.142 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:12:19.144 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:12:19.169 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:12:19.238 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:16:38.137 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:16:38.138 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:16:38.147 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:16:38.216 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:37.326 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:37.338 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:37.339 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:37.499 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:53.581 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:17:53.634 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:18:23.770 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:18:23.839 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:26:55.873 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:26:55.873 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:26:55.887 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:26:55.971 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:31:03.917 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-30 21:31:03.926 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-30 21:31:03.926 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:31:03.926 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-30 21:31:03.941 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-30 21:31:14.063 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-30 21:31:14.128 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 4912 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-30 21:31:14.128 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-30 21:31:14.541 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-30 21:31:15.299 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-30 21:31:15.407 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 105 ms. Found 10 JPA repository interfaces.
+2025-03-30 21:31:15.995 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-30 21:31:16.011 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:31:16.011 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-30 21:31:16.011 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-30 21:31:16.071 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-30 21:31:16.071 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1885 ms
+2025-03-30 21:31:16.186 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-30 21:31:16.234 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-30 21:31:16.265 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-30 21:31:16.491 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-30 21:31:16.506 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-30 21:31:16.851 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@312819ae
+2025-03-30 21:31:16.852 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-30 21:31:16.883 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-30 21:31:16.883 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-30 21:31:16.906 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-30 21:31:18.339 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-30 21:31:18.584 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:31:19.065 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-30 21:31:19.141 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-30 21:31:23.260 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-30 21:31:23.924 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:31:23.938 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-30 21:31:23.943 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 10.538 seconds (process running for 11.956)
+2025-03-30 21:32:34.058 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-30 21:32:34.058 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-30 21:32:34.060 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-30 21:32:34.413 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:32:34.413 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:32:34.507 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:32:34.647 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:34:02.124 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:34:02.201 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:11.548 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:11.550 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:11.566 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:11.660 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:24.035 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:35:24.117 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:37:11.373 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:37:11.386 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:37:11.388 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:37:11.523 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:44:37.602 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-30 21:44:37.615 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-30 21:44:37.622 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:44:37.625 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-30 21:44:37.631 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-30 21:44:51.042 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-30 21:44:51.116 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 1328 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-30 21:44:51.117 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-30 21:44:51.578 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-30 21:44:52.578 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-30 21:44:52.722 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 131 ms. Found 10 JPA repository interfaces.
+2025-03-30 21:44:53.636 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-30 21:44:53.652 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:44:53.654 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-30 21:44:53.654 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-30 21:44:53.732 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-30 21:44:53.732 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2557 ms
+2025-03-30 21:44:53.917 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-30 21:44:53.965 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-30 21:44:53.995 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-30 21:44:54.268 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-30 21:44:54.299 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-30 21:44:54.672 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66e12c3b
+2025-03-30 21:44:54.675 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-30 21:44:54.720 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-30 21:44:54.721 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-30 21:44:54.735 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-30 21:44:56.414 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-30 21:44:56.700 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:44:57.297 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-30 21:44:57.390 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-30 21:45:01.908 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-30 21:45:02.510 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:45:02.526 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-30 21:45:02.535 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 12.343 seconds (process running for 13.449)
+2025-03-30 21:45:27.250 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-30 21:45:27.250 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-30 21:45:27.252 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-03-30 21:45:27.605 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:45:27.605 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:45:27.681 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:45:27.807 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:45:55.586 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:45:55.663 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:48:27.628 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-30 21:48:27.640 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-30 21:48:27.649 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:48:27.652 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-30 21:48:27.658 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-30 21:48:36.388 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-30 21:48:36.462 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 7152 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-30 21:48:36.464 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-30 21:48:36.848 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-30 21:48:37.688 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-30 21:48:37.784 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 10 JPA repository interfaces.
+2025-03-30 21:48:38.401 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-30 21:48:38.413 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:48:38.415 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-30 21:48:38.416 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-30 21:48:38.504 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-30 21:48:38.505 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1986 ms
+2025-03-30 21:48:38.685 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-30 21:48:38.735 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-30 21:48:38.765 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-30 21:48:39.036 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-30 21:48:39.067 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-30 21:48:39.407 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@584136c1
+2025-03-30 21:48:39.410 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-30 21:48:39.453 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-30 21:48:39.454 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-30 21:48:39.472 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-30 21:48:41.103 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-30 21:48:41.392 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 21:48:41.986 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-30 21:48:42.080 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-30 21:48:47.360 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-30 21:48:48.082 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-30 21:48:48.100 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-30 21:48:48.108 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 12.393 seconds (process running for 13.291)
+2025-03-30 21:48:55.217 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-30 21:48:55.218 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-30 21:48:55.220 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-30 21:48:55.598 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:48:55.598 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:48:55.723 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-30 21:48:55.870 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:48:59.281 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 19
+2025-03-30 21:48:59.291 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 19
+2025-03-30 21:49:03.756 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to update post with ID: 19 for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:49:03.773 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully updated post with ID: 19
+2025-03-30 21:49:03.808 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:49:03.874 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:49:36.807 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to delete post with ID: 19
+2025-03-30 21:49:42.099 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully deleted post with ID: 19
+2025-03-30 21:49:42.129 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 21:49:42.191 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-30 22:11:53.942 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-30 22:11:53.955 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-30 22:11:53.962 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-30 22:11:53.964 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-30 22:11:53.971 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

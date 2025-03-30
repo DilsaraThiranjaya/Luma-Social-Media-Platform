@@ -189,9 +189,25 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     @Override
     public void deleteMedia(String publicUrl) {
         try {
+            // Extract resource type and public ID from URL
+            String[] parts = publicUrl.split("/upload/");
+            if (parts.length < 2) {
+                throw new IllegalArgumentException("Invalid Cloudinary URL");
+            }
+
+            // Get the base part containing resource type
+            String basePart = parts[0];
+            String resourceType = basePart.contains("/video/") ? "video" : "image";
+
+            // Extract public ID from URL
             String publicId = extractPublicId(publicUrl);
-            Map<String, String> options = new HashMap<>();
-            options.put("invalidate", "true");
+
+            // Delete with resource type and cache invalidation
+            Map<String, Object> options = ObjectUtils.asMap(
+                    "resource_type", resourceType,
+                    "invalidate", true
+            );
+
             cloudinary.uploader().destroy(publicId, options);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete media from Cloudinary", e);
@@ -199,30 +215,26 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     }
 
     private String extractPublicId(String url) {
-        // Split URL after "/upload/"
+        // Split URL into components
         String[] parts = url.split("/upload/");
         if (parts.length < 2) {
             throw new IllegalArgumentException("Invalid Cloudinary URL format");
         }
 
-        // Get everything after "/upload/"
+        // Get the path after /upload/
         String path = parts[1];
 
-        // Split into components [version, folder, filename]
-        String[] pathComponents = path.split("/");
-        if (pathComponents.length < 3) {
-            throw new IllegalArgumentException("Invalid Cloudinary URL path");
+        // Remove potential version prefix (v1234567/)
+        if (path.startsWith("v")) {
+            path = path.substring(path.indexOf('/') + 1);
         }
-
-        // Extract public ID (skip version and first slash)
-        String publicId = String.join("/", Arrays.copyOfRange(pathComponents, 1, pathComponents.length));
 
         // Remove file extension
-        int lastDotIndex = publicId.lastIndexOf('.');
+        int lastDotIndex = path.lastIndexOf('.');
         if (lastDotIndex != -1) {
-            publicId = publicId.substring(0, lastDotIndex);
+            path = path.substring(0, lastDotIndex);
         }
 
-        return publicId;
+        return path;
     }
 }
