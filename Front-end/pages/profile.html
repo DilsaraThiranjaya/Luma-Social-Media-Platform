@@ -614,27 +614,8 @@
                         <!-- Photos Tab -->
                         <div class="tab-pane fade" id="photos">
                             <div class="photos-container">
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <div class="photo-card">
-                                            <img
-                                                    src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
-                                                    alt="Photo"
-                                                    class="photo-image"
-                                            />
-                                            <div class="photo-overlay">
-<!--                                                <div class="photo-actions">-->
-<!--                                                    <button class="btn btn-light btn-sm">-->
-<!--                                                        <i class="bi bi-heart"></i> 45-->
-<!--                                                    </button>-->
-<!--                                                    <button class="btn btn-light btn-sm">-->
-<!--                                                        <i class="bi bi-chat"></i> 12-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Add more photo cards here -->
+                                <div class="row g-3" id="photosContainer">
+                                    <!-- Dynamic content -->
                                 </div>
                             </div>
                         </div>
@@ -642,30 +623,8 @@
                         <!-- Videos Tab -->
                         <div class="tab-pane fade" id="videos">
                             <div class="videos-container">
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <div class="video-card">
-                                            <video>
-                                                <source
-                                                        src="https://www.w3schools.com/html/mov_bbb.mp4"
-                                                        type="video/mp4"
-                                                        alt="Video"
-                                                        class="video-image"
-                                                />
-                                            </video>
-                                            <div class="video-overlay">
-<!--                                                <div class="video-actions">-->
-<!--                                                    <button class="btn btn-light btn-sm">-->
-<!--                                                        <i class="bi bi-heart"></i> 45-->
-<!--                                                    </button>-->
-<!--                                                    <button class="btn btn-light btn-sm">-->
-<!--                                                        <i class="bi bi-chat"></i> 12-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Add more video cards here -->
+                                <div class="row g-3" id="videosContainer">
+                                    <!-- Dynamic content -->
                                 </div>
                             </div>
                         </div>
@@ -986,6 +945,18 @@
                     Cancel
                 </button>
                 <button type="button" class="btn btn-post">Share Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Media Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body text-center p-0">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3 bg-white rounded-circle media-close" data-bs-dismiss="modal"></button>
+                <div id="mediaContainer"></div>
             </div>
         </div>
     </div>
