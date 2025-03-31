@@ -434,21 +434,7 @@ public class ProfileController {
 //                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving friends", e.getMessage()));
 //        }
 //    }
-//
-//    @PreAuthorize("hasAuthority('USER')")
-//    @GetMapping(value = "/photos/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> getPhotos(@PathVariable Integer userId) {
-//        log.info("Received request to get photos for user ID: {}", userId);
-//        try {
-//            List<PostMediaDTO> photos = profileService.getPhotos(userId);
-//            log.info("Successfully retrieved photos for user ID: {}", userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Photos retrieved successfully", photos));
-//        } catch (Exception e) {
-//            log.error("Error retrieving photos for user ID: {}", userId, e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving photos", e.getMessage()));
-//        }
-//    }
+
 
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/event", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -544,6 +530,4 @@ public class ProfileController {
 
         return dto;
     }
-
-
 }

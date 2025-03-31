@@ -1,9 +1,19 @@
+/* ===== LAYOUT CONTAINERS ===== */
 /* Profile Container */
 .profile-container {
   background-color: #f8f9fa;
   min-height: calc(100vh - 60px);
 }
 
+/* Profile Info Section */
+.profile-info-container {
+  background: white;
+  padding: 20px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* ===== COVER IMAGE STYLES ===== */
 /* Cover Image Section */
 .cover-image-container {
   position: relative;
@@ -42,52 +52,7 @@
   transform: translateY(-2px);
 }
 
-/* Button Styles */
-.btn-primary {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  border: none;
-  transition: transform 0.2s ease;
-}
-
-.btn-outline-primary {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.btn-primary:hover {
-  transform: translateY(-1px);
-}
-
-.btn-outline-primary:hover {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
-  color: white;
-}
-
-.btn-light {
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-}
-
-.btn-light:hover {
-  background: #e9ecef;
-}
-
-/* Profile Info Section */
-.profile-info-container {
-  background: white;
-  padding: 20px 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
+/* ===== PROFILE INFORMATION STYLES ===== */
 .profile-header {
   display: flex;
   align-items: flex-end;
@@ -180,6 +145,45 @@
   align-items: center;
 }
 
+/* ===== BUTTON STYLES ===== */
+.btn-primary {
+  background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+  );
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.btn-outline-primary {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+  );
+  color: white;
+}
+
+.btn-light {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.btn-light:hover {
+  background: #e9ecef;
+}
+
+/* ===== TABS STYLES ===== */
 /* Profile Tabs */
 .profile-tabs {
   border-bottom: 2px solid #dee2e6;
@@ -206,6 +210,7 @@
   color: var(--primary-color);
 }
 
+/* ===== POST STYLES ===== */
 /* Create Post Card */
 .create-post-card {
   border-radius: 12px;
@@ -249,7 +254,7 @@
   border-top: 1px solid #eee;
 }
 
-/* About Section */
+/* ===== ABOUT SECTION STYLES ===== */
 .info-list {
   display: flex;
   flex-direction: column;
@@ -277,7 +282,7 @@
   font-weight: 500;
 }
 
-/* Timeline */
+/* ===== TIMELINE STYLES ===== */
 .timeline {
   position: relative;
   padding-left: 30px;
@@ -325,6 +330,7 @@
   margin-bottom: 10px;
 }
 
+/* ===== FRIENDS STYLES ===== */
 /* Friends Grid */
 .friends-grid {
   display: grid;
@@ -379,6 +385,7 @@
   margin-top: 10px;
 }
 
+/* ===== MEDIA STYLES ===== */
 /* Media Cards */
 .photos-container {
   padding: 20px 0;
@@ -444,6 +451,7 @@
   cursor: not-allowed;
 }
 
+/* ===== ANIMATIONS ===== */
 @keyframes reaction-float {
   0% {
     transform: translate(-50%, 0) scale(0);
@@ -475,43 +483,7 @@
   transform: scale(1.2);
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .profile-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .profile-picture-container {
-    margin-top: -60px;
-  }
-
-  .profile-picture {
-    width: 120px;
-    height: 120px;
-  }
-
-  .profile-meta {
-    justify-content: center;
-  }
-
-  .profile-stats {
-    justify-content: center;
-  }
-
-  .profile-actions {
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .friends-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Emoji Picker Styling */
-
+/* ===== EMOJI PICKER STYLES ===== */
 .emoji-container, .emoji-container-edit {
   animation: fadeIn 0.2s ease-out;
 }
@@ -565,4 +537,40 @@
 .emoji-container-edit::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 3px;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-picture-container {
+    margin-top: -60px;
+  }
+
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-meta {
+    justify-content: center;
+  }
+
+  .profile-stats {
+    justify-content: center;
+  }
+
+  .profile-actions {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .friends-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

@@ -82,6 +82,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Page<PostDTO> getTimelinePosts(String email, PageRequest pageRequest) {
+        User currentUser = userRepository.findByEmail(email);
+        if (currentUser == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Page<Post> posts = postRepository.findAllVisiblePostsByUserId(
+                currentUser.getUserId(),
+                pageRequest
+        );
+
+        return posts.map(this::convertToDTO);
+    }
+
+    @Override
     @Transactional  // Explicit annotation to ensure transactional context
     public ResponseDTO addReaction(int postId, ReactionDTO reactionDTO, String email) {
         try {
@@ -289,6 +304,7 @@ public class PostServiceImpl implements PostService {
                     // Convert and set user
                     UserDTO reactionUserDTO = new UserDTO();
                     reactionUserDTO.setUserId(reaction.getUser().getUserId());
+                    reactionUserDTO.setEmail(reaction.getUser().getEmail());
                     reactionUserDTO.setFirstName(reaction.getUser().getFirstName());
                     reactionUserDTO.setLastName(reaction.getUser().getLastName());
                     reactionUserDTO.setProfilePictureUrl(reaction.getUser().getProfilePictureUrl());

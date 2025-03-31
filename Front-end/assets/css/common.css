@@ -1,3 +1,6 @@
+/* ==========================================================================
+   ROOT VARIABLES
+   ========================================================================== */
 :root {
   --primary-color: #600097;
   --secondary-color: #4e54c8;
@@ -7,22 +10,27 @@
   --text-muted: #666666;
   --border-color: #ff97fa;
   --background-gradient: linear-gradient(
-    135deg,
-    var(--primary-color) 0%,
-    var(--secondary-color) 100%
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
   );
 }
 
+/* ==========================================================================
+   BODY STYLES
+   ========================================================================== */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background: #e3cbff;
   color: var(--text-color);
   margin: 0;
   padding: 0;
 }
 
-/* Toast Styles */
+/* ==========================================================================
+   TOAST NOTIFICATION STYLES
+   ========================================================================== */
 .colored-toast.swal2-icon-success {
   background-color: #56f590 !important;
 }
@@ -55,10 +63,9 @@ body {
   color: #600097;
 }
 
-
-/* =========== Header =========== */
-
-/* Navbar Styles */
+/* ==========================================================================
+   HEADER & NAVBAR STYLES
+   ========================================================================== */
 .navbar {
   background: var(--background-gradient);
   padding: 0.5rem 1rem;
@@ -69,6 +76,7 @@ body {
   z-index: 1000;
 }
 
+/* Navbar Brand */
 .navbar-brand i {
   color: var(--light-color);
   font-size: 2rem;
@@ -79,18 +87,6 @@ body {
   font-size: 1.8rem !important;
 }
 
-.navbar .nav-link img {
-  height: 2.2rem;
-  width: 2.2rem;
-}
-
-#profile-down-arrow {
-  position: absolute;
-  top: 66%;
-  right: 10%;
-  transform: translateY(-50%);
-}
-
 .navbar-brand img {
   width: 3rem;
   height: 3rem;
@@ -98,68 +94,7 @@ body {
   border-radius: 10%;
 }
 
-.nav-icons .nav-link:hover {
-  color: white !important;
-  transform: translateY(-2px);
-}
-
-.nav-icons .nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-}
-
-.navbar .profile-link.active {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  padding: 5px 10px;
-}
-
-.navbar .profile-link.active #profile-down-arrow {
-  color: #fff;
-}
-
-.search-container {
-  position: relative;
-  width: 280px;
-}
-
-.search-icon {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  z-index: 10;
-}
-
-.search-input {
-  padding-left: 35px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: var(--light-color);
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.search-input:focus {
-  background-color: var(--light-color);
-  color: var(--text-color);
-}
-
-.nav-icons {
-  display: flex;
-  align-items: center;
-}
-
+/* Nav Links */
 .navbar .nav-link {
   display: flex;
   flex-direction: column;
@@ -190,6 +125,35 @@ body {
   font-size: 0.65rem !important;
 }
 
+.navbar .nav-link img {
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
+/* Nav Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icons .nav-link:hover {
+  color: white !important;
+  transform: translateY(-2px);
+}
+
+.nav-icons .nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* Profile Link */
 .profile-img {
   width: 24px;
   height: 24px;
@@ -201,6 +165,24 @@ body {
   margin-bottom: 0.25rem;
 }
 
+#profile-down-arrow {
+  position: absolute;
+  top: 66%;
+  right: 10%;
+  transform: translateY(-50%);
+}
+
+.navbar .profile-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 5px 10px;
+}
+
+.navbar .profile-link.active #profile-down-arrow {
+  color: #fff;
+}
+
+/* Work Menu */
 .work-menu {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   margin-left: 0.5rem;
@@ -211,7 +193,42 @@ body {
   margin: 5px;
 }
 
-/* Navigation Dropdowns */
+/* ==========================================================================
+   SEARCH STYLES
+   ========================================================================== */
+.search-container {
+  position: relative;
+  width: 280px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  z-index: 10;
+}
+
+.search-input {
+  padding-left: 35px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--light-color);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+  background-color: var(--light-color);
+  color: var(--text-color);
+}
+
+/* ==========================================================================
+   DROPDOWN MENU STYLES
+   ========================================================================== */
 .dropdown-menu {
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -230,7 +247,9 @@ body {
   color: white !important;
 }
 
-/* Autocomplete Styles */
+/* ==========================================================================
+   AUTOCOMPLETE STYLES
+   ========================================================================== */
 .autocomplete-results {
   position: absolute;
   background: white;
@@ -258,7 +277,9 @@ body {
   background-size: 20px !important;
 }
 
-/* Validation Styles */
+/* ==========================================================================
+   FORM VALIDATION STYLES
+   ========================================================================== */
 .input-error {
   border-color: #dc3545 !important;
   padding-right: calc(1.5em + 0.75rem);

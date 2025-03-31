@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
 
                     // Handle Join Date
-                    document.getElementById('profileJoined').textContent = `Joined ${formattedJoinDate}`;
+                    document.getElementById('profileJoined').textContent = `Joined on ${formattedJoinDate}`;
 
                     // Populate Work Experience
                     const workTimeline = document.getElementById('workTimeline');
@@ -971,6 +971,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 if (response.code === 200) {
+                    const postCount = response.data.posts.length;
+                    document.getElementById("postCount").innerHTML = postCount;
+
                     const postsContainer = document.querySelector(".posts-container");
                     postsContainer.innerHTML = "";
 
@@ -1005,10 +1008,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Format media content
             const mediaContent = (postData.media || []).map(media => {
                 if (media.mediaType === 'IMAGE') {
-                    return `<img src="${media.mediaUrl}" class="img-fluid rounded mb-3" alt="Post media">`;
+                    return `<img src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" alt="Post media">`;
                 }
                 if (media.mediaType === 'VIDEO') {
-                    return `<video src="${media.mediaUrl}" class="img-fluid rounded mb-3" controls></video>`;
+                    return `<video src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" controls></video>`;
                 }
                 return "";
             }).join("");

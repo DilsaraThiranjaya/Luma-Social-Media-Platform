@@ -24,4 +24,6 @@ public interface PostService {
     ResponseDTO addCommentReaction(int commentId, ReactionDTO reactionDTO, String email);
 
     CommentDTO getComment(int parentCommentId);
+
+    Page<PostDTO> getTimelinePosts(String email, PageRequest pageable);
 }

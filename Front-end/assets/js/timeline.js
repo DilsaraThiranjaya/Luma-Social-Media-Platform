@@ -24,6 +24,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function getRoleFromToken(token) {
+        try {
+            const decoded = jwt_decode(token);
+
+            // Check different possible claim names for role
+            return decoded.role ||
+                decoded.roles?.[0] || // if it's an array
+                decoded.authorities?.[0]?.replace('ROLE_', '') || // Spring format
+                null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     if (authData?.token) {
         try {
             // Check token expiration first
@@ -31,6 +45,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 await refreshAuthToken();
             }
             initializeUI();
+            initializeRoleBasedAccess(getRoleFromToken(authData.token));
+            initializeNavbarUserInfo();
+            initializeLogout();
         } catch (error) {
             await handleAuthError("Session expired. Please log in again.");
         }
@@ -69,6 +86,86 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function initializeRoleBasedAccess(roleFromToken) {
+        if (roleFromToken !== 'ADMIN') {
+            document.getElementById('adminButton').classList.add('d-none');
+        }
+    }
+
+    function initializeLogout() {
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', async () => {
+            try {
+                sessionStorage.removeItem('authData');
+                window.location.href = LOGIN_URL;
+            } catch (error) {
+                Toast.fire({
+                    icon: "error",
+                    title: "Logout Failed",
+                    text: error.message
+                });
+            }
+        });
+    }
+
+    async function initializeNavbarUserInfo() {
+        try {
+            const response = await fetch(`${BASE_URL}/profile/profileInfo`, {
+                headers: {
+                    'Authorization': `Bearer ${authData.token}`
+                }
+            });
+            const responseData = await response.json();
+
+            if (responseData.code === 200 || responseData.code === 201) {
+                const user = responseData.data;
+
+                document.getElementById('navProfileName').textContent = `${user.firstName} ${user.lastName}`;
+                document.getElementById('sideBarProfileName').textContent = `${user.firstName} ${user.lastName}`;
+
+                if (user.profilePictureUrl) {
+                    document.getElementById('navProfileImg').src = user.profilePictureUrl;
+                    document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
+                    document.getElementById('sideBarProfileImg').src = user.profilePictureUrl;
+                }
+
+                const sideBarLocationElement = document.getElementById('sideBarLocation');
+                const sideBarLocationItem = document.querySelector('.sidebar-location-item');
+
+                if (user.location !== null && user.location !== '') {
+                    // Keep the icon and update only the text
+                    sideBarLocationElement.nextSibling.nodeValue = ` ${user.location}`;
+                    sideBarLocationItem.classList.remove('d-none');
+                } else {
+                    sideBarLocationItem.classList.add('d-none');
+                }
+
+                const formattedJoinDate = user.createdAt
+                    ? new Date(user.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long'
+                    })
+                    : 'Not specified';
+
+                const sideBarJoinedDate = document.getElementById('sideBarJoinedDate');
+                // Find the text node after the icon and update only the text
+                sideBarJoinedDate.childNodes[1].nodeValue = ` Joined on ${formattedJoinDate}`;
+
+            } else {
+                await Toast.fire({
+                    icon: "error",
+                    title: responseData.message
+                });
+                return;
+            }
+        } catch (error) {
+            await Toast.fire({
+                icon: "error",
+                title: error.message || "Failed to load user data"
+            });
+        }
+    }
+
     function initializeUI() {
         //Toast Configs
         const Toast = Swal.mixin({
@@ -83,6 +180,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             timerProgressBar: true,
         });
 
+
+        // Initialize
+        loadPosts();
+
         // Initialize tooltips and popovers
         const tooltipTriggerList = document.querySelectorAll(
             '[data-bs-toggle="tooltip"]'
@@ -93,6 +194,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Post Modal Functionality
         const postModal = document.getElementById("postModal");
+        const bsPostModal = new bootstrap.Modal(postModal);
         const postTextarea = document.querySelector(".post-content-input");
         const postButton = document.querySelector(".btn-post");
         const mediaPreviewContainer = document.querySelector(
@@ -101,12 +203,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         let selectedPrivacy = {
             icon: "bi-globe",
-            text: "Public"
+            text: "Public",
         };
 
-        const dropdownButton = document.querySelector('.dropdown-toggle[data-bs-toggle="dropdown"]');
+        const dropdownButton = document.querySelector(
+            '.privacy-dropdown[data-bs-toggle="dropdown"]'
+        );
         dropdownButton.innerHTML = `
-        <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}`;
+    <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+  `;
 
         // Media Upload Handler
         const imageUpload = document.getElementById("imageUpload");
@@ -122,41 +227,154 @@ document.addEventListener('DOMContentLoaded', async () => {
             handleMediaUpload(e.target.files, "video");
         });
 
+        // Initialize instant add photo button
+        document.getElementById('addPhotos').addEventListener('click', function () {
+            bsPostModal.show();
+
+            postModal.addEventListener('shown.bs.modal', function modalShown() {
+                imageUpload.click();
+                postModal.removeEventListener('shown.bs.modal', modalShown);
+            });
+        });
+
+        // Initialize instant add video button
+        document.getElementById('addVideos').addEventListener('click', function () {
+            bsPostModal.show();
+
+            postModal.addEventListener('shown.bs.modal', function modalShown() {
+                videoUpload.click();
+                postModal.removeEventListener('shown.bs.modal', modalShown);
+            });
+        });
+
         // Media upload function
+        const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
+        const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+        let mediaFiles = [];
+
         function handleMediaUpload(files, type) {
+            const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
+            const validVideoTypes = ["video/mp4", "video/quicktime"];
+
             Array.from(files).forEach((file) => {
+                // Validation checks
+                if (type === "image" && !validImageTypes.includes(file.type)) {
+                    Toast.fire({icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)"});
+                    return;
+                }
+
+                if (type === "video" && !validVideoTypes.includes(file.type)) {
+                    Toast.fire({icon: "error", title: "Invalid video format (MP4, MOV only)"});
+                    return;
+                }
+
+                if (type === "image" && file.size > MAX_IMAGE_SIZE) {
+                    Toast.fire({icon: "error", title: "Image size exceeds 20MB limit"});
+                    return;
+                }
+
+                if (type === "video" && file.size > MAX_VIDEO_SIZE) {
+                    Toast.fire({icon: "error", title: "Video size exceeds 100MB limit"});
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     const mediaElement = document.createElement("div");
                     mediaElement.className = "media-preview-item position-relative mb-3";
+                    mediaElement.dataset.type = type;
+                    mediaElement.dataset.filename = file.name;
+
+                    // Store file reference
+                    mediaElement.fileData = file;
 
                     if (type === "image") {
                         mediaElement.innerHTML = `
-            <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
-            <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-          `;
-                    } else if (type === "video") {
+          <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+                    } else {
                         mediaElement.innerHTML = `
-            <video src="${e.target.result}" class="img-fluid rounded" controls></video>
-            <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
-          `;
+          <video src="${e.target.result}" class="img-fluid rounded" controls></video>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
                     }
 
                     mediaPreviewContainer.appendChild(mediaElement);
 
-                    // Remove button functionality
-                    mediaElement
-                        .querySelector(".btn-close")
-                        .addEventListener("click", function () {
-                            mediaElement.remove();
-                            updatePostButtonState();
-                        });
+                    // Store in mediaFiles array
+                    mediaFiles.push({
+                        element: mediaElement,
+                        file: file,
+                        type: type
+                    });
+
+                    // Remove button handler
+                    mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+                        mediaFiles = mediaFiles.filter(item => item.element !== mediaElement);
+                        mediaElement.remove();
+                        updatePostButtonState();
+                    });
 
                     updatePostButtonState();
                 };
                 reader.readAsDataURL(file);
             });
         }
+
+        // Reset function
+        function resetPostModal() {
+            // Clear text content
+            postTextarea.value = "";
+
+            // Clear media previews
+            mediaPreviewContainer.innerHTML = "";
+            mediaFiles = [];
+
+            // Reset privacy to default
+            selectedPrivacy = {icon: "bi-globe", text: "Public"};
+            updatePrivacyDropdown();
+
+            // Reset button state
+            postButton.disabled = true;
+
+            // Clear file inputs (important for allowing same file to be re-selected)
+            imageUpload.value = "";
+            videoUpload.value = "";
+        }
+
+// Event listeners for modal close
+        postModal.addEventListener('hide.bs.modal', function (event) {
+            const hasContent = postTextarea.value.trim() || mediaFiles.length > 0;
+
+            if (hasContent) {
+                event.preventDefault(); // Prevent immediate closing
+
+                Swal.fire({
+                    title: 'Unsaved Changes',
+                    text: "You have unsaved changes. Are you sure you want to discard them?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, discard',
+                    cancelButtonText: 'No, keep editing',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        resetPostModal();
+                        bsPostModal.hide(); // Close after reset
+                    }
+                });
+            }
+        });
+
+// Optional: Also reset when opening (in case modal was closed improperly)
+        postModal.addEventListener('show.bs.modal', function () {
+            // Only reset if there's no existing content
+            if (!postTextarea.value.trim() && mediaFiles.length === 0) {
+                resetPostModal();
+            }
+        });
 
         // Update post button state based on content
         function updatePostButtonState() {
@@ -169,195 +387,855 @@ document.addEventListener('DOMContentLoaded', async () => {
         postTextarea.addEventListener("input", updatePostButtonState);
 
         // Emoji Picker Functionality
-        function initEmojiPicker(targetInput, emojiButton) {
-            let emojiContainer = document.querySelector(".emoji-container");
+        async function initEmojiPicker(targetInput, emojiButton, isEditModal = false) {
+            const containerClass = isEditModal ? 'emoji-container-edit' : 'emoji-container';
+            let emojiContainer = document.querySelector(`.${containerClass}`);
 
-            if (!emojiContainer) {
-                emojiContainer = document.createElement("div");
-                emojiContainer.className =
-                    "emoji-container p-2 border rounded shadow bg-white";
-                emojiContainer.style.position = "absolute";
-                emojiContainer.style.zIndex = "1050";
-                emojiContainer.style.width = "250px";
-                emojiContainer.style.bottom = "0";
-                emojiContainer.style.right = "0";
+            // If container already exists, remove it
+            if (emojiContainer) {
+                emojiContainer.remove();
+                return;
+            }
 
-                const commonEmojis = [
-                    "😀",
-                    "😂",
-                    "😊",
-                    "😍",
-                    "🥰",
-                    "😎",
-                    "😇",
-                    "🤔",
-                    "😄",
-                    "😅",
-                    "😉",
-                    "😋",
-                    "😘",
-                    "🥳",
-                    "😮",
-                    "😢",
-                    "😡",
-                    "👍",
-                    "👎",
-                    "❤️",
-                    "🔥",
-                    "✨",
-                    "🎉",
-                    "👏",
-                    "🙏",
-                    "💯",
-                    "💪",
-                    "🤝",
-                    "🫡",
-                    "🙌",
-                ];
-                emojiContainer.innerHTML = `<div class="d-flex flex-wrap">${commonEmojis
-                    .map((e) => `<div class="emoji-item p-1 fs-4">${e}</div>`)
-                    .join("")}</div>`;
+            // Create new container
+            emojiContainer = document.createElement("div");
+            emojiContainer.className = `${containerClass} p-2 border rounded shadow bg-white`;
+            emojiContainer.style.position = "absolute";
+            emojiContainer.style.zIndex = "1050";
+            emojiContainer.style.width = "300px";
+            emojiContainer.style.maxHeight = "400px";
+            emojiContainer.style.overflowY = "auto";
+            emojiContainer.style.bottom = "0";
+            emojiContainer.style.right = "0";
+            emojiContainer.style.fontFamily = "'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif";
 
-                emojiButton.parentNode.appendChild(emojiContainer);
+            // Show loading state
+            const originalButtonHTML = emojiButton.innerHTML;
+            emojiButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            emojiButton.disabled = true;
 
-                emojiContainer.querySelectorAll(".emoji-item").forEach((item) => {
-                    item.addEventListener("click", () =>
-                        insertAtCursor(targetInput, item.textContent)
-                    );
+            try {
+                // Fetch emojis from EmojiHub API
+                const response = await fetch('https://emojihub.yurace.pro/api/all');
+                if (!response.ok) throw new Error('Failed to fetch emojis');
+                const allEmojis = await response.json();
+
+                // Group emojis by category
+                const categories = {};
+                allEmojis.forEach(emoji => {
+                    if (!categories[emoji.category]) {
+                        categories[emoji.category] = [];
+                    }
+                    categories[emoji.category].push(emoji);
                 });
 
-                document.addEventListener("click", function closePicker(e) {
+                // Build HTML structure
+                let emojiHTML = '';
+                for (const [category, emojis] of Object.entries(categories)) {
+                    emojiHTML += `
+        <div class="emoji-category mb-3">
+          <h6 class="category-title text-muted mb-2">${category}</h6>
+          <div class="d-flex flex-wrap">
+            ${emojis.slice(0, 30).map(emoji => `
+              <div class="emoji-item p-1 fs-4" 
+                   title="${emoji.name}" 
+                   data-emoji="${emoji.htmlCode[0]}">
+                ${emoji.htmlCode[0]}
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+                }
+
+                emojiContainer.innerHTML = emojiHTML;
+                emojiButton.parentNode.appendChild(emojiContainer);
+
+                // Add click handler for emoji items
+                emojiContainer.querySelectorAll(".emoji-item").forEach(item => {
+                    item.addEventListener("click", () => {
+                        const emoji = item.getAttribute("data-emoji");
+                        insertAtCursor(targetInput, emoji);
+                        emojiContainer.remove();
+                    });
+                });
+
+                // Close picker when clicking outside
+                const closePicker = (e) => {
                     if (!emojiContainer.contains(e.target) && e.target !== emojiButton) {
                         emojiContainer.remove();
                         document.removeEventListener("click", closePicker);
                     }
-                });
-            } else {
-                emojiContainer.remove();
+                };
+                document.addEventListener("click", closePicker);
+
+            } catch (error) {
+                // Fallback to basic emojis if API fails
+                emojiContainer.innerHTML = `
+      <div class="text-center p-3 text-muted">
+        <i class="bi bi-emoji-frown fs-4"></i>
+        <p class="mb-0">Couldn't load emojis</p>
+        <small>Using basic selection</small>
+      </div>
+      <div class="d-flex flex-wrap p-2">
+        ${["😀", "😂", "😊", "😍", "🥰", "😎", "😇", "🤔", "😄", "😅", "😉", "😋", "😘", "🥳", "😮", "😢", "😡", "👍", "👎", "❤️"]
+                    .map(e => `<div class="emoji-item p-1 fs-4">${e}</div>`).join("")}
+      </div>
+    `;
+                emojiButton.parentNode.appendChild(emojiContainer);
+            } finally {
+                // Restore button state
+                emojiButton.innerHTML = originalButtonHTML;
+                emojiButton.disabled = false;
             }
         }
 
         // Helper function to insert emoji at cursor position
-        function insertAtCursor(textarea, text) {
+        function insertAtCursor(textarea, emoji) {
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
             textarea.value =
-                textarea.value.substring(0, start) + text + textarea.value.substring(end);
-            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+                textarea.value.substring(0, start) +
+                emoji +
+                textarea.value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + emoji.length;
             textarea.focus();
         }
 
-        // Post Modal Emoji Picker
-        document.querySelector(".btn-emoji").addEventListener("click", () => {
-            initEmojiPicker(postTextarea, document.querySelector(".btn-emoji"));
+        // Post (Create) Modal Emoji Picker
+        document.querySelector("#postModal .btn-emoji").addEventListener("click", (e) => {
+            e.stopPropagation();
+            initEmojiPicker(
+                document.querySelector("#postModal .post-content-input"),
+                document.querySelector("#postModal .btn-emoji")
+            );
         });
 
+// Edit Modal Emoji Picker
+        document.querySelector("#editPostModal .btn-emoji").addEventListener("click", (e) => {
+            e.stopPropagation();
+            initEmojiPicker(
+                document.querySelector("#editPostModal .edit-post-content-input"),
+                document.querySelector("#editPostModal .btn-emoji"),
+                true // This flag helps differentiate between modals
+            );
+        })
+
         // Create Post Functionality
-        postButton.addEventListener("click", function () {
+        postButton.addEventListener("click", async function () {
             const postText = postTextarea.value.trim();
-            const mediaItems = Array.from(mediaPreviewContainer.children);
+            const OriginalPostButtonText = postButton.innerHTML;
+            if (!postText && mediaFiles.length === 0) return;
 
-            if (postText || mediaItems.length > 0) {
-                createNewPost(postText, mediaItems);
+            postButton.disabled = true;
+            postButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
+            const bsModal = bootstrap.Modal.getInstance(postModal);
 
-                // Reset form
-                postTextarea.value = "";
-                mediaPreviewContainer.innerHTML = "";
-                postButton.disabled = true;
+            try {
+                // Upload media files
+                const mediaUploads = mediaFiles.map(async ({file, type}) => {
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    formData.append("type", type.toUpperCase());
 
-                // Close modal
-                const bsModal = bootstrap.Modal.getInstance(postModal);
-                if (bsModal) {
+                    const response = await $.ajax({
+                        url: BASE_URL + "/profile/posts/upload-media",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        headers: {
+                            "Authorization": "Bearer " + authData.token
+                        }
+                    });
+
+                    if (response.code !== 200) throw new Error(response.message);
+                    return response.data;
+                });
+
+                // Wait for all media uploads
+                const mediaResults = await Promise.all(mediaUploads);
+
+                // Prepare post data
+                const postData = {
+                    content: postText,
+                    privacy: selectedPrivacy.text.toUpperCase(),
+                    media: mediaResults.map(result => ({
+                        mediaUrl: result.mediaUrl,
+                        mediaType: result.mediaType
+                    }))
+                };
+
+                // Create the post
+                const postResponse = await $.ajax({
+                    url: BASE_URL + "/profile/posts/create",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(postData),
+                    headers: {
+                        "Authorization": "Bearer " + authData.token
+                    }
+                });
+
+                if (postResponse.code === 200 || postResponse.code === 201) {
+                    loadPosts();
+
+                    // Reset form
+                    postTextarea.value = "";
+                    mediaPreviewContainer.innerHTML = "";
+                    mediaFiles = [];
+                    selectedPrivacy = {icon: "bi-globe", text: "Public"};
+                    updatePrivacyDropdown();
                     bsModal.hide();
                 }
+            } catch (error) {
+                Toast.fire({
+                    icon: "error",
+                    title: error.responseJSON?.message || "Failed to create post"
+                });
+            } finally {
+                postButton.disabled = false;
+                postButton.innerHTML = OriginalPostButtonText;
             }
         });
 
-        document.querySelectorAll('.dropdown-item[data-icon]').forEach(item => {
-            item.addEventListener('click', function (e) {
+        // Update privacy dropdown display for both modals
+        function updatePrivacyDropdown(modalType = 'create') {
+            const dropdownButton = document.querySelector(
+                `${modalType === 'create' ? '#postModal' : '#editPostModal'} .privacy-dropdown`
+            );
+            if (dropdownButton) {
+                dropdownButton.innerHTML = `
+      <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text === 'Private' ? 'Only Me' : selectedPrivacy.text}
+    `;
+            }
+        }
+
+// Handle privacy selection for both modals
+        document.querySelectorAll(".dropdown-item[data-icon]").forEach((item) => {
+            item.addEventListener("click", function (e) {
                 e.preventDefault();
                 const icon = this.dataset.icon;
                 const text = this.dataset.text;
                 selectedPrivacy = {icon, text};
 
-                // Update dropdown button display
-                const dropdownButton = document.querySelector('.dropdown-toggle[data-bs-toggle="dropdown"]');
-                dropdownButton.innerHTML = `
-        <i class="bi ${icon} me-1"></i>${text}
-      `;
+                // Determine which modal we're in
+                const modalType = this.closest('.modal')?.id === 'editPostModal' ? 'edit' : 'create';
+                updatePrivacyDropdown(modalType);
             });
         });
 
-        function createNewPost(text, mediaItems) {
-            const timelineContainer = document.querySelector(".timeline-posts");
+        // Function to load posts from backend
+        async function loadPosts() {
+            try {
+                const loader = `<div class="loading-spinner">Loading posts...</div>`;
+                document.querySelector(".posts-container").innerHTML = loader;
+
+                const response = await $.ajax({
+                    url: BASE_URL + "/timeline/posts",
+                    type: "GET",
+                    headers: {
+                        "Authorization": "Bearer " + authData.token
+                    }
+                });
+
+                if (response.code === 200) {
+                    const postsContainer = document.querySelector(".posts-container");
+                    postsContainer.innerHTML = "";
+
+                    if (response.data.posts.length === 0) {
+                        postsContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="bi bi-newspaper"></i>
+                    <p>No posts to show</p>
+                </div>
+             `;
+                        return;
+                    }
+
+                    response.data.posts.forEach(post => {
+                        const postElement = generatePostElement(post);
+                        postsContainer.appendChild(postElement);
+                    });
+                }
+            } catch (error) {
+                Toast.fire({
+                    icon: "error",
+                    title: error.responseJSON?.message || "Failed to load posts"
+                });
+            }
+        }
+
+// Modified post creation function (generic version)
+        function generatePostElement(postData) {
             const newPost = document.createElement("div");
-            newPost.className = "card post-card mb-3 new-post-animation";
+            newPost.className = "card post-card mb-3";
 
             // Format media content
-            const mediaContent = mediaItems
-                .map((item) => {
-                    const media = item.querySelector("img, video");
-                    return media
-                        ? media.outerHTML.replace('class="', 'class="img-fluid rounded mb-3 ')
-                        : "";
-                })
-                .join("");
+            const mediaContent = (postData.media || []).map(media => {
+                if (media.mediaType === 'IMAGE') {
+                    return `<img src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" alt="Post media">`;
+                }
+                if (media.mediaType === 'VIDEO') {
+                    return `<video src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" controls></video>`;
+                }
+                return "";
+            }).join("");
 
-            // Current date
-            const formattedDate = new Date().toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-            });
+            // Group reactions by type from the list of ReactionDTOs
+            const groupedReactions = {};
+            if (postData.reactions && Array.isArray(postData.reactions)) {
+                postData.reactions.forEach(reaction => {
+                    const type = reaction.type; // Reaction type, e.g., "LIKE", "LOVE"
+                    groupedReactions[type] = (groupedReactions[type] || 0) + 1;
+                });
+            }
+
+            // Build the reaction display HTML for reaction counts
+            let reactionDisplay = "";
+            if (Object.keys(groupedReactions).length > 0) {
+                reactionDisplay = Object.entries(groupedReactions)
+                    .map(([type, count]) => `
+      <span class="reaction-icon me-1">
+        <i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}
+      </span>
+    `)
+                    .join('');
+            }
+
+            // For the like button, check if the user has reacted and show the reaction type if available
+            const likeButtonIcon = postData.liked && postData.reactionType
+                ? `bi ${REACTION_TYPES[postData.reactionType].fillIcon} ${REACTION_TYPES[postData.reactionType].color}`
+                : "bi-hand-thumbs-up";
+            const likeButtonText = postData.liked && postData.reactionType ? postData.reactionType : "Like";
+
+            const formattedPrivacy = postData.privacy.charAt(0).toUpperCase() + postData.privacy.slice(1).toLowerCase();
+            const output = formattedPrivacy === "Private" ? "Only Me" : formattedPrivacy;
 
             newPost.innerHTML = `
     <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
-        <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
+        <img src="${postData.user.profilePictureUrl || '/assets/image/Profile-picture.png'}" 
+             alt="Profile" class="rounded-circle me-2" style="width: 40px; height: 40px;">
         <div>
-          <h6 class="mb-0">Dilsara Thiranjaya</h6>
-          <small class="text-muted">${formattedDate} • <i class="bi ${selectedPrivacy.icon}"></i> ${selectedPrivacy.text}</small>
+          <h6 class="mb-0">${postData.user.firstName} ${postData.user.lastName}</h6>
+          <small class="text-muted">
+            ${new Date(postData.createdAt || Date.now()).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            })} • 
+            <i class="bi ${getPrivacyIcon(postData.privacy)}"></i> 
+            ${output}
+          </small>
         </div>
-        <div class="ms-auto">
-          <button class="btn btn-light btn-sm">
-            <i class="bi bi-three-dots"></i>
-          </button>
+        <div class="ms-auto dropdown">
+          ${generatePostDropdown(postData)}
         </div>
       </div>
     </div>
     <div class="card-body">
-      <p>${text.replace(/\n/g, "<br>")}</p>
+      <p>${postData.content.replace(/\n/g, "<br>")}</p>
       ${mediaContent}
       <div class="post-stats d-flex align-items-center text-muted">
-        <span><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 0</span>
-        <span class="ms-auto">0 Comments • 0 Shares</span>
+        <span class="reaction-container">
+        ${reactionDisplay}
+      </span>
+      <span class="ms-auto">
+        ${postData.comments.length} Comments • ${postData.shares} Shares
+      </span>
       </div>
     </div>
     <div class="card-footer bg-transparent">
       <div class="post-actions d-flex justify-content-around">
-        <button class="btn btn-light reaction-btn">
-          <i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>
+        <button class="btn btn-light reaction-btn like-btn" data-post-id="${postData.postId}">
+          <i class="bi ${likeButtonIcon}"></i>
+          <span class="ms-2">${likeButtonText}</span>
         </button>
         <button class="btn btn-light reaction-btn">
           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
         </button>
-        <button class="btn btn-light reaction-btn share-post-btn" data-bs-toggle="modal" data-bs-target="#shareModal>
+        <button class="btn btn-light reaction-btn share-post-btn" 
+                data-bs-toggle="modal" 
+                data-bs-target="#shareModal"
+                data-post-id="${postData.postId}">
           <i class="bi bi-share"></i> <span class="ms-2">Share</span>
         </button>
       </div>
     </div>
   `;
 
-            // Add the new post to the timeline
-            timelineContainer.prepend(newPost);
-
-            // Add reaction event listeners to the new post
             addPostInteractions(newPost);
+            return newPost;
+        }
 
-            // Remove animation class after animation completes
-            setTimeout(() => {
-                newPost.classList.remove("new-post-animation");
-            }, 500);
+
+// Helper functions
+        function getPrivacyIcon(privacy) {
+            const icons = {
+                PUBLIC: 'bi-globe',
+                FRIENDS: 'bi-people-fill',
+                PRIVATE: 'bi-lock-fill'
+            };
+            return icons[privacy] || 'bi-globe';
+        }
+
+        function generatePostDropdown(postData) {
+            const dropdown =  `
+    <button class="btn btn-light btn-sm dropdown-toggle" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+      <i class="bi bi-three-dots"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item edit-post-btn" data-post-id="${postData.postId}">
+        <i class="bi bi-pencil-square me-2"></i>Edit
+      </a></li>
+      <li><a class="dropdown-item text-danger delete-post-btn" data-post-id="${postData.postId}">
+        <i class="bi bi-trash me-2"></i>Delete
+      </a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" data-post-id="${postData.postId}">
+        <i class="bi bi-flag me-2"></i>Report
+      </a></li>
+    </ul>
+  `;
+            if (postData.user.email === authData.email) {
+                return dropdown;
+            }
+            return `
+    <button class="btn btn-light btn-sm dropdown-toggle" 
+            type="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false">
+      <i class="bi bi-three-dots"></i>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><a class="dropdown-item" data-post-id="${postData.postId}">
+        <i class="bi bi-flag me-2"></i>Report
+      </a></li>
+    </ul>
+  `;
+        }
+
+// Get Edit Modal elements (assumed to be defined in your HTML similar to your create post modal)
+        const editPostModal = document.getElementById("editPostModal");
+        const bsEditPostModal = new bootstrap.Modal(editPostModal);
+        const editPostTextarea = editPostModal.querySelector(".edit-post-content-input");
+        const editPostButton = editPostModal.querySelector("#saveEditPostBtn");
+        const editMediaPreviewContainer = editPostModal.querySelector(".media-preview-container");
+
+// File inputs for edit modal
+        const editImageUpload = editPostModal.querySelector("#editImageUpload");
+        const editVideoUpload = editPostModal.querySelector("#editVideoUpload");
+
+// Array to store media files for the edit modal
+        let editMediaFiles = [];
+
+// When an edit button is clicked on a post, load post details (including existing media) into the edit modal.
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".edit-post-btn")) {
+                const postId = e.target.closest(".edit-post-btn").getAttribute("data-post-id");
+                $.ajax({
+                    url: BASE_URL + "/profile/posts/" + postId,
+                    type: "GET",
+                    headers: {"Authorization": "Bearer " + authData.token},
+                    success: function (response) {
+                        // Assume response.data contains the post details including content and media
+                        const postData = response.data;
+                        window.currentPostData = response.data;
+                        editPostTextarea.value = postData.content;
+                        editMediaPreviewContainer.innerHTML = "";
+                        editMediaFiles = []; // Reset the edit media files array
+
+                        // Pre-populate existing media (if any)
+                        if (postData.media && postData.media.length > 0) {
+                            postData.media.forEach((media) => {
+                                const mediaElement = document.createElement("div");
+                                mediaElement.className = "media-preview-item position-relative mb-3";
+                                mediaElement.dataset.type = media.mediaType === "IMAGE" ? "image" : "video";
+                                mediaElement.dataset.filename = media.mediaUrl;
+                                if (media.mediaType === "IMAGE") {
+                                    mediaElement.innerHTML = `
+                <img src="${media.mediaUrl}" class="img-fluid rounded" alt="Media Preview">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+              `;
+                                } else {
+                                    mediaElement.innerHTML = `
+                <video src="${media.mediaUrl}" class="img-fluid rounded" controls></video>
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+              `;
+                                }
+
+                                editMediaPreviewContainer.appendChild(mediaElement);
+                                // Save as an "existing" media item (not a File object)
+                                editMediaFiles.push({
+                                    element: mediaElement,
+                                    file: null,
+                                    url: media.mediaUrl,
+                                    type: media.mediaType === "IMAGE" ? "image" : "video",
+                                    existing: true,
+                                    deleted: false
+                                });
+                                // Add remove handler for each media item
+                                mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+                                    const mediaItem = editMediaFiles.find(item => item.element === mediaElement);
+                                    if (mediaItem) {
+                                        mediaItem.deleted = true; // Add a deletion flag
+                                    }
+                                    mediaElement.remove();
+                                    updateEditPostButtonState();
+                                });
+                            });
+                        }
+                        // Save the postId in a data attribute on the Save button.
+                        editPostButton.setAttribute("data-post-id", postId);
+                        bsEditPostModal.show();
+                    },
+                    error: function (error) {
+                        Toast.fire({
+                            icon: "error",
+                            title: error.responseJSON?.message || "Failed to load post details"
+                        });
+                    }
+                });
+            }
+        });
+
+// Handle file selection for images and videos in the edit modal.
+        editImageUpload.addEventListener("change", function (e) {
+            handleEditMediaUpload(e.target.files, "image");
+        });
+
+        editVideoUpload.addEventListener("change", function (e) {
+            handleEditMediaUpload(e.target.files, "video");
+        });
+
+        function handleEditMediaUpload(files, type) {
+            const validImageTypes = ["image/jpeg", "image/png", "image/webp"];
+            const validVideoTypes = ["video/mp4", "video/quicktime"];
+            const MAX_IMAGE_SIZE = 20 * 1024 * 1024; // 20MB
+            const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+
+            Array.from(files).forEach((file) => {
+                // Validation checks
+                if (type === "image" && !validImageTypes.includes(file.type)) {
+                    Toast.fire({icon: "error", title: "Invalid image format (JPEG, PNG, WebP only)"});
+                    return;
+                }
+                if (type === "video" && !validVideoTypes.includes(file.type)) {
+                    Toast.fire({icon: "error", title: "Invalid video format (MP4, MOV only)"});
+                    return;
+                }
+                if (type === "image" && file.size > MAX_IMAGE_SIZE) {
+                    Toast.fire({icon: "error", title: "Image size exceeds 20MB limit"});
+                    return;
+                }
+                if (type === "video" && file.size > MAX_VIDEO_SIZE) {
+                    Toast.fire({icon: "error", title: "Video size exceeds 100MB limit"});
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const mediaElement = document.createElement("div");
+                    mediaElement.className = "media-preview-item position-relative mb-3";
+                    mediaElement.dataset.type = type;
+                    mediaElement.dataset.filename = file.name;
+                    mediaElement.fileData = file;
+
+                    if (type === "image") {
+                        mediaElement.innerHTML = `
+          <img src="${e.target.result}" class="img-fluid rounded" alt="Media Preview">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+                    } else {
+                        mediaElement.innerHTML = `
+          <video src="${e.target.result}" class="img-fluid rounded" controls></video>
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
+        `;
+                    }
+                    editMediaPreviewContainer.appendChild(mediaElement);
+                    editMediaFiles.push({
+                        element: mediaElement,
+                        file: file,
+                        type: type,
+                        existing: false,
+                        deleted: false
+                    });
+                    mediaElement.querySelector(".btn-close").addEventListener("click", () => {
+                        editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+                        mediaElement.remove();
+                        updateEditPostButtonState();
+                    });
+                    updateEditPostButtonState();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateEditPostButtonState() {
+            // Enable the Save Changes button if there's any content or media
+            if (editPostTextarea.value.trim() || editMediaFiles.length > 0) {
+                editPostButton.disabled = false;
+            } else {
+                editPostButton.disabled = true;
+            }
+        }
+
+        editPostModal.addEventListener('show.bs.modal', function () {
+            if (window.currentPostData) {
+                const currentPrivacy = window.currentPostData.privacy;
+                selectedPrivacy = {
+                    icon: getPrivacyIcon(currentPrivacy),
+                    text: currentPrivacy.charAt(0) + currentPrivacy.slice(1).toLowerCase()
+                };
+                updatePrivacyDropdown('edit');
+            }
+        });
+
+// Confirm unsaved changes on modal close (similar to your create modal)
+        editPostModal.addEventListener("hide.bs.modal", function (event) {
+            const hasContent = editPostTextarea.value.trim() || editMediaFiles.length > 0;
+            if (hasContent) {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Unsaved Changes',
+                    text: "You have unsaved changes. Are you sure you want to discard them?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, discard',
+                    cancelButtonText: 'No, keep editing'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        resetEditPostModal();
+                        bsEditPostModal.hide();
+                    }
+                });
+            }
+        });
+
+        function resetEditPostModal() {
+            editPostTextarea.value = "";
+            editMediaPreviewContainer.innerHTML = "";
+            editMediaFiles = [];
+            editPostButton.disabled = true;
+            editImageUpload.value = "";
+            editVideoUpload.value = "";
+        }
+
+        // Edit Post
+        editPostButton.addEventListener("click", async function () {
+            const postId = editPostButton.getAttribute("data-post-id");
+            const updatedContent = editPostTextarea.value.trim();
+            const OriginalEditPostButtonText = editPostButton.innerHTML;
+
+            editPostButton.disabled = true;
+            editPostButton.innerHTML = '<span class="spinner-border spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>';
+
+            try {
+                const formData = new FormData();
+                formData.append("content", new Blob([updatedContent], {type: "text/plain"}));
+                formData.append("privacy", new Blob([selectedPrivacy.text.toUpperCase()], {type: "text/plain"}));
+
+                // Media to delete (append as strings)
+                editMediaFiles.forEach(media => {
+                    if (media.existing && media.deleted) {
+                        formData.append(
+                            "mediaToDelete",
+                            new Blob([media.url], {type: "text/plain"})
+                        );
+                    }
+                });
+
+                // New media files (MultipartFile)
+                editMediaFiles.forEach(media => {
+                    if (!media.existing && !media.deleted) {
+                        formData.append("newMedia", media.file);
+                    }
+                });
+
+                const postResponse = await $.ajax({
+                    url: BASE_URL + "/profile/posts/" + postId,
+                    type: "PUT",
+                    headers: {"Authorization": "Bearer " + authData.token},
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+
+                if (postResponse.code === 200) {
+                    loadPosts();
+                    resetEditPostModal();
+                    bsEditPostModal.hide();
+                    selectedPrivacy = {icon: "bi-globe", text: "Public"};
+                    updatePrivacyDropdown('edit');
+                }
+            } catch (error) {
+                Toast.fire({icon: "error", title: error.responseJSON?.message || "Failed to update post"});
+            } finally {
+                editPostButton.disabled = false;
+                editPostButton.innerHTML = OriginalEditPostButtonText;
+            }
+        });
+
+        // Delete Post
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".delete-post-btn")) {
+                const postId = e.target.closest(".delete-post-btn").getAttribute("data-post-id");
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: BASE_URL + "/profile/posts/" + postId,
+                            type: "DELETE",
+                            headers: {"Authorization": "Bearer " + authData.token},
+                            success: function (response) {
+                                Toast.fire({icon: "success", title: "Post deleted successfully"});
+                                loadPosts();
+                            },
+                            error: function (error) {
+                                Toast.fire({
+                                    icon: "error",
+                                    title: error.responseJSON?.message || "Failed to delete post"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
+        // Add new reaction constants at top
+        const REACTION_TYPES = {
+            LIKE: {icon: 'bi-hand-thumbs-up', fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary'},
+            LOVE: {icon: 'bi-heart', fillIcon: 'bi-heart-fill', color: 'text-danger'},
+            HAHA: {icon: 'bi-emoji-laughing', fillIcon: 'bi-emoji-laughing-fill', color: 'text-warning'},
+            WOW: {icon: 'bi-emoji-surprise', fillIcon: 'bi-emoji-surprise-fill', color: 'text-warning'},
+            SAD: {icon: 'bi-emoji-frown', fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary'},
+            ANGRY: {icon: 'bi-emoji-angry', fillIcon: 'bi-emoji-angry-fill', color: 'text-danger'}
+        };
+
+// Replace old handleReaction with:
+        async function handleReaction(likeBtn, reactionType) {
+            const postId = likeBtn.dataset.postId;
+            try {
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}/reactions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify({type: reactionType})
+                });
+
+                if (!response.ok) throw new Error('Failed to save reaction');
+
+                const result = await response.json();
+                updatePostReactions(likeBtn, result.data, result.message, reactionType);
+            } catch (error) {
+                Toast.fire({icon: 'error', title: 'Failed to save reaction'});
+            }
+        }
+
+        function updatePostReactions(likeBtn, postData, action, reactionType) {
+            const reactionStats = likeBtn.closest('.post-card').querySelector('.post-stats .reaction-container');
+
+            // Step 1: Count the existing reactions from the response (post before update)
+            const reactionCounts = {};
+            postData.reactions.forEach(reaction => {
+                reactionCounts[reaction.type] = (reactionCounts[reaction.type] || 0) + 1;
+            });
+
+            // Step 2: Manually adjust counts because backend does NOT return updated post
+            switch (action) {
+                case "Added":
+                    reactionCounts[reactionType] = (reactionCounts[reactionType] || 0);
+                    break;
+                case "Removed":
+                    reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) - 1;
+                    break;
+                case "Updated":
+                    reactionCounts[postData.reactionType] = (reactionCounts[postData.reactionType] || 0) - 1;
+                    reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) + 1;
+                    break;
+                default:
+                    return;
+            }
+
+            // Ensure the count does not go negative
+            if (reactionCounts[reactionType] <= 0) {
+                delete reactionCounts[reactionType];
+            }
+
+            // Step 3: Update the reaction stats UI (e.g., 👍 2 ❤️ 3)
+            reactionStats.innerHTML = Object.entries(reactionCounts)
+                .map(([type, count]) => `<i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}`)
+                .join(' • ');
+
+            // Step 4: Update the button UI (change icon and text)
+            if (action === "Added" || action === "Updated") {
+                likeBtn.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i> <span>${reactionType}</span>`;
+                createReactionAnimation(likeBtn, reactionType);
+            } else {
+                likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span>Like</span>';
+            }
+        }
+
+        function createReactionPopup(likeBtn) {
+            const popup = document.createElement('div');
+            popup.className = 'reaction-popup';
+            popup.style.position = 'absolute';
+            popup.style.bottom = '100%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translateX(-50%)';
+            popup.style.background = 'white';
+            popup.style.padding = '8px';
+            popup.style.borderRadius = '20px';
+            popup.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+            popup.style.display = 'flex';
+            popup.style.gap = '8px';
+            popup.style.zIndex = '1000';
+
+            Object.entries(REACTION_TYPES).forEach(([type, {icon, fillIcon, color}]) => {
+                const reactionBtn = document.createElement('button');
+                reactionBtn.className = `btn btn-light reaction-option ${color}`;
+                reactionBtn.innerHTML = `<i class="bi ${fillIcon}"></i>`;
+                reactionBtn.style.padding = '4px';
+                reactionBtn.style.minWidth = '32px';
+                reactionBtn.style.height = '32px';
+                reactionBtn.style.borderRadius = '50%';
+
+                reactionBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    handleReaction(likeBtn, type);
+                    popup.remove();
+                });
+
+                // Hover animation
+                reactionBtn.addEventListener('mouseenter', () => {
+                    reactionBtn.style.transform = 'scale(1.2)';
+                    reactionBtn.style.transition = 'transform 0.2s';
+                });
+
+                reactionBtn.addEventListener('mouseleave', () => {
+                    reactionBtn.style.transform = 'scale(1)';
+                });
+
+                popup.appendChild(reactionBtn);
+            });
+
+            return popup;
         }
 
         // Add interactions to posts (like, comment, share)
@@ -367,33 +1245,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Like functionality
             const likeBtn = postElement.querySelector(".reaction-btn:first-child");
             if (likeBtn) {
-                likeBtn.addEventListener("click", function () {
-                    const icon = this.querySelector("i");
-                    const isLiked = icon.classList.contains("bi-hand-thumbs-up-fill");
-                    const likeCountEl = postElement.querySelector(
-                        ".post-stats span:first-child"
-                    );
-                    const likeCount = parseInt(
-                        likeCountEl.textContent.match(/\d+/)[0] || "0"
-                    );
+                likeBtn.addEventListener('mouseenter', () => {
+                    reactionTimeout = setTimeout(() => {
+                        const popup = createReactionPopup(likeBtn);
+                        likeBtn.appendChild(popup);
+                    }, 500);
+                });
 
-                    if (isLiked) {
-                        icon.classList.remove("bi-hand-thumbs-up-fill");
-                        icon.classList.add("bi-hand-thumbs-up");
-                        likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
-                            likeCount - 1
-                        }`;
-                    } else {
-                        icon.classList.remove("bi-hand-thumbs-up");
-                        icon.classList.add("bi-hand-thumbs-up-fill");
-                        likeCountEl.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${
-                            likeCount + 1
-                        }`;
-
-                        // Add like animation
-                        createLikeAnimation(this);
+                likeBtn.addEventListener('mouseleave', () => {
+                    clearTimeout(reactionTimeout);
+                    const popup = likeBtn.querySelector('.reaction-popup');
+                    if (popup) {
+                        popup.remove();
                     }
                 });
+
+                likeBtn.addEventListener('click', () => {
+                    const iconElement = likeBtn.querySelector('i'); // Get the <i> element inside the button
+                    if (!iconElement) return handleReaction(likeBtn, 'LIKE'); // Default to LIKE if no icon is found
+
+                    // Find the reaction type by checking which icon class is applied
+                    let currentReaction = 'LIKE'; // Default reaction
+                    for (const [reaction, data] of Object.entries(REACTION_TYPES)) {
+                        if (iconElement.classList.contains(data.fillIcon) || iconElement.classList.contains(data.icon)) {
+                            currentReaction = reaction;
+                            break; // Found the reaction, no need to continue checking
+                        }
+                    }
+
+                    handleReaction(likeBtn, currentReaction);
+                });
+
             }
 
             // Comment functionality
@@ -408,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         commentSection.innerHTML = `
             <div class="d-flex">
-              <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+              <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
               <div class="flex-grow-1">
                 <div class="input-group">
                   <input type="text" class="form-control comment-input" placeholder="Write a comment...">
@@ -480,185 +1362,235 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        function addComment(postElement, commentText) {
-            const commentsContainer = postElement.querySelector(".comments-list");
-            const commentStats = postElement.querySelector(
-                ".post-stats span:last-child"
-            );
-            const currentComments = parseInt(
-                commentStats.textContent.match(/\d+/)[0] || "0"
-            );
-            const currentShares = parseInt(
-                commentStats.textContent.match(/Shares/)[0]
-                    ? commentStats.textContent.split("•")[1].trim().split(" ")[0]
-                    : "0"
-            );
+        function createReactionAnimation(element, reactionType) {
+            const animation = document.createElement('div');
+            animation.className = 'reaction-animation';
+            animation.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i>`;
 
-            // Create comment element
-            const commentElement = document.createElement("div");
-            commentElement.className = "comment-item d-flex mb-2 new-comment-animation";
+            // Add animation styles
+            animation.style.position = 'absolute';
+            animation.style.pointerEvents = 'none';
+            animation.style.animation = 'reaction-float 1s ease-out forwards';
+            animation.style.fontSize = '1.5rem';
 
-            // Format current time
-            const now = new Date();
-            const options = {hour: "numeric", minute: "numeric", hour12: true};
-            const time = new Intl.DateTimeFormat("en-US", options).format(now);
+            element.appendChild(animation);
 
-            commentElement.innerHTML = `
-      <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="32" height="32">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${commentText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-reply-btn">Reply</button>
-        </div>
-      </div>
-    `;
-
-            // Add to comments container
-            commentsContainer.appendChild(commentElement);
-
-            // Update comment count
-            commentStats.textContent = `${
-                currentComments + 1
-            } Comments • ${currentShares} Shares`;
-
-            // Remove animation after it completes
+            // Remove after animation
             setTimeout(() => {
-                commentElement.classList.remove("new-comment-animation");
-            }, 500);
-
-            // Add comment interaction listeners
-            const likeCommentBtn = commentElement.querySelector(".comment-like-btn");
-            likeCommentBtn.addEventListener("click", function () {
-                this.classList.toggle("comment-liked");
-                if (this.classList.contains("comment-liked")) {
-                    this.innerHTML = "Liked";
-                } else {
-                    this.innerHTML = "Like";
-                }
-            });
-
-            const replyCommentBtn = commentElement.querySelector(".comment-reply-btn");
-            replyCommentBtn.addEventListener("click", function () {
-                const replyBox = document.createElement("div");
-                replyBox.className = "d-flex mt-2";
-                replyBox.innerHTML = `
-        <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-        <div class="flex-grow-1">
-          <div class="input-group input-group-sm">
-            <input type="text" class="form-control reply-input" placeholder="Write a reply...">
-            <button class="btn btn-primary reply-send-btn" disabled>
-              <i class="bi bi-send"></i>
-            </button>
-          </div>
-        </div>
-      `;
-
-                const parentComment = this.closest(".comment-item");
-                parentComment.appendChild(replyBox);
-
-                const replyInput = replyBox.querySelector(".reply-input");
-                const sendReplyBtn = replyBox.querySelector(".reply-send-btn");
-
-                replyInput.focus();
-
-                replyInput.addEventListener("input", function () {
-                    sendReplyBtn.disabled = this.value.trim() === "";
-                });
-
-                sendReplyBtn.addEventListener("click", function () {
-                    const replyText = replyInput.value.trim();
-                    if (replyText) {
-                        addReply(parentComment, replyText);
-                        replyBox.remove();
-                    }
-                });
-
-                replyInput.addEventListener("keypress", function (e) {
-                    if (e.key === "Enter" && this.value.trim()) {
-                        addReply(parentComment, this.value.trim());
-                        replyBox.remove();
-                    }
-                });
-
-                // Remove other reply boxes
-                document.querySelectorAll(".reply-input").forEach((input) => {
-                    if (input !== replyInput) {
-                        input.closest(".d-flex.mt-2").remove();
-                    }
-                });
-            });
-        }
-
-        function addReply(commentElement, replyText) {
-            // Create reply element
-            const replyElement = document.createElement("div");
-            replyElement.className =
-                "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
-
-            // Format current time
-            const now = new Date();
-            const options = {hour: "numeric", minute: "numeric", hour12: true};
-            const time = new Intl.DateTimeFormat("en-US", options).format(now);
-
-            replyElement.innerHTML = `
-      <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${replyText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-        </div>
-      </div>
-    `;
-
-            // Add to comment element
-            commentElement.appendChild(replyElement);
-
-            // Remove animation after it completes
-            setTimeout(() => {
-                replyElement.classList.remove("new-comment-animation");
-            }, 500);
-
-            // Add like functionality to reply
-            const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
-            likeReplyBtn.addEventListener("click", function () {
-                this.classList.toggle("comment-liked");
-                if (this.classList.contains("comment-liked")) {
-                    this.innerHTML = "Liked";
-                } else {
-                    this.innerHTML = "Like";
-                }
-            });
-        }
-
-        // Create like animation
-        function createLikeAnimation(element) {
-            const likeBubble = document.createElement("div");
-            likeBubble.className = "like-animation";
-            likeBubble.innerHTML = `<i class="bi bi-heart-fill text-danger"></i>`;
-
-            element.appendChild(likeBubble);
-
-            // Remove after animation completes
-            setTimeout(() => {
-                if (element.contains(likeBubble)) {
-                    element.removeChild(likeBubble);
+                if (element.contains(animation)) {
+                    element.removeChild(animation);
                 }
             }, 1000);
         }
+
+        async function addComment(postElement, commentText, parentCommentId = null) {
+            const postId = postElement.closest('.post-card').dataset.postId;
+
+            try {
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify({
+                        content: commentText,
+                        parentCommentId: parentCommentId || null
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to add comment');
+
+                // Refresh comments for this post
+                await loadPostComments(postElement);
+            } catch (error) {
+                Toast.fire({icon: 'error', title: error.message});
+            }
+        }
+
+        async function loadPostComments(postElement) {
+            const postId = postElement.closest('.post-card').dataset.postId;
+            try {
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+                    headers: {'Authorization': `Bearer ${authData.token}`}
+                });
+
+                const {data} = await response.json();
+                renderComments(postElement, data.comments);
+            } catch (error) {
+                Toast.fire({icon: 'error', title: 'Failed to load comments'});
+            }
+        }
+
+        function renderComments(container, comments, depth = 0) {
+            const commentsList = container.querySelector('.comments-list') || createCommentsContainer(container);
+            commentsList.innerHTML = '';
+
+            comments.forEach(comment => {
+                const commentElement = createCommentElement(comment, depth);
+                commentsList.appendChild(commentElement);
+                if (comment.replies.length > 0) {
+                    renderReplies(commentElement, comment.replies, depth + 1);
+                }
+            });
+        }
+
+        function createCommentElement(comment, depth) {
+            const commentEl = document.createElement('div');
+            commentEl.className = `comment-item mb-2 ms-${depth * 3}`;
+            commentEl.innerHTML = `
+        <div class="comment-bubble p-2 rounded">
+            <div class="d-flex align-items-center">
+                <img src="${comment.user.profilePictureUrl}" 
+                     class="rounded-circle me-2" 
+                     width="32" height="32">
+                <div>
+                    <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
+                    <small class="text-muted">${new Date(comment.createdAt).toLocaleString()}</small>
+                </div>
+            </div>
+            <p class="mb-0 mt-2">${comment.content}</p>
+            <div class="comment-actions mt-2">
+                <button class="btn btn-sm reaction-btn ${comment.liked ? 'text-primary' : 'text-muted'}">
+                    <i class="bi ${comment.reactionType ? REACTION_TYPES[comment.reactionType].fillIcon : 'bi-hand-thumbs-up'}"></i>
+                    ${comment.reactions.length || ''}
+                </button>
+                <button class="btn btn-sm text-muted reply-btn">Reply</button>
+            </div>
+        </div>
+    `;
+
+            // Add reaction handler
+            commentEl.querySelector('.reaction-btn').addEventListener('click', async () => {
+                // Implement comment reaction logic
+            });
+
+            // Add reply handler
+            commentEl.querySelector('.reply-btn').addEventListener('click', () => {
+                showReplyInput(commentEl, comment.commentId);
+            });
+
+            return commentEl;
+        }
+
+        // function addReply(commentElement, replyText) {
+        //   // Create reply element
+        //   const replyElement = document.createElement("div");
+        //   replyElement.className =
+        //       "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
+        //
+        //   // Format current time
+        //   const now = new Date();
+        //   const options = { hour: "numeric", minute: "numeric", hour12: true };
+        //   const time = new Intl.DateTimeFormat("en-US", options).format(now);
+        //
+        //   replyElement.innerHTML = `
+        //   <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
+        //   <div>
+        //     <div class="comment-bubble p-2 rounded">
+        //       <strong>Dilsara Thiranjaya</strong>
+        //       <p class="mb-0">${replyText}</p>
+        //     </div>
+        //     <div class="comment-actions">
+        //       <small class="text-muted">${time}</small>
+        //       <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
+        //     </div>
+        //   </div>
+        // `;
+        //
+        //   // Add to comment element
+        //   commentElement.appendChild(replyElement);
+        //
+        //   // Remove animation after it completes
+        //   setTimeout(() => {
+        //     replyElement.classList.remove("new-comment-animation");
+        //   }, 500);
+        //
+        //   // Add like functionality to reply
+        //   const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
+        //   likeReplyBtn.addEventListener("click", function () {
+        //     this.classList.toggle("comment-liked");
+        //     if (this.classList.contains("comment-liked")) {
+        //       this.innerHTML = "Liked";
+        //     } else {
+        //       this.innerHTML = "Like";
+        //     }
+        //   });
+        // }
 
         // Add interactions to existing posts
         document.querySelectorAll(".post-card").forEach((post) => {
             addPostInteractions(post);
         });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.closest(".share-post-btn")) {
+                const post = e.target.closest(".post-card");
+                const postContent = post.querySelector(".card-body p").textContent;
+                const shareModal = new bootstrap.Modal(
+                    document.getElementById("shareModal")
+                );
+
+                // Set modal textarea to post content
+                document.getElementById("shareModal").querySelector("textarea").value =
+                    postContent;
+
+                // Show the modal
+                shareModal.show();
+            }
+        });
+
+        // Share Modal Handler
+        document
+            .getElementById("shareModal")
+            .querySelector(".btn-post")
+            .addEventListener("click", function () {
+                const shareMessage = document
+                    .getElementById("shareModal")
+                    .querySelector("textarea").value;
+                const privacy = document
+                    .querySelector(".btn-share-option.active")
+                    .textContent.trim();
+
+                // Add shared post to timeline (example function)
+                createNewPost(`Shared with ${privacy}: \n\n ${shareMessage}`, []);
+
+                // Hide the modal
+                const shareModal = bootstrap.Modal.getInstance(
+                    document.getElementById("shareModal")
+                );
+                shareModal.hide();
+            });
+
+        // Share Option Selection
+        document.querySelectorAll(".btn-share-option").forEach((btn) => {
+            btn.addEventListener("click", function () {
+                document
+                    .querySelectorAll(".btn-share-option")
+                    .forEach((b) => b.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+
+        // Clean up backdrop and styles after modal is hidden
+        document
+            .getElementById("shareModal")
+            .addEventListener("hidden.bs.modal", function () {
+                // Remove the backdrop manually if it's stuck
+                const modalBackdrop = document.querySelector(".modal-backdrop");
+                if (modalBackdrop) {
+                    modalBackdrop.remove();
+                }
+
+                // Ensure 'modal-open' class is removed from the body
+                document.body.classList.remove("modal-open");
+
+                // Reset any inline padding-right (used to compensate for scrollbar)
+                document.body.style.paddingRight = "";
+
+                // Re-enable scrolling in case it's disabled
+                document.body.style.overflow = ""; // Ensures scrolling is allowed
+            });
 
         // Create improved chat modal with two-sided conversation layout
         function createChatModal() {
@@ -1226,191 +2158,5 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 2000);
             }, 1000);
         }
-
-        document.addEventListener("click", function (e) {
-            if (e.target.closest(".share-post-btn")) {
-                const post = e.target.closest(".post-card");
-                const postContent = post.querySelector(".card-body p").textContent;
-                const shareModal = new bootstrap.Modal(document.getElementById("shareModal"));
-
-                // Set modal textarea to post content
-                document.getElementById("shareModal").querySelector("textarea").value = postContent;
-
-                // Show the modal
-                shareModal.show();
-            }
-        });
-
-        // Share Modal Handler
-        document.getElementById("shareModal").querySelector(".btn-post").addEventListener("click", function () {
-            const shareMessage = document.getElementById("shareModal").querySelector("textarea").value;
-            const privacy = document.querySelector(".btn-share-option.active").textContent.trim();
-
-            // Add shared post to timeline (example function)
-            createNewPost(`Shared with ${privacy}: \n\n ${shareMessage}`, []);
-
-            // Hide the modal
-            const shareModal = bootstrap.Modal.getInstance(document.getElementById("shareModal"));
-            shareModal.hide();
-        });
-
-        // Share Option Selection
-        document.querySelectorAll(".btn-share-option").forEach((btn) => {
-            btn.addEventListener("click", function () {
-                document.querySelectorAll(".btn-share-option").forEach((b) => b.classList.remove("active"));
-                this.classList.add("active");
-            });
-        });
-
-        // Clean up backdrop and styles after modal is hidden
-        document.getElementById("shareModal").addEventListener("hidden.bs.modal", function () {
-            // Remove the backdrop manually if it's stuck
-            const modalBackdrop = document.querySelector(".modal-backdrop");
-            if (modalBackdrop) {
-                modalBackdrop.remove();
-            }
-
-            // Ensure 'modal-open' class is removed from the body
-            document.body.classList.remove("modal-open");
-
-            // Reset any inline padding-right (used to compensate for scrollbar)
-            document.body.style.paddingRight = '';
-
-            // Re-enable scrolling in case it's disabled
-            document.body.style.overflow = ''; // Ensures scrolling is allowed
-        });
-
-        // Trending Post Click Handler
-        document.querySelectorAll('.trend-post').forEach(post => {
-            post.addEventListener('click', function (e) {
-                e.preventDefault();
-                // Implement trending post view
-                console.log('Viewing trending post:', this.querySelector('h6').textContent);
-            });
-        });
-
-        // Fetch timeline posts
-        async function fetchTimelinePosts() {
-            try {
-                const response = await fetch(`${BASE_URL}/timeline/getPost?userEmail=${authData.email}`, {
-                    headers: {
-                        'Authorization': `Bearer ${authData.token}`
-                    }
-                });
-
-                if (!response.ok) throw new Error('Failed to fetch posts');
-
-                const data = await response.json();
-                return data.data; // Array of posts
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-                return [];
-            }
-        }
-
-        // Create a new post
-        async function createPost(postData) {
-            try {
-                const response = await fetch(`${BASE_URL}/timeline`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authData.token}`
-                    },
-                    body: JSON.stringify(postData)
-                });
-
-                if (!response.ok) throw new Error('Failed to create post');
-
-                const data = await response.json();
-                return data.data;
-            } catch (error) {
-                console.error('Error creating post:', error);
-                return null;
-            }
-        }
-
-        // Add reaction to a post
-        async function addReaction(postId, reactionType) {
-            try {
-                const response = await fetch(`${BASE_URL}/timeline/${postId}/react?userEmail=${authData.email}&reactionType=${reactionType}`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${authData.token}`
-                    }
-                });
-
-                if (!response.ok) throw new Error('Failed to add reaction');
-
-                return true;
-            } catch (error) {
-                console.error('Error adding reaction:', error);
-                return false;
-            }
-        }
-
-        // Add comment to a post
-        async function addComment(postId, content) {
-            try {
-                const response = await fetch(`${BASE_URL}/timeline/${postId}/comment?userEmail=${authData.email}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authData.token}`
-                    },
-                    body: JSON.stringify(content)
-                });
-
-                if (!response.ok) throw new Error('Failed to add comment');
-
-                return true;
-            } catch (error) {
-                console.error('Error adding comment:', error);
-                return false;
-            }
-        }
-
-        // Share a post
-        async function sharePost(postId, shareMessage) {
-            try {
-                const response = await fetch(`${BASE_URL}/timeline/${postId}/share?userEmail=${authData.email}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authData.token}`
-                    },
-                    body: JSON.stringify(shareMessage)
-                });
-
-                if (!response.ok) throw new Error('Failed to share post');
-
-                const data = await response.json();
-                return data.data;
-            } catch (error) {
-                console.error('Error sharing post:', error);
-                return null;
-            }
-        }
-
-        // Initialize timeline
-        async function initializeTimeline() {
-            const posts = await fetchTimelinePosts();
-            const timelineContainer = document.querySelector('.timeline-posts');
-            timelineContainer.innerHTML = ''; // Clear existing posts
-
-            posts.forEach(post => {
-                const postElement = createPostElement(post);
-                timelineContainer.appendChild(postElement);
-            });
-        }
-
-        // Create post element
-        function createPostElement(post) {
-            // Implementation remains the same as in your existing code
-            // Just update the interaction handlers to use the new API functions
-        }
-
-        // Initialize the timeline when the page loads
-        initializeTimeline();
     }
 });

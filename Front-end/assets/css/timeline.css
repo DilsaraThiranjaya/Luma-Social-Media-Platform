@@ -1,28 +1,53 @@
-/* Timeline Container */
-.timeline-container {
-  padding: 1.5rem 0;
-}
-
+/* ==========================================================================
+   GENERAL STYLES
+   ========================================================================== */
 hr {
   color: var(--border-color);
+}
+
+/* ==========================================================================
+   TIMELINE CONTAINER
+   ========================================================================== */
+.timeline-container {
+  padding: 1.5rem 0;
 }
 
 .create-post{
   border-radius: 10px !important;
 }
 
-/* Chat Quick View */
-.chat-quick-view {
-  position: sticky;
-  top: 80px;
-  overflow: hidden;
+.timeline-posts {
+  padding: 20px 0;
 }
 
-.chat-quick-view .card {
-  border-radius: 10px;
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 1.2rem;
 }
 
-/* Profile Quick View */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.empty-state i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #adb5bd;
+}
+
+.timline-post-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   PROFILE QUICK VIEW STYLES
+   ========================================================================== */
 .profile-quick-view {
   position: sticky;
   top: 80px;
@@ -50,6 +75,22 @@ hr {
   border-radius: 50%;
 }
 
+/* ==========================================================================
+   CHAT QUICK VIEW STYLES
+   ========================================================================== */
+.chat-quick-view {
+  position: sticky;
+  top: 80px;
+  overflow: hidden;
+}
+
+.chat-quick-view .card {
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   QUICK LINKS & SHORTCUTS
+   ========================================================================== */
 .quick-links {
   font-size: 0.9rem;
 }
@@ -64,7 +105,44 @@ hr {
   border-radius: 50% ;
 }
 
-/* Post Composer */
+/* Quick Links Hover Effects */
+.quick-links div {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-links div:hover {
+  background: #e3d3ff;
+  transform: translateX(4px);
+}
+
+.quick-links-item {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.quick-links-item:hover {
+  color: var(--secondary-color);
+}
+
+/* Shortcut Items Animation */
+.shortcut-item {
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shortcut-item:hover {
+  background: rgba(96, 0, 151, 0.05);
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   POST COMPOSER STYLES
+   ========================================================================== */
 .post-composer {
   background-color: var(--light-color);
   border-radius: 10px;
@@ -99,7 +177,34 @@ hr {
   border-radius: 20px;
 }
 
-/* Post Card */
+.post-composer .post-input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e0d3ff;
+  transition: all 0.3s ease;
+}
+
+.post-composer .post-input:hover {
+  background: white;
+  border-color: var(--primary-color);
+}
+
+.post-content-input {
+  border: none;
+  font-size: 1.1rem;
+  resize: none;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.post-content-input:focus {
+  box-shadow: none;
+  background: white;
+}
+
+/* ==========================================================================
+   POST CARD STYLES
+   ========================================================================== */
 .post-card {
   background-color: var(--light-color);
   border-radius: 10px;
@@ -137,7 +242,34 @@ hr {
   gap: 0.5rem;
 }
 
-/* Comment Section */
+/* Modern Post Design */
+.post-card {
+  border: none;
+  background: linear-gradient(145deg, #ffffff, #f8f3ff);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Enhanced Timeline Styles - Card hover effects */
+.post-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   COMMENT SECTION STYLES
+   ========================================================================== */
 .comment-section {
   background-color: var(--light-color);
   padding: 1rem;
@@ -159,7 +291,9 @@ hr {
   margin: 0;
 }
 
-/* Right Sidebar */
+/* ==========================================================================
+   RIGHT SIDEBAR STYLES
+   ========================================================================== */
 .quick-access .list-group-item {
   border: none;
   padding: 0.75rem 1rem;
@@ -175,29 +309,9 @@ hr {
   color: var(--text-muted);
 }
 
-/* Modern Post Design */
-.post-card {
-  border: none;
-  background: linear-gradient(145deg, #ffffff, #f8f3ff);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease;
-}
-
-.post-card:hover {
-  transform: translateY(-2px);
-}
-
-.post-composer .post-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e0d3ff;
-  transition: all 0.3s ease;
-}
-
-.post-composer .post-input:hover {
-  background: white;
-  border-color: var(--primary-color);
-}
-
+/* ==========================================================================
+   BUTTON STYLES
+   ========================================================================== */
 /* Interactive Buttons */
 .btn-light {
   background: rgba(255, 255, 255, 0.9);
@@ -210,80 +324,6 @@ hr {
   color: var(--secondary-color);
 }
 
-.reaction-btn:hover {
-  background: var(--primary-color) !important;
-  color: white !important;
-}
-
-/* Modern Modal */
-#postModal .modal-content {
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
-}
-
-#postModal textarea {
-  background: transparent;
-  font-size: 1.1rem;
-  min-height: 120px;
-}
-
-/* Quick Links Hover Effects */
-.quick-links div {
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.quick-links div:hover {
-  background: #e3d3ff;
-  transform: translateX(4px);
-}
-
-/* Shortcut Items Animation */
-.shortcut-item {
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.shortcut-item:hover {
-  background: rgba(96, 0, 151, 0.05);
-  transform: translateX(4px);
-}
-
-.timline-post-item img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.list-group-item {
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.list-group-item:hover {
-  background: #f8f9fa;
-  padding-left: 1.5rem;
-}
-
-.quick-links-item {
-  font-size: 1rem;
-  color: var(--primary-color);
-}
-
-.quick-links-item:hover {
-  color: var(--secondary-color);
-}
-
-.gradient-bg {
-  background: linear-gradient(135deg, #600097, #4e54c8);
-  border: none;
-}
-
 .btn-privacy {
   background: rgba(255, 255, 255, 0.15);
   color: white;
@@ -294,20 +334,6 @@ hr {
 
 .btn-privacy:hover {
   background: rgba(255, 255, 255, 0.25);
-}
-
-.post-content-input {
-  border: none;
-  font-size: 1.1rem;
-  resize: none;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 12px;
-}
-
-.post-content-input:focus {
-  box-shadow: none;
-  background: white;
 }
 
 .btn-media {
@@ -351,6 +377,108 @@ hr {
   transform: translateY(-1px);
 }
 
+.btn-share-option {
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  margin: 2px;
+  transition: all 0.2s ease;
+}
+
+.btn-share-option.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.btn-share-option:hover {
+  background: #e3d3ff;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes reaction-float {
+  0% {
+    transform: translate(-50%, 0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50px) scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -100px) scale(1);
+    opacity: 0;
+  }
+}
+
+.reaction-btn:hover {
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+.reaction-animation {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform-origin: center;
+  z-index: 1000;
+}
+
+.reaction-option {
+  transition: transform 0.2s;
+}
+
+.reaction-option:hover {
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   MODAL STYLES
+   ========================================================================== */
+/* Modern Modal */
+#postModal .modal-content {
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+}
+
+#postModal textarea {
+  background: transparent;
+  font-size: 1.1rem;
+  min-height: 120px;
+}
+
+/* ==========================================================================
+   LIST GROUP STYLES
+   ========================================================================== */
+.list-group-item {
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+  background: #f8f9fa;
+  padding-left: 1.5rem;
+}
+
+/* ==========================================================================
+   GRADIENT BACKGROUNDS
+   ========================================================================== */
+.gradient-bg {
+  background: linear-gradient(135deg, #600097, #4e54c8);
+  border: none;
+}
+
+.navbar-dark {
+  background: linear-gradient(45deg, #4e54c8, #600097);
+}
+
+.gradient-bg {
+  background: linear-gradient(45deg, #4e54c8, #600097);
+}
+
+/* ==========================================================================
+   MEDIA PREVIEW STYLES
+   ========================================================================== */
 .media-preview-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -387,44 +515,9 @@ hr {
   justify-content: center;
 }
 
-/* Enhanced Timeline Styles */
-
-/* Card hover effects */
-.post-card {
-  transition: all 0.3s ease;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.post-hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-dark {
-  background: linear-gradient(45deg, #4e54c8, #600097);
-}
-
-.gradient-bg {
-  background: linear-gradient(45deg, #4e54c8, #600097);
-}
-
-/* Animations */
-.new-post-animation {
-  animation: fadeInDown 0.5s ease;
-}
-
-.reaction-animation {
-  animation: pulse 0.3s ease;
-}
-
-.new-comment-animation {
-  animation: slideIn 0.3s ease;
-}
-
-/* Trending Post Styles */
-
+/* ==========================================================================
+   TRENDING POST STYLES
+   ========================================================================== */
 .trend-post h6 {
   font-size: 0.9rem;
 }
@@ -444,27 +537,25 @@ hr {
   background: #f8f9fa;
 }
 
-.btn-share-option {
-  border: 1px solid #dee2e6;
-  border-radius: 20px;
-  margin: 2px;
-  transition: all 0.2s ease;
-}
-
-.btn-share-option.active {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
-}
-
-.btn-share-option:hover {
-  background: #e3d3ff;
-}
-
 .share-options {
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+.new-post-animation {
+  animation: fadeInDown 0.5s ease;
+}
+
+.reaction-animation {
+  animation: pulse 0.3s ease;
+}
+
+.new-comment-animation {
+  animation: slideIn 0.3s ease;
 }
 
 @keyframes fadeInDown {
@@ -501,7 +592,65 @@ hr {
   }
 }
 
-/* Responsive Adjustments */
+/* ===== EMOJI PICKER STYLES ===== */
+.emoji-container, .emoji-container-edit {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.emoji-category {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.category-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 4px;
+}
+
+.emoji-item {
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-item:hover {
+  transform: scale(1.2);
+  background-color: #f0f2f5;
+}
+
+/* Scrollbar styling */
+.emoji-container::-webkit-scrollbar,
+.emoji-container-edit::-webkit-scrollbar {
+  width: 6px;
+}
+
+.emoji-container::-webkit-scrollbar-track,
+.emoji-container-edit::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.emoji-container::-webkit-scrollbar-thumb,
+.emoji-container-edit::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
 @media (max-width: 992px) {
   .profile-quick-view {
     position: static;

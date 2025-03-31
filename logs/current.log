@@ -1162,3 +1162,1222 @@
 2025-03-31 11:20:58.297 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-03-31 11:20:58.299 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-03-31 11:20:58.305 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 18:04:58.444 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 18:04:58.543 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 5016 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 18:04:58.544 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 18:04:59.212 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 18:05:00.087 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 18:05:00.185 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 89 ms. Found 10 JPA repository interfaces.
+2025-03-31 18:05:00.881 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 18:05:00.895 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 18:05:00.896 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 18:05:00.896 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 18:05:00.968 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 18:05:00.968 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2333 ms
+2025-03-31 18:05:01.206 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 18:05:01.301 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 18:05:01.356 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 18:05:01.764 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 18:05:01.797 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 18:05:02.252 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@44485db
+2025-03-31 18:05:02.255 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 18:05:02.330 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 18:05:02.331 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 18:05:02.348 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 18:05:04.015 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 18:05:04.373 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 18:05:04.989 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 18:05:05.082 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 18:05:09.802 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 18:05:10.847 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 18:05:10.867 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 18:05:10.880 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 13.264 seconds (process running for 14.834)
+2025-03-31 18:13:30.839 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 18:13:30.839 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 18:13:30.841 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-03-31 18:13:31.096 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:31.552 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:31.594 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:31.848 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:13:34.859 [http-nio-8080-exec-9] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:34.859 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:34.926 [http-nio-8080-exec-9] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:34.926 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:36.804 [http-nio-8080-exec-1] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:36.804 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:36.820 [http-nio-8080-exec-1] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:36.821 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:59.274 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:59.276 [http-nio-8080-exec-6] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:59.292 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:13:59.292 [http-nio-8080-exec-6] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:12.475 [http-nio-8080-exec-2] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:12.478 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:12.492 [http-nio-8080-exec-2] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:12.500 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:25.202 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:25.207 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:25.218 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:25.429 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:39.677 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:39.681 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:39.691 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:14:39.796 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:09.101 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:09.113 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:09.124 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:09.289 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:41.230 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:41.242 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:41.252 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:20:41.378 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:21:23.618 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:21:23.618 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:21:23.631 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:21:23.752 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:31:13.645 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:31:13.848 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:31:13.869 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:31:14.351 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:31:14.361 [http-nio-8080-exec-9] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:31:14.363 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:33:45.421 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:33:45.593 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:33:45.598 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:33:45.737 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:34:40.983 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:37:08.285 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:37:08.579 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:37:08.603 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:37:09.083 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:37:09.092 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:37:09.105 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:30.339 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:30.551 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:30.580 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:31.402 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:39:34.971 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:35.071 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:35.076 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:35.199 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:39:39.380 [http-nio-8080-exec-5] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:39.410 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:39.411 [http-nio-8080-exec-5] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:39:39.422 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:40:15.799 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:40:15.801 [http-nio-8080-exec-2] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:40:15.814 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:40:38.790 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:40:38.794 [http-nio-8080-exec-7] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:40:38.801 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:41:13.408 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:41:13.414 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:41:13.425 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:30.284 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:30.290 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:30.300 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:30.384 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:57.393 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:57.393 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:57.405 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:48:57.556 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 18:49:04.589 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:49:04.590 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:49:04.600 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:12.775 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:50:12.796 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:12.808 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:14.774 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:50:14.777 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:14.787 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:35.436 [http-nio-8080-exec-9] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:50:35.439 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:35.448 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:36.449 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:50:36.461 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:50:36.474 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:52:21.830 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 18:52:21.832 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: No static resource api/v1/timeline/getPost.
+2025-03-31 18:52:21.841 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:10:08.003 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:10:08.142 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:10:08.159 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:11:06.772 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 19:11:06.784 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 19:11:06.791 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 19:11:06.794 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 19:11:06.853 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 19:11:14.534 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 19:11:14.667 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12060 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 19:11:14.668 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 19:11:15.124 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 19:11:15.999 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 19:11:16.133 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 121 ms. Found 10 JPA repository interfaces.
+2025-03-31 19:11:16.815 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 19:11:16.825 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 19:11:16.826 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 19:11:16.826 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 19:11:16.887 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 19:11:16.887 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2163 ms
+2025-03-31 19:11:17.010 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 19:11:17.075 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 19:11:17.123 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 19:11:17.339 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 19:11:17.362 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 19:11:17.641 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@77d95e5a
+2025-03-31 19:11:17.643 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 19:11:17.677 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 19:11:17.679 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 19:11:17.691 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 19:11:19.099 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 19:11:19.357 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 19:11:19.811 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 19:11:19.885 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 19:11:23.985 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 19:11:24.602 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 19:11:24.618 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 19:11:24.627 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 10.679 seconds (process running for 11.852)
+2025-03-31 19:22:34.785 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 19:22:34.785 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 19:22:34.787 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-31 19:22:35.080 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:35.080 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:35.159 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:35.299 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:38.252 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:38.261 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:38.268 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:22:38.406 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:25:25.927 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 18
+2025-03-31 19:25:26.015 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 18
+2025-03-31 19:25:50.261 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 20
+2025-03-31 19:25:50.271 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 20
+2025-03-31 19:26:27.154 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 20
+2025-03-31 19:26:27.168 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 20
+2025-03-31 19:27:48.356 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:27:48.442 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:27:55.973 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:27:56.059 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:28:03.622 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:28:03.694 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:28:15.317 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 4
+2025-03-31 19:28:15.440 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 4
+2025-03-31 19:29:04.297 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:04.438 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:06.977 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:07.154 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:07.154 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:07.260 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:07.339 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:08.818 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:08.910 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:08.916 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:08.987 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:09.084 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:10.363 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:10.457 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:10.464 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:10.553 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:10.630 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:14.725 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:14.816 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:14.820 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:14.881 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:14.969 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:16.795 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:16.885 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:16.889 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:16.954 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:29:17.032 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:30:31.508 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:30:31.680 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:30:31.688 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:30:31.823 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:30:31.926 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:31:27.994 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:31:28.137 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:31:28.142 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:31:28.229 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:31:28.317 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:41.225 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:41.393 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:41.398 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:41.810 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:41.912 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:45.855 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:45.959 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:45.963 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:46.049 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:38:46.145 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:39:44.830 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:39:44.925 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:39:44.929 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:39:45.114 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:39:45.197 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.454 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.593 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.602 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.870 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.934 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.944 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:41:08.966 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:42:02.998 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.099 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.103 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.305 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.311 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.320 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:03.387 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:06.397 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:06.408 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:06.412 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:06.445 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:41.459 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to upload profile picture for user email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:41.465 [http-nio-8080-exec-9] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading profile picture for user 2
+2025-03-31 19:42:44.729 [http-nio-8080-exec-9] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=users/2/profile, signature=8c7ad09a7a288d4ce51b719ba0dfa0fe69a408a1, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430363/users/2/profile/users/2/profile/1743430361466.jpg, created_at=2025-03-31T14:12:43Z, asset_id=865d7642531a1e180b6fe4390750df58, version_id=70a553a64b0554329204e87b6c04aa70, type=upload, display_name=1743430361466, version=1743430363, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430363/users/2/profile/users/2/profile/1743430361466.jpg, public_id=users/2/profile/users/2/profile/1743430361466, tags=[], existing=false, original_filename=file, api_key=498997394873736, bytes=57950, width=582, etag=321fe3b4550371539c720f1adbde7cc9, placeholder=false, height=606}
+2025-03-31 19:42:44.910 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully uploaded profile picture for user email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:44.934 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:44.954 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:44.967 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:45.004 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:54.944 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to upload cover picture for user email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:54.950 [http-nio-8080-exec-3] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading cover picture for user 2
+2025-03-31 19:42:59.768 [http-nio-8080-exec-3] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=users/2/cover, signature=73004fdb34ac0210681d454da4458d7a3e776040, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430378/users/2/cover/users/2/cover/1743430374950.jpg, created_at=2025-03-31T14:12:58Z, asset_id=3f093b7bcdba4795935cf560c832b328, version_id=9f34445a90c36c42e6a44449ee86c911, type=upload, display_name=1743430374950, version=1743430378, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430378/users/2/cover/users/2/cover/1743430374950.jpg, public_id=users/2/cover/users/2/cover/1743430374950, tags=[], existing=false, original_filename=file, api_key=498997394873736, bytes=1872231, width=3840, etag=8c7b042a455b3de689dcc13a74f6e887, placeholder=false, height=2160}
+2025-03-31 19:42:59.805 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully uploaded cover picture for user email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:59.821 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:59.833 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:59.851 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:42:59.882 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:05.770 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to delete post with ID: 16
+2025-03-31 19:43:05.774 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234376/users/2/profile/users/2/profile/1743234375832.jpg
+2025-03-31 19:43:05.774 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234376/users/2/profile/users/2/profile/1743234375832.jpg
+2025-03-31 19:43:05.774 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/profile/users/2/profile/1743234375832
+2025-03-31 19:43:07.211 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/profile/users/2/profile/1743234375832
+2025-03-31 19:43:07.239 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully deleted post with ID: 16
+2025-03-31 19:43:07.264 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:07.319 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:13.785 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to delete post with ID: 14
+2025-03-31 19:43:13.791 [http-nio-8080-exec-6] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233037/users/2/profile/users/2/profile/1743233036722.jpg
+2025-03-31 19:43:13.792 [http-nio-8080-exec-6] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233037/users/2/profile/users/2/profile/1743233036722.jpg
+2025-03-31 19:43:13.792 [http-nio-8080-exec-6] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/profile/users/2/profile/1743233036722
+2025-03-31 19:43:15.542 [http-nio-8080-exec-6] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/profile/users/2/profile/1743233036722
+2025-03-31 19:43:15.557 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully deleted post with ID: 14
+2025-03-31 19:43:15.576 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:15.611 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:22.244 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:22.258 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:22.270 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:43:22.323 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:44:10.055 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Method parameter 'postId': Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: "undefined"
+2025-03-31 19:44:24.429 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 19:44:24.449 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 19:44:36.859 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 19:44:36.899 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 19:44:43.173 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:44:43.183 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:44:43.194 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:44:43.245 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:45:12.228 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 19:45:12.251 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 19:45:23.620 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 19:45:23.639 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 19:46:33.031 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 22
+2025-03-31 19:46:33.040 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 22
+2025-03-31 19:47:54.910 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to upload media for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:47:54.914 [http-nio-8080-exec-3] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading IMAGE for user 2
+2025-03-31 19:47:57.576 [http-nio-8080-exec-3] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/2/image, signature=26ed3af692f628f483ec37234ff84eae2b426ba3, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430676/posts/2/image/posts/2/image/1743430674915.jpg, created_at=2025-03-31T14:17:56Z, asset_id=87ca8d739ba82496a5ad3533aa118ad3, version_id=49bd9cffb19017d0b99b41c46f2f999f, type=upload, display_name=1743430674915, version=1743430676, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430676/posts/2/image/posts/2/image/1743430674915.jpg, public_id=posts/2/image/posts/2/image/1743430674915, tags=[], original_filename=file, api_key=498997394873736, bytes=42858, width=736, etag=a986f1b4a28d991e853e0869681b1e5b, placeholder=false, height=736}
+2025-03-31 19:47:57.577 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully uploaded media for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:47:57.591 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:47:57.607 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:47:57.626 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:47:57.686 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:48:20.315 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 23
+2025-03-31 19:48:20.324 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 23
+2025-03-31 19:49:14.946 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to update post with ID: 23 for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:14.955 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430676/posts/2/image/posts/2/image/1743430674915.jpg
+2025-03-31 19:49:14.956 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430676/posts/2/image/posts/2/image/1743430674915.jpg
+2025-03-31 19:49:14.956 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: posts/2/image/posts/2/image/1743430674915
+2025-03-31 19:49:16.621 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: posts/2/image/posts/2/image/1743430674915
+2025-03-31 19:49:16.621 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading IMAGE for user 2
+2025-03-31 19:49:18.799 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/2/image, signature=b4cda2a9af1a737a11e37bbe68972963f598aa7f, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430757/posts/2/image/posts/2/image/1743430756622.jpg, created_at=2025-03-31T14:19:17Z, asset_id=441ce143aa68e1859f607cb9665a20f3, version_id=3cb290912500ce5ccde0e5fbfa25375f, type=upload, display_name=1743430756622, version=1743430757, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430757/posts/2/image/posts/2/image/1743430756622.jpg, public_id=posts/2/image/posts/2/image/1743430756622, tags=[], original_filename=file, api_key=498997394873736, bytes=64237, width=616, etag=c96fcf0cdbf68806a49770174811f320, placeholder=false, height=353}
+2025-03-31 19:49:18.799 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading IMAGE for user 2
+2025-03-31 19:49:20.971 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/2/image, signature=c4bafc46aa07235bbc28dd2aba927c5221ca2492, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430760/posts/2/image/posts/2/image/1743430758799.jpg, created_at=2025-03-31T14:19:20Z, asset_id=99eee8debb90986fcccec05adc6f7e7b, version_id=cc065cc142c61258205a7069252486dc, type=upload, display_name=1743430758799, version=1743430760, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430760/posts/2/image/posts/2/image/1743430758799.jpg, public_id=posts/2/image/posts/2/image/1743430758799, tags=[], original_filename=file, api_key=498997394873736, bytes=44304, width=768, etag=6f2f044714d2bbff3658924839403e43, placeholder=false, height=432}
+2025-03-31 19:49:20.972 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading IMAGE for user 2
+2025-03-31 19:49:24.099 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/2/image, signature=f22bfbc5860111de8c92f8e8cec123208c6266b5, format=jpg, resource_type=image, secure_url=https://res.cloudinary.com/dmbxwetlk/image/upload/v1743430762/posts/2/image/posts/2/image/1743430760972.jpg, created_at=2025-03-31T14:19:22Z, asset_id=958e6236743f446f0b61c5c7622ae335, version_id=8afab8b4b5a07823038c80853c2da577, type=upload, display_name=1743430760972, version=1743430762, url=http://res.cloudinary.com/dmbxwetlk/image/upload/v1743430762/posts/2/image/posts/2/image/1743430760972.jpg, public_id=posts/2/image/posts/2/image/1743430760972, tags=[], original_filename=file, api_key=498997394873736, bytes=448747, width=1920, etag=639fa9806c3e8d4e9ef410a5d709c1be, placeholder=false, height=1080}
+2025-03-31 19:49:24.115 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully updated post with ID: 23
+2025-03-31 19:49:24.132 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:24.194 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:34.135 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 23
+2025-03-31 19:49:34.151 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 23
+2025-03-31 19:49:36.109 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:36.110 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:36.122 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:36.176 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:51.473 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to delete post with ID: 17
+2025-03-31 19:49:51.475 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234391/users/2/cover/users/2/cover/1743234391376.jpg
+2025-03-31 19:49:51.476 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234391/users/2/cover/users/2/cover/1743234391376.jpg
+2025-03-31 19:49:51.476 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/cover/users/2/cover/1743234391376
+2025-03-31 19:49:52.985 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/cover/users/2/cover/1743234391376
+2025-03-31 19:49:53.004 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully deleted post with ID: 17
+2025-03-31 19:49:53.032 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:49:53.101 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:10.315 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 23
+2025-03-31 19:50:10.323 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 23
+2025-03-31 19:50:17.483 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to update post with ID: 23 for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:17.501 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully updated post with ID: 23
+2025-03-31 19:50:17.518 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:17.576 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:55.993 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:56.001 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:56.009 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:50:56.067 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:51:06.789 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:51:06.814 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:51:11.516 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:51:11.540 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:54:16.265 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:54:16.276 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:54:16.290 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:54:16.330 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:55:58.368 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:55:58.369 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:55:58.380 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:55:58.412 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:56:12.123 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:56:12.131 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:56:12.134 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:56:12.170 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:00.719 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:00.720 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:00.730 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:00.804 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:59.645 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:59.647 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:59.655 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:57:59.683 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:09.327 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:09.329 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:09.338 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:09.367 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:22.482 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:22.490 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:22.492 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:22.530 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:40.148 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:40.149 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:40.157 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 19:58:40.188 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 19:59:47.621 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.726 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.731 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.833 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.841 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.851 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 19:59:47.911 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:02:58.153 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:02:58.156 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:02:58.170 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:02:58.252 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:03:11.024 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:03:11.050 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:03:11.060 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:03:11.113 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:05:27.251 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:05:27.297 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:05:27.306 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:05:27.364 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:07:01.154 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 20:07:01.168 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 20:07:01.174 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:07:01.178 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 20:07:01.182 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 20:07:10.865 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 20:07:10.925 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 8732 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 20:07:10.926 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 20:07:11.356 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 20:07:11.931 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 20:07:12.018 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 79 ms. Found 10 JPA repository interfaces.
+2025-03-31 20:07:12.558 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 20:07:12.571 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:07:12.573 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 20:07:12.573 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 20:07:12.640 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 20:07:12.641 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1667 ms
+2025-03-31 20:07:12.803 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 20:07:12.879 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 20:07:12.915 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 20:07:13.178 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 20:07:13.209 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 20:07:13.553 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6124dda2
+2025-03-31 20:07:13.554 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 20:07:13.605 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 20:07:13.606 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 20:07:13.621 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 20:07:15.054 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 20:07:15.309 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:07:15.779 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 20:07:15.855 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 20:07:19.903 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 20:07:20.502 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:07:20.517 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 20:07:20.524 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 10.253 seconds (process running for 11.353)
+2025-03-31 20:07:22.557 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 20:07:22.558 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 20:07:22.561 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-03-31 20:07:22.893 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:07:22.893 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:07:22.954 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:07:23.086 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:07:52.021 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 20:07:52.033 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 20:07:52.041 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:07:52.045 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 20:07:52.056 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 20:08:01.698 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 20:08:01.768 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 4140 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 20:08:01.769 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 20:08:02.155 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 20:08:02.999 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 20:08:03.110 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 99 ms. Found 10 JPA repository interfaces.
+2025-03-31 20:08:03.740 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 20:08:03.751 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:08:03.753 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 20:08:03.753 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 20:08:03.826 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 20:08:03.826 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2005 ms
+2025-03-31 20:08:04.010 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 20:08:04.061 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 20:08:04.094 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 20:08:04.367 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 20:08:04.394 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 20:08:04.734 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@614cbec4
+2025-03-31 20:08:04.736 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 20:08:04.782 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 20:08:04.783 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 20:08:04.800 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 20:08:06.476 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 20:08:06.775 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:08:07.353 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 20:08:07.437 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 20:08:12.666 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 20:08:13.197 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:08:13.211 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 20:08:13.219 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 12.167 seconds (process running for 13.162)
+2025-03-31 20:08:15.966 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 20:08:15.967 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 20:08:15.969 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-31 20:08:16.348 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:08:16.348 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:08:16.438 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:08:16.652 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:09:50.240 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 20:09:50.254 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 20:09:50.263 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:09:50.265 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 20:09:50.273 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 20:09:57.883 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 20:09:57.954 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12192 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 20:09:57.955 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 20:09:58.343 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 20:09:59.187 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 20:09:59.322 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 122 ms. Found 10 JPA repository interfaces.
+2025-03-31 20:09:59.969 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 20:09:59.981 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:09:59.983 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 20:09:59.983 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 20:10:00.068 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 20:10:00.069 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2058 ms
+2025-03-31 20:10:00.250 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 20:10:00.299 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 20:10:00.328 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 20:10:00.607 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 20:10:00.633 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 20:10:00.995 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ab2009f
+2025-03-31 20:10:00.998 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 20:10:01.043 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 20:10:01.044 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 20:10:01.059 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 20:10:02.670 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 20:10:02.965 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:10:03.484 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 20:10:03.557 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 20:10:07.644 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 20:10:08.239 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:10:08.254 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 20:10:08.262 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 11.043 seconds (process running for 11.988)
+2025-03-31 20:10:13.665 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 20:10:13.665 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 20:10:13.666 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-03-31 20:10:13.993 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:10:13.993 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:10:14.063 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:10:14.180 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:29.588 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:29.600 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:29.615 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:29.724 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:39.565 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:39.626 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:39.640 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:11:39.699 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:12:21.932 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:12:21.932 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:12:21.947 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:12:22.070 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:13:48.810 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:13:48.824 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:13:48.842 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:13:48.994 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:14:08.861 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:14:08.874 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:14:08.886 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:14:08.981 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:16:02.882 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:16:03.128 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:16:06.878 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:16:06.907 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:16:12.961 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:16:12.986 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:16:17.462 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:16:17.482 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:16:23.729 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:16:23.750 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:16:42.033 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:16:42.045 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:16:42.045 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:16:42.166 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:16:51.646 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:16:51.676 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:16:55.221 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:16:55.238 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:16:56.220 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:16:56.241 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:16:57.563 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:16:57.582 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:17:23.011 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:23.029 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:23.039 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:23.144 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:35.816 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:35.824 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:35.838 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:35.912 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:37.683 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:37.711 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:37.723 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:17:37.785 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:22:47.844 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:22:47.849 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:22:47.862 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:22:47.979 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:22:51.657 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:22:51.691 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:22:54.700 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:22:54.721 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:23:05.936 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:23:05.959 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:23:09.177 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:23:09.197 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:23:12.775 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:23:12.816 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:23:12.827 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:23:12.889 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:23:25.378 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:23:25.405 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:23:27.513 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:23:27.535 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:23:42.106 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 22
+2025-03-31 20:23:42.117 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 22
+2025-03-31 20:26:52.338 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:52.339 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:52.350 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:52.445 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:59.209 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:59.221 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:59.223 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:26:59.342 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:29:48.265 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:48.292 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:50.495 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:50.512 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:52.046 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:52.065 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:53.298 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:53.315 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:55.051 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:55.069 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:56.527 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:56.544 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:29:59.285 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:29:59.305 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:30:01.231 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:30:01.248 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:30:05.900 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:30:05.920 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:30:07.190 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:30:07.208 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:30:09.823 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:30:09.842 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:30:11.415 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:30:11.429 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:30:17.051 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:17.071 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:18.956 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:18.977 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:20.318 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:20.335 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:21.522 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:21.539 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:25.368 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:25.386 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:26.793 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:26.813 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:28.731 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:28.747 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:32.220 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:32.238 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:35.521 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:30:35.540 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:30:39.590 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:30:39.598 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:30:39.608 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:30:39.675 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:30:48.032 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:30:48.054 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:30:50.145 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:30:50.168 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:30:52.799 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:30:52.816 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:31:02.619 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:31:02.634 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:31:11.241 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:31:11.258 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:31:14.910 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:31:14.926 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:35:34.879 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:34.889 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:34.899 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:34.981 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:43.479 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:43.508 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:43.518 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:35:43.575 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:07.491 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:07.578 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:07.589 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:07.602 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:24.171 [http-nio-8080-exec-10] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:24.189 [http-nio-8080-exec-10] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:24.195 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:24.204 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:54.103 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:54.123 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:54.133 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:36:54.196 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:37:17.584 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:37:17.604 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:37:20.054 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:37:20.076 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:37:20.083 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:37:20.153 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:37:22.762 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:37:22.785 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:37:33.947 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:37:33.964 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:38:22.273 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:38:22.293 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:38:25.466 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:38:25.477 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:38:25.487 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:38:25.560 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:45:26.103 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:45:26.103 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:45:26.111 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:45:26.198 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:45:33.565 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:45:33.587 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:45:37.719 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:45:37.738 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:45:39.719 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:45:39.734 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:45:44.039 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:45:44.056 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:46:18.897 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:46:18.918 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:46:30.391 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:46:30.408 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:46:34.942 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:46:34.958 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:46:43.868 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.067 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.078 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.195 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.203 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.212 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:44.299 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:46:55.894 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:46:55.919 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:46:57.913 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:46:57.933 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:47:00.744 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:47:00.761 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:47:03.429 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:47:03.446 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:47:12.615 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:47:12.633 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:47:17.316 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:47:17.334 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:47:46.339 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:47:46.363 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:52:45.695 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 20:52:45.710 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 20:52:45.722 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:52:45.726 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 20:52:45.731 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 20:52:54.045 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 20:52:54.107 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11656 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 20:52:54.108 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 20:52:54.454 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 20:52:55.213 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 20:52:55.303 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 78 ms. Found 10 JPA repository interfaces.
+2025-03-31 20:52:55.869 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 20:52:55.880 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:52:55.881 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 20:52:55.881 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 20:52:55.954 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 20:52:55.955 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1799 ms
+2025-03-31 20:52:56.133 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 20:52:56.191 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 20:52:56.219 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 20:52:56.488 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 20:52:56.516 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 20:52:56.848 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ab2009f
+2025-03-31 20:52:56.850 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 20:52:56.899 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 20:52:56.900 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 20:52:56.918 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 20:52:58.459 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 20:52:58.743 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 20:52:59.286 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 20:52:59.376 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 20:53:04.306 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 20:53:04.989 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 20:53:05.003 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 20:53:05.011 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 11.546 seconds (process running for 12.44)
+2025-03-31 20:53:16.148 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 20:53:16.148 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 20:53:16.150 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-31 20:53:16.464 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:53:16.464 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:53:16.523 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:53:16.691 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:54:27.069 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 20:54:27.197 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 20:54:46.558 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 20:54:46.589 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 20:55:26.475 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 20:55:26.512 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 20:56:11.239 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:56:11.247 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:56:11.260 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 20:56:11.360 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 20:56:16.568 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 23
+2025-03-31 20:56:16.604 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 23
+2025-03-31 20:56:18.415 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 20:56:18.437 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 20:56:20.485 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 21
+2025-03-31 20:56:20.507 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 21
+2025-03-31 20:56:23.785 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 20
+2025-03-31 20:56:23.807 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 20
+2025-03-31 20:56:26.121 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 19
+2025-03-31 20:56:26.161 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 19
+2025-03-31 20:56:28.851 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 20:56:28.872 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 20:56:32.999 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 20:56:33.022 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 20:56:36.410 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 20:56:36.444 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 20:56:40.485 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 20:56:40.506 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 20:56:56.703 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:56.917 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:56.927 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:57.104 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:57.109 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:57.125 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 20:56:57.222 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:05:36.586 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 21:05:36.600 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 21:05:36.611 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 21:05:36.613 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 21:05:36.623 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 21:05:42.827 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 21:05:42.899 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 10492 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 21:05:42.900 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 21:05:43.311 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 21:05:44.075 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 21:05:44.153 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 70 ms. Found 10 JPA repository interfaces.
+2025-03-31 21:05:44.780 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 21:05:44.793 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 21:05:44.794 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 21:05:44.794 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 21:05:44.869 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 21:05:44.869 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1912 ms
+2025-03-31 21:05:45.045 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 21:05:45.100 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 21:05:45.134 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 21:05:45.500 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 21:05:45.539 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 21:05:45.886 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@13cf5f8a
+2025-03-31 21:05:45.889 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 21:05:45.949 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 21:05:45.951 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 21:05:45.976 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 21:05:47.795 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 21:05:48.102 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 21:05:48.760 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 21:05:48.862 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 21:05:54.695 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 21:05:55.533 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 21:05:55.554 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 21:05:55.566 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 13.37 seconds (process running for 14.299)
+2025-03-31 21:06:00.181 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 21:06:00.182 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 21:06:00.186 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-03-31 21:06:00.571 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:06:00.571 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:06:00.645 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:06:00.857 [http-nio-8080-exec-4] ERROR l.i.b.controller.TimelineController - Error retrieving posts for email: dilsarathiranjaya3@gmail.com
+java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because the return value of "lk.ijse.backend.dto.UserDTO.getEmail()" is null
+	at lk.ijse.backend.controller.TimelineController.lambda$convertToPostResponseDTO$4(TimelineController.java:127)
+	at java.base/java.util.stream.MatchOps$1MatchSink.accept(MatchOps.java:90)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1685)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:129)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.MatchOps$MatchOp.evaluateSequential(MatchOps.java:230)
+	at java.base/java.util.stream.MatchOps$MatchOp.evaluateSequential(MatchOps.java:196)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.anyMatch(ReferencePipeline.java:632)
+	at lk.ijse.backend.controller.TimelineController.convertToPostResponseDTO(TimelineController.java:127)
+	at lk.ijse.backend.controller.TimelineController.lambda$getPosts$0(TimelineController.java:58)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at lk.ijse.backend.controller.TimelineController.getPosts(TimelineController.java:59)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:268)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:263)
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:196)
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727)
+	at lk.ijse.backend.controller.TimelineController$$SpringCGLIB$$0.getPosts(<generated>)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:257)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter.doFilterInternal(DefaultLogoutPageGeneratingFilter.java:58)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:220)
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:206)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.ui.DefaultResourcesFilter.doFilter(DefaultResourcesFilter.java:72)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at lk.ijse.backend.config.JWTFilter.doFilterInternal(JWTFilter.java:70)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:227)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-03-31 21:08:14.223 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 21:08:14.236 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 21:08:14.245 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 21:08:14.249 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 21:08:14.260 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-03-31 21:08:20.544 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-03-31 21:08:20.605 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 5444 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-03-31 21:08:20.606 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-03-31 21:08:20.957 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-03-31 21:08:21.584 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-03-31 21:08:21.660 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 69 ms. Found 10 JPA repository interfaces.
+2025-03-31 21:08:22.152 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-03-31 21:08:22.162 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-03-31 21:08:22.164 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-03-31 21:08:22.164 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-03-31 21:08:22.237 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-03-31 21:08:22.239 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1586 ms
+2025-03-31 21:08:22.369 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-03-31 21:08:22.426 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-03-31 21:08:22.452 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-03-31 21:08:22.663 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-03-31 21:08:22.686 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-03-31 21:08:22.952 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65259c53
+2025-03-31 21:08:22.953 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-03-31 21:08:22.988 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-31 21:08:22.989 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-31 21:08:23.009 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-03-31 21:08:24.334 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-03-31 21:08:24.585 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 21:08:25.036 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-03-31 21:08:25.106 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-03-31 21:08:29.143 [main] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/api/v1/profile/*, api/v1/settings/*] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-31 21:08:29.751 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-03-31 21:08:29.767 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-03-31 21:08:29.777 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 9.795 seconds (process running for 10.575)
+2025-03-31 21:08:31.370 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-31 21:08:31.370 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-03-31 21:08:31.374 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-03-31 21:08:31.665 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:08:31.665 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:08:31.725 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:08:31.948 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:08:43.282 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:43.423 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:45.172 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:45.215 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:47.405 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:47.431 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:49.178 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:49.208 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:52.811 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:52.834 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:54.284 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:54.309 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:08:57.426 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-03-31 21:08:57.449 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-03-31 21:09:03.183 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 11
+2025-03-31 21:09:03.204 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 11
+2025-03-31 21:09:06.532 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 12
+2025-03-31 21:09:06.555 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 12
+2025-03-31 21:09:15.297 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:09:15.327 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:09:22.004 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 21:09:22.024 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 21:09:24.390 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 21:09:24.413 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 21:09:38.785 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 21:09:38.811 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 21:09:42.526 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 15
+2025-03-31 21:09:42.548 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 15
+2025-03-31 21:12:27.524 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:12:27.530 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:12:27.539 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:12:27.678 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:15.618 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:15:15.649 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:15:17.497 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:15:17.520 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:15:19.107 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:15:19.129 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:15:21.742 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:15:21.762 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:15:24.633 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-03-31 21:15:24.654 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-03-31 21:15:27.206 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:27.244 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:27.256 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:27.328 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:29.927 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:15:29.954 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:15:30.952 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:15:30.973 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:15:32.996 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:32.997 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:33.006 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:33.111 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-03-31 21:15:34.873 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:15:34.896 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:15:36.168 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:15:36.190 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:16:44.416 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:16:44.450 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:16:50.340 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 22
+2025-03-31 21:16:50.363 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 22
+2025-03-31 21:17:00.625 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:00.822 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:00.834 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:01.013 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:01.037 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:01.048 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:01.119 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:17:23.764 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 11
+2025-03-31 21:17:23.790 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 11
+2025-03-31 21:17:25.963 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 11
+2025-03-31 21:17:25.986 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 11
+2025-03-31 21:24:30.639 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-03-31 21:24:30.639 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:24:30.648 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-03-31 21:24:30.772 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-03-31 21:24:37.879 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 23
+2025-03-31 21:24:37.889 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 23
+2025-03-31 21:24:46.122 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 22
+2025-03-31 21:24:46.136 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 22
+2025-03-31 21:25:15.838 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-31 21:25:15.850 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-03-31 21:25:15.855 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-03-31 21:25:15.857 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-03-31 21:25:15.862 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
