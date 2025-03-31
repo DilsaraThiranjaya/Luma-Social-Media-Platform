@@ -1,5 +1,7 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,6 +33,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "parent_comment_id")
+    @JsonBackReference("comment-replies")
     private Comment parentComment;
 
     @ManyToOne
@@ -39,14 +42,18 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference("post-comments")
     private Post post;
 
     @OneToMany(mappedBy = "parentComment")
+    @JsonManagedReference("comment-replies")
     private List<Comment> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @JsonManagedReference("comment-reactions")
     private List<Reaction> reactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @JsonManagedReference("comment-notifications")
     private List<Notification> notifications = new ArrayList<>();
 }

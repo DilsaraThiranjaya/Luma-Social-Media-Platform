@@ -1,5 +1,6 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,6 +50,7 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "reported_post_id")
+    @JsonBackReference("post-reports")
     private Post reportedPost;
 
     @ManyToOne

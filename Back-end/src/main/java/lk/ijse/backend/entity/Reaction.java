@@ -1,5 +1,6 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,10 +32,12 @@ public class Reaction {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference("post-reactions")
     private Post post;
 
     @ManyToOne
     @JoinColumn(name = "comment_id")
+    @JsonBackReference("comment-reactions")
     private Comment comment;
 
     public enum ReactionType { LIKE, LOVE, HAHA, WOW, SAD, ANGRY }

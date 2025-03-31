@@ -1,5 +1,6 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class PostMedia {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference("post-media")
     private Post post;
 
     public enum MediaType { IMAGE, VIDEO }

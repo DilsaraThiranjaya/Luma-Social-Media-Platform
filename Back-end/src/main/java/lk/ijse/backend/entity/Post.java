@@ -1,5 +1,7 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,30 +42,48 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "parent_post_id")
+    @JsonBackReference("post-shares")
     private Post parentPost;
 
     @OneToMany(mappedBy = "parentPost")
+    @JsonManagedReference("post-shares")
     private List<Post> shares = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true )
+    @JsonManagedReference("post-media")
     private List<PostMedia> media = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonManagedReference("post-comments")
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonManagedReference("post-reactions")
     private List<Reaction> reactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @JsonManagedReference("post-notifications")
     private List<Notification> notifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "reportedPost", cascade = CascadeType.ALL)
+    @JsonManagedReference("post-reports")
     private List<Report> reports = new ArrayList<>();
 
     @OneToMany(mappedBy = "targetPost", cascade = CascadeType.ALL)
+    @JsonManagedReference("post-admin-actions")
     private List<AdminAction> adminActions = new ArrayList<>();
 
     public enum PrivacyLevel { PUBLIC, FRIENDS, PRIVATE }
 
     public enum Status { ACTIVE, INACTIVE }
+
+    public void addMedia(PostMedia mediaItem) {
+        media.add(mediaItem);
+        mediaItem.setPost(this);
+    }
+
+    public void removeMedia(PostMedia mediaItem) {
+        media.remove(mediaItem);
+        mediaItem.setPost(null);
+    }
 }

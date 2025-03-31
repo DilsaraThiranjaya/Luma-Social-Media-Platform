@@ -1,5 +1,6 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,6 +38,7 @@ public class AdminAction {
 
     @ManyToOne
     @JoinColumn(name = "target_post_id")
+    @JsonBackReference("post-admin-actions")
     private Post targetPost;
 
     @ManyToOne

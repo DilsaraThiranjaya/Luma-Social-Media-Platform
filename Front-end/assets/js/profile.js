@@ -742,7 +742,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Show loading state
       const originalButtonHTML = emojiButton.innerHTML;
-      emojiButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Loading emojis...';
+      emojiButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
       emojiButton.disabled = true;
 
       try {
@@ -801,7 +801,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.addEventListener("click", closePicker);
 
       } catch (error) {
-        console.error("Emoji loading failed:", error);
         // Fallback to basic emojis if API fails
         emojiContainer.innerHTML = `
       <div class="text-center p-3 text-muted">
@@ -931,31 +930,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-// // Helper function to update privacy dropdown display
-//     function updatePrivacyDropdown() {
-//       const dropdownButton = document.querySelector('.privacy-dropdown');
-//       dropdownButton.innerHTML = `
-//     <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
-//   `;
-//     }
-//
-//     document.querySelectorAll(".dropdown-item[data-icon]").forEach((item) => {
-//       item.addEventListener("click", function (e) {
-//         e.preventDefault();
-//         const icon = this.dataset.icon;
-//         const text = this.dataset.text;
-//         selectedPrivacy = { icon, text };
-//
-//         // Update dropdown button display
-//         const dropdownButton = document.querySelector(
-//             '.privacy-dropdown[data-bs-toggle="dropdown"]'
-//         );
-//         dropdownButton.innerHTML = `
-//         <i class="bi ${icon} me-1"></i>${text}
-//       `;
-//       });
-//     });
-
     // Update privacy dropdown display for both modals
     function updatePrivacyDropdown(modalType = 'create') {
       const dropdownButton = document.querySelector(
@@ -963,7 +937,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       );
       if (dropdownButton) {
         dropdownButton.innerHTML = `
-      <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+      <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text === 'Private' ? 'Only Me' : selectedPrivacy.text}
     `;
       }
     }
@@ -1208,6 +1182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <button type="button" class="btn-close position-absolute top-0 end-0 m-2 bg-light rounded-circle" aria-label="Remove"></button>
               `;
                 }
+
                 editMediaPreviewContainer.appendChild(mediaElement);
                 // Save as an "existing" media item (not a File object)
                 editMediaFiles.push({
@@ -1215,11 +1190,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                   file: null,
                   url: media.mediaUrl,
                   type: media.mediaType === "IMAGE" ? "image" : "video",
-                  existing: true
+                  existing: true,
+                  deleted: false
                 });
                 // Add remove handler for each media item
                 mediaElement.querySelector(".btn-close").addEventListener("click", () => {
-                  editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
+                  const mediaItem = editMediaFiles.find(item => item.element === mediaElement);
+                  if (mediaItem) {
+                    mediaItem.deleted = true; // Add a deletion flag
+                  }
                   mediaElement.remove();
                   updateEditPostButtonState();
                 });
@@ -1297,7 +1276,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             element: mediaElement,
             file: file,
             type: type,
-            existing: false
+            existing: false,
+            deleted: false
           });
           mediaElement.querySelector(".btn-close").addEventListener("click", () => {
             editMediaFiles = editMediaFiles.filter(item => item.element !== mediaElement);
@@ -1373,18 +1353,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       try {
         const formData = new FormData();
-        formData.append("content", updatedContent);
-        formData.append("privacy", selectedPrivacy.text.toUpperCase());
+        formData.append("content", new Blob([updatedContent], { type: "text/plain" }));
+        formData.append("privacy", new Blob([selectedPrivacy.text.toUpperCase()], { type: "text/plain" }));
 
-        // Add media to delete
+        // Media to delete (append as strings)
         editMediaFiles.forEach(media => {
-          if (media.existing && media.element === null) { // If existing media was removed
-            formData.append("mediaToDelete", media.url);
+          if (media.existing && media.deleted) {
+            formData.append(
+                "mediaToDelete",
+                new Blob([media.url], { type: "text/plain" })
+            );
           }
         });
-        // Add new media files
+
+        // New media files (MultipartFile)
         editMediaFiles.forEach(media => {
-          if (!media.existing) {
+          if (!media.existing && !media.deleted) {
             formData.append("newMedia", media.file);
           }
         });
@@ -1417,7 +1401,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener("click", function(e) {
       if (e.target.closest(".delete-post-btn")) {
         const postId = e.target.closest(".delete-post-btn").getAttribute("data-post-id");
-        console.log(postId)
         Swal.fire({
           title: "Are you sure?",
           text: "This action cannot be undone!",
@@ -1712,164 +1695,140 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 1000);
     }
 
-    function addComment(postElement, commentText) {
-      const commentsContainer = postElement.querySelector(".comments-list");
-      const commentStats = postElement.querySelector(
-          ".post-stats span:last-child"
-      );
-      const currentComments = parseInt(
-          commentStats.textContent.match(/\d+/)[0] || "0"
-      );
-      const currentShares = parseInt(
-          commentStats.textContent.match(/Shares/)[0]
-              ? commentStats.textContent.split("•")[1].trim().split(" ")[0]
-              : "0"
-      );
+    async function addComment(postElement, commentText, parentCommentId = null) {
+      const postId = postElement.closest('.post-card').dataset.postId;
 
-      // Create comment element
-      const commentElement = document.createElement("div");
-      commentElement.className = "comment-item d-flex mb-2 new-comment-animation";
-
-      // Format current time
-      const now = new Date();
-      const options = { hour: "numeric", minute: "numeric", hour12: true };
-      const time = new Intl.DateTimeFormat("en-US", options).format(now);
-
-      commentElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="32" height="32">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${commentText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-reply-btn">Reply</button>
-        </div>
-      </div>
-    `;
-
-      // Add to comments container
-      commentsContainer.appendChild(commentElement);
-
-      // Update comment count
-      commentStats.textContent = `${
-          currentComments + 1
-      } Comments • ${currentShares} Shares`;
-
-      // Remove animation after it completes
-      setTimeout(() => {
-        commentElement.classList.remove("new-comment-animation");
-      }, 500);
-
-      // Add comment interaction listeners
-      const likeCommentBtn = commentElement.querySelector(".comment-like-btn");
-      likeCommentBtn.addEventListener("click", function () {
-        this.classList.toggle("comment-liked");
-        if (this.classList.contains("comment-liked")) {
-          this.innerHTML = "Liked";
-        } else {
-          this.innerHTML = "Like";
-        }
-      });
-
-      const replyCommentBtn = commentElement.querySelector(".comment-reply-btn");
-      replyCommentBtn.addEventListener("click", function () {
-        const replyBox = document.createElement("div");
-        replyBox.className = "d-flex mt-2";
-        replyBox.innerHTML = `
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-        <div class="flex-grow-1">
-          <div class="input-group input-group-sm">
-            <input type="text" class="form-control reply-input" placeholder="Write a reply...">
-            <button class="btn btn-primary reply-send-btn" disabled>
-              <i class="bi bi-send"></i>
-            </button>
-          </div>
-        </div>
-      `;
-
-        const parentComment = this.closest(".comment-item");
-        parentComment.appendChild(replyBox);
-
-        const replyInput = replyBox.querySelector(".reply-input");
-        const sendReplyBtn = replyBox.querySelector(".reply-send-btn");
-
-        replyInput.focus();
-
-        replyInput.addEventListener("input", function () {
-          sendReplyBtn.disabled = this.value.trim() === "";
+      try {
+        const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authData.token}`
+          },
+          body: JSON.stringify({
+            content: commentText,
+            parentCommentId: parentCommentId || null
+          })
         });
 
-        sendReplyBtn.addEventListener("click", function () {
-          const replyText = replyInput.value.trim();
-          if (replyText) {
-            addReply(parentComment, replyText);
-            replyBox.remove();
-          }
-        });
+        if (!response.ok) throw new Error('Failed to add comment');
 
-        replyInput.addEventListener("keypress", function (e) {
-          if (e.key === "Enter" && this.value.trim()) {
-            addReply(parentComment, this.value.trim());
-            replyBox.remove();
-          }
-        });
-
-        // Remove other reply boxes
-        document.querySelectorAll(".reply-input").forEach((input) => {
-          if (input !== replyInput) {
-            input.closest(".d-flex.mt-2").remove();
-          }
-        });
-      });
+        // Refresh comments for this post
+        await loadPostComments(postElement);
+      } catch (error) {
+        Toast.fire({ icon: 'error', title: error.message });
+      }
     }
 
-    function addReply(commentElement, replyText) {
-      // Create reply element
-      const replyElement = document.createElement("div");
-      replyElement.className =
-          "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
+    async function loadPostComments(postElement) {
+      const postId = postElement.closest('.post-card').dataset.postId;
+      try {
+        const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+          headers: { 'Authorization': `Bearer ${authData.token}` }
+        });
 
-      // Format current time
-      const now = new Date();
-      const options = { hour: "numeric", minute: "numeric", hour12: true };
-      const time = new Intl.DateTimeFormat("en-US", options).format(now);
+        const { data } = await response.json();
+        renderComments(postElement, data.comments);
+      } catch (error) {
+        Toast.fire({ icon: 'error', title: 'Failed to load comments' });
+      }
+    }
 
-      replyElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${replyText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-        </div>
-      </div>
-    `;
+    function renderComments(container, comments, depth = 0) {
+      const commentsList = container.querySelector('.comments-list') || createCommentsContainer(container);
+      commentsList.innerHTML = '';
 
-      // Add to comment element
-      commentElement.appendChild(replyElement);
-
-      // Remove animation after it completes
-      setTimeout(() => {
-        replyElement.classList.remove("new-comment-animation");
-      }, 500);
-
-      // Add like functionality to reply
-      const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
-      likeReplyBtn.addEventListener("click", function () {
-        this.classList.toggle("comment-liked");
-        if (this.classList.contains("comment-liked")) {
-          this.innerHTML = "Liked";
-        } else {
-          this.innerHTML = "Like";
+      comments.forEach(comment => {
+        const commentElement = createCommentElement(comment, depth);
+        commentsList.appendChild(commentElement);
+        if (comment.replies.length > 0) {
+          renderReplies(commentElement, comment.replies, depth + 1);
         }
       });
     }
+
+    function createCommentElement(comment, depth) {
+      const commentEl = document.createElement('div');
+      commentEl.className = `comment-item mb-2 ms-${depth * 3}`;
+      commentEl.innerHTML = `
+        <div class="comment-bubble p-2 rounded">
+            <div class="d-flex align-items-center">
+                <img src="${comment.user.profilePictureUrl}" 
+                     class="rounded-circle me-2" 
+                     width="32" height="32">
+                <div>
+                    <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
+                    <small class="text-muted">${new Date(comment.createdAt).toLocaleString()}</small>
+                </div>
+            </div>
+            <p class="mb-0 mt-2">${comment.content}</p>
+            <div class="comment-actions mt-2">
+                <button class="btn btn-sm reaction-btn ${comment.liked ? 'text-primary' : 'text-muted'}">
+                    <i class="bi ${comment.reactionType ? REACTION_TYPES[comment.reactionType].fillIcon : 'bi-hand-thumbs-up'}"></i>
+                    ${comment.reactions.length || ''}
+                </button>
+                <button class="btn btn-sm text-muted reply-btn">Reply</button>
+            </div>
+        </div>
+    `;
+
+      // Add reaction handler
+      commentEl.querySelector('.reaction-btn').addEventListener('click', async () => {
+        // Implement comment reaction logic
+      });
+
+      // Add reply handler
+      commentEl.querySelector('.reply-btn').addEventListener('click', () => {
+        showReplyInput(commentEl, comment.commentId);
+      });
+
+      return commentEl;
+    }
+
+    // function addReply(commentElement, replyText) {
+    //   // Create reply element
+    //   const replyElement = document.createElement("div");
+    //   replyElement.className =
+    //       "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
+    //
+    //   // Format current time
+    //   const now = new Date();
+    //   const options = { hour: "numeric", minute: "numeric", hour12: true };
+    //   const time = new Intl.DateTimeFormat("en-US", options).format(now);
+    //
+    //   replyElement.innerHTML = `
+    //   <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
+    //   <div>
+    //     <div class="comment-bubble p-2 rounded">
+    //       <strong>Dilsara Thiranjaya</strong>
+    //       <p class="mb-0">${replyText}</p>
+    //     </div>
+    //     <div class="comment-actions">
+    //       <small class="text-muted">${time}</small>
+    //       <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
+    //     </div>
+    //   </div>
+    // `;
+    //
+    //   // Add to comment element
+    //   commentElement.appendChild(replyElement);
+    //
+    //   // Remove animation after it completes
+    //   setTimeout(() => {
+    //     replyElement.classList.remove("new-comment-animation");
+    //   }, 500);
+    //
+    //   // Add like functionality to reply
+    //   const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
+    //   likeReplyBtn.addEventListener("click", function () {
+    //     this.classList.toggle("comment-liked");
+    //     if (this.classList.contains("comment-liked")) {
+    //       this.innerHTML = "Liked";
+    //     } else {
+    //       this.innerHTML = "Like";
+    //     }
+    //   });
+    // }
 
     // Add interactions to existing posts
     document.querySelectorAll(".post-card").forEach((post) => {

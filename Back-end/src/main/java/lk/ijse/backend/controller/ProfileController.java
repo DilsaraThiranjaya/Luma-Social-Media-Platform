@@ -1,10 +1,9 @@
 package lk.ijse.backend.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
-import lk.ijse.backend.entity.Post;
-import lk.ijse.backend.entity.PostMedia;
-import lk.ijse.backend.entity.Reaction;
+import lk.ijse.backend.entity.*;
 import lk.ijse.backend.service.AccountService;
 import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.PostService;
@@ -12,6 +11,7 @@ import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ public class ProfileController {
     private final AccountService accountService;
     private final PostService postService;
     private final CloudinaryService cloudinaryService;
+    private final ModelMapper modelMapper;
 
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -235,19 +237,36 @@ public class ProfileController {
     @PutMapping(value = "/posts/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDTO> updatePost(
             @PathVariable int postId,
-            @RequestPart("content") String content,
-            @RequestPart("privacy") String privacy,
-            @RequestPart(value = "mediaToDelete", required = false) List<String> mediaToDelete,
+            @RequestPart("content") MultipartFile contentFile,
+            @RequestPart("privacy") MultipartFile privacyFile,
+            @RequestPart(value = "mediaToDelete", required = false) List<MultipartFile> mediaToDeleteFiles,
             @RequestPart(value = "newMedia", required = false) List<MultipartFile> newMedia,
             Authentication authentication) {
 
         String email = authentication.getName();
         log.info("Received request to update post with ID: {} for email: {}", postId, email);
+
         try {
+            // Extract text content from MultipartFile
+            String content = new String(contentFile.getBytes(), StandardCharsets.UTF_8);
+            String privacy = new String(privacyFile.getBytes(), StandardCharsets.UTF_8);
+
+            // Extract media URLs from mediaToDeleteFiles
+            List<String> mediaToDelete = mediaToDeleteFiles != null ?
+                    mediaToDeleteFiles.stream()
+                            .map(file -> {
+                                try {
+                                    return new String(file.getBytes(), StandardCharsets.UTF_8);
+                                } catch (IOException e) {
+                                    throw new RuntimeException("Failed to read media URL", e);
+                                }
+                            })
+                            .collect(Collectors.toList()) : new ArrayList<>();
+
             PostUpdateDTO updateDTO = new PostUpdateDTO();
             updateDTO.setContent(content);
             updateDTO.setPrivacy(privacy);
-            updateDTO.setMediaToDelete(mediaToDelete != null ? mediaToDelete : new ArrayList<>());
+            updateDTO.setMediaToDelete(mediaToDelete);
             updateDTO.setNewMedia(newMedia != null ? newMedia : new ArrayList<>());
 
             PostDTO updatedPost = postService.updatePost(postId, email, updateDTO);
@@ -260,7 +279,6 @@ public class ProfileController {
         }
     }
 
-    // DELETE POST
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity<ResponseDTO> deletePost(@PathVariable int postId,
@@ -278,7 +296,6 @@ public class ProfileController {
         }
     }
 
-    // GET SINGLE POST (for edit modal pre-population)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("posts/{postId}")
     public ResponseEntity<ResponseDTO> getPost(@PathVariable int postId, Authentication authentication) {
@@ -286,8 +303,10 @@ public class ProfileController {
         log.info("Received request to get post with ID: {}", postId);
         try {
             PostDTO post = postService.getPost(postId, email);
+
+            PostResponseDTO postDTO = convertToPostResponseDTO(post);
             log.info("Successfully retrieved post with ID: {}", postId);
-            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post retrieved", post));
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post retrieved", postDTO));
         } catch (Exception e) {
             log.error("Error retrieving post with ID: {}", postId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -313,21 +332,62 @@ public class ProfileController {
         }
     }
 
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PutMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> updateProfile(@Valid @RequestBody UserDTO userDTO) {
-//        log.info("Received request to update profile for user ID: {}", userDTO.getUserId());
-//        try {
-//            UserDTO updatedUser = profileService.updateProfile(userDTO);
-//            log.info("Successfully updated profile for user ID: {}", userDTO.getUserId());
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile updated successfully", updatedUser));
-//        } catch (Exception e) {
-//            log.error("Error updating profile for user ID: {}", userDTO.getUserId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error updating profile", e.getMessage()));
-//        }
-//    }
-//
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/posts/{postId}/comments")
+    public ResponseEntity<ResponseDTO> addComment(@PathVariable int postId, @Valid @RequestBody CommentDTO commentDTO, Authentication authentication) {
+
+        try {
+            // Validate parent comment ID
+            if (commentDTO.getParentCommentId() != 0) {
+                if (commentDTO.getParentCommentId() < 0) {
+                    throw new IllegalArgumentException("Invalid parent comment ID");
+                }
+
+                // Verify parent comment exists and belongs to the same post
+                if (commentDTO.getParentCommentId() > 0) {
+                    CommentDTO parent = postService.getComment(commentDTO.getParentCommentId());
+                    if (parent == null) {
+                        throw new IllegalArgumentException("Parent comment not found");
+                    }
+
+                    if (parent.getPost().getPostId() != postId) {
+                        throw new IllegalArgumentException("Parent comment doesn't belong to this post");
+                    }
+                }
+            }
+
+            String email = authentication.getName();
+            CommentDTO createdComment = postService.addComment(postId, commentDTO, email);
+
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Comment added", createdComment));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(VarList.Not_Found, e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error adding comment", null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/comments/{commentId}/reactions")
+    public ResponseEntity<ResponseDTO> addCommentReaction(
+            @PathVariable int commentId,
+            @Valid @RequestBody ReactionDTO reactionDTO,
+            Authentication authentication) {
+        try {
+            String email = authentication.getName();
+            ResponseDTO res = postService.addCommentReaction(commentId, reactionDTO, email);
+            return ResponseEntity.status(HttpStatus.OK).body(res);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> addComment(@Valid @RequestBody CommentDTO commentDTO) {
@@ -437,7 +497,11 @@ public class ProfileController {
                     CommentDTO commentDTO = new CommentDTO();
                     commentDTO.setCommentId(comment.getCommentId());
                     commentDTO.setContent(comment.getContent());
-                    commentDTO.setCreatedAt(comment.getCreatedAt());
+                    commentDTO.setReactions(comment.getReactions().stream()
+                            .map(reaction -> modelMapper.map(reaction, ReactionDTO.class))
+                            .collect(Collectors.toList()));
+
+                    commentDTO.setReplies(comment.getReplies());
 
                     // Convert and set user
                     UserDTO commentUserDTO = new UserDTO();
@@ -480,4 +544,6 @@ public class ProfileController {
 
         return dto;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package lk.ijse.backend.service;
 
+import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,4 +18,10 @@ public interface PostService {
     void deletePost(int postId) throws Exception;
 
     PostDTO updatePost(int postId, String email, PostUpdateDTO updateDTO);
+
+    CommentDTO addComment(int postId, CommentDTO commentDTO, String email);
+
+    ResponseDTO addCommentReaction(int commentId, ReactionDTO reactionDTO, String email);
+
+    CommentDTO getComment(int parentCommentId);
 }

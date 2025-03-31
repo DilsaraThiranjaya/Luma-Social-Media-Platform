@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lk.ijse.backend.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,11 +18,14 @@ import java.util.Map;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CloudinaryServiceImpl implements CloudinaryService {
     private final Cloudinary cloudinary;
 
     @Override
     public String uploadFile(MultipartFile file, String userId) throws IOException {
+        log.info("Uploading file: {}", file.getOriginalFilename());
+
         // Sanitize and validate user ID
         String sanitizedUserId = userId.replaceAll("[^a-zA-Z0-9-]", "_");
 
@@ -52,6 +56,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                 )
         );
 
+        log.info("Upload result: {}", uploadResult);
         // Return URL in /user/id/file format
         return String.format("https://res.cloudinary.com/%s/%s/%s/%s%s",
                 cloudinary.config.cloudName,
@@ -63,6 +68,8 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     @Override
     public String uploadProfilePicture(MultipartFile file, String userId) throws IOException {
+        log.info("Uploading profile picture for user {}", userId);
+
         // Validate file
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be empty");
@@ -96,11 +103,14 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                 )
         );
 
+        log.info("Upload result: {}", uploadResult);
         return (String) uploadResult.get("secure_url");
     }
 
     @Override
     public String uploadCoverPicture(MultipartFile file, String userId) throws IOException {
+        log.info("Uploading cover picture for user {}", userId);
+
         // Validate file
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be empty");
@@ -134,11 +144,14 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                 )
         );
 
+        log.info("Upload result: {}", uploadResult);
         return (String) uploadResult.get("secure_url");
     }
 
     @Override
     public String uploadMedia(MultipartFile file, String mediaType, Integer userId) throws IOException {
+        log.info("Uploading {} for user {}", mediaType, userId);
+
         // Validation
         if (file.isEmpty()) throw new IllegalArgumentException("File cannot be empty");
 
@@ -183,11 +196,15 @@ public class CloudinaryServiceImpl implements CloudinaryService {
         }
 
         Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadOptions);
+
+        log.info("Upload result: {}", uploadResult);
         return (String) uploadResult.get("secure_url");
     }
 
     @Override
     public void deleteMedia(String publicUrl) {
+        log.info("Deleting media from Cloudinary: {}", publicUrl);
+
         try {
             // Extract resource type and public ID from URL
             String[] parts = publicUrl.split("/upload/");
@@ -209,12 +226,16 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             );
 
             cloudinary.uploader().destroy(publicId, options);
+            log.info("Deleting media with public ID: {}", publicId);
         } catch (Exception e) {
+            log.error("Failed to delete media from Cloudinary", e);
             throw new RuntimeException("Failed to delete media from Cloudinary", e);
         }
     }
 
     private String extractPublicId(String url) {
+        log.info("Extracting public ID from URL: {}", url);
+
         // Split URL into components
         String[] parts = url.split("/upload/");
         if (parts.length < 2) {
@@ -235,6 +256,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
             path = path.substring(0, lastDotIndex);
         }
 
+        log.info("Extracted public ID: {}", path);
         return path;
     }
 }

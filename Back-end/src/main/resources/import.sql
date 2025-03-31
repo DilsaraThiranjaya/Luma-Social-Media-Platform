@@ -10,29 +10,32 @@ INSERT INTO luma_social.education (education_id, end_date, field_of_study, insti
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (3, 'Updated my profile picture!', '2025-03-29 10:41:02.016522', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (4, 'Updated my cover photo!', '2025-03-29 10:42:01.759425', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (5, 'Hi Guys...👍❤️', '2025-03-29 10:45:02.425937', 'FRIENDS', 'ACTIVE', null, 1);
-INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (6, 'Cheese 🤔🙌', '2025-03-29 10:50:23.684723', 'PUBLIC', 'ACTIVE', null, 1);
-INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (7, 'Hii🫡', '2025-03-29 10:53:41.857822', 'PRIVATE', 'ACTIVE', null, 1);
+INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (7, 'Hii🫡😍', '2025-03-29 10:53:41.857822', 'PRIVATE', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (8, 'Boo.. 🤔', '2025-03-29 10:54:28.667129', 'FRIENDS', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (9, 'How Are You 😋❤️', '2025-03-29 12:47:27.800144', 'PUBLIC', 'ACTIVE', null, 1);
-INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (10, 'Updated my profile picture!', '2025-03-29 12:48:12.243094', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (11, 'Updated my cover photo!', '2025-03-29 12:49:55.845649', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (12, 'Updated my profile picture!', '2025-03-29 12:51:04.855985', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (13, 'Updated my cover photo!', '2025-03-29 12:52:26.419554', 'PUBLIC', 'ACTIVE', null, 1);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (14, 'Updated my profile picture!', '2025-03-29 12:53:59.455939', 'PUBLIC', 'ACTIVE', null, 2);
 INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (15, 'Updated my cover photo!', '2025-03-29 12:54:07.547602', 'PUBLIC', 'ACTIVE', null, 2);
-
+INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (16, 'Updated my profile picture!', '2025-03-29 13:16:19.044421', 'PUBLIC', 'ACTIVE', null, 2);
+INSERT INTO luma_social.post (post_id, content, created_at, privacy, status, parent_post_id, user_id) VALUES (17, 'Updated my cover photo!', '2025-03-29 13:16:33.914368', 'PUBLIC', 'ACTIVE', null, 2);
 
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (3, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225059/users/1/profile/users/1/profile/1743225054014.png', 3);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (4, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225119/users/1/cover/users/1/cover/1743225117024.jpg', 4);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (5, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225299/posts/1/image/posts/1/image/1743225296518.jpg', 5);
-INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (6, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225618/posts/1/image/posts/1/image/1743225612479.jpg', 6);
-INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (7, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225613/posts/1/image/posts/1/image/1743225612472.jpg', 6);
-INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (9, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743225819/posts/1/image/posts/1/image/1743225815327.jpg', 7);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (10, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743232645/posts/1/image/posts/1/image/1743232639674.jpg', 9);
-INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (11, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743232689/users/1/profile/users/1/profile/1743232689940.jpg', 10);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (12, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743232793/users/1/cover/users/1/cover/1743232785667.jpg', 11);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (13, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743232862/users/1/profile/users/1/profile/1743232859524.png', 12);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (14, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743232943/users/1/cover/users/1/cover/1743232935031.jpg', 13);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (15, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233037/users/2/profile/users/2/profile/1743233036722.jpg', 14);
 INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (16, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233045/users/2/cover/users/2/cover/1743233045002.jpg', 15);
+INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (17, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234376/users/2/profile/users/2/profile/1743234375832.jpg', 16);
+INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (18, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234391/users/2/cover/users/2/cover/1743234391376.jpg', 17);
+INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (26, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743380639/posts/1/image/posts/1/image/1743380634265.jpg', 7);
+INSERT INTO luma_social.post_media (media_id, media_type, media_url, post_id) VALUES (27, 'IMAGE', 'https://res.cloudinary.com/dmbxwetlk/image/upload/v1743380642/posts/1/image/posts/1/image/1743380640244.jpg', 7);
+
+INSERT INTO luma_social.reaction (reaction_id, created_at, type, comment_id, post_id, user_id) VALUES (50, '2025-03-30 10:20:12.780464', 'LIKE', null, 12, 1);
+INSERT INTO luma_social.reaction (reaction_id, created_at, type, comment_id, post_id, user_id) VALUES (52, '2025-03-30 10:23:15.517176', 'LOVE', null, 11, 1);
+INSERT INTO luma_social.reaction (reaction_id, created_at, type, comment_id, post_id, user_id) VALUES (53, '2025-03-31 05:59:15.974746', 'WOW', null, 8, 1);
 

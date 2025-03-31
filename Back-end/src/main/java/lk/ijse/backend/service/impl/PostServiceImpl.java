@@ -2,14 +2,8 @@ package lk.ijse.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lk.ijse.backend.dto.*;
-import lk.ijse.backend.entity.Post;
-import lk.ijse.backend.entity.PostMedia;
-import lk.ijse.backend.entity.Reaction;
-import lk.ijse.backend.entity.User;
-import lk.ijse.backend.repository.PostMediaRepository;
-import lk.ijse.backend.repository.PostRepository;
-import lk.ijse.backend.repository.ReactionRepository;
-import lk.ijse.backend.repository.UserRepository;
+import lk.ijse.backend.entity.*;
+import lk.ijse.backend.repository.*;
 import lk.ijse.backend.service.CloudinaryService;
 import lk.ijse.backend.service.PostService;
 import lk.ijse.backend.util.VarList;
@@ -23,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +29,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMediaRepository postMediaRepository;
     private final ReactionRepository reactionRepository;
+    private final CommentRepository commentRepository;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
 
@@ -153,14 +149,77 @@ public class PostServiceImpl implements PostService {
         return convertToDTO(updatedPost);
     }
 
+    @Override
+    public CommentDTO addComment(int postId, CommentDTO commentDTO, String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        Comment comment = new Comment();
+        comment.setContent(commentDTO.getContent());
+        comment.setUser(user);
+        comment.setPost(post);
+
+        // Handle parent comment ID
+        if (commentDTO.getParentCommentId() != 0 && commentDTO.getParentCommentId() > 0) {
+            Comment parent = commentRepository.findById(commentDTO.getParentCommentId())
+                    .orElseThrow(() -> new RuntimeException("Parent comment not found"));
+            comment.setParentComment(parent);
+        }
+
+        Comment savedComment = commentRepository.save(comment);
+        return convertCommentToDTO(savedComment, user.getUserId());
+    }
+
+    @Override
+    public ResponseDTO addCommentReaction(int commentId, ReactionDTO reactionDTO, String email) {
+        User user = userRepository.findByEmail(email);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+
+        Reaction existing = reactionRepository.findByUserAndComment(user, comment);
+
+        if (existing != null) {
+            if (existing.getType() != reactionDTO.getType()) {
+                existing.setType(reactionDTO.getType());
+                reactionRepository.save(existing);
+                return new ResponseDTO(VarList.OK, "Reaction updated", null);
+            }
+            reactionRepository.delete(existing);
+            return new ResponseDTO(VarList.OK, "Reaction removed", null);
+        }
+
+        Reaction reaction = new Reaction();
+        reaction.setType(reactionDTO.getType());
+        reaction.setUser(user);
+        reaction.setComment(comment);
+        reactionRepository.save(reaction);
+        return new ResponseDTO(VarList.OK, "Reaction added", null);
+    }
+
+    @Override
+    public CommentDTO getComment(int parentCommentId) {
+        Comment comment = commentRepository.findById(parentCommentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        return convertCommentToDTO(comment, comment.getUser().getUserId());
+    }
+
     private void processMediaUpdates(Post post, PostUpdateDTO updateDTO) {
         // Delete removed media
         List<String> mediaToDelete = updateDTO.getMediaToDelete();
-        if (mediaToDelete != null) {
-            mediaToDelete.forEach(mediaUrl -> {
-                System.out.println(mediaUrl);
-                cloudinaryService.deleteMedia(mediaUrl);
-                post.getMedia().removeIf(m -> m.getMediaUrl().equals(mediaUrl));
+        if (mediaToDelete != null && !mediaToDelete.isEmpty()) {
+            // Create a copy to avoid concurrent modification
+            List<PostMedia> toRemove = post.getMedia().stream()
+                    .filter(m -> mediaToDelete.contains(m.getMediaUrl()))
+                    .collect(Collectors.toList());
+
+            toRemove.forEach(media -> {
+                post.removeMedia(media);  // Use helper method
+                cloudinaryService.deleteMedia(media.getMediaUrl());
             });
         }
 
@@ -219,6 +278,103 @@ public class PostServiceImpl implements PostService {
         postDTO.setMedia(post.getMedia().stream()
                 .map(media -> modelMapper.map(media, PostMediaDTO.class))
                 .collect(Collectors.toList()));
+
+        postDTO.setReactions(post.getReactions().stream()
+                .map(reaction -> {
+                    ReactionDTO reactionDTO = new ReactionDTO();
+                    reactionDTO.setReactionId(reaction.getReactionId());
+                    reactionDTO.setType(reaction.getType());
+                    reactionDTO.setCreatedAt(reaction.getCreatedAt());
+
+                    // Convert and set user
+                    UserDTO reactionUserDTO = new UserDTO();
+                    reactionUserDTO.setUserId(reaction.getUser().getUserId());
+                    reactionUserDTO.setFirstName(reaction.getUser().getFirstName());
+                    reactionUserDTO.setLastName(reaction.getUser().getLastName());
+                    reactionUserDTO.setProfilePictureUrl(reaction.getUser().getProfilePictureUrl());
+                    reactionDTO.setUser(reactionUserDTO);
+
+                    return reactionDTO;
+                })
+                .collect(Collectors.toList()));
+
+        postDTO.setComments(post.getComments().stream()
+                .map(comment -> {
+                    CommentDTO commentDTO = new CommentDTO();
+                    commentDTO.setCommentId(comment.getCommentId());
+                    commentDTO.setContent(comment.getContent());
+
+                    // Convert and set user
+                    UserDTO commentUserDTO = new UserDTO();
+                    commentUserDTO.setUserId(comment.getUser().getUserId());
+                    commentUserDTO.setFirstName(comment.getUser().getFirstName());
+                    commentUserDTO.setLastName(comment.getUser().getLastName());
+                    commentUserDTO.setProfilePictureUrl(comment.getUser().getProfilePictureUrl());
+                    commentDTO.setUser(commentUserDTO);
+
+                    return commentDTO;
+                })
+                .collect(Collectors.toList()));
+
         return postDTO;
+    }
+
+    private CommentDTO convertCommentToDTO(Comment comment, int currentUserId) {
+        CommentDTO dto = new CommentDTO();
+        dto.setCommentId(comment.getCommentId());
+        dto.setContent(comment.getContent());
+
+        // Set parent comment ID if exists
+        if (comment.getParentComment() != null) {
+            dto.setParentCommentId(comment.getParentComment().getCommentId());
+        }
+
+        // Convert user
+        User commentUser = comment.getUser();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(commentUser.getUserId());
+        userDTO.setFirstName(commentUser.getFirstName());
+        userDTO.setLastName(commentUser.getLastName());
+        userDTO.setProfilePictureUrl(commentUser.getProfilePictureUrl());
+        dto.setUser(userDTO);
+
+        // Convert post
+        Post post = comment.getPost();
+        PostDTO postDTO = new PostDTO();
+        postDTO.setPostId(post.getPostId());
+        postDTO.setContent(post.getContent());
+        postDTO.setPrivacy(post.getPrivacy());
+        postDTO.setCreatedAt(post.getCreatedAt());
+
+        // Convert reactions
+        dto.setReactions(comment.getReactions().stream()
+                .map(reaction -> {
+                    ReactionDTO reactionDTO = new ReactionDTO();
+                    reactionDTO.setReactionId(reaction.getReactionId());
+                    reactionDTO.setType(reaction.getType());
+                    reactionDTO.setCreatedAt(reaction.getCreatedAt());
+                    return reactionDTO;
+                })
+                .collect(Collectors.toList()));
+
+        // Check if current user reacted
+        dto.setLiked(comment.getReactions().stream()
+                .anyMatch(r -> r.getUser().getUserId()== currentUserId));
+
+        // Get current user's reaction type
+        comment.getReactions().stream()
+                .filter(r -> r.getUser().getUserId()== currentUserId)
+                .findFirst()
+                .ifPresent(r -> dto.setReactionType(String.valueOf(r.getType())));
+
+        // Convert replies recursively
+        if (!comment.getReplies().isEmpty()) {
+            dto.setReplies(comment.getReplies().stream()
+                    .sorted(Comparator.comparing(Comment::getCreatedAt))
+                    .map(reply -> convertCommentToDTO(reply, currentUserId))
+                    .collect(Collectors.toList()));
+        }
+
+        return dto;
     }
 }

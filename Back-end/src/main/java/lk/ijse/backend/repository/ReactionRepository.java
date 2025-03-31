@@ -1,5 +1,6 @@
 package lk.ijse.backend.repository;
 
+import lk.ijse.backend.entity.Comment;
 import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.Reaction;
 import lk.ijse.backend.entity.User;
@@ -14,4 +15,6 @@ public interface ReactionRepository extends JpaRepository<Reaction, Integer> {
     @Modifying
     @Query("DELETE FROM Reaction r WHERE r.user = :user AND r.post = :post")
     void deleteByUserAndPost(@Param("user") User user, @Param("post") Post post);
+
+    Reaction findByUserAndComment(User user, Comment comment);
 }

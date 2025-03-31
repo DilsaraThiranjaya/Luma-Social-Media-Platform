@@ -1,5 +1,6 @@
 package lk.ijse.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,10 +38,12 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonBackReference("post-notifications")
     private Post post;
 
     @ManyToOne
     @JoinColumn(name = "comment_id")
+    @JsonBackReference("comment-notifications")
     private Comment comment;
 
     @ManyToOne
