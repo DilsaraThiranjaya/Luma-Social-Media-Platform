@@ -7,6 +7,7 @@ import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -90,17 +92,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDTO searchUser(String username) {
-        if (userRepository.existsByEmail(username)) {
-            User user=userRepository.findByEmail(username);
-            return modelMapper.map(user,UserDTO.class);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public List<UserDTO> getAllUsers() {
-        return List.of();
+    public List<UserDTO> searchUsers(String query, int limit) {
+        String searchTerm = "%" + query.toLowerCase() + "%";
+        return userRepository.findByFirstNameLikeOrLastNameLikeOrEmailLike(
+                        searchTerm, searchTerm, searchTerm, PageRequest.of(0, limit))
+                .stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
     }
 }

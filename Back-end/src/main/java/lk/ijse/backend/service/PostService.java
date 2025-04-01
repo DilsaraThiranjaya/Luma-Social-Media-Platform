@@ -1,10 +1,11 @@
 package lk.ijse.backend.service;
 
-import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public interface PostService {
     int createPost(PostDTO postDTO);
@@ -30,4 +31,6 @@ public interface PostService {
     void deleteComment(int commentId, String email);
 
     CommentDTO addReply(int parentCommentId, CommentDTO commentDTO, String email);
+
+    List<PostDTO> searchPosts(String query, int limit, String email);
 }

@@ -9,10 +9,10 @@ public interface UserService {
     int updateUser(UserDTO userDTO);
 
     int deleteUser(String email);
-    UserDTO searchUser(String email);
-    List<UserDTO> getAllUsers();
 
     UserDTO loadUserDetailsByEmail(String email) throws UsernameNotFoundException;
 
     int saveUser(UserDTO userDTO);
+
+    List<UserDTO> searchUsers(String query, int limit);
 }

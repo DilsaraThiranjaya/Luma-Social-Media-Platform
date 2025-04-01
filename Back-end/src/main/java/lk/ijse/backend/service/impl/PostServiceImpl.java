@@ -305,6 +305,16 @@ public class PostServiceImpl implements PostService {
         return convertCommentToDTO(savedReply, email);
     }
 
+    @Override
+    public List<PostDTO> searchPosts(String query, int limit, String email) {
+        String searchTerm = "%" + query.toLowerCase() + "%";
+        return postRepository.findByContentLikeAndPrivacyOrderByCreatedAtDesc(
+                        searchTerm, Post.PrivacyLevel.PUBLIC, PageRequest.of(0, limit))
+                .stream()
+                .map(post -> convertToDTO((Post) post, email))
+                .collect(Collectors.toList());
+    }
+
     private ReportDTO convertToDTO(Report savedReport, String reporterEmail) {
         ReportDTO reportDTO = modelMapper.map(savedReport, ReportDTO.class);
         reportDTO.setReporter(modelMapper.map(savedReport.getReporter(), UserDTO.class));

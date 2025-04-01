@@ -2,10 +2,13 @@ package lk.ijse.backend.repository;
 
 import lk.ijse.backend.entity.Post;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.Collection;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p WHERE "
@@ -27,4 +30,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             + ") "
             + "ORDER BY p.createdAt DESC")
     Page<Post> findAllVisiblePostsByUserId(@Param("userId") int userId, Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE " +
+            "LOWER(p.content) LIKE :content AND " +
+            "p.privacy = :privacy " +
+            "ORDER BY p.createdAt DESC")
+    Page<Post> findByContentLikeAndPrivacyOrderByCreatedAtDesc(String content, Post.PrivacyLevel privacy, Pageable pageable);
 }
