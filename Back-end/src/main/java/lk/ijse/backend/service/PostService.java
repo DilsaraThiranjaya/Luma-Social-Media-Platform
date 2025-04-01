@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface PostService {
     int createPost(PostDTO postDTO);
@@ -18,6 +19,9 @@ public interface PostService {
     void deletePost(int postId) throws Exception;
 
     PostDTO updatePost(int postId, String email, PostUpdateDTO updateDTO);
+
+    @Transactional
+    ReportDTO createReport(ReportRequestDTO reportRequest, String reporterEmail);
 
     CommentDTO addComment(int postId, CommentDTO commentDTO, String email);
 

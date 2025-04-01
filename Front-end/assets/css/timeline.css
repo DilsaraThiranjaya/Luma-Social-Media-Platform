@@ -393,6 +393,10 @@ hr {
   border-color: var(--primary-color);
 }
 
+.dropdown-btn:hover {
+  background-color: var(--primary-color);
+}
+
 .btn-share-option:hover {
   background: #e3d3ff;
 }

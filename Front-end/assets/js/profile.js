@@ -385,9 +385,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     },
                     success: function (response) {
                         if (response.code === 200) {
-                            $("#coverImage").attr("src", response.data + "?t=" + new Date().getTime());
+                            $("#coverImage").attr("src", response.data.coverPhotoUrl + "?t=" + new Date().getTime());
 
-                            createProfileAndCoverPicPost(response.data, "Updated my cover photo!");
+                            createProfileAndCoverPicPost(response.data, response.data.coverPhotoUrl, "Updated my cover photo!");
                         } else {
                             Toast.fire({
                                 icon: "error",
@@ -456,11 +456,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     success: function (response) {
                         if (response.code === 200) {
                             // Update profile image display with cache busting
-                            $("#profileImage").attr("src", response.data + "?t=" + new Date().getTime());
-                            $("#navBarProfileImg").attr("src", response.data + "?t=" + new Date().getTime());
-                            $("#navProfileImg").attr("src", response.data + "?t=" + new Date().getTime());
+                            $("#profileImage").attr("src", response.data.profilePictureUrl + "?t=" + new Date().getTime());
+                            $("#navBarProfileImg").attr("src", response.data.profilePictureUrl + "?t=" + new Date().getTime());
+                            $("#navProfileImg").attr("src", response.data.profilePictureUrl + "?t=" + new Date().getTime());
 
-                            createProfileAndCoverPicPost(response.data, "Updated my profile picture!");
+                            createProfileAndCoverPicPost(response.data, response.data.profilePictureUrl, "Updated my profile picture!");
                         } else {
                             Toast.fire({
                                 icon: "error",
@@ -486,10 +486,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         // Function to create a post when profile picture is updated
-        function createProfileAndCoverPicPost(imageUrl, content) {
+        function createProfileAndCoverPicPost(data, imageUrl, content) {
+            let privacy = "PRIVATE";
+
+            if (data.isPostPublic) {
+                privacy = "PUBLIC";
+            }
+
             const postData = {
                 content: content,
-                privacy: "PUBLIC",
+                privacy: privacy,
                 media: [{
                     mediaUrl: imageUrl,
                     mediaType: "IMAGE"
@@ -1705,314 +1711,123 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, 1000);
         }
 
-    //     async function addComment(postElement, commentSection, commentText, parentCommentId = 0) {
-    //         const postId = postElement.dataset.postId;
-    //
-    //         try {
-    //             const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'Authorization': `Bearer ${authData.token}`
-    //                 },
-    //                 body: JSON.stringify({
-    //                     content: commentText,
-    //                     parentCommentId: parentCommentId || 0
-    //                 })
-    //             });
-    //
-    //             if (!response.ok) throw new Error('Failed to add comment');
-    //
-    //             // Reload comments
-    //             await loadPostComments(postElement, commentSection);
-    //         } catch (error) {
-    //             Toast.fire({icon: 'error', title: error.message});
-    //         }
-    //     }
-    //
-    //     async function loadPostComments(postElement, commentSection) {
-    //         const postId = postElement.dataset.postId;
-    //         if (!postId) {
-    //             console.error("No postId found for post element");
-    //             return;
-    //         }
-    //
-    //         try {
-    //             const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
-    //                 headers: {'Authorization': `Bearer ${authData.token}`}
-    //             });
-    //
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! status: ${response.status}`);
-    //             }
-    //
-    //             const responseData = await response.json();
-    //             if (responseData.code !== 200) {
-    //                 throw new Error(responseData.message || "Failed to load comments");
-    //             }
-    //
-    //             const commentsContainer = commentSection.querySelector('.comments-list');
-    //             commentsContainer.innerHTML = '';
-    //
-    //             // Update comment count
-    //             // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
-    //             // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
-    //             // commentCountElement.textContent = `${currentCount - 1} Comments`;
-    //
-    //             renderComments(commentsContainer, responseData.data.comments);
-    //         } catch (error) {
-    //             console.error("Error loading comments:", error);
-    //             Toast.fire({
-    //                 icon: "error",
-    //                 title: error.message || "Failed to load comments"
-    //             });
-    //         }
-    //     }
-    //
-    //     function renderComments(container, comments, depth = 0) {
-    //         container.innerHTML = '';
-    //
-    //         if (!comments || comments.length === 0) {
-    //             if (depth === 0) { // Only show "No comments" for top-level
-    //                 container.innerHTML = '<div class="text-muted">No comments yet</div>';
-    //             }
-    //             return;
-    //         }
-    //
-    //         comments.forEach(comment => {
-    //             const commentElement = createCommentElement(comment, depth);
-    //             container.appendChild(commentElement);
-    //
-    //             if (comment.replies && comment.replies.length > 0) {
-    //                 const repliesContainer = document.createElement('div');
-    //                 repliesContainer.className = `replies-container ms-${depth + 3}`; // Increased indentation
-    //                 renderComments(repliesContainer, comment.replies, depth + 1);
-    //                 commentElement.querySelector('.comment-bubble').appendChild(repliesContainer);
-    //             }
-    //         });
-    //     }
-    //
-    //     function createCommentElement(comment, depth) {
-    //         const commentEl = document.createElement('div');
-    //         commentEl.className = `comment-item my-2 ms-${depth * 3}`;
-    //         commentEl.dataset.commentId = comment.commentId;
-    //         commentEl.dataset.authorId = comment.user.userId;
-    //
-    //         commentEl.innerHTML = `
-    //     <div class="comment-bubble p-2 rounded">
-    //         <div class="d-flex align-items-center">
-    //             <img src="${comment.user.profilePictureUrl}"
-    //                  class="rounded-circle me-2"
-    //                  width="32" height="32">
-    //             <div>
-    //                 <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
-    //                 <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
-    //             </div>
-    //         </div>
-    //         <p class="mb-0 mt-2 ms-3">${comment.content}</p>
-    //         <div class="comment-actions mt-2">
-    //             <button class="btn btn-sm text-muted reply-btn">
-    //                 <i class="bi bi-reply"></i> Reply
-    //             </button>
-    //             ${comment.user.email === authData.email ? `
-    //             <button class="btn btn-sm text-danger delete-comment-btn">
-    //                 <i class="bi bi-trash"></i> Delete
-    //             </button>
-    //             ` : ''}
-    //         </div>
-    //         <div class="reply-input-container mt-2 d-none"></div>
-    //     </div>
-    // `;
-    //
-    //         // Add reply handler
-    //         commentEl.querySelector('.reply-btn').addEventListener('click', () => {
-    //             showReplyInput(commentEl, comment.commentId);
-    //         });
-    //
-    //         // Add delete handler
-    //         if (comment.user.email === authData.email) {
-    //             commentEl.querySelector('.delete-comment-btn').addEventListener('click', async () => {
-    //                 await deleteComment(commentEl);
-    //             });
-    //         }
-    //
-    //         return commentEl;
-    //     }
-    //
-    //     // Helper function to format comment date
-    //     function formatCommentDate(dateString) {
-    //         const date = new Date(dateString);
-    //         return date.toLocaleDateString('en-US', {
-    //             month: 'short',
-    //             day: 'numeric',
-    //             year: 'numeric',
-    //             hour: '2-digit',
-    //             minute: '2-digit'
-    //         });
-    //     }
-    //
-    //     async function deleteComment(commentElement) {
-    //         const commentId = commentElement.dataset.commentId;
-    //         const postElement = commentElement.closest('.post-card');
-    //
-    //         try {
-    //             const response = await fetch(`${BASE_URL}/profile/comments/${commentId}`, {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     'Authorization': `Bearer ${authData.token}`
-    //                 }
-    //             });
-    //
-    //             if (response.ok) {
-    //                 commentElement.remove();
-    //                 // Update comment count
-    //                 // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
-    //                 // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
-    //                 // commentCountElement.textContent = `${currentCount - 1} Comments`;
-    //             }
-    //         } catch (error) {
-    //             Toast.fire({icon: 'error', title: 'Failed to delete comment'});
-    //         }
-    //     }
-    //
-    //     function showReplyInput(commentElement, parentCommentId) {
-    //         const inputContainer = commentElement.querySelector('.reply-input-container');
-    //         inputContainer.classList.remove('d-none');
-    //
-    //         if (!inputContainer.querySelector('.reply-input')) {
-    //             inputContainer.innerHTML = `
-    //         <div class="input-group mt-2">
-    //             <input type="text" class="form-control reply-input"
-    //                    placeholder="Write a reply...">
-    //             <button class="btn btn-primary btn-send-reply">
-    //                 <i class="bi bi-send"></i>
-    //             </button>
-    //         </div>
-    //     `;
-    //
-    //             const input = inputContainer.querySelector('.reply-input');
-    //             const sendBtn = inputContainer.querySelector('.btn-send-reply');
-    //
-    //             sendBtn.addEventListener('click', async () => {
-    //                 const replyText = input.value.trim();
-    //                 if (replyText) {
-    //                     const postElement = commentElement.closest('.post-card');
-    //                     const commentSection = postElement.querySelector('.comment-section');
-    //
-    //                     try {
-    //                         const response = await fetch(`${BASE_URL}/profile/comments/${parentCommentId}/reply`, {
-    //                             method: 'POST',
-    //                             headers: {
-    //                                 'Content-Type': 'application/json',
-    //                                 'Authorization': `Bearer ${authData.token}`
-    //                             },
-    //                             body: JSON.stringify({
-    //                                 content: replyText
-    //                             })
-    //                         });
-    //
-    //                         if (response.ok) {
-    //                             input.value = '';
-    //                             await loadPostComments(postElement, commentSection);
-    //                         }
-    //                     } catch (error) {
-    //                         Toast.fire({icon: 'error', title: 'Failed to post reply'});
-    //                     }
-    //                 }
-    //             });
-    //         }
-    //     }
-
-        // Main function to load and display comments
-        async function loadPostComments(postElement, commentSection) {
+        async function addComment(postElement, commentSection, commentText, parentCommentId = 0) {
             const postId = postElement.dataset.postId;
-            if (!postId) return;
 
             try {
-                // Show loading state
-                const commentsContainer = commentSection.querySelector('.comments-list');
-                commentsContainer.innerHTML = '<div class="text-center py-3"><div class="spinner-border text-primary"></div></div>';
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authData.token}`
+                    },
+                    body: JSON.stringify({
+                        content: commentText,
+                        parentCommentId: parentCommentId || 0
+                    })
+                });
 
+                if (!response.ok) throw new Error('Failed to add comment');
+
+                // Reload comments
+                await loadPostComments(postElement, commentSection);
+            } catch (error) {
+                Toast.fire({icon: 'error', title: error.message});
+            }
+        }
+
+        async function loadPostComments(postElement, commentSection) {
+            const postId = postElement.dataset.postId;
+            if (!postId) {
+                console.error("No postId found for post element");
+                return;
+            }
+
+            try {
                 const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
                     headers: {'Authorization': `Bearer ${authData.token}`}
                 });
 
-                if (!response.ok) throw new Error('Failed to load comments');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const responseData = await response.json();
-
                 if (responseData.code !== 200) {
                     throw new Error(responseData.message || "Failed to load comments");
                 }
 
-                // Clear existing comments
+                const commentsContainer = commentSection.querySelector('.comments-list');
                 commentsContainer.innerHTML = '';
 
-                if (!responseData.data.comments || responseData.data.comments.length === 0) {
-                    commentsContainer.innerHTML = '<div class="text-muted py-3">No comments yet</div>';
-                    return;
-                }
+                // Create a comment map to easily find parent comments
+                const commentMap = new Map();
 
-                // Build comment tree
-                buildCommentHierarchy(commentsContainer, responseData.data.comments);
+                // First, create map entries for all comments
+                responseData.data.comments.forEach(comment => {
+                    commentMap.set(comment.commentId, comment);
+                });
 
+                renderComments(commentsContainer, responseData.data.comments);
             } catch (error) {
                 console.error("Error loading comments:", error);
-                const commentsContainer = commentSection.querySelector('.comments-list');
-                commentsContainer.innerHTML = `<div class="alert alert-danger">${error.message || "Failed to load comments"}</div>`;
+                Toast.fire({
+                    icon: "error",
+                    title: error.message || "Failed to load comments"
+                });
             }
         }
 
-// Build hierarchical comment structure
-        function buildCommentHierarchy(container, comments, depth = 0) {
-            comments.forEach(comment => {
+        function renderComments(container, comments, depth = 0) {
+            container.innerHTML = '';
+
+            if (!comments || comments.length === 0) {
+                if (depth === 0) { // Only show "No comments" for top-level
+                    container.innerHTML = '<div class="text-muted">No comments yet</div>';
+                }
+                return;
+            }
+
+            // Filter comments based on depth
+            // For top-level (depth = 0), only show comments with parentCommentId = 0
+            // For nested levels, show all replies as they're already filtered by parent
+            const filteredComments = depth === 0
+                ? comments.filter(comment => comment.parentCommentId === 0)
+                : comments;
+
+            filteredComments.forEach(comment => {
                 const commentElement = createCommentElement(comment, depth);
                 container.appendChild(commentElement);
 
-                // If comment has replies, render them nested
                 if (comment.replies && comment.replies.length > 0) {
                     const repliesContainer = document.createElement('div');
-                    repliesContainer.className = 'replies-container';
-
-                    // Add visual indentation
-                    if (depth > 0) {
-                        repliesContainer.style.marginLeft = `${depth * 20}px`;
-                        repliesContainer.style.borderLeft = '2px solid #eee';
-                        repliesContainer.style.paddingLeft = '10px';
-                    }
-
-                    buildCommentHierarchy(repliesContainer, comment.replies, depth + 1);
-                    commentElement.appendChild(repliesContainer);
+                    repliesContainer.className = `replies-container ms-${depth + 3}`; // Increased indentation
+                    renderComments(repliesContainer, comment.replies, depth + 1);
+                    commentElement.querySelector('.comment-bubble').appendChild(repliesContainer);
                 }
             });
         }
 
-// Create a single comment element
-        function createCommentElement(comment, depth = 0) {
+        function createCommentElement(comment, depth) {
             const commentEl = document.createElement('div');
-            commentEl.className = 'comment-item';
+            commentEl.className = `comment-item my-2 ms-${depth * 3}`;
             commentEl.dataset.commentId = comment.commentId;
             commentEl.dataset.authorId = comment.user.userId;
 
-            // Add depth-based styling for nested comments
-            if (depth > 0) {
-                commentEl.style.marginLeft = `${depth * 20}px`;
-            }
-
             commentEl.innerHTML = `
-        <div class="comment-bubble p-3 rounded bg-light">
+        <div class="comment-bubble p-2 rounded">
             <div class="d-flex align-items-center">
-                <img src="${comment.user.profilePictureUrl || '/assets/image/Profile-picture.png'}" 
-                     class="rounded-circle me-2" 
-                     width="40" height="40">
+                <img src="${comment.user.profilePictureUrl}"
+                     class="rounded-circle me-2"
+                     width="32" height="32">
                 <div>
                     <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
                     <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
                 </div>
             </div>
-            <p class="mb-0 mt-2">${comment.content}</p>
-            <div class="comment-actions mt-2 d-flex">
-                <button class="btn btn-sm text-muted reply-btn me-2">
+            <p class="mb-0 mt-2 ms-3">${comment.content}</p>
+            <div class="comment-actions mt-2">
+                <button class="btn btn-sm text-muted reply-btn">
                     <i class="bi bi-reply"></i> Reply
                 </button>
                 ${comment.user.email === authData.email ? `
@@ -2026,29 +1841,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
 
             // Add reply handler
-            const replyBtn = commentEl.querySelector('.reply-btn');
-            if (replyBtn) {
-                replyBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showReplyInput(commentEl, comment.commentId);
-                });
-            }
+            commentEl.querySelector('.reply-btn').addEventListener('click', () => {
+                showReplyInput(commentEl, comment.commentId);
+            });
 
-            // Add delete handler for own comments
+            // Add delete handler
             if (comment.user.email === authData.email) {
-                const deleteBtn = commentEl.querySelector('.delete-comment-btn');
-                if (deleteBtn) {
-                    deleteBtn.addEventListener('click', async (e) => {
-                        e.stopPropagation();
-                        await deleteComment(commentEl);
-                    });
-                }
+                commentEl.querySelector('.delete-comment-btn').addEventListener('click', async () => {
+                    await deleteComment(commentEl);
+                });
             }
 
             return commentEl;
         }
 
-// Helper function to format comment date
+        // Helper function to format comment date
         function formatCommentDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', {
@@ -2060,97 +1867,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-// Show reply input field
-        function showReplyInput(commentElement, parentCommentId) {
-            let inputContainer = commentElement.querySelector('.reply-input-container');
-
-            // Create input if it doesn't exist
-            if (!inputContainer.querySelector('.reply-input')) {
-                inputContainer.innerHTML = `
-            <div class="input-group mt-2">
-                <input type="text" class="form-control reply-input" 
-                       placeholder="Write a reply..." autocomplete="off">
-                <button class="btn btn-primary btn-send-reply">
-                    <i class="bi bi-send"></i>
-                </button>
-            </div>
-        `;
-
-                const input = inputContainer.querySelector('.reply-input');
-                const sendBtn = inputContainer.querySelector('.btn-send-reply');
-
-                // Handle sending reply
-                const handleSendReply = async () => {
-                    const replyText = input.value.trim();
-                    if (!replyText) return;
-
-                    const postElement = commentElement.closest('.post-card');
-                    const commentSection = postElement?.querySelector('.comment-section');
-
-                    try {
-                        await addComment(postElement, commentSection, replyText, parentCommentId);
-                        input.value = '';
-                        inputContainer.classList.add('d-none');
-                    } catch (error) {
-                        Toast.fire({icon: 'error', title: 'Failed to post reply'});
-                    }
-                };
-
-                sendBtn.addEventListener('click', handleSendReply);
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') handleSendReply();
-                });
-            }
-
-            inputContainer.classList.remove('d-none');
-            inputContainer.querySelector('.reply-input').focus();
-        }
-
-// Add a new comment or reply
-        async function addComment(postElement, commentSection, commentText, parentCommentId = null) {
-            const postId = postElement.dataset.postId;
-
-            try {
-                const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authData.token}`
-                    },
-                    body: JSON.stringify({
-                        content: commentText,
-                        parentCommentId: parentCommentId
-                    })
-                });
-
-                if (!response.ok) throw new Error('Failed to add comment');
-
-                // Reload comments to show the new one
-                await loadPostComments(postElement, commentSection);
-
-            } catch (error) {
-                console.error("Error adding comment:", error);
-                throw error;
-            }
-        }
-
-// Delete a comment
         async function deleteComment(commentElement) {
-            const result = await Swal.fire({
-                title: 'Delete Comment?',
-                text: "This action cannot be undone!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            });
-
-            if (!result.isConfirmed) return;
-
             const commentId = commentElement.dataset.commentId;
             const postElement = commentElement.closest('.post-card');
-            const commentSection = postElement?.querySelector('.comment-section');
 
             try {
                 const response = await fetch(`${BASE_URL}/profile/comments/${commentId}`, {
@@ -2160,25 +1879,66 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 });
 
-                if (!response.ok) throw new Error('Failed to delete comment');
-
-                // Reload comments if we have the context
-                if (postElement && commentSection) {
-                    await loadPostComments(postElement, commentSection);
-                } else {
+                if (response.ok) {
                     commentElement.remove();
+                    // Update comment count
+                    // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
+                    // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
+                    // commentCountElement.textContent = `${currentCount - 1} Comments`;
                 }
-
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Comment deleted'
-                });
-
             } catch (error) {
-                console.error("Error deleting comment:", error);
                 Toast.fire({icon: 'error', title: 'Failed to delete comment'});
             }
         }
+
+        function showReplyInput(commentElement, parentCommentId) {
+            const inputContainer = commentElement.querySelector('.reply-input-container');
+            inputContainer.classList.remove('d-none');
+
+            if (!inputContainer.querySelector('.reply-input')) {
+                inputContainer.innerHTML = `
+            <div class="input-group mt-2">
+                <input type="text" class="form-control reply-input"
+                       placeholder="Write a reply...">
+                <button class="btn btn-primary btn-send-reply">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        `;
+
+                const input = inputContainer.querySelector('.reply-input');
+                const sendBtn = inputContainer.querySelector('.btn-send-reply');
+
+                sendBtn.addEventListener('click', async () => {
+                    const replyText = input.value.trim();
+                    if (replyText) {
+                        const postElement = commentElement.closest('.post-card');
+                        const commentSection = postElement.querySelector('.comment-section');
+
+                        try {
+                            const response = await fetch(`${BASE_URL}/profile/comments/${parentCommentId}/reply`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${authData.token}`
+                                },
+                                body: JSON.stringify({
+                                    content: replyText
+                                })
+                            });
+
+                            if (response.ok) {
+                                input.value = '';
+                                await loadPostComments(postElement, commentSection);
+                            }
+                        } catch (error) {
+                            Toast.fire({icon: 'error', title: 'Failed to post reply'});
+                        }
+                    }
+                });
+            }
+        }
+
 
         // Add interactions to existing posts
         document.querySelectorAll(".post-card").forEach((post) => {

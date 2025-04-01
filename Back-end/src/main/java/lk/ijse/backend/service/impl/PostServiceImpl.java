@@ -30,6 +30,7 @@ public class PostServiceImpl implements PostService {
     private final PostMediaRepository postMediaRepository;
     private final ReactionRepository reactionRepository;
     private final CommentRepository commentRepository;
+    private final ReportRepository reportRepository;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
 
@@ -225,6 +226,29 @@ public class PostServiceImpl implements PostService {
         return convertToDTO(post, userEmail);
     }
 
+    @Transactional
+    @Override
+    public ReportDTO createReport(ReportRequestDTO reportRequest, String reporterEmail) {
+        User reporter = userRepository.findByEmail(reporterEmail);
+        if (reporter == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Post reportedPost = postRepository.findById(reportRequest.getPostId())
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+
+        Report report = new Report();
+        report.setType(Report.ReportType.valueOf(reportRequest.getType()));
+        report.setPriority(Report.Priority.valueOf(reportRequest.getPriority()));
+        report.setDescription(reportRequest.getDescription());
+        report.setReporter(reporter);
+        report.setReportedPost(reportedPost);
+        report.setStatus(Report.ReportStatus.PENDING);
+
+        Report savedReport = reportRepository.save(report);
+        return convertToDTO(savedReport, reporterEmail);
+    }
+
     @Override
     public CommentDTO addComment(int postId, CommentDTO commentDTO, String email) {
         User user = userRepository.findByEmail(email);
@@ -281,7 +305,13 @@ public class PostServiceImpl implements PostService {
         return convertCommentToDTO(savedReply, email);
     }
 
-    // Ensure media is eagerly fetched in Post entity
+    private ReportDTO convertToDTO(Report savedReport, String reporterEmail) {
+        ReportDTO reportDTO = modelMapper.map(savedReport, ReportDTO.class);
+        reportDTO.setReporter(modelMapper.map(savedReport.getReporter(), UserDTO.class));
+        reportDTO.setReportedPost(convertToDTO(savedReport.getReportedPost(), reporterEmail));
+        return reportDTO;
+    }
+
     private PostDTO convertToDTO(Post post, String email) {
         // Initialize lazy-loaded collections before leaving transactional context
         Hibernate.initialize(post.getMedia());

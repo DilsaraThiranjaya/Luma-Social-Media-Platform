@@ -183,6 +183,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Initialize
         loadPosts();
+        initializeReportModal();
 
         // Initialize tooltips and popovers
         const tooltipTriggerList = document.querySelectorAll(
@@ -210,8 +211,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             '.privacy-dropdown[data-bs-toggle="dropdown"]'
         );
         dropdownButton.innerHTML = `
-    <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
-  `;
+        <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text}
+        `;
 
         // Media Upload Handler
         const imageUpload = document.getElementById("imageUpload");
@@ -481,7 +482,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ${["😀", "😂", "😊", "😍", "🥰", "😎", "😇", "🤔", "😄", "😅", "😉", "😋", "😘", "🥳", "😮", "😢", "😡", "👍", "👎", "❤️"]
                     .map(e => `<div class="emoji-item p-1 fs-4">${e}</div>`).join("")}
       </div>
-    `;
+        `;
                 emojiButton.parentNode.appendChild(emojiContainer);
             } finally {
                 // Restore button state
@@ -607,7 +608,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (dropdownButton) {
                 dropdownButton.innerHTML = `
       <i class="bi ${selectedPrivacy.icon} me-1"></i>${selectedPrivacy.text === 'Private' ? 'Only Me' : selectedPrivacy.text}
-    `;
+     `;
             }
         }
 
@@ -700,7 +701,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <span class="reaction-icon me-1">
         <i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}
       </span>
-    `)
+        `)
                     .join('');
             }
 
@@ -714,7 +715,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const output = formattedPrivacy === "Private" ? "Only Me" : formattedPrivacy;
 
             newPost.innerHTML = `
-    <div class="card-header bg-transparent">
+        <div class="card-header bg-transparent">
       <div class="d-flex align-items-center timline-post-item">
         <img src="${postData.user.profilePictureUrl || '/assets/image/Profile-picture.png'}" 
              alt="Profile" class="rounded-circle me-2" style="width: 40px; height: 40px;">
@@ -734,8 +735,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           ${generatePostDropdown(postData)}
         </div>
       </div>
-    </div>
-    <div class="card-body">
+        </div>
+        <div class="card-body">
       <p>${postData.content.replace(/\n/g, "<br>")}</p>
       ${mediaContent}
       <div class="post-stats d-flex align-items-center text-muted">
@@ -746,8 +747,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         ${postData.comments.length} Comments
       </span>
       </div>
-    </div>
-    <div class="card-footer bg-transparent">
+        </div>
+        <div class="card-footer bg-transparent">
       <div class="post-actions d-flex justify-content-around">
         <button class="btn btn-light reaction-btn like-btn" data-post-id="${postData.postId}">
           <i class="bi ${likeButtonIcon}"></i>
@@ -757,8 +758,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
         </button>
       </div>
-    </div>
-  `;
+        </div>
+         `;
 
             addPostInteractions(newPost);
             return newPost;
@@ -777,41 +778,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         function generatePostDropdown(postData) {
             const dropdown =  `
-    <button class="btn btn-light btn-sm dropdown-toggle" 
+            <button class="btn btn-light btn-sm dropdown-toggle" 
             type="button" 
             data-bs-toggle="dropdown" 
             aria-expanded="false">
       <i class="bi bi-three-dots"></i>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item edit-post-btn" data-post-id="${postData.postId}">
-        <i class="bi bi-pencil-square me-2"></i>Edit
-      </a></li>
-      <li><a class="dropdown-item text-danger delete-post-btn" data-post-id="${postData.postId}">
-        <i class="bi bi-trash me-2"></i>Delete
-      </a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" data-post-id="${postData.postId}">
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+      ${postData.user.email === authData.email ? `
+        <li><a class="dropdown-item edit-post-btn" data-post-id="${postData.postId}">
+          <i class="bi bi-pencil-square me-2"></i>Edit
+        </a></li>
+        <li><a class="dropdown-item text-danger delete-post-btn" data-post-id="${postData.postId}">
+          <i class="bi bi-trash me-2"></i>Delete
+        </a></li>
+      ` :`
+      <li><a class="dropdown-item report-post-btn" data-post-id="${postData.postId}">
         <i class="bi bi-flag me-2"></i>Report
-      </a></li>
-    </ul>
-  `;
-            if (postData.user.email === authData.email) {
-                return dropdown;
-            }
-            return `
-    <button class="btn btn-light btn-sm dropdown-toggle" 
-            type="button" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false">
-      <i class="bi bi-three-dots"></i>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item" data-post-id="${postData.postId}">
-        <i class="bi bi-flag me-2"></i>Report
-      </a></li>
-    </ul>
-  `;
+      </a></li>`}
+      </ul>`;
+            return dropdown;
         }
 
 // Get Edit Modal elements (assumed to be defined in your HTML similar to your create post modal)
@@ -1430,10 +1416,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const commentsContainer = commentSection.querySelector('.comments-list');
                 commentsContainer.innerHTML = '';
 
-                // Update comment count
-                // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
-                // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
-                // commentCountElement.textContent = `${currentCount - 1} Comments`;
+                // Create a comment map to easily find parent comments
+                const commentMap = new Map();
+
+                // First, create map entries for all comments
+                responseData.data.comments.forEach(comment => {
+                    commentMap.set(comment.commentId, comment);
+                });
 
                 renderComments(commentsContainer, responseData.data.comments);
             } catch (error) {
@@ -1455,7 +1444,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            comments.forEach(comment => {
+            // Filter comments based on depth
+            // For top-level (depth = 0), only show comments with parentCommentId = 0
+            // For nested levels, show all replies as they're already filtered by parent
+            const filteredComments = depth === 0
+                ? comments.filter(comment => comment.parentCommentId === 0)
+                : comments;
+
+            filteredComments.forEach(comment => {
                 const commentElement = createCommentElement(comment, depth);
                 container.appendChild(commentElement);
 
@@ -1498,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
             <div class="reply-input-container mt-2 d-none"></div>
         </div>
-    `;
+        `;
 
             // Add reply handler
             commentEl.querySelector('.reply-btn').addEventListener('click', () => {
@@ -1714,7 +1710,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           </div>
         </div>
       </div>
-    `;
+        `;
 
                 document.body.appendChild(modalElement);
 
@@ -1922,7 +1918,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       .emoji-item:hover {
         transform: scale(1.2);
       }
-    `;
+     `;
 
                 document.head.appendChild(styleElement);
             }
@@ -2047,11 +2043,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             messageEl.innerHTML = `
-    <div class="message-content">
+        <div class="message-content">
       <p class="mb-0">${text}</p>
-    </div>
-    <small class="text-muted message-time">${time} ${statusHTML}</small>
-  `;
+        </div>
+        <small class="text-muted message-time">${time} ${statusHTML}</small>
+        `;
 
             chatMessages.appendChild(messageEl);
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -2078,11 +2074,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             messageEl.innerHTML = `
-    <div class="message-content">
+     <div class="message-content">
       <img src="${imageUrl}" class="message-image" alt="Shared image">
-    </div>
-    <small class="text-muted message-time">${time} ${statusHTML}</small>
-  `;
+        </div>
+     <small class="text-muted message-time">${time} ${statusHTML}</small>
+    `;
 
             chatMessages.appendChild(messageEl);
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -2096,12 +2092,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 "chat-message chat-message-received typing-indicator-container";
 
             typingEl.innerHTML = `
-    <div class="chat-typing-indicator">
+        <div class="chat-typing-indicator">
       <div class="typing-dot"></div>
       <div class="typing-dot"></div>
       <div class="typing-dot"></div>
-    </div>
-  `;
+        </div>
+    `;
 
             chatMessages.appendChild(typingEl);
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -2226,6 +2222,126 @@ document.addEventListener('DOMContentLoaded', async () => {
                     addTextMessage(randomResponse, false, time);
                 }, 2000);
             }, 1000);
+        }
+
+        // Report Post Functionality
+        let currentReportPostId = null;
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.report-post-btn')) {
+                const postId = e.target.closest('.report-post-btn').dataset.postId;
+                showReportPostModal(postId);
+            }
+        });
+
+// Initialize report modal
+        function initializeReportModal() {
+            // Handle report type selection
+            document.querySelectorAll('#reportTypeDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const value = this.dataset.value;
+                    document.getElementById('reportTypeDropdown').textContent = this.textContent;
+                    document.getElementById('reportTypeDropdown').dataset.selected = value;
+                    document.getElementById('typeError').style.display = 'none';
+                });
+            });
+
+            // Handle priority selection
+            document.querySelectorAll('#priorityDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const value = this.dataset.value;
+                    document.getElementById('priorityDropdown').textContent = this.textContent;
+                    document.getElementById('priorityDropdown').dataset.selected = value;
+                });
+            });
+
+            // Submit report handler
+            document.getElementById('submitReportBtn').addEventListener('click', submitReport);
+        }
+
+// Function to show report modal
+        function showReportPostModal(postId) {
+            currentReportPostId = postId;
+            const modal = new bootstrap.Modal(document.getElementById('reportPostModal'));
+            modal.show();
+        }
+
+// Form validation
+        function validateReportForm() {
+            let isValid = true;
+
+            const reportType = document.getElementById('reportTypeDropdown').dataset.selected;
+            if (!reportType) {
+                document.getElementById('typeError').textContent = 'Please select a report type';
+                document.getElementById('typeError').style.display = 'block';
+                isValid = false;
+            }
+
+            const description = document.getElementById('reportDescription').value.trim();
+            if (description.length < 20) {
+                document.getElementById('descriptionError').textContent = 'Description must be at least 20 characters';
+                document.getElementById('descriptionError').style.display = 'block';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+// Submit report
+        async function submitReport() {
+            const reportButton = document.getElementById('submitReportBtn');
+            const OriginalReportButtonText = reportButton.innerHTML;
+
+            if (!validateReportForm()) return;
+
+            const reportData = {
+                postId: currentReportPostId,
+                type: document.getElementById('reportTypeDropdown').dataset.selected,
+                priority: document.getElementById('priorityDropdown').dataset.selected || 'LOW',
+                description: document.getElementById('reportDescription').value.trim(),
+            };
+
+            reportButton.disabled = true;
+            reportButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action cannot be undone!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, submit report!",
+                cancelButtonText: "Cancel"
+            }).then(async (result) => {
+                try {
+                    const response = await fetch(`${BASE_URL}/timeline/posts/report`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authData.token}`
+                        },
+                        body: JSON.stringify(reportData)
+                    });
+
+                    if (!response.ok) throw new Error('Failed to submit report');
+
+                    Toast.fire({icon: 'success', title: 'Report Submitted'});
+
+                    // Reset form
+                    document.getElementById('reportPostModal').querySelectorAll('.dropdown-toggle').forEach(el => {
+                        el.textContent = el.id === 'reportTypeDropdown' ? 'Select Report Type' : 'Select Priority';
+                        delete el.dataset.selected;
+                    });
+                    document.getElementById('reportDescription').value = '';
+                    bootstrap.Modal.getInstance(document.getElementById('reportPostModal')).hide();
+                } catch (error) {
+                    Toast.fire({icon: 'error', title: error.message || 'Submission Failed'});
+                } finally {
+                    reportButton.disabled = false;
+                    reportButton.innerHTML = OriginalReportButtonText;
+                }
+            });
         }
     }
 });

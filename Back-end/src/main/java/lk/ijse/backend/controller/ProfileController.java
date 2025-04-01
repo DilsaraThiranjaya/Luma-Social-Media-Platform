@@ -85,7 +85,7 @@ public class ProfileController {
 
                 if (res == VarList.Created) {
                     log.info("Successfully uploaded profile picture for user email: {}", email);
-                    return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile picture uploaded successfully", imageUrl));
+                    return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Profile picture uploaded successfully", userDTO));
                 }
             }
             log.error("Failed to upload profile picture for user email: {}", email);
@@ -117,7 +117,7 @@ public class ProfileController {
 
                 if (res == VarList.Created) {
                     log.info("Successfully uploaded cover picture for user email: {}", email);
-                    return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Cover picture uploaded successfully", imageUrl));
+                    return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Cover picture uploaded successfully", userDTO));
                 }
             }
             log.error("Failed to upload cover picture for user email: {}", email);

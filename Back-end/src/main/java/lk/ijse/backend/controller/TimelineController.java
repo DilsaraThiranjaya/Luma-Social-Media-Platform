@@ -73,6 +73,24 @@ public class TimelineController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping(value = "/posts/report", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createReport(@RequestBody ReportRequestDTO reportRequest, Authentication authentication) {
+        String reporterEmail = authentication.getName();
+        log.info("Received report creation request for email: {}", reporterEmail);
+
+        try {
+            ReportDTO createdReport = postService.createReport(reportRequest, reporterEmail);
+
+            log.info("Report submitted for email: {}", reporterEmail);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Report submitted", createdReport));
+        } catch (Exception e) {
+            log.error("Error submitting report for email: {}", reporterEmail, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
     private PostResponseDTO convertToPostResponseDTO(PostDTO post, String email) {
         PostResponseDTO dto = new PostResponseDTO();
         dto.setPostId(post.getPostId());

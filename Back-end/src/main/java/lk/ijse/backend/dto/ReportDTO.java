@@ -30,28 +30,16 @@ public class ReportDTO {
     @NotNull(message = "Priority cannot be null")
     private Priority priority;
 
-    @NotNull(message = "Status cannot be null")
     private ReportStatus status;
-
-    @Null
     private LocalDateTime createdAt;
     private LocalDateTime resolvedAt;
 
     @Size(max = 1000, message = "Resolution notes must be less than or equal to 1000 characters")
     private String resolutionNotes;
 
-    @NotNull(message = "Reporter cannot be null")
     private UserDTO reporter;
-
-    @NotNull(message = "Reported user cannot be null")
     private UserDTO reportedUser;
-
-    @NotNull(message = "Reported post cannot be null")
     private PostDTO reportedPost;
-
-    @NotNull(message = "Reported item cannot be null")
     private MarketplaceItemDTO reportedItem;
-
-    @NotNull(message = "Resolved by cannot be null")
     private UserDTO resolvedBy;
 }
