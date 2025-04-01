@@ -416,34 +416,25 @@
                                     <!-- Photos Card -->
                                     <div class="card mb-4">
                                         <div class="card-body">
-                                            <div
-                                                    class="d-flex justify-content-between align-items-center mb-3"
-                                            >
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <h5 class="card-title mb-0">Photos</h5>
-                                                <a href="#" class="text-primary">See All</a>
+                                                <a href="#" class="text-primary see-all-photos">See All</a>
                                             </div>
-                                            <div class="row g-2">
-                                                <div class="col-4">
-                                                    <img
-                                                            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6"
-                                                            class="img-fluid rounded"
-                                                            alt="Photo"
-                                                    />
-                                                </div>
-                                                <div class="col-4">
-                                                    <img
-                                                            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
-                                                            class="img-fluid rounded"
-                                                            alt="Photo"
-                                                    />
-                                                </div>
-                                                <div class="col-4">
-                                                    <img
-                                                            src="https://images.unsplash.com/photo-1504639725590-34d0984388bd"
-                                                            class="img-fluid rounded"
-                                                            alt="Photo"
-                                                    />
-                                                </div>
+                                            <div class="row g-2" id="sidebarPhotosContainer">
+                                                <!-- Dynamic content will be loaded here -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Videos Card -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h5 class="card-title mb-0">Videos</h5>
+                                                <a href="#" class="text-primary see-all-videos">See All</a>
+                                            </div>
+                                            <div class="row g-2" id="sidebarVideosContainer">
+                                                <!-- Dynamic content will be loaded here -->
                                             </div>
                                         </div>
                                     </div>
@@ -905,50 +896,50 @@
 <!--</div>-->
 
 <!-- Share Modal -->
-<div class="modal fade" id="shareModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header gradient-bg">
-                <h5 class="modal-title text-white">Share Post</h5>
-                <button
-                        type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal"
-                ></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Add Message (optional)</label>
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Share To</label>
-                    <div class="share-options">
-                        <button class="btn btn-share-option active">
-                            <i class="bi bi-people"></i> Friends
-                        </button>
-                        <button class="btn btn-share-option">
-                            <i class="bi bi-globe"></i> Public
-                        </button>
-                        <button class="btn btn-share-option">
-                            <i class="bi bi-lock"></i> Only Me
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                >
-                    Cancel
-                </button>
-                <button type="button" class="btn btn-post">Share Now</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="modal fade" id="shareModal" tabindex="-1">-->
+<!--    <div class="modal-dialog modal-dialog-centered">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header gradient-bg">-->
+<!--                <h5 class="modal-title text-white">Share Post</h5>-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn-close btn-close-white"-->
+<!--                        data-bs-dismiss="modal"-->
+<!--                ></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label">Add Message (optional)</label>-->
+<!--                    <textarea class="form-control" rows="3"></textarea>-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label">Share To</label>-->
+<!--                    <div class="share-options">-->
+<!--                        <button class="btn btn-share-option active">-->
+<!--                            <i class="bi bi-people"></i> Friends-->
+<!--                        </button>-->
+<!--                        <button class="btn btn-share-option">-->
+<!--                            <i class="bi bi-globe"></i> Public-->
+<!--                        </button>-->
+<!--                        <button class="btn btn-share-option">-->
+<!--                            <i class="bi bi-lock"></i> Only Me-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button-->
+<!--                        type="button"-->
+<!--                        class="btn btn-secondary"-->
+<!--                        data-bs-dismiss="modal"-->
+<!--                >-->
+<!--                    Cancel-->
+<!--                </button>-->
+<!--                <button type="button" class="btn btn-post">Share Now</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- Media Modal -->
 <div class="modal fade" id="mediaModal" tabindex="-1">

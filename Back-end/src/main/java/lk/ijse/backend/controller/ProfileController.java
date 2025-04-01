@@ -335,75 +335,58 @@ public class ProfileController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<ResponseDTO> addComment(@PathVariable int postId, @Valid @RequestBody CommentDTO commentDTO, Authentication authentication) {
-
+        log.info("Received request to add comment for post ID: {}", postId);
         try {
-            // Validate parent comment ID
-            if (commentDTO.getParentCommentId() != 0) {
-                if (commentDTO.getParentCommentId() < 0) {
-                    throw new IllegalArgumentException("Invalid parent comment ID");
-                }
-
-                // Verify parent comment exists and belongs to the same post
-                if (commentDTO.getParentCommentId() > 0) {
-                    CommentDTO parent = postService.getComment(commentDTO.getParentCommentId());
-                    if (parent == null) {
-                        throw new IllegalArgumentException("Parent comment not found");
-                    }
-
-                    if (parent.getPost().getPostId() != postId) {
-                        throw new IllegalArgumentException("Parent comment doesn't belong to this post");
-                    }
-                }
-            }
-
             String email = authentication.getName();
             CommentDTO createdComment = postService.addComment(postId, commentDTO, email);
 
+            log.info("Successfully added comment for post ID: {}", postId);
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Comment added", createdComment));
 
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseDTO(VarList.Not_Found, e.getMessage(), null));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error adding comment", null));
+            log.error("Error adding comment for post ID: {}", postId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    @PostMapping("/comments/{commentId}/reactions")
-    public ResponseEntity<ResponseDTO> addCommentReaction(
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<ResponseDTO> deleteComment(
             @PathVariable int commentId,
-            @Valid @RequestBody ReactionDTO reactionDTO,
-            Authentication authentication) {
+            Authentication authentication
+    ) {
+        log.info("Received request to delete comment ID: {}", commentId);
         try {
             String email = authentication.getName();
-            ResponseDTO res = postService.addCommentReaction(commentId, reactionDTO, email);
-            return ResponseEntity.status(HttpStatus.OK).body(res);
+            postService.deleteComment(commentId, email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Comment deleted", null));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+            log.error("Error deleting comment ID: {}", commentId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping("/comments/{parentCommentId}/reply")
+    public ResponseEntity<ResponseDTO> addReply(
+            @PathVariable int parentCommentId,
+            @Valid @RequestBody CommentDTO commentDTO,
+            Authentication authentication
+    ) {
+        log.info("Received request to add reply to comment ID: {}", parentCommentId);
+        try {
+            String email = authentication.getName();
+            commentDTO.setParentCommentId(parentCommentId);
+            CommentDTO createdReply = postService.addReply(parentCommentId, commentDTO, email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Reply added", createdReply));
+        } catch (Exception e) {
+            log.error("Error adding reply to comment ID: {}", parentCommentId, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
 
-//    @PreAuthorize("hasAuthority('USER')")
-//    @PostMapping(value = "/comment", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> addComment(@Valid @RequestBody CommentDTO commentDTO) {
-//        log.info("Received request to add comment for post ID: {}", commentDTO.getPost().getPostId());
-//        try {
-//            CommentDTO savedComment = profileService.addComment(commentDTO);
-//            log.info("Successfully added comment for post ID: {}", commentDTO.getPost().getPostId());
-//            return ResponseEntity.status(HttpStatus.CREATED)
-//                    .body(new ResponseDTO(VarList.Created, "Comment added successfully", savedComment));
-//        } catch (Exception e) {
-//            log.error("Error adding comment for post ID: {}", commentDTO.getPost().getPostId(), e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error adding comment", e.getMessage()));
-//        }
-//    }
-//
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/share", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> sharePost(@Valid @RequestBody PostShareDTO shareDTO) {
@@ -483,15 +466,16 @@ public class ProfileController {
                     CommentDTO commentDTO = new CommentDTO();
                     commentDTO.setCommentId(comment.getCommentId());
                     commentDTO.setContent(comment.getContent());
-                    commentDTO.setReactions(comment.getReactions().stream()
-                            .map(reaction -> modelMapper.map(reaction, ReactionDTO.class))
-                            .collect(Collectors.toList()));
-
+                    commentDTO.setCreatedAt(comment.getCreatedAt());
                     commentDTO.setReplies(comment.getReplies());
+                    commentDTO.setParentCommentId(comment.getParentCommentId());
+                    System.out.println(commentDTO.getParentCommentId());
+
 
                     // Convert and set user
                     UserDTO commentUserDTO = new UserDTO();
                     commentUserDTO.setUserId(comment.getUser().getUserId());
+                    commentUserDTO.setEmail(comment.getUser().getEmail());
                     commentUserDTO.setFirstName(comment.getUser().getFirstName());
                     commentUserDTO.setLastName(comment.getUser().getLastName());
                     commentUserDTO.setProfilePictureUrl(comment.getUser().getProfilePictureUrl());
@@ -501,7 +485,6 @@ public class ProfileController {
                 })
                 .collect(Collectors.toList()));
 
-        dto.setShares(post.getShares().size());
         dto.setLiked(post.getReactions().stream()
                 .anyMatch(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId())));
         dto.setReactionType(post.getReactions().stream()

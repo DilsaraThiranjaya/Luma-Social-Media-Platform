@@ -104,9 +104,6 @@ public class TimelineController {
                     CommentDTO commentDTO = new CommentDTO();
                     commentDTO.setCommentId(comment.getCommentId());
                     commentDTO.setContent(comment.getContent());
-                    commentDTO.setReactions(comment.getReactions().stream()
-                            .map(reaction -> modelMapper.map(reaction, ReactionDTO.class))
-                            .collect(Collectors.toList()));
 
                     commentDTO.setReplies(comment.getReplies());
 
@@ -121,8 +118,6 @@ public class TimelineController {
                     return commentDTO;
                 })
                 .collect(Collectors.toList()));
-
-        dto.setShares(post.getShares().size());
         dto.setLiked(post.getReactions().stream()
                 .anyMatch(reaction -> reaction.getUser().getEmail().equals(email)));
         dto.setReactionType(post.getReactions().stream()

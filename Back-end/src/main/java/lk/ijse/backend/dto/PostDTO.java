@@ -41,6 +41,4 @@ public class PostDTO {
     private List<CommentDTO> comments = new ArrayList<>();
 
     private List<ReactionDTO> reactions = new ArrayList<>();
-
-    private List<PostDTO> shares = new ArrayList<>();
 }

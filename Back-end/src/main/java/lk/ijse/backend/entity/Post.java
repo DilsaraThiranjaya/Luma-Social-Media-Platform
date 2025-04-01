@@ -40,14 +40,14 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_post_id")
-    @JsonBackReference("post-shares")
-    private Post parentPost;
+//    @ManyToOne
+//    @JoinColumn(name = "parent_post_id")
+//    @JsonBackReference("post-shares")
+//    private Post parentPost;
 
-    @OneToMany(mappedBy = "parentPost")
-    @JsonManagedReference("post-shares")
-    private List<Post> shares = new ArrayList<>();
+//    @OneToMany(mappedBy = "parentPost")
+//    @JsonManagedReference("post-shares")
+//    private List<Post> shares = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,orphanRemoval = true )
     @JsonManagedReference("post-media")

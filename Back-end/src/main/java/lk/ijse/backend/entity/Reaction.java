@@ -35,10 +35,10 @@ public class Reaction {
     @JsonBackReference("post-reactions")
     private Post post;
 
-    @ManyToOne
-    @JoinColumn(name = "comment_id")
-    @JsonBackReference("comment-reactions")
-    private Comment comment;
+//    @ManyToOne
+//    @JoinColumn(name = "comment_id")
+//    @JsonBackReference("comment-reactions")
+//    private Comment comment;
 
     public enum ReactionType { LIKE, LOVE, HAHA, WOW, SAD, ANGRY }
 }

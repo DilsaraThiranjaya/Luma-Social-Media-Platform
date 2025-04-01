@@ -15,6 +15,4 @@ public interface ReactionRepository extends JpaRepository<Reaction, Integer> {
     @Modifying
     @Query("DELETE FROM Reaction r WHERE r.user = :user AND r.post = :post")
     void deleteByUserAndPost(@Param("user") User user, @Param("post") Post post);
-
-    Reaction findByUserAndComment(User user, Comment comment);
 }

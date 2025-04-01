@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,9 @@ public class CommentDTO {
     @NotBlank(message = "Content cannot be blank")
     @Size(max = 1000, message = "Content must be less than or equal to 1000 characters")
     private String content;
-
+    private LocalDateTime createdAt;
     private UserDTO user;
     private PostDTO post;
     private int parentCommentId;
     private List<CommentDTO> replies = new ArrayList<>();
-    private List<ReactionDTO> reactions = new ArrayList<>();
-    private boolean liked;
-    private String reactionType;
 }

@@ -78,7 +78,7 @@ public class PostServiceImpl implements PostService {
                 pageRequest
         );
 
-        return posts.map(this::convertToDTO);
+        return posts.map(post -> convertToDTO(post, email));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class PostServiceImpl implements PostService {
                 pageRequest
         );
 
-        return posts.map(this::convertToDTO);
+        return posts.map(post -> convertToDTO(post, email));
     }
 
     @Override
@@ -114,13 +114,13 @@ public class PostServiceImpl implements PostService {
                     System.out.println("Update" + byUserAndPost.getReactionId());
                     byUserAndPost.setType(reactionDTO.getType());
                     reactionRepository.save(byUserAndPost);
-                    return new ResponseDTO(VarList.OK, "Updated", convertToDTO(post));
+                    return new ResponseDTO(VarList.OK, "Updated", convertToDTO(post, email));
                 } else {
                     // Delete reaction
                     System.out.println("Remove" + byUserAndPost.getReactionId());
                     // Delete using custom query
                     reactionRepository.deleteByUserAndPost(user, post); // Use the custom query
-                    return new ResponseDTO(VarList.OK, "Removed", convertToDTO(post));
+                    return new ResponseDTO(VarList.OK, "Removed", convertToDTO(post, email));
                 }
             } else {
                 // Add new reaction
@@ -129,7 +129,7 @@ public class PostServiceImpl implements PostService {
                 reaction.setUser(user);
                 reaction.setPost(post);
                 reactionRepository.save(reaction);
-                return new ResponseDTO(VarList.OK, "Added", convertToDTO(post));
+                return new ResponseDTO(VarList.OK, "Added", convertToDTO(post, email));
             }
         } catch (Exception e) {
             // Log the exception to identify issues
@@ -161,66 +161,7 @@ public class PostServiceImpl implements PostService {
         processMediaUpdates(post, postUpdateDTO);
 
         Post updatedPost = postRepository.save(post);
-        return convertToDTO(updatedPost);
-    }
-
-    @Override
-    public CommentDTO addComment(int postId, CommentDTO commentDTO, String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new EntityNotFoundException("User not found");
-        }
-
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
-
-        Comment comment = new Comment();
-        comment.setContent(commentDTO.getContent());
-        comment.setUser(user);
-        comment.setPost(post);
-
-        // Handle parent comment ID
-        if (commentDTO.getParentCommentId() != 0 && commentDTO.getParentCommentId() > 0) {
-            Comment parent = commentRepository.findById(commentDTO.getParentCommentId())
-                    .orElseThrow(() -> new RuntimeException("Parent comment not found"));
-            comment.setParentComment(parent);
-        }
-
-        Comment savedComment = commentRepository.save(comment);
-        return convertCommentToDTO(savedComment, user.getUserId());
-    }
-
-    @Override
-    public ResponseDTO addCommentReaction(int commentId, ReactionDTO reactionDTO, String email) {
-        User user = userRepository.findByEmail(email);
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
-
-        Reaction existing = reactionRepository.findByUserAndComment(user, comment);
-
-        if (existing != null) {
-            if (existing.getType() != reactionDTO.getType()) {
-                existing.setType(reactionDTO.getType());
-                reactionRepository.save(existing);
-                return new ResponseDTO(VarList.OK, "Reaction updated", null);
-            }
-            reactionRepository.delete(existing);
-            return new ResponseDTO(VarList.OK, "Reaction removed", null);
-        }
-
-        Reaction reaction = new Reaction();
-        reaction.setType(reactionDTO.getType());
-        reaction.setUser(user);
-        reaction.setComment(comment);
-        reactionRepository.save(reaction);
-        return new ResponseDTO(VarList.OK, "Reaction added", null);
-    }
-
-    @Override
-    public CommentDTO getComment(int parentCommentId) {
-        Comment comment = commentRepository.findById(parentCommentId)
-                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
-        return convertCommentToDTO(comment, comment.getUser().getUserId());
+        return convertToDTO(updatedPost, email);
     }
 
     private void processMediaUpdates(Post post, PostUpdateDTO updateDTO) {
@@ -281,11 +222,67 @@ public class PostServiceImpl implements PostService {
     public PostDTO getPost(int postId, String userEmail) throws Exception {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new Exception("Post not found"));
-        return convertToDTO(post);
+        return convertToDTO(post, userEmail);
+    }
+
+    @Override
+    public CommentDTO addComment(int postId, CommentDTO commentDTO, String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        Comment comment = new Comment();
+        comment.setContent(commentDTO.getContent());
+        comment.setUser(user);
+        comment.setPost(post);
+
+        Comment savedComment = commentRepository.save(comment);
+        return convertCommentToDTO(savedComment, email);
+    }
+
+    @Override
+    public void deleteComment(int commentId, String email) {
+        User user = userRepository.findByEmail(email);
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+
+        if (comment.getUser().getUserId() != user.getUserId()) {
+            throw new SecurityException("Unauthorized to delete this comment");
+        }
+
+        // Handle replies if needed
+        if (!comment.getReplies().isEmpty()) {
+            comment.getReplies().forEach(reply -> {
+                reply.setParentComment(null);
+                commentRepository.delete(reply);
+            });
+        }
+
+        commentRepository.delete(comment);
+    }
+
+    @Override
+    public CommentDTO addReply(int parentCommentId, CommentDTO commentDTO, String email) {
+        User user = userRepository.findByEmail(email);
+        Comment parentComment = commentRepository.findById(parentCommentId)
+                .orElseThrow(() -> new EntityNotFoundException("Parent comment not found"));
+
+        Comment reply = new Comment();
+        reply.setContent(commentDTO.getContent());
+        reply.setUser(user);
+        reply.setPost(parentComment.getPost());
+        reply.setParentComment(parentComment);
+
+        Comment savedReply = commentRepository.save(reply);
+        return convertCommentToDTO(savedReply, email);
     }
 
     // Ensure media is eagerly fetched in Post entity
-    private PostDTO convertToDTO(Post post) {
+    private PostDTO convertToDTO(Post post, String email) {
         // Initialize lazy-loaded collections before leaving transactional context
         Hibernate.initialize(post.getMedia());
         PostDTO postDTO = modelMapper.map(post, PostDTO.class);
@@ -315,32 +312,19 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList()));
 
         postDTO.setComments(post.getComments().stream()
-                .map(comment -> {
-                    CommentDTO commentDTO = new CommentDTO();
-                    commentDTO.setCommentId(comment.getCommentId());
-                    commentDTO.setContent(comment.getContent());
-
-                    // Convert and set user
-                    UserDTO commentUserDTO = new UserDTO();
-                    commentUserDTO.setUserId(comment.getUser().getUserId());
-                    commentUserDTO.setFirstName(comment.getUser().getFirstName());
-                    commentUserDTO.setLastName(comment.getUser().getLastName());
-                    commentUserDTO.setProfilePictureUrl(comment.getUser().getProfilePictureUrl());
-                    commentDTO.setUser(commentUserDTO);
-
-                    return commentDTO;
-                })
+                .map(comment -> convertCommentToDTO(comment, email))
                 .collect(Collectors.toList()));
 
         return postDTO;
     }
 
-    private CommentDTO convertCommentToDTO(Comment comment, int currentUserId) {
+    private CommentDTO convertCommentToDTO(Comment comment, String email) {
         CommentDTO dto = new CommentDTO();
         dto.setCommentId(comment.getCommentId());
         dto.setContent(comment.getContent());
+        dto.setCreatedAt(comment.getCreatedAt());
 
-        // Set parent comment ID if exists
+        // Set parent comment if exists
         if (comment.getParentComment() != null) {
             dto.setParentCommentId(comment.getParentComment().getCommentId());
         }
@@ -349,6 +333,7 @@ public class PostServiceImpl implements PostService {
         User commentUser = comment.getUser();
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(commentUser.getUserId());
+        userDTO.setEmail(commentUser.getEmail());
         userDTO.setFirstName(commentUser.getFirstName());
         userDTO.setLastName(commentUser.getLastName());
         userDTO.setProfilePictureUrl(commentUser.getProfilePictureUrl());
@@ -362,32 +347,11 @@ public class PostServiceImpl implements PostService {
         postDTO.setPrivacy(post.getPrivacy());
         postDTO.setCreatedAt(post.getCreatedAt());
 
-        // Convert reactions
-        dto.setReactions(comment.getReactions().stream()
-                .map(reaction -> {
-                    ReactionDTO reactionDTO = new ReactionDTO();
-                    reactionDTO.setReactionId(reaction.getReactionId());
-                    reactionDTO.setType(reaction.getType());
-                    reactionDTO.setCreatedAt(reaction.getCreatedAt());
-                    return reactionDTO;
-                })
-                .collect(Collectors.toList()));
-
-        // Check if current user reacted
-        dto.setLiked(comment.getReactions().stream()
-                .anyMatch(r -> r.getUser().getUserId()== currentUserId));
-
-        // Get current user's reaction type
-        comment.getReactions().stream()
-                .filter(r -> r.getUser().getUserId()== currentUserId)
-                .findFirst()
-                .ifPresent(r -> dto.setReactionType(String.valueOf(r.getType())));
-
         // Convert replies recursively
         if (!comment.getReplies().isEmpty()) {
             dto.setReplies(comment.getReplies().stream()
                     .sorted(Comparator.comparing(Comment::getCreatedAt))
-                    .map(reply -> convertCommentToDTO(reply, currentUserId))
+                    .map(reply -> convertCommentToDTO(reply, email))
                     .collect(Collectors.toList()));
         }
 

@@ -244,6 +244,7 @@ body {
 
 .dropdown-item:hover {
   background: var(--primary-color);
+  margin: 0 !important;
   color: white !important;
 }
 

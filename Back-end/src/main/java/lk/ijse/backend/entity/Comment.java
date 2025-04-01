@@ -49,9 +49,9 @@ public class Comment {
     @JsonManagedReference("comment-replies")
     private List<Comment> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
-    @JsonManagedReference("comment-reactions")
-    private List<Reaction> reactions = new ArrayList<>();
+//    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+//    @JsonManagedReference("comment-reactions")
+//    private List<Reaction> reactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     @JsonManagedReference("comment-notifications")

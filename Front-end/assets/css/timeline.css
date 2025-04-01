@@ -270,25 +270,28 @@ hr {
 /* ==========================================================================
    COMMENT SECTION STYLES
    ========================================================================== */
-.comment-section {
-  background-color: var(--light-color);
-  padding: 1rem;
-  border-top: 1px solid var(--border-color);
+.replies-container {
+  border-left: 2px solid #dee2e6;
+  padding-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .comment-bubble {
-  background-color: var(--secondary-color);
+  background-color: #e3d1ff !important;
   border-radius: 1rem;
-  padding: 0.75rem 1rem;
+  padding: 1rem;
+  color: black;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.comment-bubble strong {
-  font-size: 0.9rem;
+.comment-item {
+  transition: all 0.2s ease;
 }
 
-.comment-bubble p {
-  font-size: 0.9rem;
-  margin: 0;
+.comment-item:hover {
+  background-color: #f8f9fa;
 }
 
 /* ==========================================================================

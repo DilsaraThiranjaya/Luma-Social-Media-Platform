@@ -124,6 +124,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Initialize
         loadProfileInfo();
         loadPosts();
+        loadSidebarMedia('IMAGE', 'sidebarPhotosContainer');
+        loadSidebarMedia('VIDEO', 'sidebarVideosContainer', 3); // Show 1 video in sidebar
+        initializeSeeAllButtons();
 
         // Initialize tooltips
         const tooltipTriggerList = document.querySelectorAll(
@@ -987,10 +990,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         return;
                     }
 
-                    response.data.posts.forEach(post => {
+                    response.data.posts.map(post => {
                         const postElement = generatePostElement(post);
                         postsContainer.appendChild(postElement);
+                        return { postElement, post };
                     });
+
+                    // Then load comments for each post
+                    // for (const { postElement, post } of postElements) {
+                    //     if (post.comments.length > 0) {
+                    //         await loadPostComments(postElement);
+                    //     }
+                    // }
                 }
             } catch (error) {
                 Toast.fire({
@@ -1004,6 +1015,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         function generatePostElement(postData) {
             const newPost = document.createElement("div");
             newPost.className = "card post-card mb-3";
+            newPost.dataset.postId = postData.postId;
 
             // Format media content
             const mediaContent = (postData.media || []).map(media => {
@@ -1076,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ${reactionDisplay}
       </span>
       <span class="ms-auto">
-        ${postData.comments.length} Comments • ${postData.shares} Shares
+        ${postData.comments.length} Comments
       </span>
       </div>
     </div>
@@ -1088,12 +1100,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         </button>
         <button class="btn btn-light reaction-btn">
           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
-        </button>
-        <button class="btn btn-light reaction-btn share-post-btn" 
-                data-bs-toggle="modal" 
-                data-bs-target="#shareModal"
-                data-post-id="${postData.postId}">
-          <i class="bi bi-share"></i> <span class="ms-2">Share</span>
         </button>
       </div>
     </div>
@@ -1128,10 +1134,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       </a></li>
       <li><a class="dropdown-item text-danger delete-post-btn" data-post-id="${postId}">
         <i class="bi bi-trash me-2"></i>Delete
-      </a></li>
-      <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" data-post-id="${postId}">
-        <i class="bi bi-flag me-2"></i>Report
       </a></li>
     </ul>
   `;
@@ -1418,7 +1420,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             type: "DELETE",
                             headers: {"Authorization": "Bearer " + authData.token},
                             success: function (response) {
-                                Toast.fire({icon: "success", title: "Post deleted successfully"});
                                 loadPosts();
                             },
                             error: function (error) {
@@ -1600,26 +1601,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             const commentBtn = postElement.querySelector(".reaction-btn:nth-child(2)");
             if (commentBtn) {
                 commentBtn.addEventListener("click", function () {
+                    const postId = postElement.dataset.postId;
                     let commentSection = postElement.querySelector(".comment-section");
 
                     if (!commentSection) {
                         commentSection = document.createElement("div");
                         commentSection.className = "comment-section p-3 border-top";
+                        commentSection.dataset.postId = postId;
 
                         commentSection.innerHTML = `
-            <div class="d-flex">
-              <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
-              <div class="flex-grow-1">
-                <div class="input-group">
-                  <input type="text" class="form-control comment-input" placeholder="Write a comment...">
-                  <button class="btn btn-primary comment-send-btn" disabled>
-                    <i class="bi bi-send"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="comments-list mt-3"></div>
-          `;
+                             <div class="d-flex">
+                                 <div class="flex-grow-1">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control comment-input" placeholder="Write a comment...">
+                                        <button class="btn btn-primary comment-send-btn" disabled>
+                                            <i class="bi bi-send"></i>
+                                        </button>
+                                    </div>
+                                 </div>
+                               </div>
+                            <div class="comments-list mt-3"></div>
+                            `;
 
                         postElement
                             .querySelector(".card-footer")
@@ -1644,7 +1646,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         sendCommentBtn.addEventListener("click", function () {
                             const commentText = commentInput.value.trim();
                             if (commentText) {
-                                addComment(postElement, commentText);
+                                addComment(postElement, commentSection, commentText);
                                 commentInput.value = "";
                                 sendCommentBtn.disabled = true;
                             }
@@ -1652,7 +1654,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         commentInput.addEventListener("keypress", function (e) {
                             if (e.key === "Enter" && this.value.trim()) {
-                                addComment(postElement, this.value.trim());
+                                addComment(postElement, commentSection, this.value.trim());
                                 this.value = "";
                                 sendCommentBtn.disabled = true;
                             }
@@ -1660,6 +1662,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         // Focus the input
                         commentInput.focus();
+
+                        loadPostComments(postElement, commentSection);
                     } else {
                         // Toggle comment section
                         commentSection.classList.toggle("d-none");
@@ -1701,8 +1705,410 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, 1000);
         }
 
-        async function addComment(postElement, commentText, parentCommentId = null) {
-            const postId = postElement.closest('.post-card').dataset.postId;
+    //     async function addComment(postElement, commentSection, commentText, parentCommentId = 0) {
+    //         const postId = postElement.dataset.postId;
+    //
+    //         try {
+    //             const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${authData.token}`
+    //                 },
+    //                 body: JSON.stringify({
+    //                     content: commentText,
+    //                     parentCommentId: parentCommentId || 0
+    //                 })
+    //             });
+    //
+    //             if (!response.ok) throw new Error('Failed to add comment');
+    //
+    //             // Reload comments
+    //             await loadPostComments(postElement, commentSection);
+    //         } catch (error) {
+    //             Toast.fire({icon: 'error', title: error.message});
+    //         }
+    //     }
+    //
+    //     async function loadPostComments(postElement, commentSection) {
+    //         const postId = postElement.dataset.postId;
+    //         if (!postId) {
+    //             console.error("No postId found for post element");
+    //             return;
+    //         }
+    //
+    //         try {
+    //             const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+    //                 headers: {'Authorization': `Bearer ${authData.token}`}
+    //             });
+    //
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! status: ${response.status}`);
+    //             }
+    //
+    //             const responseData = await response.json();
+    //             if (responseData.code !== 200) {
+    //                 throw new Error(responseData.message || "Failed to load comments");
+    //             }
+    //
+    //             const commentsContainer = commentSection.querySelector('.comments-list');
+    //             commentsContainer.innerHTML = '';
+    //
+    //             // Update comment count
+    //             // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
+    //             // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
+    //             // commentCountElement.textContent = `${currentCount - 1} Comments`;
+    //
+    //             renderComments(commentsContainer, responseData.data.comments);
+    //         } catch (error) {
+    //             console.error("Error loading comments:", error);
+    //             Toast.fire({
+    //                 icon: "error",
+    //                 title: error.message || "Failed to load comments"
+    //             });
+    //         }
+    //     }
+    //
+    //     function renderComments(container, comments, depth = 0) {
+    //         container.innerHTML = '';
+    //
+    //         if (!comments || comments.length === 0) {
+    //             if (depth === 0) { // Only show "No comments" for top-level
+    //                 container.innerHTML = '<div class="text-muted">No comments yet</div>';
+    //             }
+    //             return;
+    //         }
+    //
+    //         comments.forEach(comment => {
+    //             const commentElement = createCommentElement(comment, depth);
+    //             container.appendChild(commentElement);
+    //
+    //             if (comment.replies && comment.replies.length > 0) {
+    //                 const repliesContainer = document.createElement('div');
+    //                 repliesContainer.className = `replies-container ms-${depth + 3}`; // Increased indentation
+    //                 renderComments(repliesContainer, comment.replies, depth + 1);
+    //                 commentElement.querySelector('.comment-bubble').appendChild(repliesContainer);
+    //             }
+    //         });
+    //     }
+    //
+    //     function createCommentElement(comment, depth) {
+    //         const commentEl = document.createElement('div');
+    //         commentEl.className = `comment-item my-2 ms-${depth * 3}`;
+    //         commentEl.dataset.commentId = comment.commentId;
+    //         commentEl.dataset.authorId = comment.user.userId;
+    //
+    //         commentEl.innerHTML = `
+    //     <div class="comment-bubble p-2 rounded">
+    //         <div class="d-flex align-items-center">
+    //             <img src="${comment.user.profilePictureUrl}"
+    //                  class="rounded-circle me-2"
+    //                  width="32" height="32">
+    //             <div>
+    //                 <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
+    //                 <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
+    //             </div>
+    //         </div>
+    //         <p class="mb-0 mt-2 ms-3">${comment.content}</p>
+    //         <div class="comment-actions mt-2">
+    //             <button class="btn btn-sm text-muted reply-btn">
+    //                 <i class="bi bi-reply"></i> Reply
+    //             </button>
+    //             ${comment.user.email === authData.email ? `
+    //             <button class="btn btn-sm text-danger delete-comment-btn">
+    //                 <i class="bi bi-trash"></i> Delete
+    //             </button>
+    //             ` : ''}
+    //         </div>
+    //         <div class="reply-input-container mt-2 d-none"></div>
+    //     </div>
+    // `;
+    //
+    //         // Add reply handler
+    //         commentEl.querySelector('.reply-btn').addEventListener('click', () => {
+    //             showReplyInput(commentEl, comment.commentId);
+    //         });
+    //
+    //         // Add delete handler
+    //         if (comment.user.email === authData.email) {
+    //             commentEl.querySelector('.delete-comment-btn').addEventListener('click', async () => {
+    //                 await deleteComment(commentEl);
+    //             });
+    //         }
+    //
+    //         return commentEl;
+    //     }
+    //
+    //     // Helper function to format comment date
+    //     function formatCommentDate(dateString) {
+    //         const date = new Date(dateString);
+    //         return date.toLocaleDateString('en-US', {
+    //             month: 'short',
+    //             day: 'numeric',
+    //             year: 'numeric',
+    //             hour: '2-digit',
+    //             minute: '2-digit'
+    //         });
+    //     }
+    //
+    //     async function deleteComment(commentElement) {
+    //         const commentId = commentElement.dataset.commentId;
+    //         const postElement = commentElement.closest('.post-card');
+    //
+    //         try {
+    //             const response = await fetch(`${BASE_URL}/profile/comments/${commentId}`, {
+    //                 method: 'DELETE',
+    //                 headers: {
+    //                     'Authorization': `Bearer ${authData.token}`
+    //                 }
+    //             });
+    //
+    //             if (response.ok) {
+    //                 commentElement.remove();
+    //                 // Update comment count
+    //                 // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
+    //                 // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
+    //                 // commentCountElement.textContent = `${currentCount - 1} Comments`;
+    //             }
+    //         } catch (error) {
+    //             Toast.fire({icon: 'error', title: 'Failed to delete comment'});
+    //         }
+    //     }
+    //
+    //     function showReplyInput(commentElement, parentCommentId) {
+    //         const inputContainer = commentElement.querySelector('.reply-input-container');
+    //         inputContainer.classList.remove('d-none');
+    //
+    //         if (!inputContainer.querySelector('.reply-input')) {
+    //             inputContainer.innerHTML = `
+    //         <div class="input-group mt-2">
+    //             <input type="text" class="form-control reply-input"
+    //                    placeholder="Write a reply...">
+    //             <button class="btn btn-primary btn-send-reply">
+    //                 <i class="bi bi-send"></i>
+    //             </button>
+    //         </div>
+    //     `;
+    //
+    //             const input = inputContainer.querySelector('.reply-input');
+    //             const sendBtn = inputContainer.querySelector('.btn-send-reply');
+    //
+    //             sendBtn.addEventListener('click', async () => {
+    //                 const replyText = input.value.trim();
+    //                 if (replyText) {
+    //                     const postElement = commentElement.closest('.post-card');
+    //                     const commentSection = postElement.querySelector('.comment-section');
+    //
+    //                     try {
+    //                         const response = await fetch(`${BASE_URL}/profile/comments/${parentCommentId}/reply`, {
+    //                             method: 'POST',
+    //                             headers: {
+    //                                 'Content-Type': 'application/json',
+    //                                 'Authorization': `Bearer ${authData.token}`
+    //                             },
+    //                             body: JSON.stringify({
+    //                                 content: replyText
+    //                             })
+    //                         });
+    //
+    //                         if (response.ok) {
+    //                             input.value = '';
+    //                             await loadPostComments(postElement, commentSection);
+    //                         }
+    //                     } catch (error) {
+    //                         Toast.fire({icon: 'error', title: 'Failed to post reply'});
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     }
+
+        // Main function to load and display comments
+        async function loadPostComments(postElement, commentSection) {
+            const postId = postElement.dataset.postId;
+            if (!postId) return;
+
+            try {
+                // Show loading state
+                const commentsContainer = commentSection.querySelector('.comments-list');
+                commentsContainer.innerHTML = '<div class="text-center py-3"><div class="spinner-border text-primary"></div></div>';
+
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+                    headers: {'Authorization': `Bearer ${authData.token}`}
+                });
+
+                if (!response.ok) throw new Error('Failed to load comments');
+
+                const responseData = await response.json();
+
+                if (responseData.code !== 200) {
+                    throw new Error(responseData.message || "Failed to load comments");
+                }
+
+                // Clear existing comments
+                commentsContainer.innerHTML = '';
+
+                if (!responseData.data.comments || responseData.data.comments.length === 0) {
+                    commentsContainer.innerHTML = '<div class="text-muted py-3">No comments yet</div>';
+                    return;
+                }
+
+                // Build comment tree
+                buildCommentHierarchy(commentsContainer, responseData.data.comments);
+
+            } catch (error) {
+                console.error("Error loading comments:", error);
+                const commentsContainer = commentSection.querySelector('.comments-list');
+                commentsContainer.innerHTML = `<div class="alert alert-danger">${error.message || "Failed to load comments"}</div>`;
+            }
+        }
+
+// Build hierarchical comment structure
+        function buildCommentHierarchy(container, comments, depth = 0) {
+            comments.forEach(comment => {
+                const commentElement = createCommentElement(comment, depth);
+                container.appendChild(commentElement);
+
+                // If comment has replies, render them nested
+                if (comment.replies && comment.replies.length > 0) {
+                    const repliesContainer = document.createElement('div');
+                    repliesContainer.className = 'replies-container';
+
+                    // Add visual indentation
+                    if (depth > 0) {
+                        repliesContainer.style.marginLeft = `${depth * 20}px`;
+                        repliesContainer.style.borderLeft = '2px solid #eee';
+                        repliesContainer.style.paddingLeft = '10px';
+                    }
+
+                    buildCommentHierarchy(repliesContainer, comment.replies, depth + 1);
+                    commentElement.appendChild(repliesContainer);
+                }
+            });
+        }
+
+// Create a single comment element
+        function createCommentElement(comment, depth = 0) {
+            const commentEl = document.createElement('div');
+            commentEl.className = 'comment-item';
+            commentEl.dataset.commentId = comment.commentId;
+            commentEl.dataset.authorId = comment.user.userId;
+
+            // Add depth-based styling for nested comments
+            if (depth > 0) {
+                commentEl.style.marginLeft = `${depth * 20}px`;
+            }
+
+            commentEl.innerHTML = `
+        <div class="comment-bubble p-3 rounded bg-light">
+            <div class="d-flex align-items-center">
+                <img src="${comment.user.profilePictureUrl || '/assets/image/Profile-picture.png'}" 
+                     class="rounded-circle me-2" 
+                     width="40" height="40">
+                <div>
+                    <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
+                    <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
+                </div>
+            </div>
+            <p class="mb-0 mt-2">${comment.content}</p>
+            <div class="comment-actions mt-2 d-flex">
+                <button class="btn btn-sm text-muted reply-btn me-2">
+                    <i class="bi bi-reply"></i> Reply
+                </button>
+                ${comment.user.email === authData.email ? `
+                <button class="btn btn-sm text-danger delete-comment-btn">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+                ` : ''}
+            </div>
+            <div class="reply-input-container mt-2 d-none"></div>
+        </div>
+    `;
+
+            // Add reply handler
+            const replyBtn = commentEl.querySelector('.reply-btn');
+            if (replyBtn) {
+                replyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showReplyInput(commentEl, comment.commentId);
+                });
+            }
+
+            // Add delete handler for own comments
+            if (comment.user.email === authData.email) {
+                const deleteBtn = commentEl.querySelector('.delete-comment-btn');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        await deleteComment(commentEl);
+                    });
+                }
+            }
+
+            return commentEl;
+        }
+
+// Helper function to format comment date
+        function formatCommentDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+// Show reply input field
+        function showReplyInput(commentElement, parentCommentId) {
+            let inputContainer = commentElement.querySelector('.reply-input-container');
+
+            // Create input if it doesn't exist
+            if (!inputContainer.querySelector('.reply-input')) {
+                inputContainer.innerHTML = `
+            <div class="input-group mt-2">
+                <input type="text" class="form-control reply-input" 
+                       placeholder="Write a reply..." autocomplete="off">
+                <button class="btn btn-primary btn-send-reply">
+                    <i class="bi bi-send"></i>
+                </button>
+            </div>
+        `;
+
+                const input = inputContainer.querySelector('.reply-input');
+                const sendBtn = inputContainer.querySelector('.btn-send-reply');
+
+                // Handle sending reply
+                const handleSendReply = async () => {
+                    const replyText = input.value.trim();
+                    if (!replyText) return;
+
+                    const postElement = commentElement.closest('.post-card');
+                    const commentSection = postElement?.querySelector('.comment-section');
+
+                    try {
+                        await addComment(postElement, commentSection, replyText, parentCommentId);
+                        input.value = '';
+                        inputContainer.classList.add('d-none');
+                    } catch (error) {
+                        Toast.fire({icon: 'error', title: 'Failed to post reply'});
+                    }
+                };
+
+                sendBtn.addEventListener('click', handleSendReply);
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') handleSendReply();
+                });
+            }
+
+            inputContainer.classList.remove('d-none');
+            inputContainer.querySelector('.reply-input').focus();
+        }
+
+// Add a new comment or reply
+        async function addComment(postElement, commentSection, commentText, parentCommentId = null) {
+            const postId = postElement.dataset.postId;
 
             try {
                 const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
@@ -1713,202 +2119,140 @@ document.addEventListener('DOMContentLoaded', async () => {
                     },
                     body: JSON.stringify({
                         content: commentText,
-                        parentCommentId: parentCommentId || null
+                        parentCommentId: parentCommentId
                     })
                 });
 
                 if (!response.ok) throw new Error('Failed to add comment');
 
-                // Refresh comments for this post
-                await loadPostComments(postElement);
+                // Reload comments to show the new one
+                await loadPostComments(postElement, commentSection);
+
             } catch (error) {
-                Toast.fire({icon: 'error', title: error.message});
+                console.error("Error adding comment:", error);
+                throw error;
             }
         }
 
-        async function loadPostComments(postElement) {
-            const postId = postElement.closest('.post-card').dataset.postId;
+// Delete a comment
+        async function deleteComment(commentElement) {
+            const result = await Swal.fire({
+                title: 'Delete Comment?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            });
+
+            if (!result.isConfirmed) return;
+
+            const commentId = commentElement.dataset.commentId;
+            const postElement = commentElement.closest('.post-card');
+            const commentSection = postElement?.querySelector('.comment-section');
+
             try {
-                const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
-                    headers: {'Authorization': `Bearer ${authData.token}`}
+                const response = await fetch(`${BASE_URL}/profile/comments/${commentId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
                 });
 
-                const {data} = await response.json();
-                renderComments(postElement, data.comments);
+                if (!response.ok) throw new Error('Failed to delete comment');
+
+                // Reload comments if we have the context
+                if (postElement && commentSection) {
+                    await loadPostComments(postElement, commentSection);
+                } else {
+                    commentElement.remove();
+                }
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Comment deleted'
+                });
+
             } catch (error) {
-                Toast.fire({icon: 'error', title: 'Failed to load comments'});
+                console.error("Error deleting comment:", error);
+                Toast.fire({icon: 'error', title: 'Failed to delete comment'});
             }
         }
-
-        function renderComments(container, comments, depth = 0) {
-            const commentsList = container.querySelector('.comments-list') || createCommentsContainer(container);
-            commentsList.innerHTML = '';
-
-            comments.forEach(comment => {
-                const commentElement = createCommentElement(comment, depth);
-                commentsList.appendChild(commentElement);
-                if (comment.replies.length > 0) {
-                    renderReplies(commentElement, comment.replies, depth + 1);
-                }
-            });
-        }
-
-        function createCommentElement(comment, depth) {
-            const commentEl = document.createElement('div');
-            commentEl.className = `comment-item mb-2 ms-${depth * 3}`;
-            commentEl.innerHTML = `
-        <div class="comment-bubble p-2 rounded">
-            <div class="d-flex align-items-center">
-                <img src="${comment.user.profilePictureUrl}" 
-                     class="rounded-circle me-2" 
-                     width="32" height="32">
-                <div>
-                    <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
-                    <small class="text-muted">${new Date(comment.createdAt).toLocaleString()}</small>
-                </div>
-            </div>
-            <p class="mb-0 mt-2">${comment.content}</p>
-            <div class="comment-actions mt-2">
-                <button class="btn btn-sm reaction-btn ${comment.liked ? 'text-primary' : 'text-muted'}">
-                    <i class="bi ${comment.reactionType ? REACTION_TYPES[comment.reactionType].fillIcon : 'bi-hand-thumbs-up'}"></i>
-                    ${comment.reactions.length || ''}
-                </button>
-                <button class="btn btn-sm text-muted reply-btn">Reply</button>
-            </div>
-        </div>
-    `;
-
-            // Add reaction handler
-            commentEl.querySelector('.reaction-btn').addEventListener('click', async () => {
-                // Implement comment reaction logic
-            });
-
-            // Add reply handler
-            commentEl.querySelector('.reply-btn').addEventListener('click', () => {
-                showReplyInput(commentEl, comment.commentId);
-            });
-
-            return commentEl;
-        }
-
-        // function addReply(commentElement, replyText) {
-        //   // Create reply element
-        //   const replyElement = document.createElement("div");
-        //   replyElement.className =
-        //       "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
-        //
-        //   // Format current time
-        //   const now = new Date();
-        //   const options = { hour: "numeric", minute: "numeric", hour12: true };
-        //   const time = new Intl.DateTimeFormat("en-US", options).format(now);
-        //
-        //   replyElement.innerHTML = `
-        //   <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-        //   <div>
-        //     <div class="comment-bubble p-2 rounded">
-        //       <strong>Dilsara Thiranjaya</strong>
-        //       <p class="mb-0">${replyText}</p>
-        //     </div>
-        //     <div class="comment-actions">
-        //       <small class="text-muted">${time}</small>
-        //       <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-        //     </div>
-        //   </div>
-        // `;
-        //
-        //   // Add to comment element
-        //   commentElement.appendChild(replyElement);
-        //
-        //   // Remove animation after it completes
-        //   setTimeout(() => {
-        //     replyElement.classList.remove("new-comment-animation");
-        //   }, 500);
-        //
-        //   // Add like functionality to reply
-        //   const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
-        //   likeReplyBtn.addEventListener("click", function () {
-        //     this.classList.toggle("comment-liked");
-        //     if (this.classList.contains("comment-liked")) {
-        //       this.innerHTML = "Liked";
-        //     } else {
-        //       this.innerHTML = "Like";
-        //     }
-        //   });
-        // }
 
         // Add interactions to existing posts
         document.querySelectorAll(".post-card").forEach((post) => {
             addPostInteractions(post);
         });
 
-        document.addEventListener("click", function (e) {
-            if (e.target.closest(".share-post-btn")) {
-                const post = e.target.closest(".post-card");
-                const postContent = post.querySelector(".card-body p").textContent;
-                const shareModal = new bootstrap.Modal(
-                    document.getElementById("shareModal")
-                );
-
-                // Set modal textarea to post content
-                document.getElementById("shareModal").querySelector("textarea").value =
-                    postContent;
-
-                // Show the modal
-                shareModal.show();
-            }
-        });
+        // document.addEventListener("click", function (e) {
+        //     if (e.target.closest(".share-post-btn")) {
+        //         const post = e.target.closest(".post-card");
+        //         const postContent = post.querySelector(".card-body p").textContent;
+        //         const shareModal = new bootstrap.Modal(
+        //             document.getElementById("shareModal")
+        //         );
+        //
+        //         // Set modal textarea to post content
+        //         document.getElementById("shareModal").querySelector("textarea").value =
+        //             postContent;
+        //
+        //         // Show the modal
+        //         shareModal.show();
+        //     }
+        // });
 
         // Share Modal Handler
-        document
-            .getElementById("shareModal")
-            .querySelector(".btn-post")
-            .addEventListener("click", function () {
-                const shareMessage = document
-                    .getElementById("shareModal")
-                    .querySelector("textarea").value;
-                const privacy = document
-                    .querySelector(".btn-share-option.active")
-                    .textContent.trim();
-
-                // Add shared post to timeline (example function)
-                createNewPost(`Shared with ${privacy}: \n\n ${shareMessage}`, []);
-
-                // Hide the modal
-                const shareModal = bootstrap.Modal.getInstance(
-                    document.getElementById("shareModal")
-                );
-                shareModal.hide();
-            });
-
-        // Share Option Selection
-        document.querySelectorAll(".btn-share-option").forEach((btn) => {
-            btn.addEventListener("click", function () {
-                document
-                    .querySelectorAll(".btn-share-option")
-                    .forEach((b) => b.classList.remove("active"));
-                this.classList.add("active");
-            });
-        });
+        // document
+        //     .getElementById("shareModal")
+        //     .querySelector(".btn-post")
+        //     .addEventListener("click", function () {
+        //         const shareMessage = document
+        //             .getElementById("shareModal")
+        //             .querySelector("textarea").value;
+        //         const privacy = document
+        //             .querySelector(".btn-share-option.active")
+        //             .textContent.trim();
+        //
+        //         // Add shared post to timeline (example function)
+        //         createNewPost(`Shared with ${privacy}: \n\n ${shareMessage}`, []);
+        //
+        //         // Hide the modal
+        //         const shareModal = bootstrap.Modal.getInstance(
+        //             document.getElementById("shareModal")
+        //         );
+        //         shareModal.hide();
+        //     });
+        //
+        // // Share Option Selection
+        // document.querySelectorAll(".btn-share-option").forEach((btn) => {
+        //     btn.addEventListener("click", function () {
+        //         document
+        //             .querySelectorAll(".btn-share-option")
+        //             .forEach((b) => b.classList.remove("active"));
+        //         this.classList.add("active");
+        //     });
+        // });
 
         // Clean up backdrop and styles after modal is hidden
-        document
-            .getElementById("shareModal")
-            .addEventListener("hidden.bs.modal", function () {
-                // Remove the backdrop manually if it's stuck
-                const modalBackdrop = document.querySelector(".modal-backdrop");
-                if (modalBackdrop) {
-                    modalBackdrop.remove();
-                }
-
-                // Ensure 'modal-open' class is removed from the body
-                document.body.classList.remove("modal-open");
-
-                // Reset any inline padding-right (used to compensate for scrollbar)
-                document.body.style.paddingRight = "";
-
-                // Re-enable scrolling in case it's disabled
-                document.body.style.overflow = ""; // Ensures scrolling is allowed
-            });
+        // document
+        //     .getElementById("shareModal")
+        //     .addEventListener("hidden.bs.modal", function () {
+        //         // Remove the backdrop manually if it's stuck
+        //         const modalBackdrop = document.querySelector(".modal-backdrop");
+        //         if (modalBackdrop) {
+        //             modalBackdrop.remove();
+        //         }
+        //
+        //         // Ensure 'modal-open' class is removed from the body
+        //         document.body.classList.remove("modal-open");
+        //
+        //         // Reset any inline padding-right (used to compensate for scrollbar)
+        //         document.body.style.paddingRight = "";
+        //
+        //         // Re-enable scrolling in case it's disabled
+        //         document.body.style.overflow = ""; // Ensures scrolling is allowed
+        //     });
 
 
         // Function to load media
@@ -1998,6 +2342,67 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         });
+
+        // Load sidebar media
+        async function loadSidebarMedia(type, containerId, limit = 3) {
+            try {
+                const media = await loadMedia(type);
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+
+                media.slice(0, limit).forEach(item => {
+                    const col = document.createElement('div');
+                    col.className = 'col-4';
+
+                    const card = document.createElement('div');
+                    card.className = `media-card ${type.toLowerCase()}-card`;
+                    card.innerHTML = `
+                ${type === 'IMAGE' ?
+                        `<img src="${item.mediaUrl}" class="img-fluid rounded media-image" alt="Photo">` :
+                        `<video class="img-fluid rounded media-video" src="${item.mediaUrl}"></video>`}
+                <div class="media-overlay">
+                    <button class="btn btn-light btn-sm view-media-btn">
+                        <i class="bi ${type === 'IMAGE' ? 'bi-zoom-in' : 'bi-play-fill'}"></i>
+                    </button>
+                </div>
+            `;
+
+                    card.querySelector('.view-media-btn').addEventListener('click', () => {
+                        showMediaModal(item.mediaUrl, item.mediaType);
+                    });
+
+                    col.appendChild(card);
+                    container.appendChild(col);
+                });
+            } catch (error) {
+                Toast.fire({ icon: 'error', title: `Failed to load ${type.toLowerCase()}s` });
+            }
+        }
+
+// Handle "See All" clicks
+        function initializeSeeAllButtons() {
+            document.querySelectorAll('.see-all-photos').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const photosTab = document.querySelector('[data-bs-target="#photos"]');
+                    if (photosTab) {
+                        const tab = new bootstrap.Tab(photosTab);
+                        tab.show();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.see-all-videos').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const videosTab = document.querySelector('[data-bs-target="#videos"]');
+                    if (videosTab) {
+                        const tab = new bootstrap.Tab(videosTab);
+                        tab.show();
+                    }
+                });
+            });
+        }
     }
 });
 
