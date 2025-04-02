@@ -36,7 +36,7 @@ public class SearchController {
             Map<String, Object> results = new HashMap<>();
 
             // Get users matching query
-            List<UserDTO> users = userService.searchUsers(q, limit);
+            List<UserDTO> users = userService.searchUsers(q, limit, email);
             results.put("users", users);
 
             // Get posts matching query

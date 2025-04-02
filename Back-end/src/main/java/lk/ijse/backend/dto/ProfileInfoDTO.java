@@ -1,12 +1,14 @@
 package lk.ijse.backend.dto;
 
 import jakarta.validation.constraints.*;
+import lk.ijse.backend.entity.Friendship;
 import lk.ijse.backend.entity.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -49,4 +51,6 @@ public class ProfileInfoDTO {
     private List<EducationDTO> education;
 
     private List<WorkExperienceDTO> workExperience;
+
+    private List<Friendship> friendshipsReceived;
 }

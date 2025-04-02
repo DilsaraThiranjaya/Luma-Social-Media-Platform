@@ -722,11 +722,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div>
           <h6 class="mb-0">${postData.user.firstName} ${postData.user.lastName}</h6>
           <small class="text-muted">
-            ${new Date(postData.createdAt || Date.now()).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric"
-            })} • 
+            ${formatCommentDate(postData.createdAt)} • 
             <i class="bi ${getPrivacyIcon(postData.privacy)}"></i> 
             ${output}
           </small>
@@ -1478,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                      width="32" height="32">
                 <div>
                     <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
-                    <small class="text-muted">${new Date(comment.createdAt).toLocaleString()}</small>
+                    <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
                 </div>
             </div>
             <p class="mb-0 mt-2 ms-3">${comment.content}</p>
@@ -1509,6 +1505,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             return commentEl;
+        }
+
+        // Helper function to format comment date
+        function formatCommentDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diff = now - date;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (days > 7) {
+                return date.toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric"
+                })
+            } else if (days > 0) {
+                return `${days}d ago`;
+            } else if (hours > 0) {
+                return `${hours}h ago`;
+            } else if (minutes > 0) {
+                return `${minutes}m ago`;
+            } else {
+                return 'Just now';
+            }
         }
 
         async function deleteComment(commentElement) {

@@ -12,6 +12,7 @@ import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -306,12 +307,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> searchPosts(String query, int limit, String email) {
+    public List<PostDTO> searchPosts(String query, int limit, String currentUserEmail) {
+        User currentUser = userRepository.findByEmail(currentUserEmail);
+        if (currentUser == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
         String searchTerm = "%" + query.toLowerCase() + "%";
-        return postRepository.findByContentLikeAndPrivacyOrderByCreatedAtDesc(
-                        searchTerm, Post.PrivacyLevel.PUBLIC, PageRequest.of(0, limit))
-                .stream()
-                .map(post -> convertToDTO((Post) post, email))
+        return postRepository.findByContentLikeAndPrivacyAndUserIsProfilePublicTrue(
+                        searchTerm,
+                        Post.PrivacyLevel.PUBLIC,
+                        currentUser.getUserId(),
+                        PageRequest.of(0, limit)
+                ).stream()
+                .map(post -> convertToDTO((Post) post, currentUserEmail))
                 .collect(Collectors.toList());
     }
 

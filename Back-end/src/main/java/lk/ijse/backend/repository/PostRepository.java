@@ -32,8 +32,10 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Post> findAllVisiblePostsByUserId(@Param("userId") int userId, Pageable pageable);
 
     @Query("SELECT p FROM Post p WHERE " +
-            "LOWER(p.content) LIKE :content AND " +
-            "p.privacy = :privacy " +
+            "LOWER(p.content) LIKE LOWER(CONCAT('%', :searchTerm, '%')) AND " +
+            "p.privacy = :privacy AND " +
+            "p.user.isProfilePublic = true AND " +
+            "(p.user.userId <> :currentUserId OR p.user.userId = :currentUserId) " +
             "ORDER BY p.createdAt DESC")
-    Page<Post> findByContentLikeAndPrivacyOrderByCreatedAtDesc(String content, Post.PrivacyLevel privacy, Pageable pageable);
+    Page<Post> findByContentLikeAndPrivacyAndUserIsProfilePublicTrue(@Param("searchTerm") String searchTerm, @Param("privacy") Post.PrivacyLevel privacy, @Param("currentUserId") int currentUserId, Pageable pageable);
 }

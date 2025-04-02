@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const LOGIN_URL = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
   const BASE_URL = "http://localhost:8080/api/v1";
 
+  // Get user ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileUserId = urlParams.get('id');
+
+  if (!profileUserId) {
+    window.location.href = '/Luma-Social-Media-Platform/Front-end/pages/timeline.html';
+    return;
+  }
+
   const handleAuthError = async (message) => {
     await Swal.fire({
       title: "Access Denied!",
@@ -18,20 +27,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   function isTokenExpired(token) {
     try {
       const {exp} = jwt_decode(token);
-      return Date.now() >= exp * 1000; // Correct if `exp` is in seconds
+      return Date.now() >= exp * 1000;
     } catch (error) {
-      return true; // Treat invalid tokens as expired
+      return true;
     }
   }
 
   function getRoleFromToken(token) {
     try {
       const decoded = jwt_decode(token);
-
-      // Check different possible claim names for role
       return decoded.role ||
-          decoded.roles?.[0] || // if it's an array
-          decoded.authorities?.[0]?.replace('ROLE_', '') || // Spring format
+          decoded.roles?.[0] ||
+          decoded.authorities?.[0]?.replace('ROLE_', '') ||
           null;
     } catch (error) {
       throw error;
@@ -40,7 +47,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (authData?.token) {
     try {
-      // Check token expiration first
       if (isTokenExpired(authData.token)) {
         await refreshAuthToken();
       }
@@ -57,28 +63,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   async function refreshAuthToken() {
     try {
       const authData = JSON.parse(sessionStorage.getItem('authData'));
-
-      // Send refreshToken in the request body
       const response = await fetch(`${BASE_URL}/auth/refreshToken`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json' // Required for JSON body
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          refreshToken: authData.token // Use the token from storage
+          refreshToken: authData.token
         })
       });
 
       if (!response.ok) throw new Error('Refresh failed');
-
-      // Parse the response and extract the new access token from data
       const responseData = await response.json();
       const newAccessToken = responseData.data.token;
-
-      // Update the stored access token
       const newAuthData = {...authData, token: newAccessToken};
       sessionStorage.setItem('authData', JSON.stringify(newAuthData));
-
       return newAccessToken;
     } catch (error) {
       throw error;
@@ -108,7 +107,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function initializeUI() {
-    //Toast Configs
     const Toast = Swal.mixin({
       toast: true,
       position: "bottom-end",
@@ -121,601 +119,1155 @@ document.addEventListener('DOMContentLoaded', async () => {
       timerProgressBar: true,
     });
 
-    // Initialize tooltips
-    const tooltipTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-    );
+    // Initialize
+    loadProfileInfo();
+    // loadPosts();
+    // initializeReportModal();
+    // loadSidebarMedia('IMAGE', 'sidebarPhotosContainer');
+    // loadSidebarMedia('VIDEO', 'sidebarVideosContainer', 3);
+    // initializeSeeAllButtons();
+    initializeFriendshipButtons();
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(
         (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
     );
 
-    // Add friend button toggle
-    $('.btn-primary:contains("Follow")').click(function () {
-      const $btn = $(this);
-      if ($btn.hasClass("following")) {
-        $btn
-            .html('<i class="bi bi-plus-lg"></i> Follow')
-            .removeClass("following btn-outline-primary")
-            .addClass("btn-primary");
-      } else {
-        $btn
-            .html('<i class="bi bi-check-lg"></i> Following')
-            .addClass("following btn-outline-primary")
-            .removeClass("btn-primary");
-      }
-    });
-
-    // Photo overlay effect
-    $(".photo-card").hover(
-        function () {
-          $(this).find(".photo-overlay").css("opacity", "1");
-        },
-        function () {
-          $(this).find(".photo-overlay").css("opacity", "0");
-        }
-    );
-
-    function createNewPost(text, mediaItems) {
-      const timelineContainer = document.querySelector(".posts-container");
-      const newPost = document.createElement("div");
-      newPost.className = "card post-card mb-3 new-post-animation";
-
-      // Format media content
-      const mediaContent = mediaItems
-          .map((item) => {
-            const media = item.querySelector("img, video");
-            return media
-                ? media.outerHTML.replace('class="', 'class="img-fluid rounded mb-3 ')
-                : "";
-          })
-          .join("");
-
-      // Current date
-      const formattedDate = new Date().toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      });
-
-      newPost.innerHTML = `
-    <div class="card-header bg-transparent">
-      <div class="d-flex align-items-center timline-post-item">
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2">
-        <div>
-          <h6 class="mb-0">Dilsara Thiranjaya</h6>
-          <small class="text-muted">${formattedDate} • <i class="bi ${
-          selectedPrivacy.icon
-      }"></i> ${selectedPrivacy.text}</small>
-        </div>
-        <div class="ms-auto">
-          <button class="btn btn-light btn-sm">
-            <i class="bi bi-three-dots"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="card-body">
-      <p>${text.replace(/\n/g, "<br>")}</p>
-      ${mediaContent}
-      <div class="post-stats d-flex align-items-center text-muted">
-        <span><i class="bi bi-hand-thumbs-up-fill text-primary"></i> 0</span>
-        <span class="ms-auto">0 Comments • 0 Shares</span>
-      </div>
-    </div>
-    <div class="card-footer bg-transparent">
-      <div class="post-actions d-flex justify-content-around">
-        <button class="btn btn-light reaction-btn">
-          <i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>
-        </button>
-        <button class="btn btn-light reaction-btn">
-          <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
-        </button>
-        <button class="btn btn-light reaction-btn share-post-btn" data-bs-toggle="modal" data-bs-target="#shareModal>
-          <i class="bi bi-share"></i> <span class="ms-2">Share</span>
-        </button>
-      </div>
-    </div>
-  `;
-
-      // Add the new post to the timeline
-      timelineContainer.prepend(newPost);
-
-      // Add reaction event listeners to the new post
-      addPostInteractions(newPost);
-
-      // Remove animation class after animation completes
-      setTimeout(() => {
-        newPost.classList.remove("new-post-animation");
-      }, 500);
-    }
-
-    const REACTION_TYPES = {
-      LIKE: { icon: 'bi-hand-thumbs-up', fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary' },
-      LOVE: { icon: 'bi-heart', fillIcon: 'bi-heart-fill', color: 'text-danger' },
-      HAHA: { icon: 'bi-emoji-laughing', fillIcon: 'bi-emoji-laughing-fill', color: 'text-warning' },
-      WOW: { icon: 'bi-emoji-surprise', fillIcon: 'bi-emoji-surprise-fill', color: 'text-warning' },
-      SAD: { icon: 'bi-emoji-frown', fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary' },
-      ANGRY: { icon: 'bi-emoji-angry', fillIcon: 'bi-emoji-angry-fill', color: 'text-danger' }
-    };
-
-    function createReactionPopup(likeBtn) {
-      const popup = document.createElement('div');
-      popup.className = 'reaction-popup';
-      popup.style.position = 'absolute';
-      popup.style.bottom = '100%';
-      popup.style.left = '50%';
-      popup.style.transform = 'translateX(-50%)';
-      popup.style.background = 'white';
-      popup.style.padding = '8px';
-      popup.style.borderRadius = '20px';
-      popup.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-      popup.style.display = 'flex';
-      popup.style.gap = '8px';
-      popup.style.zIndex = '1000';
-
-      Object.entries(REACTION_TYPES).forEach(([type, {icon, fillIcon, color}]) => {
-        const reactionBtn = document.createElement('button');
-        reactionBtn.className = `btn btn-light reaction-option ${color}`;
-        reactionBtn.innerHTML = `<i class="bi ${fillIcon}"></i>`;
-        reactionBtn.style.padding = '4px';
-        reactionBtn.style.minWidth = '32px';
-        reactionBtn.style.height = '32px';
-        reactionBtn.style.borderRadius = '50%';
-
-        reactionBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          handleReaction(likeBtn, type);
-          popup.remove();
-        });
-
-        // Hover animation
-        reactionBtn.addEventListener('mouseenter', () => {
-          reactionBtn.style.transform = 'scale(1.2)';
-          reactionBtn.style.transition = 'transform 0.2s';
-        });
-
-        reactionBtn.addEventListener('mouseleave', () => {
-          reactionBtn.style.transform = 'scale(1)';
-        });
-
-        popup.appendChild(reactionBtn);
-      });
-
-      return popup;
-    }
-
-    async function handleReaction(likeBtn, reactionType) {
-      const post = likeBtn.closest('.post-card');
-      const reactionCount = post.querySelector('.post-stats span:first-child');
-      const currentType = likeBtn.dataset.reactionType;
-
-      // Remove existing reaction class and icon
-      if (currentType) {
-        likeBtn.classList.remove(REACTION_TYPES[currentType].color);
-        likeBtn.querySelector('i').classList.remove(REACTION_TYPES[currentType].fillIcon);
-        likeBtn.querySelector('i').classList.add(REACTION_TYPES[currentType].icon);
-      }
-
-      // If clicking the same reaction, remove it
-      if (currentType === reactionType) {
-        likeBtn.dataset.reactionType = '';
-        likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span class="ms-2">Like</span>';
-        updateReactionCount(reactionCount, -1);
-        return;
-      }
-
-      // Add new reaction
-      likeBtn.dataset.reactionType = reactionType;
-      likeBtn.classList.add(REACTION_TYPES[reactionType].color);
-      likeBtn.innerHTML = `
-        <i class="bi ${REACTION_TYPES[reactionType].fillIcon}"></i>
-        <span class="ms-2">${reactionType}</span>
-    `;
-
-      // If there was no previous reaction, increment the count
-      if (!currentType) {
-        updateReactionCount(reactionCount, 1);
-      }
-
-      // Create reaction animation
-      createReactionAnimation(likeBtn, reactionType);
-
-      // Send reaction to server
+    async function loadProfileInfo() {
       try {
-        const response = await fetch('/api/v1/profile/reaction', {
-          method: 'POST',
+        const response = await fetch(`${BASE_URL}/profile/user/${profileUserId}/profileInfo`, {
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorage.getItem('authToken')}`
-          },
-          body: JSON.stringify({
-            type: reactionType,
-            postId: post.dataset.postId
-          })
+            'Authorization': `Bearer ${authData.token}`
+          }
         });
+        const responseData = await response.json();
 
-        if (!response.ok) {
-          throw new Error('Failed to save reaction');
+        if (responseData.code === 200 || responseData.code === 201) {
+          const user = responseData.data;
+          updateProfileUI(user);
+          updateFriendshipStatus(user.friendshipStatus);
+        } else {
+          await Toast.fire({
+            icon: "error",
+            title: responseData.message
+          });
         }
       } catch (error) {
-        console.error('Error saving reaction:', error);
-        // Revert the UI changes if the server request fails
-        handleReaction(likeBtn, currentType || '');
+        await Toast.fire({
+          icon: "error",
+          title: error.message || "Failed to load user data"
+        });
       }
     }
 
-    // Add interactions to posts (like, comment, share)
-    function addPostInteractions(postElement) {
-      if (!postElement) return;
+    function updateProfileUI(user) {
+      // Update profile information
+      document.getElementById('profileName').textContent = `${user.firstName} ${user.lastName}`;
 
-      // Like functionality
-      const likeBtn = postElement.querySelector(".reaction-btn:first-child");
-      if (likeBtn) {
-        likeBtn.addEventListener('mouseenter', () => {
-          reactionTimeout = setTimeout(() => {
-            const popup = createReactionPopup(likeBtn);
-            likeBtn.appendChild(popup);
-          }, 500);
-        });
-
-        likeBtn.addEventListener('mouseleave', () => {
-          clearTimeout(reactionTimeout);
-          const popup = likeBtn.querySelector('.reaction-popup');
-          if (popup) {
-            popup.remove();
-          }
-        });
-
-        likeBtn.addEventListener('click', () => {
-          handleReaction(likeBtn, 'LIKE');
-        });
+      if (user.profilePictureUrl) {
+        document.getElementById('profileImage').src = user.profilePictureUrl;
+      }
+      if (user.coverPhotoUrl) {
+        document.getElementById('coverImage').src = user.coverPhotoUrl;
       }
 
-      // Comment functionality
-      const commentBtn = postElement.querySelector(".reaction-btn:nth-child(2)");
-      if (commentBtn) {
-        commentBtn.addEventListener("click", function () {
-          let commentSection = postElement.querySelector(".comment-section");
+      // Update about section if visible
+      if (user.isProfilePublic) {
+        updateAboutSection(user);
+      }
 
-          if (!commentSection) {
-            commentSection = document.createElement("div");
-            commentSection.className = "comment-section p-3 border-top";
+      // Update stats
+      document.getElementById('postCount').textContent = user.post.length || 0;
+      document.getElementById('friendCount').textContent = user.friendshipsReceived.length || 0;
+    }
 
-            commentSection.innerHTML = `
-            <div class="d-flex">
-              <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2" width="32" height="32">
-              <div class="flex-grow-1">
-                <div class="input-group">
-                  <input type="text" class="form-control comment-input" placeholder="Write a comment...">
-                  <button class="btn btn-primary comment-send-btn" disabled>
-                    <i class="bi bi-send"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="comments-list mt-3"></div>
-          `;
+    function updateAboutSection(user) {
+      const aboutBio = document.getElementById('profileBio');
+      if (user.bio) {
+        aboutBio.textContent = user.bio;
+        aboutBio.classList.remove('d-none');
+      } else {
+        aboutBio.classList.add('d-none');
+      }
 
-            postElement
-                .querySelector(".card-footer")
-                .insertBefore(
-                    commentSection,
-                    postElement.querySelector(".post-actions")
-                );
+      // Update other visible information based on privacy settings
+      // updatePrivateInfo('profileWork', user.workExperience, user.isDisplayWork);
+      // updatePrivateInfo('profileEducation', user.education, user.isDisplayEducation);
+      updatePrivateInfo('profileLocation', user.location, user.isDisplayLocation);
+    }
 
-            // Add comment input functionality
-            const commentInput = commentSection.querySelector(".comment-input");
-            const sendCommentBtn =
-                commentSection.querySelector(".comment-send-btn");
+    function updatePrivateInfo(elementId, info, isVisible) {
+      const element = document.getElementById(elementId);
+      const container = element.closest('.info-item');
 
-            commentInput.addEventListener("input", function () {
-              sendCommentBtn.disabled = this.value.trim() === "";
-            });
+      if (isVisible && info) {
+        element.textContent = info;
+        container.classList.remove('d-none');
+      } else {
+        container.classList.add('d-none');
+      }
+    }
 
-            commentInput.addEventListener("focus", function () {
-              commentSection.classList.add("active-comment-section");
-            });
+    function updateFriendshipStatus(status) {
+      const addFriendBtn = document.querySelector('.add-friend-btn');
+      const unfriendBtn = document.querySelector('.unfriend-btn');
+      const messageBtn = document.querySelector('.message-btn');
 
-            sendCommentBtn.addEventListener("click", function () {
-              const commentText = commentInput.value.trim();
-              if (commentText) {
-                addComment(postElement, commentText);
-                commentInput.value = "";
-                sendCommentBtn.disabled = true;
-              }
-            });
+      switch(status) {
+        case 'NONE':
+          addFriendBtn.classList.remove('d-none');
+          unfriendBtn.classList.add('d-none');
+          messageBtn.classList.add('d-none');
+          break;
+        case 'PENDING_SENT':
+          addFriendBtn.classList.remove('d-none');
+          addFriendBtn.textContent = 'Cancel Request';
+          addFriendBtn.classList.add('btn-secondary');
+          unfriendBtn.classList.add('d-none');
+          messageBtn.classList.add('d-none');
+          break;
+        case 'PENDING_RECEIVED':
+          addFriendBtn.classList.remove('d-none');
+          addFriendBtn.textContent = 'Accept Request';
+          addFriendBtn.classList.add('btn-success');
+          unfriendBtn.classList.remove('d-none');
+          unfriendBtn.textContent = 'Decline';
+          messageBtn.classList.add('d-none');
+          break;
+        case 'FRIENDS':
+          addFriendBtn.classList.add('d-none');
+          unfriendBtn.classList.remove('d-none');
+          messageBtn.classList.remove('d-none');
+          break;
+        case 'BLOCKED':
+          addFriendBtn.classList.add('d-none');
+          unfriendBtn.classList.add('d-none');
+          messageBtn.classList.add('d-none');
+          break;
+      }
+    }
 
-            commentInput.addEventListener("keypress", function (e) {
-              if (e.key === "Enter" && this.value.trim()) {
-                addComment(postElement, this.value.trim());
-                this.value = "";
-                sendCommentBtn.disabled = true;
-              }
-            });
+    function initializeFriendshipButtons() {
+      const addFriendBtn = document.querySelector('.add-friend-btn');
+      const unfriendBtn = document.querySelector('.unfriend-btn');
+      const messageBtn = document.querySelector('.message-btn');
 
-            // Focus the input
-            commentInput.focus();
-          } else {
-            // Toggle comment section
-            commentSection.classList.toggle("d-none");
-            if (!commentSection.classList.contains("d-none")) {
-              commentSection.querySelector(".comment-input").focus();
+      addFriendBtn.addEventListener('click', async () => {
+        try {
+          const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/request`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${authData.token}`
             }
+          });
+
+          const data = await response.json();
+          if (data.code === 200) {
+            updateFriendshipStatus(data.data.status);
+            Toast.fire({
+              icon: 'success',
+              title: data.message
+            });
           }
-        });
-      }
-
-      // Add hover effect
-      postElement.addEventListener("mouseenter", function () {
-        this.classList.add("post-hover");
-      });
-
-      postElement.addEventListener("mouseleave", function () {
-        this.classList.remove("post-hover");
-      });
-    }
-
-    function createReactionAnimation(element, reactionType) {
-      const animation = document.createElement('div');
-      animation.className = 'reaction-animation';
-      animation.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i>`;
-
-      // Add animation styles
-      animation.style.position = 'absolute';
-      animation.style.pointerEvents = 'none';
-      animation.style.animation = 'reaction-float 1s ease-out forwards';
-      animation.style.fontSize = '1.5rem';
-
-      element.appendChild(animation);
-
-      // Remove after animation
-      setTimeout(() => {
-        if (element.contains(animation)) {
-          element.removeChild(animation);
-        }
-      }, 1000);
-    }
-
-    function updateReactionCount(countElement, change) {
-      const currentCount = parseInt(countElement.textContent.match(/\d+/)[0] || '0');
-      const newCount = Math.max(0, currentCount + change);
-      countElement.innerHTML = `<i class="bi bi-hand-thumbs-up-fill text-primary"></i> ${newCount}`;
-    }
-
-    function addComment(postElement, commentText) {
-      const commentsContainer = postElement.querySelector(".comments-list");
-      const commentStats = postElement.querySelector(
-          ".post-stats span:last-child"
-      );
-      const currentComments = parseInt(
-          commentStats.textContent.match(/\d+/)[0] || "0"
-      );
-      const currentShares = parseInt(
-          commentStats.textContent.match(/Shares/)[0]
-              ? commentStats.textContent.split("•")[1].trim().split(" ")[0]
-              : "0"
-      );
-
-      // Create comment element
-      const commentElement = document.createElement("div");
-      commentElement.className = "comment-item d-flex mb-2 new-comment-animation";
-
-      // Format current time
-      const now = new Date();
-      const options = { hour: "numeric", minute: "numeric", hour12: true };
-      const time = new Intl.DateTimeFormat("en-US", options).format(now);
-
-      commentElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="32" height="32">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${commentText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-reply-btn">Reply</button>
-        </div>
-      </div>
-    `;
-
-      // Add to comments container
-      commentsContainer.appendChild(commentElement);
-
-      // Update comment count
-      commentStats.textContent = `${
-          currentComments + 1
-      } Comments • ${currentShares} Shares`;
-
-      // Remove animation after it completes
-      setTimeout(() => {
-        commentElement.classList.remove("new-comment-animation");
-      }, 500);
-
-      // Add comment interaction listeners
-      const likeCommentBtn = commentElement.querySelector(".comment-like-btn");
-      likeCommentBtn.addEventListener("click", function () {
-        this.classList.toggle("comment-liked");
-        if (this.classList.contains("comment-liked")) {
-          this.innerHTML = "Liked";
-        } else {
-          this.innerHTML = "Like";
+        } catch (error) {
+          Toast.fire({
+            icon: 'error',
+            title: 'Failed to send friend request'
+          });
         }
       });
 
-      const replyCommentBtn = commentElement.querySelector(".comment-reply-btn");
-      replyCommentBtn.addEventListener("click", function () {
-        const replyBox = document.createElement("div");
-        replyBox.className = "d-flex mt-2";
-        replyBox.innerHTML = `
-        <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-        <div class="flex-grow-1">
-          <div class="input-group input-group-sm">
-            <input type="text" class="form-control reply-input" placeholder="Write a reply...">
-            <button class="btn btn-primary reply-send-btn" disabled>
-              <i class="bi bi-send"></i>
-            </button>
-          </div>
-        </div>
-      `;
+      unfriendBtn.addEventListener('click', async () => {
+        try {
+          const response = await fetch(`${BASE_URL}/friendship/${profileUserId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${authData.token}`
+            }
+          });
 
-        const parentComment = this.closest(".comment-item");
-        parentComment.appendChild(replyBox);
-
-        const replyInput = replyBox.querySelector(".reply-input");
-        const sendReplyBtn = replyBox.querySelector(".reply-send-btn");
-
-        replyInput.focus();
-
-        replyInput.addEventListener("input", function () {
-          sendReplyBtn.disabled = this.value.trim() === "";
-        });
-
-        sendReplyBtn.addEventListener("click", function () {
-          const replyText = replyInput.value.trim();
-          if (replyText) {
-            addReply(parentComment, replyText);
-            replyBox.remove();
+          const data = await response.json();
+          if (data.code === 200) {
+            updateFriendshipStatus('NONE');
+            Toast.fire({
+              icon: 'success',
+              title: data.message
+            });
           }
-        });
-
-        replyInput.addEventListener("keypress", function (e) {
-          if (e.key === "Enter" && this.value.trim()) {
-            addReply(parentComment, this.value.trim());
-            replyBox.remove();
-          }
-        });
-
-        // Remove other reply boxes
-        document.querySelectorAll(".reply-input").forEach((input) => {
-          if (input !== replyInput) {
-            input.closest(".d-flex.mt-2").remove();
-          }
-        });
-      });
-    }
-
-    function addReply(commentElement, replyText) {
-      // Create reply element
-      const replyElement = document.createElement("div");
-      replyElement.className =
-          "reply-item d-flex mt-2 mb-2 ms-4 new-comment-animation";
-
-      // Format current time
-      const now = new Date();
-      const options = { hour: "numeric", minute: "numeric", hour12: true };
-      const time = new Intl.DateTimeFormat("en-US", options).format(now);
-
-      replyElement.innerHTML = `
-      <img src="/assets/image/Profile-picture.png" alt="Profile" class="rounded-circle me-2 mt-1" width="24" height="24">
-      <div>
-        <div class="comment-bubble p-2 rounded">
-          <strong>Dilsara Thiranjaya</strong>
-          <p class="mb-0">${replyText}</p>
-        </div>
-        <div class="comment-actions">
-          <small class="text-muted">${time}</small>
-          <button class="btn btn-sm text-primary p-0 ms-2 comment-like-btn">Like</button>
-        </div>
-      </div>
-    `;
-
-      // Add to comment element
-      commentElement.appendChild(replyElement);
-
-      // Remove animation after it completes
-      setTimeout(() => {
-        replyElement.classList.remove("new-comment-animation");
-      }, 500);
-
-      // Add like functionality to reply
-      const likeReplyBtn = replyElement.querySelector(".comment-like-btn");
-      likeReplyBtn.addEventListener("click", function () {
-        this.classList.toggle("comment-liked");
-        if (this.classList.contains("comment-liked")) {
-          this.innerHTML = "Liked";
-        } else {
-          this.innerHTML = "Like";
+        } catch (error) {
+          Toast.fire({
+            icon: 'error',
+            title: 'Failed to unfriend user'
+          });
         }
       });
-    }
 
-    // Add interactions to existing posts
-    document.querySelectorAll(".post-card").forEach((post) => {
-      addPostInteractions(post);
-    });
-
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".share-post-btn")) {
-        const post = e.target.closest(".post-card");
-        const postContent = post.querySelector(".card-body p").textContent;
-        const shareModal = new bootstrap.Modal(
-            document.getElementById("shareModal")
-        );
-
-        // Set modal textarea to post content
-        document.getElementById("shareModal").querySelector("textarea").value =
-            postContent;
-
-        // Show the modal
-        shareModal.show();
-      }
-    });
-
-    // Share Modal Handler
-    document
-        .getElementById("shareModal")
-        .querySelector(".btn-post")
-        .addEventListener("click", function () {
-          const shareMessage = document
-              .getElementById("shareModal")
-              .querySelector("textarea").value;
-          const privacy = document
-              .querySelector(".btn-share-option.active")
-              .textContent.trim();
-
-          // Add shared post to timeline (example function)
-          createNewPost(`Shared with ${privacy}: \n\n ${shareMessage}`, []);
-
-          // Hide the modal
-          const shareModal = bootstrap.Modal.getInstance(
-              document.getElementById("shareModal")
-          );
-          shareModal.hide();
-        });
-
-    // Share Option Selection
-    document.querySelectorAll(".btn-share-option").forEach((btn) => {
-      btn.addEventListener("click", function () {
-        document
-            .querySelectorAll(".btn-share-option")
-            .forEach((b) => b.classList.remove("active"));
-        this.classList.add("active");
+      messageBtn.addEventListener('click', () => {
+        window.location.href = `/messages.html?userId=${profileUserId}`;
       });
-    });
-
-    // Clean up backdrop and styles after modal is hidden
-    document
-        .getElementById("shareModal")
-        .addEventListener("hidden.bs.modal", function () {
-          // Remove the backdrop manually if it's stuck
-          const modalBackdrop = document.querySelector(".modal-backdrop");
-          if (modalBackdrop) {
-            modalBackdrop.remove();
-          }
-
-          // Ensure 'modal-open' class is removed from the body
-          document.body.classList.remove("modal-open");
-
-          // Reset any inline padding-right (used to compensate for scrollbar)
-          document.body.style.paddingRight = "";
-
-          // Re-enable scrolling in case it's disabled
-          document.body.style.overflow = ""; // Ensures scrolling is allowed
-        });
     }
 
+//     // Photo overlay effect
+//     $(".photo-card").hover(
+//         function () {
+//           $(this).find(".photo-overlay").css("opacity", "1");
+//         },
+//         function () {
+//           $(this).find(".photo-overlay").css("opacity", "0");
+//         }
+//     );
+//
+//     // Function to load posts from backend
+//     async function loadPosts() {
+//       try {
+//         const loader = `<div class="loading-spinner">Loading posts...</div>`;
+//         document.querySelector(".posts-container").innerHTML = loader;
+//
+//         const response = await $.ajax({
+//           url: BASE_URL + "/profile/posts",
+//           type: "GET",
+//           headers: {
+//             "Authorization": "Bearer " + authData.token
+//           }
+//         });
+//
+//         if (response.code === 200) {
+//           const postCount = response.data.posts.length;
+//           document.getElementById("postCount").innerHTML = postCount;
+//
+//           const postsContainer = document.querySelector(".posts-container");
+//           postsContainer.innerHTML = "";
+//
+//           if (response.data.posts.length === 0) {
+//             postsContainer.innerHTML = `
+//                 <div class="empty-state">
+//                     <i class="bi bi-newspaper"></i>
+//                     <p>No posts to show</p>
+//                 </div>
+//              `;
+//             return;
+//           }
+//
+//           response.data.posts.map(post => {
+//             const postElement = generatePostElement(post);
+//             postsContainer.appendChild(postElement);
+//             return { postElement, post };
+//           });
+//
+//           // Then load comments for each post
+//           // for (const { postElement, post } of postElements) {
+//           //     if (post.comments.length > 0) {
+//           //         await loadPostComments(postElement);
+//           //     }
+//           // }
+//         }
+//       } catch (error) {
+//         Toast.fire({
+//           icon: "error",
+//           title: error.responseJSON?.message || "Failed to load posts"
+//         });
+//       }
+//     }
+//
+// // Modified post creation function (generic version)
+//     function generatePostElement(postData) {
+//       const newPost = document.createElement("div");
+//       newPost.className = "card post-card mb-3";
+//       newPost.dataset.postId = postData.postId;
+//
+//       // Format media content
+//       const mediaContent = (postData.media || []).map(media => {
+//         if (media.mediaType === 'IMAGE') {
+//           return `<img src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" alt="Post media">`;
+//         }
+//         if (media.mediaType === 'VIDEO') {
+//           return `<video src="${media.mediaUrl}" class="w-100 img-fluid rounded mb-3" controls></video>`;
+//         }
+//         return "";
+//       }).join("");
+//
+//       // Group reactions by type from the list of ReactionDTOs
+//       const groupedReactions = {};
+//       if (postData.reactions && Array.isArray(postData.reactions)) {
+//         postData.reactions.forEach(reaction => {
+//           const type = reaction.type; // Reaction type, e.g., "LIKE", "LOVE"
+//           groupedReactions[type] = (groupedReactions[type] || 0) + 1;
+//         });
+//       }
+//
+//       // Build the reaction display HTML for reaction counts
+//       let reactionDisplay = "";
+//       if (Object.keys(groupedReactions).length > 0) {
+//         reactionDisplay = Object.entries(groupedReactions)
+//             .map(([type, count]) => `
+//       <span class="reaction-icon me-1">
+//         <i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}
+//       </span>
+//     `)
+//             .join('');
+//       }
+//
+//       // For the like button, check if the user has reacted and show the reaction type if available
+//       const likeButtonIcon = postData.liked && postData.reactionType
+//           ? `bi ${REACTION_TYPES[postData.reactionType].fillIcon} ${REACTION_TYPES[postData.reactionType].color}`
+//           : "bi-hand-thumbs-up";
+//       const likeButtonText = postData.liked && postData.reactionType ? postData.reactionType : "Like";
+//
+//       const formattedPrivacy = postData.privacy.charAt(0).toUpperCase() + postData.privacy.slice(1).toLowerCase();
+//       const output = formattedPrivacy === "Private" ? "Only Me" : formattedPrivacy;
+//
+//       newPost.innerHTML = `
+//     <div class="card-header bg-transparent">
+//       <div class="d-flex align-items-center timline-post-item">
+//         <img src="${postData.user.profilePictureUrl || '/assets/image/Profile-picture.png'}"
+//              alt="Profile" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+//         <div>
+//           <h6 class="mb-0">${postData.user.firstName} ${postData.user.lastName}</h6>
+//           <small class="text-muted">
+//             ${formatCommentDate(postData.createdAt)} •
+//             <i class="bi ${getPrivacyIcon(postData.privacy)}"></i>
+//             ${output}
+//           </small>
+//         </div>
+//         <div class="ms-auto dropdown">
+//           ${generatePostDropdown(postData.postId)}
+//         </div>
+//       </div>
+//     </div>
+//     <div class="card-body">
+//       <p>${postData.content.replace(/\n/g, "<br>")}</p>
+//       ${mediaContent}
+//       <div class="post-stats d-flex align-items-center text-muted">
+//         <span class="reaction-container">
+//         ${reactionDisplay}
+//       </span>
+//       <span class="ms-auto">
+//         ${postData.comments.length} Comments
+//       </span>
+//       </div>
+//     </div>
+//     <div class="card-footer bg-transparent">
+//       <div class="post-actions d-flex justify-content-around">
+//         <button class="btn btn-light reaction-btn like-btn" data-post-id="${postData.postId}">
+//           <i class="bi ${likeButtonIcon}"></i>
+//           <span class="ms-2">${likeButtonText}</span>
+//         </button>
+//         <button class="btn btn-light reaction-btn">
+//           <i class="bi bi-chat-text"></i> <span class="ms-2">Comment</span>
+//         </button>
+//       </div>
+//     </div>
+//   `;
+//
+//       addPostInteractions(newPost);
+//       return newPost;
+//     }
+//
+//
+// // Helper functions
+//     function getPrivacyIcon(privacy) {
+//       const icons = {
+//         PUBLIC: 'bi-globe',
+//         FRIENDS: 'bi-people-fill',
+//         PRIVATE: 'bi-lock-fill'
+//       };
+//       return icons[privacy] || 'bi-globe';
+//     }
+//
+//     function generatePostDropdown(postId) {
+//       return `
+//     <button class="btn btn-light btn-sm dropdown-toggle"
+//             type="button"
+//             data-bs-toggle="dropdown"
+//             aria-expanded="false">
+//       <i class="bi bi-three-dots"></i>
+//     </button>
+//     <ul class="dropdown-menu dropdown-menu-end">
+//       <li><a class="dropdown-item report-post-btn" data-post-id="${postData.postId}">
+//         <i class="bi bi-flag me-2"></i>Report
+//       </a></li>
+//     </ul>
+//   `;
+//     }
+//
+//     // Add new reaction constants at top
+//     const REACTION_TYPES = {
+//       LIKE: {icon: 'bi-hand-thumbs-up', fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary'},
+//       LOVE: {icon: 'bi-heart', fillIcon: 'bi-heart-fill', color: 'text-danger'},
+//       HAHA: {icon: 'bi-emoji-laughing', fillIcon: 'bi-emoji-laughing-fill', color: 'text-warning'},
+//       WOW: {icon: 'bi-emoji-surprise', fillIcon: 'bi-emoji-surprise-fill', color: 'text-warning'},
+//       SAD: {icon: 'bi-emoji-frown', fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary'},
+//       ANGRY: {icon: 'bi-emoji-angry', fillIcon: 'bi-emoji-angry-fill', color: 'text-danger'}
+//     };
+//
+// // Replace old handleReaction with:
+//     async function handleReaction(likeBtn, reactionType) {
+//       const postId = likeBtn.dataset.postId;
+//       try {
+//         const response = await fetch(`${BASE_URL}/profile/posts/${postId}/reactions`, {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${authData.token}`
+//           },
+//           body: JSON.stringify({type: reactionType})
+//         });
+//
+//         if (!response.ok) throw new Error('Failed to save reaction');
+//
+//         const result = await response.json();
+//         updatePostReactions(likeBtn, result.data, result.message, reactionType);
+//       } catch (error) {
+//         Toast.fire({icon: 'error', title: 'Failed to save reaction'});
+//       }
+//     }
+//
+//     function updatePostReactions(likeBtn, postData, action, reactionType) {
+//       const reactionStats = likeBtn.closest('.post-card').querySelector('.post-stats .reaction-container');
+//
+//       // Step 1: Count the existing reactions from the response (post before update)
+//       const reactionCounts = {};
+//       postData.reactions.forEach(reaction => {
+//         reactionCounts[reaction.type] = (reactionCounts[reaction.type] || 0) + 1;
+//       });
+//
+//       // Step 2: Manually adjust counts because backend does NOT return updated post
+//       switch (action) {
+//         case "Added":
+//           reactionCounts[reactionType] = (reactionCounts[reactionType] || 0);
+//           break;
+//         case "Removed":
+//           reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) - 1;
+//           break;
+//         case "Updated":
+//           reactionCounts[postData.reactionType] = (reactionCounts[postData.reactionType] || 0) - 1;
+//           reactionCounts[reactionType] = (reactionCounts[reactionType] || 0) + 1;
+//           break;
+//         default:
+//           return;
+//       }
+//
+//       // Ensure the count does not go negative
+//       if (reactionCounts[reactionType] <= 0) {
+//         delete reactionCounts[reactionType];
+//       }
+//
+//       // Step 3: Update the reaction stats UI (e.g., 👍 2 ❤️ 3)
+//       reactionStats.innerHTML = Object.entries(reactionCounts)
+//           .map(([type, count]) => `<i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i> ${count}`)
+//           .join(' • ');
+//
+//       // Step 4: Update the button UI (change icon and text)
+//       if (action === "Added" || action === "Updated") {
+//         likeBtn.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i> <span>${reactionType}</span>`;
+//         createReactionAnimation(likeBtn, reactionType);
+//       } else {
+//         likeBtn.innerHTML = '<i class="bi bi-hand-thumbs-up"></i> <span>Like</span>';
+//       }
+//     }
+//
+//     function createReactionPopup(likeBtn) {
+//       const popup = document.createElement('div');
+//       popup.className = 'reaction-popup';
+//       popup.style.position = 'absolute';
+//       popup.style.bottom = '100%';
+//       popup.style.left = '50%';
+//       popup.style.transform = 'translateX(-50%)';
+//       popup.style.background = 'white';
+//       popup.style.padding = '8px';
+//       popup.style.borderRadius = '20px';
+//       popup.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+//       popup.style.display = 'flex';
+//       popup.style.gap = '8px';
+//       popup.style.zIndex = '1000';
+//
+//       Object.entries(REACTION_TYPES).forEach(([type, {icon, fillIcon, color}]) => {
+//         const reactionBtn = document.createElement('button');
+//         reactionBtn.className = `btn btn-light reaction-option ${color}`;
+//         reactionBtn.innerHTML = `<i class="bi ${fillIcon}"></i>`;
+//         reactionBtn.style.padding = '4px';
+//         reactionBtn.style.minWidth = '32px';
+//         reactionBtn.style.height = '32px';
+//         reactionBtn.style.borderRadius = '50%';
+//
+//         reactionBtn.addEventListener('click', (e) => {
+//           e.stopPropagation();
+//           handleReaction(likeBtn, type);
+//           popup.remove();
+//         });
+//
+//         // Hover animation
+//         reactionBtn.addEventListener('mouseenter', () => {
+//           reactionBtn.style.transform = 'scale(1.2)';
+//           reactionBtn.style.transition = 'transform 0.2s';
+//         });
+//
+//         reactionBtn.addEventListener('mouseleave', () => {
+//           reactionBtn.style.transform = 'scale(1)';
+//         });
+//
+//         popup.appendChild(reactionBtn);
+//       });
+//
+//       return popup;
+//     }
+//
+//     // Add interactions to posts (like, comment, share)
+//     function addPostInteractions(postElement) {
+//       if (!postElement) return;
+//
+//       // Like functionality
+//       const likeBtn = postElement.querySelector(".reaction-btn:first-child");
+//       if (likeBtn) {
+//         likeBtn.addEventListener('mouseenter', () => {
+//           reactionTimeout = setTimeout(() => {
+//             const popup = createReactionPopup(likeBtn);
+//             likeBtn.appendChild(popup);
+//           }, 500);
+//         });
+//
+//         likeBtn.addEventListener('mouseleave', () => {
+//           clearTimeout(reactionTimeout);
+//           const popup = likeBtn.querySelector('.reaction-popup');
+//           if (popup) {
+//             popup.remove();
+//           }
+//         });
+//
+//         likeBtn.addEventListener('click', () => {
+//           const iconElement = likeBtn.querySelector('i'); // Get the <i> element inside the button
+//           if (!iconElement) return handleReaction(likeBtn, 'LIKE'); // Default to LIKE if no icon is found
+//
+//           // Find the reaction type by checking which icon class is applied
+//           let currentReaction = 'LIKE'; // Default reaction
+//           for (const [reaction, data] of Object.entries(REACTION_TYPES)) {
+//             if (iconElement.classList.contains(data.fillIcon) || iconElement.classList.contains(data.icon)) {
+//               currentReaction = reaction;
+//               break; // Found the reaction, no need to continue checking
+//             }
+//           }
+//
+//           handleReaction(likeBtn, currentReaction);
+//         });
+//
+//       }
+//
+//       // Comment functionality
+//       const commentBtn = postElement.querySelector(".reaction-btn:nth-child(2)");
+//       if (commentBtn) {
+//         commentBtn.addEventListener("click", function () {
+//           const postId = postElement.dataset.postId;
+//           let commentSection = postElement.querySelector(".comment-section");
+//
+//           if (!commentSection) {
+//             commentSection = document.createElement("div");
+//             commentSection.className = "comment-section p-3 border-top";
+//             commentSection.dataset.postId = postId;
+//
+//             commentSection.innerHTML = `
+//                              <div class="d-flex">
+//                                  <div class="flex-grow-1">
+//                                     <div class="input-group">
+//                                         <input type="text" class="form-control comment-input" placeholder="Write a comment...">
+//                                         <button class="btn btn-primary comment-send-btn" disabled>
+//                                             <i class="bi bi-send"></i>
+//                                         </button>
+//                                     </div>
+//                                  </div>
+//                                </div>
+//                             <div class="comments-list mt-3"></div>
+//                             `;
+//
+//             postElement
+//                 .querySelector(".card-footer")
+//                 .insertBefore(
+//                     commentSection,
+//                     postElement.querySelector(".post-actions")
+//                 );
+//
+//             // Add comment input functionality
+//             const commentInput = commentSection.querySelector(".comment-input");
+//             const sendCommentBtn =
+//                 commentSection.querySelector(".comment-send-btn");
+//
+//             commentInput.addEventListener("input", function () {
+//               sendCommentBtn.disabled = this.value.trim() === "";
+//             });
+//
+//             commentInput.addEventListener("focus", function () {
+//               commentSection.classList.add("active-comment-section");
+//             });
+//
+//             sendCommentBtn.addEventListener("click", function () {
+//               const commentText = commentInput.value.trim();
+//               if (commentText) {
+//                 addComment(postElement, commentSection, commentText);
+//                 commentInput.value = "";
+//                 sendCommentBtn.disabled = true;
+//               }
+//             });
+//
+//             commentInput.addEventListener("keypress", function (e) {
+//               if (e.key === "Enter" && this.value.trim()) {
+//                 addComment(postElement, commentSection, this.value.trim());
+//                 this.value = "";
+//                 sendCommentBtn.disabled = true;
+//               }
+//             });
+//
+//             // Focus the input
+//             commentInput.focus();
+//
+//             loadPostComments(postElement, commentSection);
+//           } else {
+//             // Toggle comment section
+//             commentSection.classList.toggle("d-none");
+//             if (!commentSection.classList.contains("d-none")) {
+//               commentSection.querySelector(".comment-input").focus();
+//             }
+//           }
+//         });
+//       }
+//
+//       // Add hover effect
+//       postElement.addEventListener("mouseenter", function () {
+//         this.classList.add("post-hover");
+//       });
+//
+//       postElement.addEventListener("mouseleave", function () {
+//         this.classList.remove("post-hover");
+//       });
+//     }
+//
+//     function createReactionAnimation(element, reactionType) {
+//       const animation = document.createElement('div');
+//       animation.className = 'reaction-animation';
+//       animation.innerHTML = `<i class="bi ${REACTION_TYPES[reactionType].fillIcon} ${REACTION_TYPES[reactionType].color}"></i>`;
+//
+//       // Add animation styles
+//       animation.style.position = 'absolute';
+//       animation.style.pointerEvents = 'none';
+//       animation.style.animation = 'reaction-float 1s ease-out forwards';
+//       animation.style.fontSize = '1.5rem';
+//
+//       element.appendChild(animation);
+//
+//       // Remove after animation
+//       setTimeout(() => {
+//         if (element.contains(animation)) {
+//           element.removeChild(animation);
+//         }
+//       }, 1000);
+//     }
+//
+//     async function addComment(postElement, commentSection, commentText, parentCommentId = 0) {
+//       const postId = postElement.dataset.postId;
+//
+//       try {
+//         const response = await fetch(`${BASE_URL}/profile/posts/${postId}/comments`, {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': `Bearer ${authData.token}`
+//           },
+//           body: JSON.stringify({
+//             content: commentText,
+//             parentCommentId: parentCommentId || 0
+//           })
+//         });
+//
+//         if (!response.ok) throw new Error('Failed to add comment');
+//
+//         // Reload comments
+//         await loadPostComments(postElement, commentSection);
+//       } catch (error) {
+//         Toast.fire({icon: 'error', title: error.message});
+//       }
+//     }
+//
+//     async function loadPostComments(postElement, commentSection) {
+//       const postId = postElement.dataset.postId;
+//       if (!postId) {
+//         console.error("No postId found for post element");
+//         return;
+//       }
+//
+//       try {
+//         const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+//           headers: {'Authorization': `Bearer ${authData.token}`}
+//         });
+//
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//
+//         const responseData = await response.json();
+//         if (responseData.code !== 200) {
+//           throw new Error(responseData.message || "Failed to load comments");
+//         }
+//
+//         const commentsContainer = commentSection.querySelector('.comments-list');
+//         commentsContainer.innerHTML = '';
+//
+//         // Create a comment map to easily find parent comments
+//         const commentMap = new Map();
+//
+//         // First, create map entries for all comments
+//         responseData.data.comments.forEach(comment => {
+//           commentMap.set(comment.commentId, comment);
+//         });
+//
+//         renderComments(commentsContainer, responseData.data.comments);
+//       } catch (error) {
+//         console.error("Error loading comments:", error);
+//         Toast.fire({
+//           icon: "error",
+//           title: error.message || "Failed to load comments"
+//         });
+//       }
+//     }
+//
+//     function renderComments(container, comments, depth = 0) {
+//       container.innerHTML = '';
+//
+//       if (!comments || comments.length === 0) {
+//         if (depth === 0) { // Only show "No comments" for top-level
+//           container.innerHTML = '<div class="text-muted">No comments yet</div>';
+//         }
+//         return;
+//       }
+//
+//       // Filter comments based on depth
+//       // For top-level (depth = 0), only show comments with parentCommentId = 0
+//       // For nested levels, show all replies as they're already filtered by parent
+//       const filteredComments = depth === 0
+//           ? comments.filter(comment => comment.parentCommentId === 0)
+//           : comments;
+//
+//       filteredComments.forEach(comment => {
+//         const commentElement = createCommentElement(comment, depth);
+//         container.appendChild(commentElement);
+//
+//         if (comment.replies && comment.replies.length > 0) {
+//           const repliesContainer = document.createElement('div');
+//           repliesContainer.className = `replies-container ms-${depth + 3}`; // Increased indentation
+//           renderComments(repliesContainer, comment.replies, depth + 1);
+//           commentElement.querySelector('.comment-bubble').appendChild(repliesContainer);
+//         }
+//       });
+//     }
+//
+//     function createCommentElement(comment, depth) {
+//       const commentEl = document.createElement('div');
+//       commentEl.className = `comment-item my-2 ms-${depth * 3}`;
+//       commentEl.dataset.commentId = comment.commentId;
+//       commentEl.dataset.authorId = comment.user.userId;
+//
+//       commentEl.innerHTML = `
+//         <div class="comment-bubble p-2 rounded">
+//             <div class="d-flex align-items-center">
+//                 <img src="${comment.user.profilePictureUrl}"
+//                      class="rounded-circle me-2"
+//                      width="32" height="32">
+//                 <div>
+//                     <h6 class="mb-0">${comment.user.firstName} ${comment.user.lastName}</h6>
+//                     <small class="text-muted">${formatCommentDate(comment.createdAt)}</small>
+//                 </div>
+//             </div>
+//             <p class="mb-0 mt-2 ms-3">${comment.content}</p>
+//             <div class="comment-actions mt-2">
+//                 <button class="btn btn-sm text-muted reply-btn">
+//                     <i class="bi bi-reply"></i> Reply
+//                 </button>
+//                 ${comment.user.email === authData.email ? `
+//                 <button class="btn btn-sm text-danger delete-comment-btn">
+//                     <i class="bi bi-trash"></i> Delete
+//                 </button>
+//                 ` : ''}
+//             </div>
+//             <div class="reply-input-container mt-2 d-none"></div>
+//         </div>
+//     `;
+//
+//       // Add reply handler
+//       commentEl.querySelector('.reply-btn').addEventListener('click', () => {
+//         showReplyInput(commentEl, comment.commentId);
+//       });
+//
+//       // Add delete handler
+//       if (comment.user.email === authData.email) {
+//         commentEl.querySelector('.delete-comment-btn').addEventListener('click', async () => {
+//           await deleteComment(commentEl);
+//         });
+//       }
+//
+//       return commentEl;
+//     }
+//
+//     // Helper function to format comment date
+//     function formatCommentDate(dateString) {
+//       const date = new Date(dateString);
+//       const now = new Date();
+//       const diff = now - date;
+//       const seconds = Math.floor(diff / 1000);
+//       const minutes = Math.floor(seconds / 60);
+//       const hours = Math.floor(minutes / 60);
+//       const days = Math.floor(hours / 24);
+//
+//       if (days > 7) {
+//         return date.toLocaleDateString("en-US", {
+//           month: "long",
+//           day: "numeric",
+//           year: "numeric"
+//         });
+//       } else if (days > 0) {
+//         return `${days}d ago`;
+//       } else if (hours > 0) {
+//         return `${hours}h ago`;
+//       } else if (minutes > 0) {
+//         return `${minutes}m ago`;
+//       } else {
+//         return 'Just now';
+//       }
+//     }
+//
+//     async function deleteComment(commentElement) {
+//       const commentId = commentElement.dataset.commentId;
+//       const postElement = commentElement.closest('.post-card');
+//
+//       try {
+//         const response = await fetch(`${BASE_URL}/profile/comments/${commentId}`, {
+//           method: 'DELETE',
+//           headers: {
+//             'Authorization': `Bearer ${authData.token}`
+//           }
+//         });
+//
+//         if (response.ok) {
+//           commentElement.remove();
+//           // Update comment count
+//           // const commentCountElement = postElement.querySelector('.post-stats span:last-child');
+//           // const currentCount = parseInt(commentCountElement.textContent.match(/\d+/)[0]) || 0;
+//           // commentCountElement.textContent = `${currentCount - 1} Comments`;
+//         }
+//       } catch (error) {
+//         Toast.fire({icon: 'error', title: 'Failed to delete comment'});
+//       }
+//     }
+//
+//     function showReplyInput(commentElement, parentCommentId) {
+//       const inputContainer = commentElement.querySelector('.reply-input-container');
+//       inputContainer.classList.remove('d-none');
+//
+//       if (!inputContainer.querySelector('.reply-input')) {
+//         inputContainer.innerHTML = `
+//             <div class="input-group mt-2">
+//                 <input type="text" class="form-control reply-input"
+//                        placeholder="Write a reply...">
+//                 <button class="btn btn-primary btn-send-reply">
+//                     <i class="bi bi-send"></i>
+//                 </button>
+//             </div>
+//         `;
+//
+//         const input = inputContainer.querySelector('.reply-input');
+//         const sendBtn = inputContainer.querySelector('.btn-send-reply');
+//
+//         sendBtn.addEventListener('click', async () => {
+//           const replyText = input.value.trim();
+//           if (replyText) {
+//             const postElement = commentElement.closest('.post-card');
+//             const commentSection = postElement.querySelector('.comment-section');
+//
+//             try {
+//               const response = await fetch(`${BASE_URL}/profile/comments/${parentCommentId}/reply`, {
+//                 method: 'POST',
+//                 headers: {
+//                   'Content-Type': 'application/json',
+//                   'Authorization': `Bearer ${authData.token}`
+//                 },
+//                 body: JSON.stringify({
+//                   content: replyText
+//                 })
+//               });
+//
+//               if (response.ok) {
+//                 input.value = '';
+//                 await loadPostComments(postElement, commentSection);
+//               }
+//             } catch (error) {
+//               Toast.fire({icon: 'error', title: 'Failed to post reply'});
+//             }
+//           }
+//         });
+//       }
+//     }
+//
+//
+//     // Add interactions to existing posts
+//     document.querySelectorAll(".post-card").forEach((post) => {
+//       addPostInteractions(post);
+//     });
+//
+//     // Function to load media
+//     async function loadMedia(type) {
+//       try {
+//         const response = await fetch(`${BASE_URL}/profile/posts`, {
+//           headers: {'Authorization': `Bearer ${authData.token}`}
+//         });
+//         const responseData = await response.json();
+//
+//         const media = responseData.data.posts
+//             .flatMap(post => post.media)
+//             .filter(m => m.mediaType === type.toUpperCase());
+//
+//         return media;
+//       } catch (error) {
+//         Toast.fire({icon: 'error', title: 'Failed to load media'});
+//         return [];
+//       }
+//     }
+//
+//     function populateMediaTab(containerId, media, mediaType) {
+//       const container = document.getElementById(containerId);
+//       container.innerHTML = '';
+//
+//       if (media.length === 0) {
+//         const emptyState = document.createElement('div');
+//         emptyState.className = 'col-12 text-center py-5';
+//         emptyState.innerHTML = `
+//       <div class="empty-media-state">
+//         <i class="bi ${mediaType === 'photo' ? 'bi-image' : 'bi-camera-reels'} fs-1 text-muted"></i>
+//         <h5 class="mt-3">No ${mediaType === 'photo' ? 'photos' : 'videos'} to show</h5>
+//         <p class="text-muted">When you share ${mediaType === 'photo' ? 'photos' : 'videos'}, they'll appear here</p>
+//       </div>
+//     `;
+//         container.appendChild(emptyState);
+//         return;
+//       }
+//
+//       media.forEach(item => {
+//         const col = document.createElement('div');
+//         col.className = 'col-md-4 mb-3';
+//
+//         const card = document.createElement('div');
+//         card.className = `media-card ${mediaType}-card`;
+//         card.innerHTML = `
+//       ${mediaType === 'photo' ?
+//             `<img src="${item.mediaUrl}" class="img-fluid rounded media-image" alt="Photo">` :
+//             `<video class="img-fluid rounded media-video" src="${item.mediaUrl}"></video>`}
+//       <div class="media-overlay">
+//         <button class="btn btn-light btn-sm view-media-btn">
+//           <i class="bi ${mediaType === 'photo' ? 'bi-zoom-in' : 'bi-play-fill'}"></i>
+//         </button>
+//       </div>
+//     `;
+//
+//         card.querySelector('.view-media-btn').addEventListener('click', () => {
+//           showMediaModal(item.mediaUrl, item.mediaType);
+//         });
+//
+//         col.appendChild(card);
+//         container.appendChild(col);
+//       });
+//     }
+//
+//     function showMediaModal(mediaUrl, mediaType) {
+//       const mediaContainer = document.getElementById('mediaContainer');
+//       mediaContainer.innerHTML = mediaType === 'IMAGE' ?
+//           `<img src="${mediaUrl}" class="img-fluid" style="max-height: 80vh">` :
+//           `<video src="${mediaUrl}" class="img-fluid" controls style="max-height: 80vh"></video>`;
+//
+//       const mediaModal = new bootstrap.Modal(document.getElementById('mediaModal'));
+//       mediaModal.show();
+//     }
+//
+// // Update tab change handlers
+//     document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+//       tab.addEventListener('shown.bs.tab', async (e) => {
+//         const target = e.target.getAttribute('data-bs-target');
+//
+//         if (target === '#photos') {
+//           const photos = await loadMedia('IMAGE');
+//           populateMediaTab('photosContainer', photos, 'photo');
+//         } else if (target === '#videos') {
+//           const videos = await loadMedia('VIDEO');
+//           populateMediaTab('videosContainer', videos, 'video');
+//         }
+//       });
+//     });
+//
+//     // Load sidebar media
+//     async function loadSidebarMedia(type, containerId, limit = 3) {
+//       try {
+//         const media = await loadMedia(type);
+//         const container = document.getElementById(containerId);
+//         container.innerHTML = '';
+//
+//         media.slice(0, limit).forEach(item => {
+//           const col = document.createElement('div');
+//           col.className = 'col-4';
+//
+//           const card = document.createElement('div');
+//           card.className = `media-card ${type.toLowerCase()}-card`;
+//           card.innerHTML = `
+//                 ${type === 'IMAGE' ?
+//               `<img src="${item.mediaUrl}" class="img-fluid rounded media-image" alt="Photo">` :
+//               `<video class="img-fluid rounded media-video" src="${item.mediaUrl}"></video>`}
+//                 <div class="media-overlay">
+//                     <button class="btn btn-light btn-sm view-media-btn">
+//                         <i class="bi ${type === 'IMAGE' ? 'bi-zoom-in' : 'bi-play-fill'}"></i>
+//                     </button>
+//                 </div>
+//             `;
+//
+//           card.querySelector('.view-media-btn').addEventListener('click', () => {
+//             showMediaModal(item.mediaUrl, item.mediaType);
+//           });
+//
+//           col.appendChild(card);
+//           container.appendChild(col);
+//         });
+//       } catch (error) {
+//         Toast.fire({ icon: 'error', title: `Failed to load ${type.toLowerCase()}s` });
+//       }
+//     }
+//
+// // Handle "See All" clicks
+//     function initializeSeeAllButtons() {
+//       document.querySelectorAll('.see-all-photos').forEach(btn => {
+//         btn.addEventListener('click', (e) => {
+//           e.preventDefault();
+//           const photosTab = document.querySelector('[data-bs-target="#photos"]');
+//           if (photosTab) {
+//             const tab = new bootstrap.Tab(photosTab);
+//             tab.show();
+//           }
+//         });
+//       });
+//
+//       document.querySelectorAll('.see-all-videos').forEach(btn => {
+//         btn.addEventListener('click', (e) => {
+//           e.preventDefault();
+//           const videosTab = document.querySelector('[data-bs-target="#videos"]');
+//           if (videosTab) {
+//             const tab = new bootstrap.Tab(videosTab);
+//             tab.show();
+//           }
+//         });
+//       });
+//     }
+//
+//     // Initialize report modal
+//     function initializeReportModal() {
+//       // Handle report type selection
+//       document.querySelectorAll('#reportTypeDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+//         item.addEventListener('click', function(e) {
+//           e.preventDefault();
+//           const value = this.dataset.value;
+//           document.getElementById('reportTypeDropdown').textContent = this.textContent;
+//           document.getElementById('reportTypeDropdown').dataset.selected = value;
+//           document.getElementById('typeError').style.display = 'none';
+//         });
+//       });
+//
+//       // Handle priority selection
+//       document.querySelectorAll('#priorityDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+//         item.addEventListener('click', function(e) {
+//           e.preventDefault();
+//           const value = this.dataset.value;
+//           document.getElementById('priorityDropdown').textContent = this.textContent;
+//           document.getElementById('priorityDropdown').dataset.selected = value;
+//         });
+//       });
+//
+//       // Submit report handler
+//       document.getElementById('submitReportBtn').addEventListener('click', submitReport);
+//     }
+//
+// // Function to show report modal
+//     function showReportPostModal(postId) {
+//       currentReportPostId = postId;
+//       const modal = new bootstrap.Modal(document.getElementById('reportPostModal'));
+//       modal.show();
+//     }
+//
+// // Form validation
+//     function validateReportForm() {
+//       let isValid = true;
+//
+//       const reportType = document.getElementById('reportTypeDropdown').dataset.selected;
+//       if (!reportType) {
+//         document.getElementById('typeError').textContent = 'Please select a report type';
+//         document.getElementById('typeError').style.display = 'block';
+//         isValid = false;
+//       }
+//
+//       const description = document.getElementById('reportDescription').value.trim();
+//       if (description.length < 20) {
+//         document.getElementById('descriptionError').textContent = 'Description must be at least 20 characters';
+//         document.getElementById('descriptionError').style.display = 'block';
+//         isValid = false;
+//       }
+//
+//       return isValid;
+//     }
+//
+// // Submit report
+//     async function submitReport() {
+//       const reportButton = document.getElementById('submitReportBtn');
+//       const OriginalReportButtonText = reportButton.innerHTML;
+//
+//       if (!validateReportForm()) return;
+//
+//       const reportData = {
+//         postId: currentReportPostId,
+//         type: document.getElementById('reportTypeDropdown').dataset.selected,
+//         priority: document.getElementById('priorityDropdown').dataset.selected || 'LOW',
+//         description: document.getElementById('reportDescription').value.trim(),
+//       };
+//
+//       reportButton.disabled = true;
+//       reportButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
+//
+//       Swal.fire({
+//         title: "Are you sure?",
+//         text: "This action cannot be undone!",
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: "Yes, submit report!",
+//         cancelButtonText: "Cancel"
+//       }).then(async (result) => {
+//         try {
+//           const response = await fetch(`${BASE_URL}/timeline/posts/report`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json',
+//               'Authorization': `Bearer ${authData.token}`
+//             },
+//             body: JSON.stringify(reportData)
+//           });
+//
+//           if (!response.ok) throw new Error('Failed to submit report');
+//
+//           Toast.fire({icon: 'success', title: 'Report Submitted'});
+//
+//           // Reset form
+//           document.getElementById('reportPostModal').querySelectorAll('.dropdown-toggle').forEach(el => {
+//             el.textContent = el.id === 'reportTypeDropdown' ? 'Select Report Type' : 'Select Priority';
+//             delete el.dataset.selected;
+//           });
+//           document.getElementById('reportDescription').value = '';
+//           bootstrap.Modal.getInstance(document.getElementById('reportPostModal')).hide();
+//         } catch (error) {
+//           Toast.fire({icon: 'error', title: error.message || 'Submission Failed'});
+//         } finally {
+//           reportButton.disabled = false;
+//           reportButton.innerHTML = OriginalReportButtonText;
+//         }
+//       });
+//     }
+  }
 });
 
 

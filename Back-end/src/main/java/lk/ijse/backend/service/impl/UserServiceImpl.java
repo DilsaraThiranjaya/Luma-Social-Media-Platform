@@ -92,11 +92,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<UserDTO> searchUsers(String query, int limit) {
+    public List<UserDTO> searchUsers(String query, int limit, String currentUserEmail) {
+        User currentUser = userRepository.findByEmail(currentUserEmail);
+        if (currentUser == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
         String searchTerm = "%" + query.toLowerCase() + "%";
-        return userRepository.findByFirstNameLikeOrLastNameLikeOrEmailLike(
-                        searchTerm, searchTerm, searchTerm, PageRequest.of(0, limit))
-                .stream()
+        return userRepository.searchPublicUsers(
+                        searchTerm,
+                        currentUser.getUserId(),
+                        PageRequest.of(0, limit)
+                ).stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }

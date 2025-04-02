@@ -109,6 +109,34 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public ProfileInfoDTO getUserProfileInfo(int userId) {
+        User user = userRepository.findByUserId(userId);
+
+        if (user != null) {
+            ProfileInfoDTO responseDTO = modelMapper.map(user, ProfileInfoDTO.class);
+
+            // Load education entries
+            List<Education> educations = educationRepository.findByUser(user);
+            responseDTO.setEducation(
+                    educations.stream()
+                            .map(edu -> modelMapper.map(edu, EducationDTO.class))
+                            .collect(Collectors.toList())
+            );
+
+            // Load work experience entries
+            List<WorkExperience> works = workExperienceRepository.findByUser(user);
+            responseDTO.setWorkExperience(
+                    works.stream()
+                            .map(work -> modelMapper.map(work, WorkExperienceDTO.class))
+                            .collect(Collectors.toList())
+            );
+
+            return responseDTO;
+        }
+        return null;
+    }
+
     private Education convertToEducation(EducationDTO dto, User user) {
         Education education = modelMapper.map(dto, Education.class);
         education.setUser(user); // Manual relationship setting

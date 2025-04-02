@@ -67,6 +67,26 @@ public class ProfileController {
     }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/user/{userId}/profileInfo")
+    public ResponseEntity<ResponseDTO> getUserProfileInfo(@PathVariable int userId) {
+        log.info("Received user profile info fetch request for user: {}", userId);
+        try {
+            ProfileInfoDTO profileInfoDTO = accountService.getUserProfileInfo(userId);
+
+            if (profileInfoDTO == null) {
+                log.error("User not found for email: {}", userId);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            log.info("Successfully retrieved user profile info for user: {}", userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User profile info retrieved", profileInfoDTO));
+        } catch (Exception e) {
+            log.error("Error retrieving user profile info: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/upload-profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDTO> uploadProfilePicture(@RequestParam("file") MultipartFile file, @RequestParam("userEmail") String email) {
         log.info("Received request to upload profile picture for user email: {}", email);

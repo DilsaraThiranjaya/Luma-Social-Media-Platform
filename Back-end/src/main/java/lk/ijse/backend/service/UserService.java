@@ -14,5 +14,5 @@ public interface UserService {
 
     int saveUser(UserDTO userDTO);
 
-    List<UserDTO> searchUsers(String query, int limit);
+    List<UserDTO> searchUsers(String query, int limit, String currentUserEmail);
 }
