@@ -5,6 +5,7 @@ import lk.ijse.backend.entity.Education;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.entity.WorkExperience;
 import lk.ijse.backend.repository.EducationRepository;
+import lk.ijse.backend.repository.FriendshipRepository;
 import lk.ijse.backend.repository.UserRepository;
 import lk.ijse.backend.repository.WorkExperienceRepository;
 import lk.ijse.backend.service.AccountService;
@@ -24,8 +25,10 @@ public class AccountServiceImpl implements AccountService {
     private final UserRepository userRepository;
     private final EducationRepository educationRepository;
     private final WorkExperienceRepository workExperienceRepository;
+    private final FriendshipRepository friendshipRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public ProfileInfoDTO getProfileInfo(String email) {
         User user = userRepository.findByEmail(email);
@@ -49,11 +52,16 @@ public class AccountServiceImpl implements AccountService {
                             .collect(Collectors.toList())
             );
 
+            responseDTO.setPostCount(user.getPosts().size());
+            responseDTO.setFollowerCount(user.getFriendshipsReceived().size());
+            responseDTO.setFollowingCount(user.getFriendshipsSent().size());
+
             return responseDTO;
         }
         return null;
     }
 
+    @Transactional
     @Override
     public AccountSettingsDTO getSettings(String email) {
         User user = userRepository.findByEmail(email);
@@ -109,9 +117,11 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Transactional
     @Override
-    public ProfileInfoDTO getUserProfileInfo(int userId) {
+    public ProfileInfoDTO getUserProfileInfo(int userId, String currentUserEmail) {
         User user = userRepository.findByUserId(userId);
+        User currentUser = userRepository.findByEmail(currentUserEmail);
 
         if (user != null) {
             ProfileInfoDTO responseDTO = modelMapper.map(user, ProfileInfoDTO.class);
@@ -131,6 +141,11 @@ public class AccountServiceImpl implements AccountService {
                             .map(work -> modelMapper.map(work, WorkExperienceDTO.class))
                             .collect(Collectors.toList())
             );
+
+            responseDTO.setPostCount(user.getPosts().size());
+            responseDTO.setFollowerCount(user.getFriendshipsReceived().size());
+            responseDTO.setFollowingCount(user.getFriendshipsSent().size());
+            responseDTO.setFriendshipStatus(friendshipRepository.findFriendshipStatusByUsers(userId, currentUser.getUserId()));
 
             return responseDTO;
         }

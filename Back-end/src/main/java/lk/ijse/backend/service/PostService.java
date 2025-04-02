@@ -33,4 +33,6 @@ public interface PostService {
     CommentDTO addReply(int parentCommentId, CommentDTO commentDTO, String email);
 
     List<PostDTO> searchPosts(String query, int limit, String email);
+
+    Page<PostDTO> getUserProfilePosts(int userId, PageRequest pageable);
 }

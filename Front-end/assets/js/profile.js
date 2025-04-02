@@ -149,6 +149,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (responseData.code === 200 || responseData.code === 201) {
                     const user = responseData.data;
 
+                    document.getElementById("postCount").innerHTML = user.postCount;
+                    document.getElementById("followingCount").innerHTML = user.followingCount;
+                    document.getElementById("followerCount").innerHTML = user.followerCount;
+
                     // Format birthday to "Month Day, Year" (e.g., "January 15, 1995")
                     const formattedBirthday = user.birthday
                         ? new Date(user.birthday).toLocaleDateString('en-US', {
@@ -980,9 +984,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 if (response.code === 200) {
-                    const postCount = response.data.posts.length;
-                    document.getElementById("postCount").innerHTML = postCount;
-
                     const postsContainer = document.querySelector(".posts-container");
                     postsContainer.innerHTML = "";
 

@@ -3,6 +3,7 @@ package lk.ijse.backend.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lk.ijse.backend.dto.FriendshipDTO;
+import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.entity.Friendship;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.FriendshipRepository;
@@ -12,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,20 +28,55 @@ public class FriendshipServiceImpl implements FriendshipService {
     private final FriendshipRepository friendshipRepository;
     private final ModelMapper modelMapper;
 
+    @Override
+    public List<FriendshipDTO> getAllFriends(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        return friendshipRepository.findAllFriendships(user.getUserId())
+                .stream()
+                .map(friendship -> modelMapper.map(friendship, FriendshipDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FriendshipDTO> getPendingRequests(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        return friendshipRepository.findPendingRequests(user.getUserId())
+                .stream()
+                .map(friendship -> modelMapper.map(friendship, FriendshipDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getFriendSuggestions(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        return friendshipRepository.findSuggestions(user.getUserId())
+                .stream()
+                .map(suggestion -> modelMapper.map(suggestion, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public FriendshipDTO getFriendshipStatus(String email, int targetUserId) throws Exception {
+        User currentUser = userRepository.findByEmail(email);
+        Optional<Friendship> friendship = friendshipRepository.findByUsers(currentUser.getUserId(), targetUserId);
+        return friendship.map(f -> modelMapper.map(f, FriendshipDTO.class)).orElse(null);
+    }
 
     @Override
     public FriendshipDTO sendFriendRequest(String senderEmail, int receiverId) throws Exception {
         User sender = userRepository.findByEmail(senderEmail);
-        User receiver = userRepository.findById(String.valueOf(receiverId))
-                .orElseThrow(() -> new EntityNotFoundException("Receiver not found"));
+        User receiver = userRepository.findByUserId(receiverId);
+
+        if (sender == null || receiver == null) {
+            throw new IllegalArgumentException("User not found");
+        }
 
         if (sender.getUserId() == receiverId) {
             throw new IllegalArgumentException("Cannot send friend request to yourself");
         }
 
-        // Check if friendship already exists
-        Friendship existingFriendship = friendshipRepository.findByUsers(sender.getUserId(), receiverId);
-        if (existingFriendship != null) {
+        Optional<Friendship> existingFriendship = friendshipRepository.findByUsers(sender.getUserId(), receiverId);
+        if (existingFriendship.isPresent()) {
             throw new IllegalStateException("Friendship already exists");
         }
 
@@ -53,10 +93,13 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public FriendshipDTO acceptFriendRequest(String receiverEmail, int senderId) throws Exception {
         User receiver = userRepository.findByEmail(receiverEmail);
+        Optional<Friendship> friendshipOpt = friendshipRepository.findByUsers(senderId, receiver.getUserId());
 
-        Friendship friendship = friendshipRepository.findByUsers(senderId, receiver.getUserId());
-        if (friendship == null || friendship.getStatus() != Friendship.FriendshipStatus.PENDING) {
-            throw new IllegalStateException("No pending friend request found");
+        Friendship friendship = friendshipOpt.orElseThrow(() ->
+                new IllegalStateException("No pending friend request found"));
+
+        if (friendship.getStatus() != Friendship.FriendshipStatus.PENDING) {
+            throw new IllegalStateException("Friend request is not pending");
         }
 
         friendship.setStatus(Friendship.FriendshipStatus.ACCEPTED);
@@ -67,24 +110,28 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public void removeFriendship(String userEmail, int friendId) throws Exception {
         User user = userRepository.findByEmail(userEmail);
-        Friendship friendship = friendshipRepository.findByUsers(user.getUserId(), friendId);
+        Optional<Friendship> friendship = friendshipRepository.findByUsers(user.getUserId(), friendId);
 
-        if (friendship == null) {
+        if (friendship.isEmpty()) {
             throw new EntityNotFoundException("Friendship not found");
         }
 
-        friendshipRepository.delete(friendship);
+        friendshipRepository.delete(friendship.get());
     }
 
     @Override
     public FriendshipDTO blockUser(String userEmail, int blockedUserId) throws Exception {
         User user = userRepository.findByEmail(userEmail);
+        Optional<Friendship> existingFriendship = friendshipRepository.findByUsers(user.getUserId(), blockedUserId);
 
-        Friendship friendship = friendshipRepository.findByUsers(user.getUserId(), blockedUserId);
-        if (friendship == null) {
-            // Create new blocked relationship
-            User blockedUser = userRepository.findById(String.valueOf(blockedUserId))
-                    .orElseThrow(() -> new EntityNotFoundException("User to block not found"));
+        Friendship friendship;
+        if (existingFriendship.isPresent()) {
+            friendship = existingFriendship.get();
+        } else {
+            User blockedUser = userRepository.findByUserId(blockedUserId);
+            if (blockedUser == null) {
+                throw new EntityNotFoundException("Blocked user not found");
+            }
 
             friendship = new Friendship();
             friendship.setId(new Friendship.FriendshipId(user.getUserId(), blockedUserId));
@@ -100,65 +147,33 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public void unblockUser(String userEmail, int blockedUserId) throws Exception {
         User user = userRepository.findByEmail(userEmail);
-        Friendship friendship = friendshipRepository.findByUsers(user.getUserId(), blockedUserId);
+        Optional<Friendship> friendship = friendshipRepository.findByUsers(user.getUserId(), blockedUserId);
 
-        if (friendship == null || friendship.getStatus() != Friendship.FriendshipStatus.BLOCKED) {
+        if (friendship.isEmpty() || friendship.get().getStatus() != Friendship.FriendshipStatus.BLOCKED) {
             throw new IllegalStateException("No blocked relationship found");
         }
 
-        friendshipRepository.delete(friendship);
+        friendshipRepository.delete(friendship.get());
     }
 
-//    @Override
-//    public Friendship.FriendshipStatus getFriendshipStatus(String email, int targetUserId) {
-//        User currentUser = userRepository.findByEmail(email);
-//        User targetUser = userRepository.findById(String.valueOf(targetUserId))
-//                .orElseThrow(() -> new EntityNotFoundException("Target user not found"));
-//
-//        if (currentUser.getUserId() == targetUserId) {
-//            throw new IllegalArgumentException("Cannot check friendship status with self");
-//        }
-//
-//        Optional<Friendship> friendship = friendshipRepository.findByUsers(currentUser.getUserId(), targetUserId);
-//
-//        if (friendship.isEmpty()) {
-//            return FriendshipStatus.NONE;
-//        }
-//
-//        Friendship.FriendshipStatus status = friendship.get().getStatus();
-//        User user1 = friendship.get().getUser1();
-//
-//        switch (status) {
-//            case PENDING:
-//                return user1.getUserId() == currentUser.getUserId() ?
-//                        FriendshipStatus.PENDING_SENT : FriendshipStatus.PENDING_RECEIVED;
-//            case ACCEPTED:
-//                return FriendshipStatus.FRIENDS;
-//            case BLOCKED:
-//                return FriendshipStatus.BLOCKED;
-//            default:
-//                return FriendshipStatus.NONE;
-//        }
-//    }
-
     @Override
-    public void declineFriendRequest(String email, int requesterId) {
+    public void declineFriendRequest(String email, int requesterId) throws Exception {
         User currentUser = userRepository.findByEmail(email);
+        Optional<Friendship> friendship = friendshipRepository.findByUsers(requesterId, currentUser.getUserId());
 
-        Friendship friendship = friendshipRepository.findByUsers(requesterId, currentUser.getUserId());
-
-        if (friendship == null) {
-            throw new EntityNotFoundException("Friendship not found");
+        if (friendship.isEmpty()) {
+            throw new EntityNotFoundException("Friend request not found");
         }
 
-        if (friendship.getStatus() != Friendship.FriendshipStatus.PENDING) {
+        Friendship request = friendship.get();
+        if (request.getStatus() != Friendship.FriendshipStatus.PENDING) {
             throw new IllegalStateException("Invalid friendship status");
         }
 
-        if (friendship.getUser2().getUserId() != currentUser.getUserId()) {
+        if (request.getUser2().getUserId() != currentUser.getUserId()) {
             throw new IllegalStateException("Not authorized to decline this request");
         }
 
-        friendshipRepository.delete(friendship);
+        friendshipRepository.delete(request);
     }
 }

@@ -189,11 +189,11 @@
                           <span class="stat-label">Posts</span>
                         </div>
                         <div class="stat-item">
-                          <span class="stat-number">1.2K</span>
+                          <span id="followerCount" class="stat-number">0</span>
                           <span class="stat-label">Followers</span>
                         </div>
                         <div class="stat-item">
-                          <span class="stat-number">890</span>
+                          <span id="followingCount" class="stat-number">0</span>
                           <span class="stat-label">Following</span>
                         </div>
                       </div>
@@ -202,10 +202,14 @@
                 </div>
                 <div class="col-md-4">
                   <div class="profile-actions">
-                    <button class="btn btn-primary btn-lg">
+                    <button class="btn btn-primary btn-lg add-friend-btn">
                       <i class="bi bi-person-plus-fill"></i> Add Friend
                     </button>
-                    <button class="btn btn-outline-primary btn-lg">
+                    <button class="btn btn-primary btn-lg unfriend-btn">
+                      <i class="bi bi-person-dash-fill"></i> Unfriend
+                    </button>
+
+                    <button class="btn btn-outline-primary btn-lg message-btn">
                       <i class="bi bi-chat-dots"></i> Message
                     </button>
                     <div class="dropdown">
@@ -217,18 +221,13 @@
                       </button>
                       <ul class="dropdown-menu">
                         <li>
-                          <a class="dropdown-item" href="#">
-                            <i class="bi bi-share"></i> Share Profile
-                          </a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="#" id="reportProfile">
                             <i class="bi bi-flag"></i> Report Profile
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#">
-                            <i class="bi bi-block"></i> Block User
+                          <a class="dropdown-item" href="#" id="blockProfile">
+                            <i class="bi bi-ban"></i> Block User
                           </a>
                         </li>
                       </ul>
@@ -306,28 +305,28 @@
                       <!-- About Card -->
                       <div class="card mb-4">
                         <div class="card-body">
-                          <h5 class="card-title">About</h5>
-                          <p class="text-muted">
+                          <h5 class="card-title mb-2">About</h5>
+                          <p class="text-muted mb-2" id="profileBio">
                             Passionate software developer with a love for
                             creating innovative solutions. Always learning,
                             always growing.
                           </p>
                           <div class="about-info">
-                            <div class="info-item">
+                            <div class="info-item profile-work-item">
                               <i class="bi bi-briefcase"></i>
-                              <span>Works at Tech Solutions Ltd</span>
+                              <span id="profileWork">Works at Tech Solutions Ltd</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item profile-education-item">
                               <i class="bi bi-mortarboard"></i>
-                              <span>Studied at University of Colombo</span>
+                              <span id="profileEducation">Studied at University of Colombo</span>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item profile-location-item">
                               <i class="bi bi-house"></i>
-                              <span>Lives in Galle, Sri Lanka</span>
+                              <span id="profileLocation">Lives in Galle, Sri Lanka</span>
                             </div>
                             <div class="info-item">
                               <i class="bi bi-calendar"></i>
-                              <span>Joined October 2023</span>
+                              <span id="profileJoined">Joined October 2023</span>
                             </div>
                           </div>
                         </div>
@@ -412,35 +411,35 @@
                               <i class="bi bi-person"></i>
                               <div>
                                 <label>Name</label>
-                                <span>Dilsara Thiranjaya</span>
+                                <span id="aboutName">Name</span>
                               </div>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item about-email-item">
                               <i class="bi bi-envelope"></i>
                               <div>
                                 <label>Email</label>
-                                <span>dilsara@example.com</span>
+                                <span id="aboutEmail">temp@example.com</span>
                               </div>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item about-phone-item">
                               <i class="bi bi-phone"></i>
                               <div>
                                 <label>Phone</label>
-                                <span>+94 71 234 5678</span>
+                                <span id="aboutPhone">+94 71 234 5678</span>
                               </div>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item about-birthday-item">
                               <i class="bi bi-calendar"></i>
                               <div>
                                 <label>Birthday</label>
-                                <span>January 15, 1995</span>
+                                <span id="aboutBirthday">January 15, 1995</span>
                               </div>
                             </div>
-                            <div class="info-item">
+                            <div class="info-item about-location-item">
                               <i class="bi bi-geo-alt"></i>
                               <div>
                                 <label>Location</label>
-                                <span>Galle, Sri Lanka</span>
+                                <span id="aboutLocation">Galle, Sri Lanka</span>
                               </div>
                             </div>
                           </div>
@@ -450,8 +449,8 @@
                     <div class="col-md-8">
                       <div class="card mb-4">
                         <div class="card-body">
-                          <h5 class="section-title">Work Experience</h5>
-                          <div class="timeline">
+                          <h5 class="section-title mb-3">Work Experience</h5>
+                          <div class="timeline" id="workTimeline">
                             <div class="timeline-item">
                               <div class="timeline-marker"></div>
                               <div class="timeline-content">
@@ -470,8 +469,8 @@
                       </div>
                       <div class="card">
                         <div class="card-body">
-                          <h5 class="section-title">Education</h5>
-                          <div class="timeline">
+                          <h5 class="section-title mb-3">Education</h5>
+                          <div class="timeline" id="educationTimeline">
                             <div class="timeline-item">
                               <div class="timeline-marker"></div>
                               <div class="timeline-content">

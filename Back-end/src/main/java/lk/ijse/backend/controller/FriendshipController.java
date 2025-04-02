@@ -2,64 +2,96 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.FriendshipDTO;
 import lk.ijse.backend.dto.ResponseDTO;
-import lk.ijse.backend.entity.Friendship;
+import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.service.FriendshipService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping("api/v1/friends")
+@RequestMapping("api/v1/friendship")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 public class FriendshipController {
     private final FriendshipService friendshipService;
 
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    @GetMapping("/{userId}/status")
-//    public ResponseEntity<ResponseDTO> getFriendshipStatus(
-//            @PathVariable int userId,
-//            Authentication authentication) {
-//        try {
-//            String email = authentication.getName();
-//            Friendship.FriendshipStatus status = friendshipService.getFriendshipStatus(email, userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Status retrieved", status));
-//        } catch (Exception e) {
-//            log.error("Error getting friendship status", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to get status", null));
-//        }
-//    }
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/friends")
+    public ResponseEntity<ResponseDTO> getAllFriends(Authentication authentication) {
+        try {
+            List<FriendshipDTO> friends = friendshipService.getAllFriends(authentication.getName());
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friends retrieved successfully", friends));
+        } catch (Exception e) {
+            log.error("Error retrieving friends", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/requests")
+    public ResponseEntity<ResponseDTO> getPendingRequests(Authentication authentication) {
+        try {
+            List<FriendshipDTO> requests = friendshipService.getPendingRequests(authentication.getName());
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend requests retrieved successfully", requests));
+        } catch (Exception e) {
+            log.error("Error retrieving friend requests", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/suggestions")
+    public ResponseEntity<ResponseDTO> getFriendSuggestions(Authentication authentication) {
+        try {
+            List<UserDTO> suggestions = friendshipService.getFriendSuggestions(authentication.getName());
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend suggestions retrieved successfully", suggestions));
+        } catch (Exception e) {
+            log.error("Error retrieving friend suggestions", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/counts")
+    public ResponseEntity<ResponseDTO> getFriendshipCounts(Authentication authentication) {
+        try {
+            String email = authentication.getName();
+            List<FriendshipDTO> friends = friendshipService.getAllFriends(email);
+            List<FriendshipDTO> requests = friendshipService.getPendingRequests(email);
+            List<UserDTO> suggestions = friendshipService.getFriendSuggestions(email);
+
+            Map<String, Integer> counts = Map.of(
+                    "friendsCount", friends.size(),
+                    "requestsCount", requests.size(),
+                    "suggestionsCount", suggestions.size()
+            );
+
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Counts retrieved successfully", counts));
+        } catch (Exception e) {
+            log.error("Error retrieving counts", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{userId}/request")
     public ResponseEntity<ResponseDTO> sendFriendRequest(
             @PathVariable Integer userId,
             Authentication authentication) {
-        log.info("Received friend request for user ID: {}", userId);
         try {
-            String email = authentication.getName();
-            FriendshipDTO friendship = friendshipService.sendFriendRequest(email, userId);
-
-            log.info("Successfully sent friend request to user ID: {}", userId);
-            return ResponseEntity.ok(new ResponseDTO(
-                    VarList.OK,
-                    "Friend request sent successfully",
-                    friendship
-            ));
+            FriendshipDTO friendship = friendshipService.sendFriendRequest(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend request sent successfully", friendship));
         } catch (Exception e) {
-            log.error("Error sending friend request to user ID: {}", userId, e);
-            return ResponseEntity.badRequest().body(new ResponseDTO(
-                    VarList.Bad_Request,
-                    e.getMessage(),
-                    null
-            ));
+            log.error("Error sending friend request", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
         }
     }
 
@@ -68,24 +100,12 @@ public class FriendshipController {
     public ResponseEntity<ResponseDTO> acceptFriendRequest(
             @PathVariable Integer userId,
             Authentication authentication) {
-        log.info("Accepting friend request from user ID: {}", userId);
         try {
-            String email = authentication.getName();
-            FriendshipDTO friendship = friendshipService.acceptFriendRequest(email, userId);
-
-            log.info("Successfully accepted friend request from user ID: {}", userId);
-            return ResponseEntity.ok(new ResponseDTO(
-                    VarList.OK,
-                    "Friend request accepted",
-                    friendship
-            ));
+            FriendshipDTO friendship = friendshipService.acceptFriendRequest(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend request accepted", friendship));
         } catch (Exception e) {
-            log.error("Error accepting friend request from user ID: {}", userId, e);
-            return ResponseEntity.badRequest().body(new ResponseDTO(
-                    VarList.Bad_Request,
-                    e.getMessage(),
-                    null
-            ));
+            log.error("Error accepting friend request", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
         }
     }
 
@@ -94,82 +114,40 @@ public class FriendshipController {
     public ResponseEntity<ResponseDTO> removeFriendship(
             @PathVariable Integer userId,
             Authentication authentication) {
-        log.info("Removing friendship with user ID: {}", userId);
         try {
-            String email = authentication.getName();
-            friendshipService.removeFriendship(email, userId);
-
-            log.info("Successfully removed friendship with user ID: {}", userId);
-            return ResponseEntity.ok(new ResponseDTO(
-                    VarList.OK,
-                    "Friendship removed successfully",
-                    null
-            ));
+            friendshipService.removeFriendship(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friendship removed successfully", null));
         } catch (Exception e) {
-            log.error("Error removing friendship with user ID: {}", userId, e);
-            return ResponseEntity.badRequest().body(new ResponseDTO(
-                    VarList.Bad_Request,
-                    e.getMessage(),
-                    null
-            ));
+            log.error("Error removing friendship", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
         }
     }
 
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    @DeleteMapping("/{userId}/decline")
-//    public ResponseEntity<ResponseDTO> declineFriendRequest(
-//            @PathVariable int userId,
-//            Authentication authentication) {
-//        try {
-//            String email = authentication.getName();
-//            friendshipService.declineFriendRequest(email, userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend request declined", null));
-//        } catch (Exception e) {
-//            log.error("Error declining friend request", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to decline request", null));
-//        }
-//    }
-
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    @DeleteMapping("/{userId}/unfriend")
-//    public ResponseEntity<ResponseDTO> unfriend(
-//            @PathVariable int userId,
-//            Authentication authentication) {
-//        try {
-//            String email = authentication.getName();
-//            friendshipService.unfriend(email, userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Unfriended successfully", null));
-//        } catch (Exception e) {
-//            log.error("Error unfriending", e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Failed to unfriend", null));
-//        }
-//    }
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @DeleteMapping("/{userId}/decline")
+    public ResponseEntity<ResponseDTO> declineFriendRequest(
+            @PathVariable Integer userId,
+            Authentication authentication) {
+        try {
+            friendshipService.declineFriendRequest(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friend request declined", null));
+        } catch (Exception e) {
+            log.error("Error declining friend request", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/{userId}/block")
     public ResponseEntity<ResponseDTO> blockUser(
             @PathVariable Integer userId,
             Authentication authentication) {
-        log.info("Blocking user ID: {}", userId);
         try {
-            String email = authentication.getName();
-            FriendshipDTO friendship = friendshipService.blockUser(email, userId);
-
-            log.info("Successfully blocked user ID: {}", userId);
-            return ResponseEntity.ok(new ResponseDTO(
-                    VarList.OK,
-                    "User blocked successfully",
-                    friendship
-            ));
+            FriendshipDTO friendship = friendshipService.blockUser(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User blocked successfully", friendship));
         } catch (Exception e) {
-            log.error("Error blocking user ID: {}", userId, e);
-            return ResponseEntity.badRequest().body(new ResponseDTO(
-                    VarList.Bad_Request,
-                    e.getMessage(),
-                    null
-            ));
+            log.error("Error blocking user", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
         }
     }
 
@@ -178,24 +156,12 @@ public class FriendshipController {
     public ResponseEntity<ResponseDTO> unblockUser(
             @PathVariable Integer userId,
             Authentication authentication) {
-        log.info("Unblocking user ID: {}", userId);
         try {
-            String email = authentication.getName();
-            friendshipService.unblockUser(email, userId);
-
-            log.info("Successfully unblocked user ID: {}", userId);
-            return ResponseEntity.ok(new ResponseDTO(
-                    VarList.OK,
-                    "User unblocked successfully",
-                    null
-            ));
+            friendshipService.unblockUser(authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "User unblocked successfully", null));
         } catch (Exception e) {
-            log.error("Error unblocking user ID: {}", userId, e);
-            return ResponseEntity.badRequest().body(new ResponseDTO(
-                    VarList.Bad_Request,
-                    e.getMessage(),
-                    null
-            ));
+            log.error("Error unblocking user", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
         }
     }
 }

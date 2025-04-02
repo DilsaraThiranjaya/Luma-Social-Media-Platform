@@ -68,10 +68,10 @@ public class ProfileController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/user/{userId}/profileInfo")
-    public ResponseEntity<ResponseDTO> getUserProfileInfo(@PathVariable int userId) {
+    public ResponseEntity<ResponseDTO> getUserProfileInfo(@PathVariable int userId, Authentication authentication) {
         log.info("Received user profile info fetch request for user: {}", userId);
         try {
-            ProfileInfoDTO profileInfoDTO = accountService.getUserProfileInfo(userId);
+            ProfileInfoDTO profileInfoDTO = accountService.getUserProfileInfo(userId, authentication.getName());
 
             if (profileInfoDTO == null) {
                 log.error("User not found for email: {}", userId);
@@ -235,7 +235,7 @@ public class ProfileController {
             Page<PostDTO> posts = postService.getProfilePosts(email, pageable);
 
             List<PostResponseDTO> postDTOs = posts.getContent().stream()
-                    .map(this::convertToPostResponseDTO)
+                    .map(post -> convertToPostResponseDTO(post, null))
                     .collect(Collectors.toList());
 
             Map<String, Object> response = new HashMap<>();
@@ -248,6 +248,45 @@ public class ProfileController {
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Posts retrieved", response));
         } catch (Exception e) {
             log.error("Error retrieving posts for email: {}", email, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving posts", null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping(value = "/{userId}/posts")
+    public ResponseEntity<ResponseDTO> getUserPosts(
+            @PathVariable int userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication) {
+        String email = authentication.getName();
+        log.info("Received request to get posts for user: {}", userId);
+
+        try {
+            // Add sorting by createdAt DESC
+            PageRequest pageable = PageRequest.of(
+                    page,
+                    size,
+                    Sort.by(Sort.Direction.DESC, "createdAt") // Add this line
+            );
+
+            Page<PostDTO> posts = postService.getUserProfilePosts(userId, pageable);
+
+            List<PostResponseDTO> postDTOs = posts.getContent().stream()
+                    .map(post -> convertToPostResponseDTO(post, email))
+                    .collect(Collectors.toList());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("posts", postDTOs);
+            response.put("currentPage", posts.getNumber());
+            response.put("totalItems", posts.getTotalElements());
+            response.put("totalPages", posts.getTotalPages());
+
+            log.info("Successfully retrieved posts for user: {}", userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Posts retrieved", response));
+        } catch (Exception e) {
+            log.error("Error retrieving posts for user: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving posts", null));
         }
@@ -291,7 +330,7 @@ public class ProfileController {
 
             PostDTO updatedPost = postService.updatePost(postId, email, updateDTO);
             log.info("Successfully updated post with ID: {}", postId);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "Post updated", convertToPostResponseDTO(updatedPost)));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "Post updated", convertToPostResponseDTO(updatedPost, null)));
         } catch (Exception e) {
             log.error("Error updating post with ID: {}", postId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -324,7 +363,7 @@ public class ProfileController {
         try {
             PostDTO post = postService.getPost(postId, email);
 
-            PostResponseDTO postDTO = convertToPostResponseDTO(post);
+            PostResponseDTO postDTO = convertToPostResponseDTO(post, null);
             log.info("Successfully retrieved post with ID: {}", postId);
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Post retrieved", postDTO));
         } catch (Exception e) {
@@ -342,7 +381,7 @@ public class ProfileController {
         try {
             String email = authentication.getName();
             ResponseDTO res = postService.addReaction(postId, reactionDTO, email);
-            res.setData(convertToPostResponseDTO((PostDTO) res.getData()));
+            res.setData(convertToPostResponseDTO((PostDTO) res.getData(), null));
 
             log.info("Successfully added reaction for post ID: {}", postId);
             return ResponseEntity.status(HttpStatus.OK).body(res);
@@ -455,7 +494,7 @@ public class ProfileController {
 //        }
 //    }
 
-    private PostResponseDTO convertToPostResponseDTO(PostDTO post) {
+    private PostResponseDTO convertToPostResponseDTO(PostDTO post, String currentEmail) {
         PostResponseDTO dto = new PostResponseDTO();
         dto.setPostId(post.getPostId());
         dto.setContent(post.getContent());
@@ -472,6 +511,7 @@ public class ProfileController {
                     // Convert and set user
                     UserDTO reactionUserDTO = new UserDTO();
                     reactionUserDTO.setUserId(reaction.getUser().getUserId());
+                    reactionUserDTO.setEmail(reaction.getUser().getEmail());
                     reactionUserDTO.setFirstName(reaction.getUser().getFirstName());
                     reactionUserDTO.setLastName(reaction.getUser().getLastName());
                     reactionUserDTO.setProfilePictureUrl(reaction.getUser().getProfilePictureUrl());
@@ -489,8 +529,6 @@ public class ProfileController {
                     commentDTO.setCreatedAt(comment.getCreatedAt());
                     commentDTO.setReplies(comment.getReplies());
                     commentDTO.setParentCommentId(comment.getParentCommentId());
-                    System.out.println(commentDTO.getParentCommentId());
-
 
                     // Convert and set user
                     UserDTO commentUserDTO = new UserDTO();
@@ -505,13 +543,23 @@ public class ProfileController {
                 })
                 .collect(Collectors.toList()));
 
-        dto.setLiked(post.getReactions().stream()
-                .anyMatch(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId())));
-        dto.setReactionType(post.getReactions().stream()
-                .filter(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId()))
-                .findFirst()
-                .map(ReactionDTO::getType)
-                .orElse(null));
+        if (currentEmail != null) {
+            dto.setLiked(post.getReactions().stream()
+                    .anyMatch(reaction -> reaction.getUser().getEmail().equals(currentEmail)));
+            dto.setReactionType(post.getReactions().stream()
+                    .filter(reaction -> reaction.getUser().getEmail().equals(currentEmail))
+                    .findFirst()
+                    .map(ReactionDTO::getType)
+                    .orElse(null));
+        } else {
+            dto.setLiked(post.getReactions().stream()
+                    .anyMatch(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId())));
+            dto.setReactionType(post.getReactions().stream()
+                    .filter(reaction -> reaction.getUser().getUserId().equals(post.getUser().getUserId()))
+                    .findFirst()
+                    .map(ReactionDTO::getType)
+                    .orElse(null));
+        }
 
         // Convert user
         UserDTO userDTO = new UserDTO();
