@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadSidebarMedia('IMAGE', 'sidebarPhotosContainer');
         loadSidebarMedia('VIDEO', 'sidebarVideosContainer', 3); // Show 1 video in sidebar
         initializeSeeAllButtons();
+        initializeFriends();
 
         // Initialize tooltips
         const tooltipTriggerList = document.querySelectorAll(
@@ -1002,13 +1003,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         postsContainer.appendChild(postElement);
                         return { postElement, post };
                     });
-
-                    // Then load comments for each post
-                    // for (const { postElement, post } of postElements) {
-                    //     if (post.comments.length > 0) {
-                    //         await loadPostComments(postElement);
-                    //     }
-                    // }
                 }
             } catch (error) {
                 Toast.fire({
@@ -2173,6 +2167,219 @@ document.addEventListener('DOMContentLoaded', async () => {
                         tab.show();
                     }
                 });
+            });
+        }
+
+        // Load friends for both tab and card
+        async function loadFriends(containerId, limit = null) {
+            try {
+                const response = await fetch(`${BASE_URL}/friendship/friends`, {
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
+                });
+                const data = await response.json();
+
+                if (data.code === 200) {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
+
+                    if (!data.data || data.data.length === 0) {
+                        container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="empty-friends-state">
+                            <i class="bi bi-people fs-1 text-muted"></i>
+                            <h5 class="mt-3">No friends yet</h5>
+                            <p class="text-muted">When you connect with people, they'll appear here</p>
+                        </div>
+                    </div>
+                `;
+                        return;
+                    }
+
+                    // If limit is provided, only show that many friends
+                    const friendsToShow = limit ? data.data.slice(0, limit) : data.data;
+
+                    friendsToShow.forEach(friendship => {
+                        const friend = friendship.user2;
+                        const friendElement = createFriendElement(friend, containerId === 'friendsContainer');
+                        container.appendChild(friendElement);
+                    });
+                }
+            } catch (error) {
+                Toast.fire({
+                    icon: "error",
+                    title: "Failed to load friends"
+                });
+            }
+        }
+
+        function createFriendElement(friend, isFullView = false) {
+            const element = document.createElement('div');
+            element.className = isFullView ? 'col-md-4 mb-3' : 'friend-item';
+
+            if (isFullView) {
+                element.innerHTML = `
+            <div class="friend-card" data-friend-id="${friend.userId}">
+                <img src="${friend.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" 
+                     alt="Friend" 
+                     class="friend-image">
+                <div class="friend-info">
+                    <h6>${friend.firstName} ${friend.lastName}</h6>
+                    <div class="friend-actions">
+                        <button class="btn btn-primary btn-sm message-friend">
+                            <i class="bi bi-chat-dots-fill me-2"></i>Message
+                        </button>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item view-profile" href="http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}">
+                                    <i class="bi bi-person-badge me-2"></i>View Profile
+                                </a></li>
+                                <li><a class="dropdown-item unfriend" href="#">
+                                    <i class="bi bi-person-x me-2"></i>Unfriend
+                                </a></li>
+                                <li><a class="dropdown-item block" href="#">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>Block
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            } else {
+                element.innerHTML = `
+            <a href="http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}" class="friend-link text-decoration-none">
+                <img src="${friend.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" 
+                     alt="Friend" 
+                     class="rounded-circle">
+                <span>${friend.firstName} ${friend.lastName}</span>
+            </a>`;
+            }
+
+            if (isFullView) {
+                // Add event handlers for full view
+                addFriendCardHandlers(element);
+            }
+
+            return element;
+        }
+
+        function addFriendCardHandlers(friendElement) {
+            const friendId = friendElement.querySelector('.friend-card').dataset.friendId;
+            const friendName = friendElement.querySelector('h6').textContent;
+
+            // Message button handler
+            friendElement.querySelector('.message-friend').addEventListener('click', () => {
+                window.location.href = `/messages.html?userId=${friendId}`;
+            });
+
+            // Unfriend handler
+            friendElement.querySelector('.unfriend').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const confirmed = await Swal.fire({
+                    title: 'Unfriend Confirmation',
+                    text: `Are you sure you want to unfriend ${friendName}?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, unfriend',
+                    cancelButtonText: 'Cancel'
+                });
+
+                if (confirmed.isConfirmed) {
+                    try {
+                        const response = await fetch(`${BASE_URL}/friendship/${friendId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${authData.token}`
+                            }
+                        });
+
+                        if (response.ok) {
+                            friendElement.remove();
+                            Toast.fire({
+                                icon: 'success',
+                                title: `Unfriended ${friendName}`
+                            });
+                            // Reload both containers to keep them in sync
+                            loadFriends('friendsContainer');
+                            loadFriends('sidebarFriendsContainer', 3);
+                        }
+                    } catch (error) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Failed to unfriend'
+                        });
+                    }
+                }
+            });
+
+            // Block handler
+            friendElement.querySelector('.block').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const confirmed = await Swal.fire({
+                    title: 'Block Confirmation',
+                    text: `Are you sure you want to block ${friendName}? This will also unfriend them.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, block',
+                    cancelButtonText: 'Cancel'
+                });
+
+                if (confirmed.isConfirmed) {
+                    try {
+                        const response = await fetch(`${BASE_URL}/friendship/${friendId}/block`, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${authData.token}`
+                            }
+                        });
+
+                        if (response.ok) {
+                            friendElement.remove();
+                            Toast.fire({
+                                icon: 'success',
+                                title: `Blocked ${friendName}`
+                            });
+                            // Reload both containers to keep them in sync
+                            loadFriends('friendsContainer');
+                            loadFriends('sidebarFriendsContainer', 3);
+                        }
+                    } catch (error) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Failed to block user'
+                        });
+                    }
+                }
+            });
+        }
+
+// Initialize friends loading
+        function initializeFriends() {
+            // Load initial friends for sidebar
+            loadFriends('sidebarFriendsContainer', 3);
+
+            // Add tab change handler for friends
+            document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', async (e) => {
+                    const target = e.target.getAttribute('data-bs-target');
+                    if (target === '#friends') {
+                        await loadFriends('friendsContainer');
+                    }
+                });
+            });
+
+            // Handle "See All" friends click
+            document.querySelector('.friends-card .text-primary').addEventListener('click', (e) => {
+                e.preventDefault();
+                const friendsTab = document.querySelector('[data-bs-target="#friends"]');
+                if (friendsTab) {
+                    const tab = new bootstrap.Tab(friendsTab);
+                    tab.show();
+                }
             });
         }
     }

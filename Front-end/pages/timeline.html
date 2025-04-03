@@ -31,13 +31,13 @@
                 <a class="navbar-brand" href="/">
                     <img src="../assets/image/Luma-logo.jpeg" alt="Luma Logo"/>
                 </a>
-                <div class="search-container">
+                <div class="search-container" style="flex: 1 1 500px; max-width: 600px;">
                     <i class="bi bi-search search-icon"></i>
-                    <input
-                            type="text"
-                            class="form-control search-input"
-                            placeholder="Search post"
-                    />
+                    <input type="text"
+                           class="form-control search-input"
+                           placeholder="Search people and posts here..."
+                           id="mainSearchInput"
+                           autocomplete="off">
                 </div>
                 <div class="navbar-nav ms-auto d-flex gap-1 nav-icons">
                     <a
@@ -129,13 +129,35 @@
                         <a class="dropdown-item" href="settings.html">
                             <i class="bi bi-gear-fill me-2"></i> Settings & Privacy
                         </a>
-                        <a id="logoutButton" class="dropdown-item text-danger" href="login.html">
+                        <a id="logoutButton" class="dropdown-item text-danger" href="#">
                             <i class="bi bi-box-arrow-right me-2"></i> Logout
                         </a>
                     </div>
                 </div>
             </div>
         </nav>
+
+        <!-- Search Overlay -->
+        <div class="search-overlay">
+            <div class="search-header">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-search fs-4 text-muted me-3"></i>
+                        <input type="text"
+                               class="search-input-full"
+                               placeholder="Search people and posts here..."
+                               id="fullSearchInput"
+                               autocomplete="off">
+                        <button class="btn-close-search ms-auto">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-results-full container-fluid">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
 
         <!-- Timeline Content -->
         <div class="container timeline-container">
@@ -738,5 +760,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/timeline.js"></script>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

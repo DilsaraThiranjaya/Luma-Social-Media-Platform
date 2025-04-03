@@ -658,6 +658,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const postElement = generatePostElement(post);
                         postsContainer.appendChild(postElement);
                     });
+
+                    const hash = window.location.hash;
+                    if (hash) {
+                        const postElement = document.getElementById(hash.substring(1));
+                        if (postElement) {
+                            postElement.scrollIntoView({ behavior: 'smooth' });
+                            postElement.style.backgroundColor = '#fff9e6';
+                            setTimeout(() => {
+                                postElement.style.backgroundColor = '';
+                            }, 2000);
+                        }
+                    }
                 }
             } catch (error) {
                 Toast.fire({
@@ -670,6 +682,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Modified post creation function (generic version)
         function generatePostElement(postData) {
             const newPost = document.createElement("div");
+            newPost.id = `post-${postData.postId}`;
             newPost.className = "card post-card mb-3";
             newPost.dataset.postId = postData.postId;
 

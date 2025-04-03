@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       icon: "error",
       draggable: false
     });
-    sessionStorage.removeItem('authData');
+    // sessionStorage.removeItem('authData');
     // window.location.href = LOGIN_URL;
   };
 
@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializeUI();
       initializeRoleBasedAccess(getRoleFromToken(authData.token));
       initializeLogout();
+      initializeNavbarUserInfo();
     } catch (error) {
       await handleAuthError("Session expired. Please log in again.");
     }
@@ -104,6 +105,40 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       }
     });
+  }
+
+  async function initializeNavbarUserInfo() {
+    try {
+      const response = await fetch(`${BASE_URL}/profile/profileInfo`, {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+      const responseData = await response.json();
+
+      if (responseData.code === 200 || responseData.code === 201) {
+        const user = responseData.data;
+
+        document.getElementById('navProfileName').textContent = `${user.firstName} ${user.lastName}`;
+
+        if (user.profilePictureUrl) {
+          document.getElementById('navProfileImg').src = user.profilePictureUrl;
+          document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
+        }
+
+      } else {
+        await Toast.fire({
+          icon: "error",
+          title: responseData.message
+        });
+        return;
+      }
+    } catch (error) {
+      await Toast.fire({
+        icon: "error",
+        title: error.message || "Failed to load user data"
+      });
+    }
   }
 
   function initializeUI() {
@@ -197,13 +232,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Update Profile Name in Header and Navigation
       document.getElementById('profileName').textContent = `${user.firstName} ${user.lastName}`;
-      document.getElementById('navProfileName').textContent = `${user.firstName} ${user.lastName}`;
 
       // Set Profile and Cover Images
       if (user.profilePictureUrl) {
         document.getElementById('profileImage').src = user.profilePictureUrl;
-        document.getElementById('navProfileImg').src = user.profilePictureUrl;
-        document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
       }
       if (user.coverPhotoUrl) {
         document.getElementById('coverImage').src = user.coverPhotoUrl;
@@ -365,7 +397,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         status = 'NONE';
       }
 
-      switch(status) {
+      switch (status) {
         case 'NONE':
           addFriendBtn.classList.remove('d-none');
           unfriendBtn.classList.add('d-none');
@@ -498,21 +530,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
 
           response.data.posts.map(post => {
-            console.log(post.postId)
-            console.log(post.content)
-            console.log(post.privacy)
-            console.log(post.createdAt)
-            console.log(post.user.userId)
-            console.log('Media'+post.media.length)
-            console.log('Reactions'+post.reactions.length)
-            console.log('Comments'+post.comments.length)
-            console.log(post.shares)
-            console.log(post.liked)
-            console.log(post.reactionType)
 
             const postElement = generatePostElement(post);
             postsContainer.appendChild(postElement);
-            return { postElement, post };
+            return {postElement, post};
           });
 
         }
@@ -638,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <i class="bi bi-three-dots"></i>
     </button>
     <ul class="dropdown-menu dropdown-menu-end">
-      <li><a class="dropdown-item report-post-btn" data-post-id="${postData.postId}">
+      <li><a class="dropdown-item report-post-btn" data-post-id="${postId}">
         <i class="bi bi-flag me-2"></i>Report
       </a></li>
     </ul>

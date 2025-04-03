@@ -545,6 +545,66 @@
       </div>
     </div>
 
+    <!-- Report Post Modal -->
+    <div class="modal fade" id="reportPostModal" tabindex="-1" aria-labelledby="reportPostModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header gradient-bg">
+            <h5 class="modal-title text-white" id="reportPostModalLabel">Report Post</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Report Type Selection -->
+            <div class="mb-4">
+              <label class="form-label">Report Type</label>
+              <div class="dropdown">
+                <button class="btn dropdown-btn btn-outline-secondary dropdown-toggle w-100 text-start"
+                        type="button" id="reportTypeDropdown" data-bs-toggle="dropdown">
+                  Select Report Type
+                </button>
+                <ul class="dropdown-menu shadow-sm">
+                  <li><a class="dropdown-item" href="#" data-value="SPAM">Spam</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="HARASSMENT">Harassment</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="INAPPROPRIATE">Inappropriate Content</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="OTHER">Other</a></li>
+                </ul>
+              </div>
+              <div class="validation-message" id="typeError"></div>
+            </div>
+
+            <!-- Priority Selection -->
+            <div class="mb-4">
+              <label class="form-label">Priority</label>
+              <div class="dropdown">
+                <button class="btn dropdown-btn btn-outline-secondary dropdown-toggle w-100 text-start"
+                        type="button" id="priorityDropdown" data-bs-toggle="dropdown">
+                  Select Priority
+                </button>
+                <ul class="dropdown-menu shadow-sm">
+                  <li><a class="dropdown-item" href="#" data-value="HIGH">High</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="MEDIUM">Medium</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="LOW">Low</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" id="reportDescription" rows="4"
+                        placeholder="Please provide details about your report..."></textarea>
+              <div class="validation-message" id="descriptionError"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn rounded-5 btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-post" id="submitReportBtn">Submit Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Media Modal -->
     <div class="modal fade" id="mediaModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered modal-lg">

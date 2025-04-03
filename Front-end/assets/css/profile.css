@@ -332,6 +332,13 @@
 
 /* ===== FRIENDS STYLES ===== */
 /* Friends Grid */
+.friends-container{
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
 .friends-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -356,6 +363,7 @@
 
 /* Friends Cards */
 .friend-card {
+  width: calc(100vw / 3 - 82px);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

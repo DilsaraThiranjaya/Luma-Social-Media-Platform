@@ -120,6 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     });
 
+    document.querySelector('.search-results-full').addEventListener('click', (e) => {
+        const postLink = e.target.closest('a[href^="timeline.html#post-"]');
+        if (postLink) {
+            toggleSearch(false);
+
+            // For single-page applications, add:
+            // e.preventDefault();
+            // const href = postLink.getAttribute('href');
+            // setTimeout(() => { window.location.href = href; }, 300);
+        }
+    });
+
     // Modern result rendering with animations
     const renderResults = (data, query) => {
         const { users = [], posts = [] } = data;
@@ -151,61 +163,60 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 ` : ''}
                 
-                ${posts.length ? `
-    <div class="col-md-8">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="text-muted fs-5 mb-0" style="color: #8b0c7d !important">Posts</h5>
-            <span class="badge bg-primary rounded-pill">${posts.length}</span>
-        </div>
-        <div class="row g-3">
-            ${posts.map(post => `
-                <div class="col-12">
-                    <a href="timeline.html#post-${post.postId}" 
-                       class="card hover-shadow text-decoration-none h-100">
-                        <div class="card-body">
-                            <!-- Header Section -->
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="${post.user.profilePictureUrl || '../assets/image/Profile-picture.png'}" 
-                                     class="rounded-circle me-2" 
-                                     width="40" 
-                                     height="40"
-                                     alt="${post.user.firstName}">
-                                <div>
-                                    <h6 class="mb-0">${post.user.firstName} ${post.user.lastName}</h6>
-                                    <small class="text-muted">
-                                        ${formatRelativeTime(post.createdAt)} • 
-                                        <i class="bi ${getPrivacyIcon(post.privacy)}"></i>
-                                        ${post.privacy === 'PRIVATE' ? 'Only Me' : post.privacy.charAt(0) + post.privacy.slice(1).toLowerCase()}
-                                    </small>
-                                </div>
-                            </div>
-
-                            <!-- Content & Media -->
-                            <p class="mb-3">${highlightMatch(post.content, query)}</p>
-                            ${post.media?.length ? `
-                                <div class="post-media mb-3">
-                                    ${post.media.map(media => `
-                                        ${media.mediaType === 'IMAGE' ? `
-                                            <img src="${media.mediaUrl}" 
-                                                 class="img-fluid rounded mb-2" 
-                                                 alt="Post image">
-                                        ` : ''}
-                                        ${media.mediaType === 'VIDEO' ? `
-                                            <video controls class="w-100 rounded mb-2">
-                                                <source src="${media.mediaUrl}" 
-                                                        type="video/mp4">
-                                            </video>
-                                        ` : ''}
-                                    `).join('')}
-                                </div>
-                            ` : ''}
+${posts.length ? `
+<div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="text-muted fs-5 mb-0" style="color: #8b0c7d !important">Posts</h5>
+        <span class="badge bg-primary rounded-pill">${posts.length}</span>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        ${posts.map(post => `
+            <div class="col">
+                <a href="timeline.html#post-${post.postId}" 
+                   class="card hover-shadow text-decoration-none h-100">
+                    <div class="card-body">
+                        <!-- Header Section -->
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="${post.user.profilePictureUrl || '../assets/image/Profile-picture.png'}" 
+                                 class="rounded-circle me-2" 
+                                 width="40" 
+                                 height="40"
+                                 alt="${post.user.firstName}">
+                            <div>
+                                <h6 class="mb-0">${post.user.firstName} ${post.user.lastName}</h6>
+                                <small class="text-muted">
+                                    ${formatRelativeTime(post.createdAt)} • 
+                                    <i class="bi ${getPrivacyIcon(post.privacy)}"></i>
+                                    ${post.privacy === 'PRIVATE' ? 'Only Me' : post.privacy.charAt(0) + post.privacy.slice(1).toLowerCase()}
+                                </small>
                             </div>
                         </div>
-                    </a>
-                </div>
-            `).join('')}
-        </div>
+
+                        <!-- Content & Media -->
+                        <p class="mb-3 text-truncate-2">${highlightMatch(post.content, query)}</p>
+                        ${post.media?.length ? `
+                            <div class="post-media mb-3 ratio ratio-1x1">
+                                ${post.media.map(media => `
+                                    ${media.mediaType === 'IMAGE' ? `
+                                        <img src="${media.mediaUrl}" 
+                                             class="img-fluid rounded mb-2 object-fit-cover" 
+                                             alt="Post image">
+                                    ` : ''}
+                                    ${media.mediaType === 'VIDEO' ? `
+                                        <video class="w-100 rounded mb-2 object-fit-cover">
+                                            <source src="${media.mediaUrl}" 
+                                                    type="video/mp4">
+                                        </video>
+                                    ` : ''}
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </a>
+            </div>
+        `).join('')}
     </div>
+</div>
 ` : ''}
                 
                 ${!users.length && !posts.length ? `
