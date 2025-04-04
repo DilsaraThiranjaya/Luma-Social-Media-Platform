@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class FriendshipDTO {
-    private Integer user1Id;
-    private Integer user2Id;
+    private int user1Id;
+    private int user2Id;
     private Friendship.FriendshipStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

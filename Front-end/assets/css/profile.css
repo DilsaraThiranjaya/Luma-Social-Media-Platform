@@ -332,12 +332,12 @@
 
 /* ===== FRIENDS STYLES ===== */
 /* Friends Grid */
-.friends-container{
-  padding: 20px 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
+/*.friends-container{*/
+/*  padding: 20px 0;*/
+/*  display: grid;*/
+/*  grid-template-columns: repeat(3, 1fr);*/
+/*  gap: 20px;*/
+/*}*/
 
 .friends-grid {
   display: grid;

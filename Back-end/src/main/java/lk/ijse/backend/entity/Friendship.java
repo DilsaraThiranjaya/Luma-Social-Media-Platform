@@ -1,11 +1,11 @@
 package lk.ijse.backend.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.backend.entity.Embeded.FriendshipId;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,17 +36,6 @@ public class Friendship {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @Embeddable
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class FriendshipId implements Serializable {
-        @Column(name = "user1_id")
-        private int user1Id;
-
-        @Column(name = "user2_id")
-        private int user2Id;
-    }
-
     public enum FriendshipStatus { PENDING, ACCEPTED, BLOCKED }
 }
+

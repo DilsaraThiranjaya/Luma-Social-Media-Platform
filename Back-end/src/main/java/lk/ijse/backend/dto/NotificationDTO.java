@@ -15,24 +15,16 @@ import java.time.LocalDateTime;
 @Builder
 public class NotificationDTO {
     private int notificationId;
-
-    @NotNull(message = "Notification type cannot be null")
+    private String title;
+    private String content;
     private NotificationType type;
     private Boolean isRead;
-
-    @Null
     private LocalDateTime createdAt;
-
-    @NotNull(message = "User cannot be null")
+    private String actionUrl;
     private UserDTO user;
-
     private UserDTO sourceUser;
-
     private PostDTO post;
-
     private CommentDTO comment;
-
     private MessageDTO message;
-
     private ReportDTO report;
 }
