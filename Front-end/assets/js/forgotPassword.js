@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const newPasswordSection = document.getElementById("newPasswordSection");
     const stepDescription = document.getElementById("stepDescription");
     const steps = document.querySelectorAll(".step");
-    const successMessage = document.getElementById("successMessage");
     let timerInterval;
     let otpCode;
     let email;
@@ -217,11 +216,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const responseData = await response.json();
 
             if (responseData.code === 200 || responseData.code === 201) {
-                await Toast.fire({
-                    icon: "success",
-                    title: responseData.message
-                });
-
                 otpCode = responseData.data;
                 if (otpCode !== null) {
                     showStep(2);

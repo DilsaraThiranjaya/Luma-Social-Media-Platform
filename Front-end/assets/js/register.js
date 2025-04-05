@@ -308,7 +308,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("email").classList.add("is-valid");
             document.querySelector(".verify-button").classList.add("d-none");
 
-            Toast.fire({ icon: "success", title: "Email verified successfully!" });
             bootstrap.Modal.getInstance("#otpModal").hide();
             otpCode = null;
         } catch (error) {

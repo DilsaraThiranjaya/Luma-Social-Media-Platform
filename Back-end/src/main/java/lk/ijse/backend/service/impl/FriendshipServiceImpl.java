@@ -74,6 +74,24 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
+    public List<FriendshipDTO> getOtherUsersAllFriends(int userId) {
+        User currentUser = userRepository.findByUserId(userId);
+        return friendshipRepository.findAllFriendships(currentUser.getUserId())
+                .stream()
+                .map(friendship -> {
+                    FriendshipDTO dto = modelMapper.map(friendship, FriendshipDTO.class);
+                    // Ensure we always show the other user as user2
+                    if (friendship.getUser1().getUserId() == currentUser.getUserId()) {
+                        dto.setUser2(modelMapper.map(friendship.getUser2(), UserDTO.class));
+                    } else {
+                        dto.setUser2(modelMapper.map(friendship.getUser1(), UserDTO.class));
+                    }
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public FriendshipDTO sendFriendRequest(String senderEmail, int receiverId) throws Exception {
         User sender = userRepository.findByEmail(senderEmail);
         User receiver = userRepository.findByUserId(receiverId);
@@ -124,9 +142,6 @@ public class FriendshipServiceImpl implements FriendshipService {
         if (user == null) {
             throw new EntityNotFoundException("User not found");
         }
-
-        System.out.println("User1 ID: " + user.getUserId());
-        System.out.println("User2 ID: " + friendId);
 
         Optional<Friendship> friendship = friendshipRepository.findByUsers(user.getUserId(), friendId);
 

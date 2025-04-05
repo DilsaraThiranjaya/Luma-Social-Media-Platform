@@ -24,6 +24,23 @@ public class FriendshipController {
     private final FriendshipService friendshipService;
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/{userId}/check")
+    public ResponseEntity<ResponseDTO> checkFriendship(
+            @PathVariable Integer userId,
+            Authentication authentication) {
+        log.info("Checking friendship between users: {} and {}", authentication.getName(), userId);
+        try {
+            FriendshipDTO friendship = friendshipService.getFriendshipStatus(authentication.getName(), userId);
+
+            log.info("Friendship checked successfully between users: {} and {}", authentication.getName(), userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friendship checked successfully", friendship));
+        } catch (Exception e) {
+            log.error("Error checking friendship", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/friends")
     public ResponseEntity<ResponseDTO> getAllFriends(Authentication authentication) {
         log.info("Retrieving friends for user: {}", authentication.getName());
@@ -31,6 +48,21 @@ public class FriendshipController {
             List<FriendshipDTO> friends = friendshipService.getAllFriends(authentication.getName());
 
             log.info("Retrieved {} friends for user: {}", friends.size(), authentication.getName());
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friends retrieved successfully", friends));
+        } catch (Exception e) {
+            log.error("Error retrieving friends", e);
+            return ResponseEntity.badRequest().body(new ResponseDTO(VarList.Bad_Request, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/{userId}/friends")
+    public ResponseEntity<ResponseDTO> getOtherUsersAllFriends(@PathVariable Integer userId) {
+        log.info("Retrieving friends for user: {}", userId);
+        try {
+            List<FriendshipDTO> friends = friendshipService.getOtherUsersAllFriends(userId);
+
+            log.info("Retrieved {} friends for user: {}", friends.size(), userId);
             return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friends retrieved successfully", friends));
         } catch (Exception e) {
             log.error("Error retrieving friends", e);

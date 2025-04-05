@@ -1090,7 +1090,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             type: "DELETE",
                             headers: {"Authorization": "Bearer " + authData.token},
                             success: function (response) {
-                                Toast.fire({icon: "success", title: "Post deleted successfully"});
                                 loadPosts();
                             },
                             error: function (error) {

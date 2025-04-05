@@ -271,7 +271,7 @@ public class ProfileController {
                     Sort.by(Sort.Direction.DESC, "createdAt") // Add this line
             );
 
-            Page<PostDTO> posts = postService.getUserProfilePosts(userId, pageable);
+            Page<PostDTO> posts = postService.getOtherUsersProfilePosts(userId, authentication.getName(), pageable);
 
             List<PostResponseDTO> postDTOs = posts.getContent().stream()
                     .map(post -> convertToPostResponseDTO(post, email))

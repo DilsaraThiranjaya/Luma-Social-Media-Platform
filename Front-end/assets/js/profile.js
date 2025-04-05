@@ -2059,6 +2059,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             media.forEach(item => {
+                if (!item.mediaUrl) return;
+
                 const col = document.createElement('div');
                 col.className = 'col-md-4 mb-3';
 
@@ -2216,7 +2218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         function createFriendElement(friend, isFullView = false) {
             const element = document.createElement('div');
-            element.className = isFullView ? 'col-md-4 mb-3' : 'friend-item';
+            element.className = isFullView ? 'col-md-4 mb-3' : 'sidebar-friend-item';
 
             if (isFullView) {
                 element.innerHTML = `
@@ -2256,7 +2258,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                      alt="Friend" 
                      class="rounded-circle">
                 <span>${friend.firstName} ${friend.lastName}</span>
-            </a>`;
+            </a>
+            `;
             }
 
             if (isFullView) {
@@ -2299,10 +2302,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         if (response.ok) {
                             friendElement.remove();
-                            Toast.fire({
-                                icon: 'success',
-                                title: `Unfriended ${friendName}`
-                            });
                             // Reload both containers to keep them in sync
                             loadFriends('friendsContainer');
                             loadFriends('sidebarFriendsContainer', 3);
@@ -2339,10 +2338,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         if (response.ok) {
                             friendElement.remove();
-                            Toast.fire({
-                                icon: 'success',
-                                title: `Blocked ${friendName}`
-                            });
                             // Reload both containers to keep them in sync
                             loadFriends('friendsContainer');
                             loadFriends('sidebarFriendsContainer', 3);

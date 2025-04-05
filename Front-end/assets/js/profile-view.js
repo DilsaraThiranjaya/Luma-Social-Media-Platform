@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       icon: "error",
       draggable: false
     });
-    // sessionStorage.removeItem('authData');
-    // window.location.href = LOGIN_URL;
+    sessionStorage.removeItem('authData');
+    window.location.href = LOGIN_URL;
   };
 
   const authData = JSON.parse(sessionStorage.getItem('authData'));
@@ -55,7 +55,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializeLogout();
       initializeNavbarUserInfo();
     } catch (error) {
-      await handleAuthError("Session expired. Please log in again.");
+      throw error;
+      // await handleAuthError("Session expired. Please log in again.");
     }
   } else {
     await handleAuthError("You need to log in to access this page.");
@@ -161,6 +162,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadSidebarMedia('IMAGE', 'sidebarPhotosContainer');
     loadSidebarMedia('VIDEO', 'sidebarVideosContainer', 3);
     initializeSeeAllButtons();
+    initializeFriends();
     initializeFriendshipButtons();
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
@@ -387,39 +389,171 @@ document.addEventListener('DOMContentLoaded', async () => {
       return sorted[0];
     }
 
+    // Handle "See All" clicks
+    function initializeSeeAllButtons() {
+      document.querySelectorAll('.see-all-photos').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const photosTab = document.querySelector('[data-bs-target="#photos"]');
+          if (photosTab) {
+            const tab = new bootstrap.Tab(photosTab);
+            tab.show();
+          }
+        });
+      });
+
+      document.querySelectorAll('.see-all-videos').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const videosTab = document.querySelector('[data-bs-target="#videos"]');
+          if (videosTab) {
+            const tab = new bootstrap.Tab(videosTab);
+            tab.show();
+          }
+        });
+      });
+    }
+
+    // Load friends for both tab and card
+    async function loadFriends(containerId, limit = null) {
+      try {
+        const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/friends`, {
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+        const data = await response.json();
+
+        if (data.code === 200) {
+          const container = document.getElementById(containerId);
+          container.innerHTML = '';
+
+          if (!data.data || data.data.length === 0) {
+            container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="empty-friends-state">
+                            <i class="bi bi-people fs-1 text-muted"></i>
+                            <h5 class="mt-3">No friends yet</h5>
+                            <p class="text-muted">When you connect with people, they'll appear here</p>
+                        </div>
+                    </div>
+                `;
+            return;
+          }
+
+          // If limit is provided, only show that many friends
+          const friendsToShow = limit ? data.data.slice(0, limit) : data.data;
+
+          friendsToShow.forEach(friendship => {
+            const friend = friendship.user2;
+            const friendElement = createFriendElement(friend, containerId === 'friendsContainer');
+            container.appendChild(friendElement);
+          });
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "Failed to load friends"
+        });
+      }
+    }
+
+    function createFriendElement(friend, isFullView = false) {
+      const element = document.createElement('div');
+      element.className = isFullView ? 'col-md-4 mb-3' : 'sidebar-friend-item';
+
+      if (isFullView) {
+        element.innerHTML = `
+            <div class="friend-card" data-friend-id="${friend.userId}">
+                <img src="${friend.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" 
+                     alt="Friend" 
+                     class="friend-image">
+                <div class="friend-info">
+                    <h6>${friend.firstName} ${friend.lastName}</h6>
+                    <div class="friend-actions">
+                        <button class="btn btn-primary btn-sm message-friend">
+                            <i class="bi bi-chat-dots-fill me-2"></i>Message
+                        </button>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item view-profile" href=${friend.email === authData.email ? 'http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile.html' : `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}`}>
+                                    <i class="bi bi-person-badge me-2"></i>View Profile
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+      } else {
+        element.innerHTML = `
+            <a href=${friend.email === authData.email ? 'http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile.html' : `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}`} class="friend-link text-decoration-none">
+                <img src="${friend.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" 
+                     alt="Friend" 
+                     class="rounded-circle">
+                <span>${friend.firstName} ${friend.lastName}</span>
+            </a>
+            `;
+      }
+
+      return element;
+    }
+
+// Initialize friends loading
+    function initializeFriends() {
+      // Load initial friends for sidebar
+      loadFriends('sidebarFriendsContainer', 3);
+
+      // Add tab change handler for friends
+      document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+        tab.addEventListener('shown.bs.tab', async (e) => {
+          const target = e.target.getAttribute('data-bs-target');
+          if (target === '#friends') {
+            await loadFriends('friendsContainer');
+          }
+        });
+      });
+
+      // Handle "See All" friends click
+      document.querySelector('.friends-card .text-primary').addEventListener('click', (e) => {
+        e.preventDefault();
+        const friendsTab = document.querySelector('[data-bs-target="#friends"]');
+        if (friendsTab) {
+          const tab = new bootstrap.Tab(friendsTab);
+          tab.show();
+        }
+      });
+    }
 
     function updateFriendshipStatus(status) {
       const addFriendBtn = document.querySelector('.add-friend-btn');
       const unfriendBtn = document.querySelector('.unfriend-btn');
       const messageBtn = document.querySelector('.message-btn');
 
-      if (status === null) {
-        status = 'NONE';
-      }
+      // Reset all buttons to default state first
+      addFriendBtn.classList.remove('d-none', 'btn-secondary', 'btn-success');
+      addFriendBtn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Add Friend';
+      unfriendBtn.classList.add('d-none');
+      messageBtn.classList.add('d-none');
 
       switch (status) {
         case 'NONE':
-          addFriendBtn.classList.remove('d-none');
-          unfriendBtn.classList.add('d-none');
-          messageBtn.classList.add('d-none');
           break;
         case 'PENDING_SENT':
-          addFriendBtn.classList.remove('d-none');
-          addFriendBtn.textContent = 'Cancel Request';
+          addFriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Cancel Request';
           addFriendBtn.classList.add('btn-secondary');
-          unfriendBtn.classList.add('d-none');
-          messageBtn.classList.add('d-none');
           break;
         case 'PENDING_RECEIVED':
-          addFriendBtn.classList.remove('d-none');
-          addFriendBtn.textContent = 'Accept Request';
+          addFriendBtn.innerHTML = '<i class="bi bi-check-circle"></i> Accept';
           addFriendBtn.classList.add('btn-success');
+          unfriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Decline';
           unfriendBtn.classList.remove('d-none');
-          unfriendBtn.textContent = 'Decline';
-          messageBtn.classList.add('d-none');
           break;
         case 'FRIENDS':
           addFriendBtn.classList.add('d-none');
+          unfriendBtn.innerHTML = '<i class="bi bi-person-dash-fill"></i> Unfriend';
           unfriendBtn.classList.remove('d-none');
           messageBtn.classList.remove('d-none');
           break;
@@ -431,64 +565,138 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    function initializeFriendshipButtons() {
-      const addFriendBtn = document.querySelector('.add-friend-btn');
-      const unfriendBtn = document.querySelector('.unfriend-btn');
-      const messageBtn = document.querySelector('.message-btn');
-
-      addFriendBtn.addEventListener('click', async () => {
-        try {
-          const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/request`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${authData.token}`
-            }
-          });
-
-          const data = await response.json();
-          if (data.code === 200) {
-            updateFriendshipStatus(data.data.status);
-            Toast.fire({
-              icon: 'success',
-              title: data.message
-            });
+    async function initializeFriendshipButtons() {
+      try {
+        const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/check`, {
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
           }
-        } catch (error) {
-          Toast.fire({
-            icon: 'error',
-            title: 'Failed to send friend request'
-          });
-        }
-      });
+        });
 
-      unfriendBtn.addEventListener('click', async () => {
-        try {
-          const response = await fetch(`${BASE_URL}/friendship/${profileUserId}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${authData.token}`
-            }
-          });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-          const data = await response.json();
-          if (data.code === 200) {
-            updateFriendshipStatus('NONE');
-            Toast.fire({
-              icon: 'success',
-              title: data.message
-            });
+        const data = await response.json();
+        if (data.code !== 200) throw new Error(data.message || 'Failed to check friendship status');
+
+        if (data.data) {
+          switch (data.data.status) {
+            case 'ACCEPTED':
+              updateFriendshipStatus('FRIENDS');
+              break;
+            case 'PENDING':
+              if (data.data.user1?.email === authData.email) {
+                updateFriendshipStatus('PENDING_SENT');
+              } else {
+                updateFriendshipStatus('PENDING_RECEIVED');
+              }
+              break;
+            case 'BLOCKED':
+              updateFriendshipStatus('BLOCKED');
+              break;
+            default:
+              updateFriendshipStatus('NONE');
           }
-        } catch (error) {
-          Toast.fire({
-            icon: 'error',
-            title: 'Failed to unfriend user'
-          });
+        } else {
+          updateFriendshipStatus('NONE');
         }
-      });
 
-      messageBtn.addEventListener('click', () => {
-        window.location.href = `/messages.html?userId=${profileUserId}`;
-      });
+        // Add event listeners
+        document.querySelector('.add-friend-btn').addEventListener('click', handleFriendAction);
+        document.querySelector('.unfriend-btn').addEventListener('click', handleUnfriendAction);
+        document.querySelector('.message-btn').addEventListener('click', () => {
+          window.location.href = `/messages.html?userId=${profileUserId}`;
+        });
+        document.getElementById('blockProfile')?.addEventListener('click', handleBlockAction);
+
+      } catch (error) {
+        Toast.fire({ icon: 'error', title: error.message });
+      }
+    }
+
+    async function handleFriendAction() {
+      try {
+        const currentStatus = document.querySelector('.add-friend-btn').textContent.trim();
+        let endpoint = `${BASE_URL}/friendship/${profileUserId}/request`;
+        let method = 'POST';
+
+        if (currentStatus.includes('Cancel')) {
+          endpoint = `${BASE_URL}/friendship/${profileUserId}`;
+          method = 'DELETE';
+        } else if (currentStatus.includes('Accept')) {
+          endpoint = `${BASE_URL}/friendship/${profileUserId}/accept`;
+        }
+
+        const response = await fetch(endpoint, {
+          method,
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        const data = await response.json();
+        if (data.code === 200) {
+          initializeFriendshipButtons(); // Refresh status
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: error.message || 'Failed to complete action'
+        });
+      }
+    }
+
+    async function handleUnfriendAction() {
+      try {
+        const currentStatus = document.querySelector('.unfriend-btn').textContent.trim();
+        const endpoint = currentStatus.includes('Decline')
+            ? `${BASE_URL}/friendship/${profileUserId}/decline`
+            : `${BASE_URL}/friendship/${profileUserId}`;
+
+        const response = await fetch(endpoint, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        const data = await response.json();
+        if (data.code === 200) {
+          updateFriendshipStatus('NONE');
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: error.message || 'Failed to complete action'
+        });
+      }
+    }
+
+    async function handleBlockAction(e) {
+      e.preventDefault();
+      try {
+        const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/block`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        const data = await response.json();
+        if (data.code === 200) {
+          updateFriendshipStatus('BLOCKED');
+        } else {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: error.message || 'Failed to block user'
+        });
+      }
     }
 
     // Photo overlay effect
@@ -1178,7 +1386,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Function to load media
     async function loadMedia(type) {
       try {
-        const response = await fetch(`${BASE_URL}/profile/posts`, {
+        const response = await fetch(`${BASE_URL}/profile/${profileUserId}/posts`, {
           headers: {'Authorization': `Bearer ${authData.token}`}
         });
         const responseData = await response.json();
@@ -1299,30 +1507,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-// Handle "See All" clicks
-    function initializeSeeAllButtons() {
-      document.querySelectorAll('.see-all-photos').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const photosTab = document.querySelector('[data-bs-target="#photos"]');
-          if (photosTab) {
-            const tab = new bootstrap.Tab(photosTab);
-            tab.show();
-          }
-        });
-      });
+    // Report Post Functionality
+    let currentReportPostId = null;
 
-      document.querySelectorAll('.see-all-videos').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const videosTab = document.querySelector('[data-bs-target="#videos"]');
-          if (videosTab) {
-            const tab = new bootstrap.Tab(videosTab);
-            tab.show();
-          }
-        });
-      });
-    }
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.report-post-btn')) {
+        const postId = e.target.closest('.report-post-btn').dataset.postId;
+        showReportPostModal(postId);
+      }
+    });
 
     // Initialize report modal
     function initializeReportModal() {

@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { users = [], posts = [] } = data;
 
         const content = `
-            <div class="row g-4 fade-in">
+            <div class="row g-4 mx-1 fade-in">
                 ${users.length ? `
                     <div class="col-md-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -164,12 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 ` : ''}
                 
 ${posts.length ? `
-<div class="col-12">
+<div class="col-md-8">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="text-muted fs-5 mb-0" style="color: #8b0c7d !important">Posts</h5>
         <span class="badge bg-primary rounded-pill">${posts.length}</span>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-2 g-4">
         ${posts.map(post => `
             <div class="col">
                 <a href="timeline.html#post-${post.postId}" 

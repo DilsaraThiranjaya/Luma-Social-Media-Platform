@@ -385,6 +385,7 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) transparent;
+  overflow-x: hidden;
 }
 
 .search-results-full::-webkit-scrollbar {
@@ -411,8 +412,6 @@ body {
 }
 
 .list-group-item-action:hover {
-  background: var(--background-gradient);
-  color: var(--light-color);
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(78, 84, 200, 0.2);
 }

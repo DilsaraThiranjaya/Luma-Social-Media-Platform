@@ -1095,7 +1095,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const data = await response.json();
                 if (data.code === 200 || data.code === 201) {
-                    Toast.fire({icon: 'success', title: data.message});
                     otpCode = data.data;
                     startTimer();
                     return true;
@@ -1116,7 +1115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verifying...';
 
             if (enteredOtp == otpCode) {
-                Toast.fire({icon: 'success', title: 'Email verified!'});
                 document.getElementById('email').classList.add('is-valid');
                 document.querySelector('.verify-button').classList.add('d-none');
                 initialEmail = document.getElementById('email').value;

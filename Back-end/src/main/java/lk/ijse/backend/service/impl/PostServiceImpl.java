@@ -84,14 +84,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostDTO> getUserProfilePosts(int userId, PageRequest pageRequest) {
+    public Page<PostDTO> getOtherUsersProfilePosts(int userId, String email, PageRequest pageRequest) {
         User user = userRepository.findByUserId(userId);
-        if (user == null) {
+        User currentUser = userRepository.findByEmail(email);
+        if (user == null || currentUser == null) {
             throw new EntityNotFoundException("User not found");
         }
 
-        Page<Post> posts = postRepository.findUsersVisiblePostsByUserId(
+        Page<Post> posts = postRepository.findOtherUsersVisiblePostsByUserId(
                 user.getUserId(),
+                currentUser.getUserId(),
                 pageRequest
         );
 

@@ -359,39 +359,16 @@
                       </div>
 
                       <!-- Friends Card -->
-                      <div class="card">
+                      <div class="card friends-card">
                         <div class="card-body">
                           <div
-                            class="d-flex justify-content-between align-items-center mb-3"
+                                  class="d-flex justify-content-between align-items-center mb-3"
                           >
                             <h5 class="card-title mb-0">Friends</h5>
                             <a href="#" class="text-primary">See All</a>
                           </div>
-                          <div class="friends-grid">
-                            <div class="friend-item">
-                              <img
-                                src="../assets/image/Test-profile-img.jpg"
-                                alt="Friend"
-                                class="rounded-circle"
-                              />
-                              <span>John Doe</span>
-                            </div>
-                            <div class="friend-item">
-                              <img
-                                src="../assets/image/Test-profile-img.jpg"
-                                alt="Friend"
-                                class="rounded-circle"
-                              />
-                              <span>Jane Smith</span>
-                            </div>
-                            <div class="friend-item">
-                              <img
-                                src="../assets/image/Test-profile-img.jpg"
-                                alt="Friend"
-                                class="rounded-circle"
-                              />
-                              <span>Mike Johnson</span>
-                            </div>
+                          <div class="row g-2 d-grid" id="sidebarFriendsContainer">
+                            <!-- Dynamic content will be loaded here -->
                           </div>
                         </div>
                       </div>
@@ -494,29 +471,8 @@
                 <!-- Friends Tab -->
                 <div class="tab-pane fade" id="friends">
                   <div class="friends-container">
-                    <div class="row g-4">
-                      <div class="col-md-3">
-                        <div class="friend-card">
-                          <img
-                            src="../assets/image/Test-profile-img.jpg"
-                            alt="Friend"
-                            class="friend-image"
-                          />
-                          <div class="friend-info">
-                            <h6>John Doe</h6>
-                            <p class="text-muted">Software Developer</p>
-                            <div class="friend-actions">
-                              <button class="btn btn-primary btn-sm">
-                                Message
-                              </button>
-                              <button class="btn btn-outline-primary btn-sm">
-                                Unfriend
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Add more friend cards here -->
+                    <div class="row g-3" id="friendsContainer">
+                      <!-- Friend cards will be dynamically inserted here -->
                     </div>
                   </div>
                 </div>

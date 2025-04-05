@@ -18,4 +18,5 @@ public interface FriendshipService {
     List<FriendshipDTO> getPendingRequests(String email) throws Exception;
     List<UserDTO> getFriendSuggestions(String email) throws Exception;
     FriendshipDTO getFriendshipStatus(String email, int targetUserId) throws Exception;
+    List<FriendshipDTO> getOtherUsersAllFriends(int userId);
 }

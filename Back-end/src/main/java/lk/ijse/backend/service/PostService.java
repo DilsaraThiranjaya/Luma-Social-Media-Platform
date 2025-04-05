@@ -34,5 +34,5 @@ public interface PostService {
 
     List<PostDTO> searchPosts(String query, int limit, String email);
 
-    Page<PostDTO> getUserProfilePosts(int userId, PageRequest pageable);
+    Page<PostDTO> getOtherUsersProfilePosts(int userId, String email, PageRequest pageable);
 }
