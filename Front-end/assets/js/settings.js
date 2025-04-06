@@ -1552,6 +1552,126 @@ document.addEventListener('DOMContentLoaded', async () => {
             return isValid;
         }
 
+        // Load blocked users
+        async function loadBlockedUsers() {
+            const blockedUsersContainer = document.querySelector('.blocked-users-list');
+
+            try {
+                const response = await fetch(`${BASE_URL}/settings/blocked-users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.code === 200) {
+                    const blockedUsers = responseData.data;
+
+                    if (blockedUsers.length === 0) {
+                        blockedUsersContainer.innerHTML = `
+                    <div class="no-blocked-users">
+                        <i class="fa-solid fa-ban"></i>
+                        <h5>No Blocked Users</h5>
+                        <p>You haven't blocked anyone yet.</p>
+                    </div>
+                `;
+                        return;
+                    }
+
+                    blockedUsersContainer.innerHTML = blockedUsers.map(user => `
+                <div class="blocked-user-card" data-user-id="${user.userId}">
+                    <div class="blocked-user-info">
+                        <img src="${user.profilePictureUrl || '../assets/image/Profile-picture.png'}" 
+                             alt="${user.firstName}" 
+                             class="blocked-user-avatar">
+                        <div class="blocked-user-details">
+                            <h6>${user.firstName} ${user.lastName}</h6>
+                            <p>${user.email}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-unblock">
+                        <i class="fa-solid fa-user-check me-2"></i>Unblock
+                    </button>
+                </div>
+            `).join('');
+
+                    blockedUsersContainer.addEventListener('click', (e) => {
+                        if (e.target.closest('.btn-unblock')) {
+                            const userId = e.target.closest('.blocked-user-card').dataset.userId;
+                            unblockUser(userId);
+                        }
+                    });
+                } else {
+                    await Toast.fire({
+                        icon: "error",
+                        title: responseData.message
+                    });
+                }
+            } catch (error) {
+                await Toast.fire({
+                    icon: "error",
+                    title: error.message || "Failed to load blocked users"
+                });
+            }
+        }
+
+// Unblock user function
+        async function unblockUser(userId) {
+            try {
+                const response = await fetch(`${BASE_URL}/friendship/${userId}/unblock`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authData.token}`
+                    }
+                });
+
+                const responseData = await response.json();
+
+                if (responseData.code === 200) {
+                    // Remove the user card from the UI
+                    const userCard = document.querySelector(`.blocked-user-card[data-user-id="${userId}"]`);
+                    if (userCard) {
+                        userCard.style.opacity = '0';
+                        setTimeout(() => {
+                            userCard.remove();
+
+                            // Check if there are any blocked users left
+                            const remainingCards = document.querySelectorAll('.blocked-user-card');
+                            if (remainingCards.length === 0) {
+                                document.querySelector('.blocked-users-list').innerHTML = `
+                            <div class="no-blocked-users">
+                                <i class="fa-solid fa-ban"></i>
+                                <h5>No Blocked Users</h5>
+                                <p>You haven't blocked anyone yet.</p>
+                            </div>
+                        `;
+                            }
+                        }, 300);
+                    }
+                } else {
+                    await Toast.fire({
+                        icon: "error",
+                        title: responseData.message
+                    });
+                }
+            } catch (error) {
+                await Toast.fire({
+                    icon: "error",
+                    title: error.message || "Failed to unblock user"
+                });
+            }
+        }
+
+// Add this to your existing tab change handler
+        document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+            tab.addEventListener('shown.bs.tab', async (e) => {
+                if (e.target.getAttribute('data-bs-target') === '#blocked-users') {
+                    await loadBlockedUsers();
+                }
+            });
+        });
+
         // Session Management
         // const sessionButtons = document.querySelectorAll(".session-item button");
         // sessionButtons.forEach((button) => {

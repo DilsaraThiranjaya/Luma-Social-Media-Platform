@@ -1,7 +1,13 @@
 package lk.ijse.backend.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
+import lk.ijse.backend.dto.ReportDTO;
+import lk.ijse.backend.dto.ReportRequestDTO;
 import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.entity.Post;
+import lk.ijse.backend.entity.Report;
 import lk.ijse.backend.entity.User;
+import lk.ijse.backend.repository.ReportRepository;
 import lk.ijse.backend.repository.UserRepository;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
@@ -25,8 +31,8 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
-
     private final UserRepository userRepository;
+    private final ReportRepository reportRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -107,4 +113,37 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    @Override
+    public ReportDTO createReport(ReportRequestDTO reportRequest, String reporterEmail) {
+        User reporter = userRepository.findByEmail(reporterEmail);
+        if (reporter == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        User reportedUser = userRepository.findByUserId(reportRequest.getUserId());
+        if (reportedUser == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        Report report = new Report();
+        report.setType(Report.ReportType.valueOf(reportRequest.getType()));
+        report.setPriority(Report.Priority.valueOf(reportRequest.getPriority()));
+        report.setDescription(reportRequest.getDescription());
+        report.setReporter(reporter);
+        report.setReportedUser(reportedUser);
+        report.setStatus(Report.ReportStatus.PENDING);
+
+        Report savedReport = reportRepository.save(report);
+        return convertToDTO(savedReport);
+    }
+
+    private ReportDTO convertToDTO(Report savedReport) {
+        ReportDTO reportDTO = modelMapper.map(savedReport, ReportDTO.class);
+        reportDTO.setReporter(modelMapper.map(savedReport.getReporter(), UserDTO.class));
+        reportDTO.setReportedUser(modelMapper.map(savedReport.getReportedUser(), UserDTO.class));
+        return reportDTO;
+    }
 }
+

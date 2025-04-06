@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.*;
 import lk.ijse.backend.service.AccountService;
+import lk.ijse.backend.service.FriendshipService;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.EmailSender;
 import lk.ijse.backend.util.VarList;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -29,6 +31,7 @@ import java.util.Random;
 public class SettingsController {
     private final UserService userService;
     private final AccountService accountService;
+    private final FriendshipService friendshipService;
     private final EmailSender emailSender;
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -338,6 +341,23 @@ public class SettingsController {
             log.error("Error deactivating account: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseDTO(VarList.Internal_Server_Error, "An error occurred!", null));
+        }
+    }
+
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @GetMapping("/blocked-users")
+    public ResponseEntity<ResponseDTO> getBlockedUsers(Authentication authentication) {
+        log.info("Fetching blocked users for user: {}", authentication.getName());
+        try {
+            String email = authentication.getName();
+            List<UserDTO> blockedUsers = friendshipService.getBlockedUsers(email);
+
+            log.info("Successfully retrieved blocked users for: {}", email);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Blocked users retrieved", blockedUsers));
+        } catch (Exception e) {
+            log.error("Error retrieving blocked users", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving blocked users", null));
         }
     }
 

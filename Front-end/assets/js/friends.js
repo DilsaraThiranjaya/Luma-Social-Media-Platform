@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Sort functionality
-    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    document.querySelectorAll('.sort-dropdown').forEach(menu => {
       menu.querySelectorAll('.dropdown-item').forEach(item => {
         item.addEventListener('click', function(e) {
           e.preventDefault();

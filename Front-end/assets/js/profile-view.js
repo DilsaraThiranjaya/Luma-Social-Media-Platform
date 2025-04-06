@@ -471,19 +471,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="friend-info">
                     <h6>${friend.firstName} ${friend.lastName}</h6>
                     <div class="friend-actions">
-                        <button class="btn btn-primary btn-sm message-friend">
-                            <i class="bi bi-chat-dots-fill me-2"></i>Message
-                        </button>
-                        <div class="dropdown d-inline-block">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item view-profile" href=${friend.email === authData.email ? 'http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile.html' : `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}`}>
-                                    <i class="bi bi-person-badge me-2"></i>View Profile
-                                </a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-primary btn-sm"
+                            href=${friend.email === authData.email
+                            ? 'http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile.html'
+                            : `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${friend.userId}`}>
+                            <i class="bi bi-person-badge me-2"></i>View Profile
+                        </a>
                     </div>
                 </div>
             </div>`;
@@ -532,7 +525,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       const unfriendBtn = document.querySelector('.unfriend-btn');
       const messageBtn = document.querySelector('.message-btn');
 
-      // Reset all buttons to default state first
       addFriendBtn.classList.remove('d-none', 'btn-secondary', 'btn-success');
       addFriendBtn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Add Friend';
       unfriendBtn.classList.add('d-none');
@@ -540,24 +532,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       switch (status) {
         case 'NONE':
+          isUpdated = true;
           break;
         case 'PENDING_SENT':
+          isUpdated = true;
           addFriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Cancel Request';
           addFriendBtn.classList.add('btn-secondary');
           break;
         case 'PENDING_RECEIVED':
+          isUpdated = true;
           addFriendBtn.innerHTML = '<i class="bi bi-check-circle"></i> Accept';
           addFriendBtn.classList.add('btn-success');
           unfriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Decline';
           unfriendBtn.classList.remove('d-none');
           break;
         case 'FRIENDS':
+          isUpdated = true;
           addFriendBtn.classList.add('d-none');
           unfriendBtn.innerHTML = '<i class="bi bi-person-dash-fill"></i> Unfriend';
           unfriendBtn.classList.remove('d-none');
           messageBtn.classList.remove('d-none');
           break;
         case 'BLOCKED':
+          isUpdated = true;
           addFriendBtn.classList.add('d-none');
           unfriendBtn.classList.add('d-none');
           messageBtn.classList.add('d-none');
@@ -1515,6 +1512,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const postId = e.target.closest('.report-post-btn').dataset.postId;
         showReportPostModal(postId);
       }
+
+      if (e.target.closest('#reportProfile')) {
+        showReportUserModal();
+      }
     });
 
     // Initialize report modal
@@ -1530,6 +1531,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       });
 
+        // Handle report type selection
+        document.querySelectorAll('#reportUserTypeDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.dataset.value;
+            document.getElementById('reportUserTypeDropdown').textContent = this.textContent;
+            document.getElementById('reportUserTypeDropdown').dataset.selected = value;
+            document.getElementById('reportUserTypeError').style.display = 'none';
+          });
+        });
+
       // Handle priority selection
       document.querySelectorAll('#priorityDropdown + .dropdown-menu .dropdown-item').forEach(item => {
         item.addEventListener('click', function(e) {
@@ -1540,8 +1552,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
       });
 
+        document.querySelectorAll('#reportUserPriorityDropdown + .dropdown-menu .dropdown-item').forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const value = this.dataset.value;
+            document.getElementById('reportUserPriorityDropdown').textContent = this.textContent;
+            document.getElementById('reportUserPriorityDropdown').dataset.selected = value;
+          });
+        });
+
       // Submit report handler
-      document.getElementById('submitReportBtn').addEventListener('click', submitReport);
+      document.getElementById('submitReportBtn').addEventListener('click', submitPostReport);
+      document.getElementById('reportUserSubmitReportBtn').addEventListener('click', submitUserReport);
     }
 
 // Function to show report modal
@@ -1551,8 +1573,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       modal.show();
     }
 
+    function showReportUserModal() {
+      const modal = new bootstrap.Modal(document.getElementById('reportUserModal'));
+      modal.show();
+    }
+
 // Form validation
-    function validateReportForm() {
+    function validateReportPostForm() {
       let isValid = true;
 
       const reportType = document.getElementById('reportTypeDropdown').dataset.selected;
@@ -1572,12 +1599,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       return isValid;
     }
 
+    function validateReportUserForm() {
+      let isValid = true;
+
+      const reportType = document.getElementById('reportUserTypeDropdown').dataset.selected;
+      if (!reportType) {
+        document.getElementById('reportUserTypeError').textContent = 'Please select a report type';
+        document.getElementById('reportUserTypeError').style.display = 'block';
+        isValid = false;
+      }
+
+      const description = document.getElementById('reportUserDescription').value.trim();
+      if (description.length < 20) {
+        document.getElementById('reportUserDescriptionError').textContent = 'Description must be at least 20 characters';
+        document.getElementById('reportUserDescriptionError').style.display = 'block';
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
 // Submit report
-    async function submitReport() {
+    async function submitPostReport() {
       const reportButton = document.getElementById('submitReportBtn');
       const OriginalReportButtonText = reportButton.innerHTML;
 
-      if (!validateReportForm()) return;
+      if (!validateReportPostForm()) return;
 
       const reportData = {
         postId: currentReportPostId,
@@ -1618,6 +1665,60 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
           document.getElementById('reportDescription').value = '';
           bootstrap.Modal.getInstance(document.getElementById('reportPostModal')).hide();
+        } catch (error) {
+          Toast.fire({icon: 'error', title: error.message || 'Submission Failed'});
+        } finally {
+          reportButton.disabled = false;
+          reportButton.innerHTML = OriginalReportButtonText;
+        }
+      });
+    }
+
+    async function submitUserReport() {
+      const reportButton = document.getElementById('reportUserSubmitReportBtn');
+      const OriginalReportButtonText = reportButton.innerHTML;
+
+      if (!validateReportUserForm()) return;
+
+      const reportData = {
+        userId: profileUserId,
+        type: document.getElementById('reportUserTypeDropdown').dataset.selected,
+        priority: document.getElementById('reportUserPriorityDropdown').dataset.selected || 'LOW',
+        description: document.getElementById('reportUserDescription').value.trim(),
+      };
+
+      reportButton.disabled = true;
+      reportButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, submit report!",
+        cancelButtonText: "Cancel"
+      }).then(async (result) => {
+        try {
+          const response = await fetch(`${BASE_URL}/profile/report`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authData.token}`
+            },
+            body: JSON.stringify(reportData)
+          });
+
+          if (!response.ok) throw new Error('Failed to submit report');
+
+          Toast.fire({icon: 'success', title: 'Report Submitted'});
+
+          // Reset form
+          document.getElementById('reportUserModal').querySelectorAll('.dropdown-toggle').forEach(el => {
+            el.textContent = el.id === 'reportUserTypeDropdown' ? 'Select Report Type' : 'Select Priority';
+            delete el.dataset.selected;
+          });
+          document.getElementById('reportUserDescription').value = '';
+          bootstrap.Modal.getInstance(document.getElementById('reportUserModal')).hide();
         } catch (error) {
           Toast.fire({icon: 'error', title: error.message || 'Submission Failed'});
         } finally {

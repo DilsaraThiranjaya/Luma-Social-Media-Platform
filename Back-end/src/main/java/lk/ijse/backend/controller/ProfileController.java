@@ -446,6 +446,24 @@ public class ProfileController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PostMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseDTO> createReport(@RequestBody ReportRequestDTO reportRequest, Authentication authentication) {
+        String reporterEmail = authentication.getName();
+        log.info("Received report creation request for email: {}", reporterEmail);
+
+        try {
+            ReportDTO createdReport = userService.createReport(reportRequest, reporterEmail);
+
+            log.info("Report submitted for email: {}", reporterEmail);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Report submitted", createdReport));
+        } catch (Exception e) {
+            log.error("Error submitting report for email: {}", reporterEmail, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/share", consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<ResponseDTO> sharePost(@Valid @RequestBody PostShareDTO shareDTO) {
@@ -461,22 +479,6 @@ public class ProfileController {
 //                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error sharing post", e.getMessage()));
 //        }
 //    }
-//
-//    @PreAuthorize("hasAuthority('USER')")
-//    @GetMapping(value = "/friends/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ResponseDTO> getFriends(@PathVariable Integer userId) {
-//        log.info("Received request to get friends for user ID: {}", userId);
-//        try {
-//            List<UserDTO> friends = profileService.getFriends(userId);
-//            log.info("Successfully retrieved friends for user ID: {}", userId);
-//            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Friends retrieved successfully", friends));
-//        } catch (Exception e) {
-//            log.error("Error retrieving friends for user ID: {}", userId, e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(new ResponseDTO(VarList.Internal_Server_Error, "Error retrieving friends", e.getMessage()));
-//        }
-//    }
-
 
 //    @PreAuthorize("hasAuthority('USER')")
 //    @PostMapping(value = "/event", consumes = MediaType.APPLICATION_JSON_VALUE)
