@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           // Handle unfriend
           menu.querySelector('.unfriend').addEventListener('click', async function(e) {
             e.preventDefault();
-            Swal.fire({
+            const result = await Swal.fire({
               title: 'Unfriend',
               text: `Are you sure you want to unfriend ${name}?`,
               icon: 'warning',
@@ -374,7 +374,10 @@ document.addEventListener('DOMContentLoaded', async () => {
               cancelButtonColor: '#3085d6',
               confirmButtonText: 'Yes, unfriend',
               cancelButtonText: 'No, cancel'
-            }).then(async (result) => {
+            });
+
+// Only proceed if the user confirmed
+            if (result.isConfirmed) {
               try {
                 const response = await fetch(`${BASE_URL}/friendship/${userId}`, {
                   method: 'DELETE',
@@ -393,14 +396,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                   title: error.message || "Failed to unfriend"
                 });
               }
-            });
+            }
             menu.remove();
           });
 
           // Handle block
           menu.querySelector('.block').addEventListener('click', async function(e) {
             e.preventDefault();
-            Swal.fire({
+            const result = await Swal.fire({
               title: 'Block',
               text: `Are you sure you want to block ${name}? This will also unfriend them.`,
               icon: 'warning',
@@ -409,7 +412,10 @@ document.addEventListener('DOMContentLoaded', async () => {
               cancelButtonColor: '#3085d6',
               confirmButtonText: 'Yes, block',
               cancelButtonText: 'No, cancel'
-            }).then(async (result) => {
+            });
+
+// Only proceed if the user confirmed
+            if (result.isConfirmed) {
               try {
                 const response = await fetch(`${BASE_URL}/friendship/${userId}/block`, {
                   method: 'POST',
@@ -428,7 +434,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   title: error.message || "Failed to block user"
                 });
               }
-            });
+            }
             menu.remove();
           });
 

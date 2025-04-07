@@ -1,14 +1,14 @@
 package lk.ijse.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import lk.ijse.backend.dto.ReportDTO;
-import lk.ijse.backend.dto.ReportRequestDTO;
-import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.dto.*;
+import lk.ijse.backend.entity.Notification;
 import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.Report;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.ReportRepository;
 import lk.ijse.backend.repository.UserRepository;
+import lk.ijse.backend.service.NotificationService;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final ReportRepository reportRepository;
+    private final NotificationService notificationService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -136,6 +137,24 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         report.setStatus(Report.ReportStatus.PENDING);
 
         Report savedReport = reportRepository.save(report);
+
+        // Send notification to admins
+        userRepository.findByRole(User.Role.ADMIN).forEach(admin -> {
+            if (admin.getUserId() != reporter.getUserId()) {
+                NotificationDTO notificationDTO = new NotificationDTO();
+                notificationDTO.setTitle("New User Report!");
+                notificationDTO.setContent(reporter.getFirstName() + " " + reporter.getLastName() + " has reported a user.");
+                notificationDTO.setType(Notification.NotificationType.REPORT_UPDATE);
+                notificationDTO.setActionUrl("/profile");
+                notificationDTO.setIsRead(false);
+                notificationDTO.setUser(modelMapper.map(admin, UserDTO.class));
+                notificationDTO.setSourceUser(modelMapper.map(reporter, UserDTO.class));
+                notificationDTO.setReport(modelMapper.map(savedReport, ReportDTO.class));
+
+                notificationService.createNotification(notificationDTO);
+            }
+        });
+
         return convertToDTO(savedReport);
     }
 

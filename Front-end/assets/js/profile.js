@@ -2186,7 +2186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const container = document.getElementById(containerId);
                     container.innerHTML = '';
 
-                    if (!data.data || data.data.length === 0) {
+                    if (!data.data || data.data.length === 0 && limit === null) {
                         container.innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div class="empty-friends-state">

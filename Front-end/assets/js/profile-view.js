@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializeNavbarUserInfo();
     } catch (error) {
       throw error;
-      // await handleAuthError("Session expired. Please log in again.");
+      await handleAuthError("Session expired. Please log in again.");
     }
   } else {
     await handleAuthError("You need to log in to access this page.");
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           const container = document.getElementById(containerId);
           container.innerHTML = '';
 
-          if (!data.data || data.data.length === 0) {
+          if (!data.data || data.data.length === 0 && limit === null) {
             container.innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div class="empty-friends-state">
@@ -520,50 +520,62 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
 
-    function updateFriendshipStatus(status) {
+    function updateFriendshipStatus(status, skipReset = false) {
       const addFriendBtn = document.querySelector('.add-friend-btn');
       const unfriendBtn = document.querySelector('.unfriend-btn');
       const messageBtn = document.querySelector('.message-btn');
+      const dropDownBtn = document.querySelector('.profile-view-dropdown');
 
-      addFriendBtn.classList.remove('d-none', 'btn-secondary', 'btn-success');
-      addFriendBtn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Add Friend';
-      unfriendBtn.classList.add('d-none');
-      messageBtn.classList.add('d-none');
+      if (!skipReset) {
+        resetFrienshipButtons(addFriendBtn, unfriendBtn, messageBtn, dropDownBtn);
+      }
 
       switch (status) {
         case 'NONE':
-          isUpdated = true;
           break;
         case 'PENDING_SENT':
-          isUpdated = true;
           addFriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Cancel Request';
           addFriendBtn.classList.add('btn-secondary');
           break;
         case 'PENDING_RECEIVED':
-          isUpdated = true;
           addFriendBtn.innerHTML = '<i class="bi bi-check-circle"></i> Accept';
           addFriendBtn.classList.add('btn-success');
           unfriendBtn.innerHTML = '<i class="bi bi-x-circle"></i> Decline';
           unfriendBtn.classList.remove('d-none');
           break;
         case 'FRIENDS':
-          isUpdated = true;
           addFriendBtn.classList.add('d-none');
           unfriendBtn.innerHTML = '<i class="bi bi-person-dash-fill"></i> Unfriend';
           unfriendBtn.classList.remove('d-none');
           messageBtn.classList.remove('d-none');
           break;
         case 'BLOCKED':
-          isUpdated = true;
           addFriendBtn.classList.add('d-none');
           unfriendBtn.classList.add('d-none');
           messageBtn.classList.add('d-none');
+          dropDownBtn.classList.add('d-none');
           break;
       }
     }
 
+    function resetFrienshipButtons (addFriendBtn, unfriendBtn, messageBtn, dropDownBtn) {
+      addFriendBtn.classList.remove('d-none', 'btn-secondary', 'btn-success');
+      addFriendBtn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Add Friend';
+      unfriendBtn.classList.add('d-none');
+      messageBtn.classList.add('d-none');
+      dropDownBtn.classList.remove('d-none');
+    }
+
     async function initializeFriendshipButtons() {
       try {
+        const addFriendBtn = document.querySelector('.add-friend-btn');
+        const unfriendBtn = document.querySelector('.unfriend-btn');
+        const messageBtn = document.querySelector('.message-btn');
+        const dropDownBtn = document.querySelector('.profile-view-dropdown');
+
+        // Initial reset before the API call
+        resetFrienshipButtons(addFriendBtn, unfriendBtn, messageBtn, dropDownBtn);
+
         const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/check`, {
           headers: {
             'Authorization': `Bearer ${authData.token}`
@@ -578,26 +590,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.data) {
           switch (data.data.status) {
             case 'ACCEPTED':
-              updateFriendshipStatus('FRIENDS');
+              updateFriendshipStatus('FRIENDS', true);
               break;
             case 'PENDING':
               if (data.data.user1?.email === authData.email) {
-                updateFriendshipStatus('PENDING_SENT');
+                updateFriendshipStatus('PENDING_SENT', true);
               } else {
-                updateFriendshipStatus('PENDING_RECEIVED');
+                updateFriendshipStatus('PENDING_RECEIVED', true);
               }
               break;
             case 'BLOCKED':
-              updateFriendshipStatus('BLOCKED');
+              updateFriendshipStatus('BLOCKED', true);
               break;
             default:
-              updateFriendshipStatus('NONE');
+              updateFriendshipStatus('NONE', true);
           }
         } else {
-          updateFriendshipStatus('NONE');
+          updateFriendshipStatus('NONE', true);
         }
 
-        // Add event listeners
         document.querySelector('.add-friend-btn').addEventListener('click', handleFriendAction);
         document.querySelector('.unfriend-btn').addEventListener('click', handleUnfriendAction);
         document.querySelector('.message-btn').addEventListener('click', () => {
@@ -645,6 +656,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     async function handleUnfriendAction() {
+      const result = await Swal.fire({
+        title: 'Unfriend',
+        text: `Are you sure you want to unfriend ${name}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, unfriend',
+        cancelButtonText: 'No, cancel'
+      });
+
+      // Only proceed if the user confirmed
+      if (!result.isConfirmed) {
+        return; // Exit the function if user clicked cancel
+      }
+
       try {
         const currentStatus = document.querySelector('.unfriend-btn').textContent.trim();
         const endpoint = currentStatus.includes('Decline')
@@ -674,6 +701,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function handleBlockAction(e) {
       e.preventDefault();
+
+      const result = await Swal.fire({
+        title: 'Block',
+        text: `Are you sure you want to block ${name}? This will also unfriend them.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, block',
+        cancelButtonText: 'No, cancel'
+      });
+
+      // Only proceed if the user confirmed
+      if (!result.isConfirmed) {
+        return; // Exit the function if user clicked cancel
+      }
+
       try {
         const response = await fetch(`${BASE_URL}/friendship/${profileUserId}/block`, {
           method: 'POST',
@@ -1636,14 +1680,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       reportButton.disabled = true;
       reportButton.innerHTML = `<span class="spinner-border  spinner-border-sm" style="color: white !important" role="status" aria-hidden="true"></span>`;
 
-      Swal.fire({
+      const result = await Swal.fire({
         title: "Are you sure?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, submit report!",
         cancelButtonText: "Cancel"
-      }).then(async (result) => {
+      });
+
+// Only proceed if confirmed
+      if (result.isConfirmed) {
         try {
           const response = await fetch(`${BASE_URL}/timeline/posts/report`, {
             method: 'POST',
@@ -1671,7 +1718,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           reportButton.disabled = false;
           reportButton.innerHTML = OriginalReportButtonText;
         }
-      });
+      }
     }
 
     async function submitUserReport() {

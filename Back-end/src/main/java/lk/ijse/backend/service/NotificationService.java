@@ -12,5 +12,5 @@ public interface NotificationService {
     boolean markAsRead(int notificationId);
     boolean markAllAsRead(String userEmail);
     boolean deleteNotification(int notificationId);
-    NotificationDTO createNotification(UserDTO user, Notification.NotificationType type, String title, String message, String actionUrl);
+    NotificationDTO createNotification(NotificationDTO notificationDTO);
 }

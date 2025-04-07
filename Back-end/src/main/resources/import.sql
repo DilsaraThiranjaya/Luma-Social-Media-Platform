@@ -43,3 +43,5 @@ INSERT INTO luma_social.friendship (user1_id, user2_id, status) VALUES (2, 1, 'A
 INSERT INTO luma_social.friendship (user1_id, user2_id, status) VALUES (2, 3, 'ACCEPTED');
 
 
+
+

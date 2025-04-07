@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,13 +29,12 @@ public class NotificationController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getNotifications(
-            @RequestParam String userEmail,
             @RequestParam(required = false) NotificationType type,
-            @RequestParam(required = false, defaultValue = "10") int limit,
-            @RequestParam(required = false, defaultValue = "0") int offset
+            Authentication authentication
     ) {
-        log.info("Fetching notifications for user: {}, type: {}, limit: {}, offset: {}",
-                userEmail, type, limit, offset);
+        String userEmail = authentication.getName();
+        log.info("Fetching notifications for user: {}, type: {}",
+                userEmail, type);
 
         try {
             List<NotificationDTO> notifications = notificationService.getNotifications(userEmail);
@@ -46,19 +46,9 @@ public class NotificationController {
                         .toList();
             }
 
-            // Apply pagination
-            int endIndex = Math.min(offset + limit, notifications.size());
-            List<NotificationDTO> paginatedNotifications = notifications.subList(offset, endIndex);
-
-            Map<String, Object> response = Map.of(
-                    "notifications", paginatedNotifications,
-                    "total", notifications.size(),
-                    "hasMore", endIndex < notifications.size()
-            );
-
-            log.info("Successfully fetched {} notifications", paginatedNotifications.size());
+            log.info("Successfully fetched {} notifications", notifications.size());
             return ResponseEntity.ok()
-                    .body(new ResponseDTO(VarList.OK, "Notifications Retrieved Successfully!", response));
+                    .body(new ResponseDTO(VarList.OK, "Notifications Retrieved Successfully!", notifications));
         } catch (Exception e) {
             log.error("Error fetching notifications: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -69,9 +59,10 @@ public class NotificationController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping(value = "/unread", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> getUnreadNotifications(
-            @RequestParam String userEmail,
-            @RequestParam(required = false) NotificationType type
+            @RequestParam(required = false) NotificationType type,
+            Authentication authentication
     ) {
+        String userEmail = authentication.getName();
         log.info("Fetching unread notifications for user: {}, type: {}", userEmail, type);
 
         try {
@@ -96,7 +87,8 @@ public class NotificationController {
 
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping(value = "/count", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> getUnreadCount(@RequestParam String userEmail) {
+    public ResponseEntity<ResponseDTO> getUnreadCount(Authentication authentication) {
+        String userEmail = authentication.getName();
         log.info("Getting unread notification count for user: {}", userEmail);
 
         try {
@@ -148,9 +140,10 @@ public class NotificationController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping(value = "/mark-all-read", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO> markAllAsRead(
-            @RequestParam String userEmail,
-            @RequestParam(required = false) NotificationType type
+            @RequestParam(required = false) NotificationType type,
+            Authentication authentication
     ) {
+        String userEmail = authentication.getName();
         log.info("Marking all notifications as read for user: {}, type: {}", userEmail, type);
 
         try {
@@ -200,13 +193,7 @@ public class NotificationController {
         log.info("Creating notification for user: {}", notificationDTO.getUser().getEmail());
 
         try {
-            NotificationDTO created = notificationService.createNotification(
-                    notificationDTO.getUser(),
-                    notificationDTO.getType(),
-                    notificationDTO.getTitle(),
-                    notificationDTO.getContent(),
-                    notificationDTO.getActionUrl()
-            );
+            NotificationDTO created = notificationService.createNotification(notificationDTO);
 
             log.info("Successfully created notification");
             return ResponseEntity.status(HttpStatus.CREATED)

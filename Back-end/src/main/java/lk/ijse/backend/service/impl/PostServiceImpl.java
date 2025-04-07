@@ -5,6 +5,7 @@ import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.*;
 import lk.ijse.backend.repository.*;
 import lk.ijse.backend.service.CloudinaryService;
+import lk.ijse.backend.service.NotificationService;
 import lk.ijse.backend.service.PostService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class PostServiceImpl implements PostService {
     private final ReportRepository reportRepository;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;
+    private final NotificationService notificationService;
 
     @Transactional
     @Override
@@ -130,24 +132,36 @@ public class PostServiceImpl implements PostService {
             if (byUserAndPost != null) {
                 if (byUserAndPost.getType() != reactionDTO.getType()) {
                     // Update existing reaction
-                    System.out.println("Update" + byUserAndPost.getReactionId());
                     byUserAndPost.setType(reactionDTO.getType());
                     reactionRepository.save(byUserAndPost);
                     return new ResponseDTO(VarList.OK, "Updated", convertToDTO(post, email));
                 } else {
                     // Delete reaction
-                    System.out.println("Remove" + byUserAndPost.getReactionId());
                     // Delete using custom query
                     reactionRepository.deleteByUserAndPost(user, post); // Use the custom query
                     return new ResponseDTO(VarList.OK, "Removed", convertToDTO(post, email));
                 }
             } else {
                 // Add new reaction
-                System.out.println("Add");
                 Reaction reaction = modelMapper.map(reactionDTO, Reaction.class);
                 reaction.setUser(user);
                 reaction.setPost(post);
                 reactionRepository.save(reaction);
+
+                // Send notification
+                if (post.getUser().getUserId() != user.getUserId()) {
+                    NotificationDTO notificationDTO = new NotificationDTO();
+                    notificationDTO.setTitle("New Post Like!");
+                    notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " liked your post.");
+                    notificationDTO.setType(Notification.NotificationType.POST_LIKE);
+                    notificationDTO.setActionUrl("/post");
+                    notificationDTO.setIsRead(false);
+                    notificationDTO.setUser(modelMapper.map(post.getUser(), UserDTO.class));
+                    notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
+                    notificationDTO.setPost(modelMapper.map(post, PostDTO.class));
+
+                    notificationService.createNotification(notificationDTO);
+                }
                 return new ResponseDTO(VarList.OK, "Added", convertToDTO(post, email));
             }
         } catch (Exception e) {
@@ -264,6 +278,25 @@ public class PostServiceImpl implements PostService {
         report.setStatus(Report.ReportStatus.PENDING);
 
         Report savedReport = reportRepository.save(report);
+
+        // Send notification to admins
+        userRepository.findByRole(User.Role.ADMIN).forEach(admin -> {
+            if (admin.getUserId() != reporter.getUserId()) {
+                NotificationDTO notificationDTO = new NotificationDTO();
+                notificationDTO.setTitle("New Post Report!");
+                notificationDTO.setContent(reporter.getFirstName() + " " + reporter.getLastName() + " has reported a post.");
+                notificationDTO.setType(Notification.NotificationType.REPORT_UPDATE);
+                notificationDTO.setActionUrl("/report");
+                notificationDTO.setIsRead(false);
+                notificationDTO.setUser(modelMapper.map(admin, UserDTO.class));
+                notificationDTO.setSourceUser(modelMapper.map(reporter, UserDTO.class));
+                notificationDTO.setReport(modelMapper.map(savedReport, ReportDTO.class));
+
+                notificationService.createNotification(notificationDTO);
+            }
+        });
+
+
         return convertToDTO(savedReport, reporterEmail);
     }
 
@@ -283,6 +316,22 @@ public class PostServiceImpl implements PostService {
         comment.setPost(post);
 
         Comment savedComment = commentRepository.save(comment);
+
+        // Send notification
+        if (post.getUser().getUserId() != user.getUserId()) {
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setTitle("New Post Comment!");
+            notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " commented on your post.");
+            notificationDTO.setType(Notification.NotificationType.POST_COMMENT);
+            notificationDTO.setActionUrl("/post");
+            notificationDTO.setIsRead(false);
+            notificationDTO.setUser(modelMapper.map(post.getUser(), UserDTO.class));
+            notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
+            notificationDTO.setPost(modelMapper.map(post, PostDTO.class));
+
+            notificationService.createNotification(notificationDTO);
+        }
+
         return convertCommentToDTO(savedComment, email);
     }
 
@@ -320,6 +369,22 @@ public class PostServiceImpl implements PostService {
         reply.setParentComment(parentComment);
 
         Comment savedReply = commentRepository.save(reply);
+
+        // Send notification
+        if (parentComment.getUser().getUserId() != user.getUserId()) {
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setTitle("New Comment Reply!");
+            notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " replied to your comment on a post");
+            notificationDTO.setType(Notification.NotificationType.POST_COMMENT);
+            notificationDTO.setActionUrl("/post");
+            notificationDTO.setIsRead(false);
+            notificationDTO.setUser(modelMapper.map(parentComment.getUser(), UserDTO.class));
+            notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
+            notificationDTO.setPost(modelMapper.map(parentComment.getPost(), PostDTO.class));
+
+            notificationService.createNotification(notificationDTO);
+        }
+
         return convertCommentToDTO(savedReply, email);
     }
 

@@ -1,7 +1,6 @@
 package lk.ijse.backend.service.impl;
 
-import lk.ijse.backend.dto.NotificationDTO;
-import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Notification;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.NotificationRepository;
@@ -28,7 +27,7 @@ public class NotificationServiceImpl implements NotificationService {
         User user = userRepository.findByEmail(userEmail);
         List<Notification> notifications = notificationRepository.findByUserOrderByCreatedAtDesc(user);
         return notifications.stream()
-                .map(notification -> modelMapper.map(notification, NotificationDTO.class))
+                .map(notification -> convertToDTO(notification))
                 .collect(Collectors.toList());
     }
 
@@ -37,7 +36,7 @@ public class NotificationServiceImpl implements NotificationService {
         User user = userRepository.findByEmail(userEmail);
         List<Notification> notifications = notificationRepository.findByUserAndIsReadFalseOrderByCreatedAtDesc(user);
         return notifications.stream()
-                .map(notification -> modelMapper.map(notification, NotificationDTO.class))
+                .map(notification -> convertToDTO(notification))
                 .collect(Collectors.toList());
     }
 
@@ -80,43 +79,95 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public NotificationDTO createNotification(UserDTO user, Notification.NotificationType type, String title, String message, String actionUrl) {
+    public NotificationDTO createNotification(NotificationDTO notificationDTO) {
         // Check user preferences before creating notification
         boolean shouldCreate = false;
 
-        switch (type) {
+        switch (notificationDTO.getType()) {
             case FRIEND_REQUEST:
-                shouldCreate = user.getIsPushNewFollowers();
+                shouldCreate = notificationDTO.getUser().getIsPushNewFollowers();
                 break;
             case NEW_MESSAGE:
-                shouldCreate = user.getIsPushMessages();
+                shouldCreate = notificationDTO.getUser().getIsPushMessages();
                 break;
             case POST_LIKE:
-                shouldCreate = user.getIsPushPostLikes();
+                shouldCreate = notificationDTO.getUser().getIsPushPostLikes();
                 break;
             case POST_COMMENT:
-                shouldCreate = user.getIsPushPostComments();
+                shouldCreate = notificationDTO.getUser().getIsPushPostComments();
                 break;
             case POST_SHARE:
-                shouldCreate = user.getIsPushPostShares();
+                shouldCreate = notificationDTO.getUser().getIsPushPostShares();
                 break;
             case REPORT_UPDATE:
-                shouldCreate = user.getIsPushReports();
+                shouldCreate = notificationDTO.getUser().getIsPushReports();
                 break;
         }
 
         if (shouldCreate) {
-            Notification notification = Notification.builder()
-                    .user(modelMapper.map(user, User.class))
-                    .type(type)
-                    .title(title)
-                    .content(message)
-                    .actionUrl(actionUrl)
-                    .build();
-            notificationRepository.save(notification);
+            Notification saved = notificationRepository.save(modelMapper.map(notificationDTO, Notification.class));
 
-            return modelMapper.map(notification, NotificationDTO.class);
+            return convertToDTO(saved);
         }
         return null;
+    }
+
+    public static NotificationDTO convertToDTO(Notification notification) {
+        if (notification == null) {
+            return null;
+        }
+
+        NotificationDTO dto = new NotificationDTO();
+
+        dto.setNotificationId(notification.getNotificationId());
+        dto.setTitle(notification.getTitle());
+        dto.setContent(notification.getContent());
+        dto.setType(notification.getType());
+        dto.setIsRead(notification.getIsRead());
+        dto.setCreatedAt(notification.getCreatedAt());
+        dto.setActionUrl(notification.getActionUrl());
+
+        if (notification.getUser() != null) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserId(notification.getUser().getUserId());
+            userDTO.setEmail(notification.getUser().getEmail());
+            dto.setUser(userDTO);
+        }
+
+        if (notification.getSourceUser() != null) {
+            UserDTO sourceUserDTO = new UserDTO();
+            sourceUserDTO.setUserId(notification.getSourceUser().getUserId());
+            sourceUserDTO.setEmail(notification.getSourceUser().getEmail());
+            sourceUserDTO.setFirstName(notification.getSourceUser().getFirstName());
+            sourceUserDTO.setLastName(notification.getSourceUser().getLastName());
+            sourceUserDTO.setProfilePictureUrl(notification.getSourceUser().getProfilePictureUrl());
+            dto.setSourceUser(sourceUserDTO);
+        }
+
+        if (notification.getPost() != null) {
+            PostDTO postDTO = new PostDTO();
+            postDTO.setPostId(notification.getPost().getPostId());
+            dto.setPost(postDTO);
+        }
+
+        if (notification.getComment() != null) {
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setCommentId(notification.getComment().getCommentId());
+            dto.setComment(commentDTO);
+        }
+
+        if (notification.getMessage() != null) {
+            MessageDTO messageDTO = new MessageDTO();
+            messageDTO.setMessageId(notification.getMessage().getMessageId());
+            dto.setMessage(messageDTO);
+        }
+
+        if (notification.getReport() != null) {
+            ReportDTO reportDTO = new ReportDTO();
+            reportDTO.setReportId(notification.getReport().getReportId());
+            dto.setReport(reportDTO);
+        }
+
+        return dto;
     }
 }

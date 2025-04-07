@@ -3,13 +3,17 @@ package lk.ijse.backend.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lk.ijse.backend.dto.FriendshipDTO;
+import lk.ijse.backend.dto.NotificationDTO;
+import lk.ijse.backend.dto.PostDTO;
 import lk.ijse.backend.dto.UserDTO;
 import lk.ijse.backend.entity.Embeded.FriendshipId;
 import lk.ijse.backend.entity.Friendship;
+import lk.ijse.backend.entity.Notification;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.FriendshipRepository;
 import lk.ijse.backend.repository.UserRepository;
 import lk.ijse.backend.service.FriendshipService;
+import lk.ijse.backend.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -27,6 +31,7 @@ import java.util.stream.Collectors;
 public class FriendshipServiceImpl implements FriendshipService {
     private final UserRepository userRepository;
     private final FriendshipRepository friendshipRepository;
+    private final NotificationService notificationService;
     private final ModelMapper modelMapper;
 
     @Override
@@ -116,6 +121,19 @@ public class FriendshipServiceImpl implements FriendshipService {
         friendship.setStatus(Friendship.FriendshipStatus.PENDING);
 
         Friendship savedFriendship = friendshipRepository.save(friendship);
+
+        // Send notification
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setTitle("New Friend Request!");
+        notificationDTO.setContent(sender.getFirstName() + " " + sender.getLastName() + " sent you a friend request.");
+        notificationDTO.setType(Notification.NotificationType.FRIEND_REQUEST);
+        notificationDTO.setActionUrl("/profile");
+        notificationDTO.setIsRead(false);
+        notificationDTO.setUser(modelMapper.map(receiver, UserDTO.class));
+        notificationDTO.setSourceUser(modelMapper.map(sender, UserDTO.class));
+
+        notificationService.createNotification(notificationDTO);
+
         return modelMapper.map(savedFriendship, FriendshipDTO.class);
     }
 
