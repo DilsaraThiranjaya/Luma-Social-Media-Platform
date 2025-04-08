@@ -1,390 +1,319 @@
-// Initialize tooltips and setup global event handlers
+// Initialize dashboard when DOM is loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize Bootstrap tooltips
-  const tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
+    const BASE_URL = "http://localhost:8080/api/v1";
+    const authData = JSON.parse(sessionStorage.getItem('authData'));
 
-  // Toggle sidebar functionality
-  const toggleBtn = document.querySelector(".toggle-sidebar");
-  const sidebar = document.querySelector(".admin-sidebar");
-  const mainContent = document.querySelector(".admin-main");
+    initializeDashboard();
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("show");
-      mainContent.classList.toggle("sidebar-hidden");
-    });
-  }
+    async function initializeDashboard() {
+        try {
+            // Fetch initial dashboard stats
+            const stats = await fetchDashboardStats();
+            updateDashboardStats(stats);
 
-  // Initialize charts
-  initializeCharts();
+            // Initialize charts
+            await initializeCharts();
 
-  // Initialize search functionality
-  initializeSearch();
+            // Fetch and display recent activities
+            await loadRecentActivities();
 
-  // Initialize filters
-  initializeFilters();
+            // Setup event listeners
+            setupEventListeners();
+        } catch (error) {
+            throw error;
+            showToast("Error loading dashboard data", "error");
+        }
+    }
 
-  // Initialize user actions
-  initializeUserActions();
+    async function fetchDashboardStats() {
+        const response = await fetch(`${BASE_URL}/dashboard/stats`, {
+            headers: {
+                'Authorization': `Bearer ${authData.token}`
+            }
+        });
+        if (!response.ok) throw new Error("Failed to fetch dashboard stats");
+        return await response.json();
+    }
 
-  // Initialize post actions
-  initializePostActions();
+    function updateDashboardStats(stats) {
+        // Update stats cards
+        document.querySelector(".total-users").textContent = stats.totalUsers.toLocaleString();
+        document.querySelector(".total-posts").textContent = stats.totalPosts.toLocaleString();
+        document.querySelector(".active-reports").textContent = stats.activeReports.toLocaleString();
+        document.querySelector(".user-activity").textContent = `${Math.round(stats.userActivity)}%`;
 
-  // Initialize report actions
-  initializeReportActions();
+        // Update growth indicators
+        updateGrowthIndicator(".user-growth", stats.userGrowthRate);
+        updateGrowthIndicator(".post-growth", stats.postGrowthRate);
+        updateGrowthIndicator(".report-change", -stats.reportDecreaseRate);
+        updateGrowthIndicator(".activity-growth", stats.activityGrowthRate);
+    }
 
-  // Initialize settings
-  initializeSettings();
-});
+    function updateGrowthIndicator(selector, rate) {
+        const element = document.querySelector(selector);
+        const icon = element.querySelector("i");
+        const value = element.querySelector("span");
 
-// Chart initialization and updates
-function initializeCharts() {
-  // User Growth Chart
-  const userGrowthCtx = document.getElementById("userGrowthChart");
-  let userGrowthChart;
+        const isPositive = rate > 0;
+        icon.className = isPositive ? "bi bi-arrow-up" : "bi bi-arrow-down";
+        element.className = `stats-trend ${isPositive ? "positive" : "negative"}`;
+        value.textContent = `${Math.abs(Math.round(rate))}%`;
+    }
 
-  if (userGrowthCtx) {
-    userGrowthChart = new Chart(userGrowthCtx, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [
-          {
-            label: "New Users",
-            data: [650, 850, 1100, 900, 1200, 1500],
-            borderColor: "#600097",
-            tension: 0.4,
-            fill: true,
-            backgroundColor: "rgba(96, 0, 151, 0.1)",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: {
-              color: "rgba(0, 0, 0, 0.05)",
+    async function initializeCharts() {
+        // Initialize User Growth Chart
+        const userGrowthData = await fetchUserGrowth("monthly");
+        initializeUserGrowthChart(userGrowthData);
+
+        // Initialize Demographics Chart
+        const demographicsData = await fetchUserDemographics();
+        initializeDemographicsChart(demographicsData);
+    }
+
+    async function fetchUserGrowth(period) {
+        const response =  await fetch(`${BASE_URL}/dashboard/user-growth?period=${period}`, {
+            headers: {
+                'Authorization': `Bearer ${authData.token}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch user growth data");
+        return await response.json();
+    }
+
+    async function fetchUserDemographics() {
+        const response =  await fetch(`${BASE_URL}/dashboard/user-demographics`, {
+            headers: {
+                'Authorization': `Bearer ${authData.token}`
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch demographics data");
+        return await response.json();
+    }
+
+    function initializeUserGrowthChart(data) {
+        const ctx = document.getElementById("userGrowthChart").getContext("2d");
+        let userGrowthChart;
+
+        userGrowthChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: "New Users",
+                    data: data.data,
+                    borderColor: "#600097",
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: "rgba(96, 0, 151, 0.1)"
+                }]
             },
-          },
-          x: {
-            grid: {
-              display: false,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: "rgba(0, 0, 0, 0.05)"
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        document.querySelectorAll(".card-actions .btn").forEach((btn) => {
+            btn.addEventListener("click", function () {
+                const period = this.textContent.trim().toLowerCase();
+                updateUserGrowthChart(userGrowthChart, period);
+
+                // Update active state
+                document
+                    .querySelectorAll(".card-actions .btn")
+                    .forEach((b) => b.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+    }
+
+    function initializeDemographicsChart(data) {
+        const ctx = document.getElementById("demographicsChart").getContext("2d");
+        new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    data: data.data,
+                    backgroundColor: ["#600097", "#4e54c8", "#8b0c7d", "#ff97fa"]
+                }]
             },
-          },
-        },
-      },
-    });
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
+    }
 
-    // Handle period change
-    document.querySelectorAll(".card-actions .btn").forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const period = this.textContent.trim().toLowerCase();
-        updateUserGrowthChart(userGrowthChart, period);
+    async function loadRecentActivities() {
+        try {
+            // Fetch recent reports
+            const reports = await fetchRecentReports();
+            updateRecentReports(reports);
 
-        // Update active state
-        document
-          .querySelectorAll(".card-actions .btn")
-          .forEach((b) => b.classList.remove("active"));
-        this.classList.add("active");
-      });
-    });
-  }
+            // Fetch new users
+            const users = await fetchNewUsers();
+            updateNewUsers(users);
+        } catch (error) {
+            throw error;
+            showToast("Error loading recent activities", "error");
+        }
+    }
 
-  // Demographics Chart
-  const demographicsCtx = document.getElementById("demographicsChart");
-  if (demographicsCtx) {
-    new Chart(demographicsCtx, {
-      type: "doughnut",
-      data: {
-        labels: ["18-24", "25-34", "35-44", "45+"],
-        datasets: [
-          {
-            data: [30, 40, 20, 10],
-            backgroundColor: ["#600097", "#4e54c8", "#8b0c7d", "#ff97fa"],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
-    });
-  }
+    async function fetchRecentReports() {
+        const response =  await fetch(`${BASE_URL}/dashboard/recent-reports`, {
+            headers: {
+                'Authorization': `Bearer ${authData.token}`
+            }
+        });
 
-  // Posts Analytics Chart
-  const postsAnalyticsCtx = document.getElementById("postsAnalyticsChart");
-  if (postsAnalyticsCtx) {
-    new Chart(postsAnalyticsCtx, {
-      type: "bar",
-      data: {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [
-          {
-            label: "Posts",
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: "#600097",
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  }
+        if (!response.ok) throw new Error("Failed to fetch recent reports");
+        return await response.json();
+    }
 
-  // Reports Chart
-  const reportsChartCtx = document.getElementById("reportsChart");
-  if (reportsChartCtx) {
-    new Chart(reportsChartCtx, {
-      type: "pie",
-      data: {
-        labels: ["Spam", "Inappropriate", "Harassment", "Other"],
-        datasets: [
-          {
-            data: [35, 25, 20, 20],
-            backgroundColor: ["#600097", "#4e54c8", "#8b0c7d", "#ff97fa"],
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "bottom",
-          },
-        },
-      },
-    });
-  }
-}
+    async function fetchNewUsers() {
+        const response =  await fetch(`${BASE_URL}/dashboard/new-users`, {
+            headers: {
+                'Authorization': `Bearer ${authData.token}`
+            }
+        });
 
-// Update User Growth Chart based on period
-function updateUserGrowthChart(chart, period) {
-  const data = {
-    weekly: {
-      labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      data: [120, 150, 180, 160, 200, 180, 160],
-    },
-    monthly: {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      data: [650, 850, 1100, 900, 1200, 1500],
-    },
-    yearly: {
-      labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
-      data: [5000, 8000, 12000, 15000, 18000, 22000],
-    },
-  };
+        if (!response.ok) throw new Error("Failed to fetch new users");
+        return await response.json();
+    }
 
-  chart.data.labels = data[period].labels;
-  chart.data.datasets[0].data = data[period].data;
-  chart.update();
-}
+    function updateRecentReports(reports) {
+        const container = document.querySelector(".recent-reports-list");
+        container.innerHTML = reports.map(report => `
+    <div class="list-group-item">
+      <div class="d-flex align-items-center">
+        <img src="${report.reporter.profilePictureUrl || '../../assets/image/Test-profile-img.jpg'}" 
+             alt="User" class="rounded-circle me-3" width="40">
+        <div class="flex-grow-1">
+          <h6 class="mb-1">${report.type} Report</h6>
+          <p class="mb-0 text-muted">
+            Reported by ${report.reporter.firstName} ${report.reporter.lastName} • 
+            ${formatTimeAgo(report.createdAt)}
+          </p>
+        </div>
+        <span class="badge bg-${getStatusBadgeColor(report.status)}">${report.status}</span>
+      </div>
+    </div>
+  `).join("");
+    }
 
-// Search functionality
-function initializeSearch() {
-  document.querySelectorAll(".table-search").forEach((searchInput) => {
-    searchInput.addEventListener("input", function () {
-      const searchTerm = this.value.toLowerCase();
-      const table = this.closest(".card").querySelector("table");
-      const rows = table.querySelectorAll("tbody tr");
+    function updateNewUsers(users) {
+        const container = document.querySelector(".new-users-list");
+        container.innerHTML = users.map(user => `
+    <div class="list-group-item">
+      <div class="d-flex align-items-center">
+        <img src="${user.profilePictureUrl || '../../assets/image/Test-profile-img.jpg'}" 
+             alt="User" class="rounded-circle me-3" width="40">
+        <div class="flex-grow-1">
+          <h6 class="mb-1">${user.firstName} ${user.lastName}</h6>
+          <p class="mb-0 text-muted">Joined ${formatTimeAgo(user.createdAt)}</p>
+        </div>
+        <button class="btn btn-sm btn-outline-primary" 
+                onclick="viewUserProfile(${user.userId})">
+          View Profile
+        </button>
+      </div>
+    </div>
+  `).join("");
+    }
 
-      rows.forEach((row) => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? "" : "none";
-      });
-    });
-  });
-}
+    function getStatusBadgeColor(status) {
+        switch (status) {
+            case "PENDING":
+                return "warning";
+            case "RESOLVED":
+                return "success";
+            case "ESCALATED":
+                return "danger";
+            default:
+                return "secondary";
+        }
+    }
 
-// Filter functionality
-function initializeFilters() {
-  document.querySelectorAll(".dropdown-menu .dropdown-item").forEach((item) => {
-    item.addEventListener("click", function (e) {
-      e.preventDefault();
-      const filterType = this.textContent.trim();
-      const table = this.closest(".card").querySelector("table");
-      filterTable(table, filterType);
-    });
-  });
-}
+    function formatTimeAgo(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
 
-function filterTable(table, filterType) {
-  const rows = table.querySelectorAll("tbody tr");
-  rows.forEach((row) => {
-    const status = row.querySelector(".badge").textContent.trim();
-    row.style.display =
-      filterType === "All" || status === filterType ? "" : "none";
-  });
-}
+        if (seconds < 60) return "just now";
+        if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+        if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+        return `${Math.floor(seconds / 86400)} days ago`;
+    }
 
-// User actions
-function initializeUserActions() {
-  // Handle user status toggle
-  document.querySelectorAll('[data-action="toggle-status"]').forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const userId = this.closest("tr").dataset.userId;
-      const currentStatus = this.dataset.status;
-      toggleUserStatus(userId, currentStatus);
-    });
-  });
+    function setupEventListeners() {
+        // Period change for user growth chart
+        document.querySelectorAll(".card-actions .btn").forEach(btn => {
+            btn.addEventListener("click", async function () {
+                const period = this.dataset.period;
+                const data = await fetchUserGrowth(period);
+                updateUserGrowthChart(data);
 
-  // Handle view user profile
-  document.querySelectorAll('[data-action="view"]').forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const userId = this.closest("tr").dataset.userId;
-      viewUserProfile(userId);
-    });
-  });
-}
+                // Update active state
+                document.querySelectorAll(".card-actions .btn")
+                    .forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
 
-function toggleUserStatus(userId, currentStatus) {
-  const newStatus = currentStatus === "active" ? "inactive" : "active";
-  // API call would go here
-  console.log(`Toggling user ${userId} status to ${newStatus}`);
-}
+        // Sidebar toggle
+        const toggleBtn = document.querySelector(".toggle-sidebar");
+        const sidebar = document.querySelector(".admin-sidebar");
+        const mainContent = document.querySelector(".admin-main");
 
-function viewUserProfile(userId) {
-  // Show user profile modal
-  const modal = new bootstrap.Modal(
-    document.getElementById("userProfileModal")
-  );
-  modal.show();
-}
+        if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("show");
+                mainContent.classList.toggle("sidebar-hidden");
+            });
+        }
+    }
 
-// Post actions
-function initializePostActions() {
-  // Handle post status toggle
-  document
-    .querySelectorAll('[data-action="toggle-post-status"]')
-    .forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const postId = this.closest("tr").dataset.postId;
-        const currentStatus = this.dataset.status;
-        togglePostStatus(postId, currentStatus);
-      });
-    });
-
-  // Handle view post
-  document.querySelectorAll('[data-action="view-post"]').forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const postId = this.closest("tr").dataset.postId;
-      viewPost(postId);
-    });
-  });
-}
-
-function togglePostStatus(postId, currentStatus) {
-  const newStatus = currentStatus === "active" ? "inactive" : "active";
-  // API call would go here
-  console.log(`Toggling post ${postId} status to ${newStatus}`);
-}
-
-function viewPost(postId) {
-  // Show post modal
-  const modal = new bootstrap.Modal(document.getElementById("postViewModal"));
-  modal.show();
-}
-
-// Report actions
-function initializeReportActions() {
-  // Handle report resolution
-  document.querySelectorAll('[data-action="resolve"]').forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const reportId = this.closest("tr").dataset.reportId;
-      resolveReport(reportId);
-    });
-  });
-
-  // Handle report escalation
-  document.querySelectorAll('[data-action="escalate"]').forEach((btn) => {
-    btn.addEventListener("click", function () {
-      const reportId = this.closest("tr").dataset.reportId;
-      escalateReport(reportId);
-    });
-  });
-}
-
-function resolveReport(reportId) {
-  // API call would go here
-  console.log(`Resolving report ${reportId}`);
-  // Update UI
-  const row = document.querySelector(`tr[data-report-id="${reportId}"]`);
-  const statusBadge = row.querySelector(".badge");
-  statusBadge.className = "badge bg-success";
-  statusBadge.textContent = "Resolved";
-}
-
-function escalateReport(reportId) {
-  // API call would go here
-  console.log(`Escalating report ${reportId}`);
-  // Update UI
-  const row = document.querySelector(`tr[data-report-id="${reportId}"]`);
-  const statusBadge = row.querySelector(".badge");
-  statusBadge.className = "badge bg-danger";
-  statusBadge.textContent = "Escalated";
-}
-
-// Settings
-function initializeSettings() {
-  // Handle settings form submissions
-  document.querySelectorAll("form").forEach((form) => {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      saveSettings(new FormData(form));
-    });
-  });
-}
-
-function saveSettings(formData) {
-  // API call would go here
-  console.log("Saving settings:", Object.fromEntries(formData));
-  // Show success message
-  showToast("Settings saved successfully");
-}
-
-// Utility functions
-function showToast(message) {
-  // Create and show Bootstrap toast
-  const toastContainer = document.createElement("div");
-  toastContainer.className =
-    "toast-container position-fixed bottom-0 end-0 p-3";
-  toastContainer.innerHTML = `
+    function showToast(message, type = "info") {
+        const toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container position-fixed bottom-0 end-0 p-3";
+        toastContainer.innerHTML = `
     <div class="toast" role="alert">
-      <div class="toast-body">${message}</div>
+      <div class="toast-body bg-${type === "error" ? "danger" : "success"} text-white">
+        ${message}
+      </div>
     </div>
   `;
-  document.body.appendChild(toastContainer);
-  const toast = new bootstrap.Toast(toastContainer.querySelector(".toast"));
-  toast.show();
 
-  // Remove after shown
-  toastContainer.addEventListener("hidden.bs.toast", () => {
-    toastContainer.remove();
-  });
-}
+        document.body.appendChild(toastContainer);
+        const toast = new bootstrap.Toast(toastContainer.querySelector(".toast"));
+        toast.show();
+
+        toastContainer.addEventListener("hidden.bs.toast", () => {
+            toastContainer.remove();
+        });
+    }
+});

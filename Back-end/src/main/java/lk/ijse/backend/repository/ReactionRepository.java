@@ -9,10 +9,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+
 public interface ReactionRepository extends JpaRepository<Reaction, Integer> {
     Reaction findByUserAndPost(User user, Post post);
 
     @Modifying
     @Query("DELETE FROM Reaction r WHERE r.user = :user AND r.post = :post")
     void deleteByUserAndPost(@Param("user") User user, @Param("post") Post post);
+
+    @Query("SELECT COUNT(r) FROM Reaction r WHERE r.createdAt < :date")
+    long countCreatedBefore(@Param("date") LocalDateTime date);
+
 }

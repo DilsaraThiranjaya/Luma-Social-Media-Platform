@@ -2,6 +2,7 @@ package lk.ijse.backend.service.impl;
 
 import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Notification;
+import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.NotificationRepository;
 import lk.ijse.backend.repository.UserRepository;
@@ -165,9 +166,28 @@ public class NotificationServiceImpl implements NotificationService {
         if (notification.getReport() != null) {
             ReportDTO reportDTO = new ReportDTO();
             reportDTO.setReportId(notification.getReport().getReportId());
+            if (notification.getReport().getReportedPost() != null) {
+                reportDTO.setReportedPost(convertToDTO(notification.getReport().getReportedPost()));
+            }
+            if (notification.getReport().getReportedUser() != null) {
+                reportDTO.setReportedUser(convertToDTO(notification.getReport().getReportedUser()));
+            }
             dto.setReport(reportDTO);
         }
 
         return dto;
     }
+
+    private static UserDTO convertToDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        return userDTO;
+    }
+
+    public static PostDTO convertToDTO(Post post) {
+        PostDTO postDTO = new PostDTO();
+        postDTO.setPostId(post.getPostId());
+        return postDTO;
+    }
 }
+

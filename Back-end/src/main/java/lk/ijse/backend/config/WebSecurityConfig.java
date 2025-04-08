@@ -88,7 +88,8 @@ public class WebSecurityConfig {
                                 "/api/v1/timeline/*",
                                 "/api/v1/search/*",
                                 "/api/v1/friends/*",
-                                "/api/v1/notifications/*").hasAnyRole("USER", "ADMIN")
+                                "/api/v1/notifications/*",
+                                "/api/v1/dashboard/*").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(
                                 "/oauth2/**",
                                 "/login/**").permitAll()

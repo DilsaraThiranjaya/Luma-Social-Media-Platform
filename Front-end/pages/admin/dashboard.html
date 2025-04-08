@@ -84,12 +84,12 @@
                   <i class="bi bi-people"></i>
                 </div>
                 <div class="stats-info">
-                  <h3>2,459</h3>
+                  <h3 class="total-users">0</h3>
                   <p>Total Users</p>
                 </div>
-                <div class="stats-trend positive">
-                  <i class="bi bi-arrow-up"></i>
-                  <span>12%</span>
+                <div class="stats-trend user-growth">
+                  <i></i>
+                  <span>0%</span>
                 </div>
               </div>
             </div>
@@ -99,12 +99,12 @@
                   <i class="bi bi-file-post"></i>
                 </div>
                 <div class="stats-info">
-                  <h3>1,257</h3>
+                  <h3 class="total-posts">0</h3>
                   <p>Total Posts</p>
                 </div>
-                <div class="stats-trend positive">
-                  <i class="bi bi-arrow-up"></i>
-                  <span>8%</span>
+                <div class="stats-trend post-growth">
+                  <i></i>
+                  <span>0%</span>
                 </div>
               </div>
             </div>
@@ -114,12 +114,12 @@
                   <i class="bi bi-flag"></i>
                 </div>
                 <div class="stats-info">
-                  <h3>23</h3>
+                  <h3 class="active-reports">0</h3>
                   <p>Active Reports</p>
                 </div>
-                <div class="stats-trend negative">
-                  <i class="bi bi-arrow-down"></i>
-                  <span>5%</span>
+                <div class="stats-trend report-change">
+                  <i></i>
+                  <span>0%</span>
                 </div>
               </div>
             </div>
@@ -129,12 +129,12 @@
                   <i class="bi bi-activity"></i>
                 </div>
                 <div class="stats-info">
-                  <h3>89%</h3>
+                  <h3 class="user-activity">0%</h3>
                   <p>User Activity</p>
                 </div>
-                <div class="stats-trend positive">
-                  <i class="bi bi-arrow-up"></i>
-                  <span>3%</span>
+                <div class="stats-trend activity-growth">
+                  <i></i>
+                  <span>0%</span>
                 </div>
               </div>
             </div>
@@ -189,41 +189,8 @@
                   >
                 </div>
                 <div class="card-body p-0">
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item">
-                      <div class="d-flex align-items-center">
-                        <img
-                          src="../../assets/image/Test-profile-img.jpg"
-                          alt="User"
-                          class="rounded-circle me-3"
-                          width="40"
-                        />
-                        <div class="flex-grow-1">
-                          <h6 class="mb-1">Inappropriate Content Report</h6>
-                          <p class="mb-0 text-muted">
-                            Reported by John Doe • 2 hours ago
-                          </p>
-                        </div>
-                        <span class="badge bg-warning">Pending</span>
-                      </div>
-                    </div>
-                    <div class="list-group-item">
-                      <div class="d-flex align-items-center">
-                        <img
-                          src="../../assets/image/Test-profile-img.jpg"
-                          alt="User"
-                          class="rounded-circle me-3"
-                          width="40"
-                        />
-                        <div class="flex-grow-1">
-                          <h6 class="mb-1">Spam Report</h6>
-                          <p class="mb-0 text-muted">
-                            Reported by Jane Smith • 5 hours ago
-                          </p>
-                        </div>
-                        <span class="badge bg-success">Resolved</span>
-                      </div>
-                    </div>
+                  <div class="list-group list-group-flush recent-reports-list">
+
                   </div>
                 </div>
               </div>
@@ -237,49 +204,8 @@
                   >
                 </div>
                 <div class="card-body p-0">
-                  <div class="list-group list-group-flush">
-                    <div class="list-group-item">
-                      <div class="d-flex align-items-center">
-                        <img
-                          src="../../assets/image/Test-profile-img.jpg"
-                          alt="User"
-                          class="rounded-circle me-3"
-                          width="40"
-                        />
-                        <div class="flex-grow-1">
-                          <h6 class="mb-1">Sarah Johnson</h6>
-                          <p class="mb-0 text-muted">Joined 1 hour ago</p>
-                        </div>
-                        <button
-                          class="btn btn-sm btn-outline-primary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#userProfileModal"
-                        >
-                          View Profile
-                        </button>
-                      </div>
-                    </div>
-                    <div class="list-group-item">
-                      <div class="d-flex align-items-center">
-                        <img
-                          src="../../assets/image/Test-profile-img.jpg"
-                          alt="User"
-                          class="rounded-circle me-3"
-                          width="40"
-                        />
-                        <div class="flex-grow-1">
-                          <h6 class="mb-1">Michael Brown</h6>
-                          <p class="mb-0 text-muted">Joined 3 hours ago</p>
-                        </div>
-                        <button
-                          class="btn btn-sm btn-outline-primary"
-                          data-bs-toggle="modal"
-                          data-bs-target="#userProfileModal"
-                        >
-                          View Profile
-                        </button>
-                      </div>
-                    </div>
+                  <div class="list-group list-group-flush new-users-list">
+
                   </div>
                 </div>
               </div>
@@ -294,13 +220,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../assets/js/admin/dashboard.js"></script>
-    <script>
-      // Load modals
-      fetch("../../assets/html/admin/modals.html")
-        .then((response) => response.text())
-        .then((html) => {
-          document.getElementById("modalsContainer").innerHTML = html;
-        });
-    </script>
   </body>
 </html>

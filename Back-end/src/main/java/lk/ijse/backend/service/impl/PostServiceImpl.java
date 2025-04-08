@@ -154,7 +154,7 @@ public class PostServiceImpl implements PostService {
                     notificationDTO.setTitle("New Post Like!");
                     notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " liked your post.");
                     notificationDTO.setType(Notification.NotificationType.POST_LIKE);
-                    notificationDTO.setActionUrl("/post");
+                    notificationDTO.setActionUrl("/post-like");
                     notificationDTO.setIsRead(false);
                     notificationDTO.setUser(modelMapper.map(post.getUser(), UserDTO.class));
                     notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
@@ -279,18 +279,20 @@ public class PostServiceImpl implements PostService {
 
         Report savedReport = reportRepository.save(report);
 
+        report.setReportId(savedReport.getReportId());
+
         // Send notification to admins
         userRepository.findByRole(User.Role.ADMIN).forEach(admin -> {
-            if (admin.getUserId() != reporter.getUserId()) {
+            if (admin.getUserId() != reporter.getUserId() && admin.getUserId() != reportedPost.getUser().getUserId()) {
                 NotificationDTO notificationDTO = new NotificationDTO();
                 notificationDTO.setTitle("New Post Report!");
                 notificationDTO.setContent(reporter.getFirstName() + " " + reporter.getLastName() + " has reported a post.");
                 notificationDTO.setType(Notification.NotificationType.REPORT_UPDATE);
-                notificationDTO.setActionUrl("/report");
+                notificationDTO.setActionUrl("/report-post");
                 notificationDTO.setIsRead(false);
                 notificationDTO.setUser(modelMapper.map(admin, UserDTO.class));
                 notificationDTO.setSourceUser(modelMapper.map(reporter, UserDTO.class));
-                notificationDTO.setReport(modelMapper.map(savedReport, ReportDTO.class));
+                notificationDTO.setReport(modelMapper.map(report, ReportDTO.class));
 
                 notificationService.createNotification(notificationDTO);
             }
@@ -323,11 +325,12 @@ public class PostServiceImpl implements PostService {
             notificationDTO.setTitle("New Post Comment!");
             notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " commented on your post.");
             notificationDTO.setType(Notification.NotificationType.POST_COMMENT);
-            notificationDTO.setActionUrl("/post");
+            notificationDTO.setActionUrl("/post-comment");
             notificationDTO.setIsRead(false);
             notificationDTO.setUser(modelMapper.map(post.getUser(), UserDTO.class));
             notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
             notificationDTO.setPost(modelMapper.map(post, PostDTO.class));
+            notificationDTO.setComment(modelMapper.map(savedComment, CommentDTO.class));
 
             notificationService.createNotification(notificationDTO);
         }
@@ -376,11 +379,12 @@ public class PostServiceImpl implements PostService {
             notificationDTO.setTitle("New Comment Reply!");
             notificationDTO.setContent(user.getFirstName() + " " + user.getLastName() + " replied to your comment on a post");
             notificationDTO.setType(Notification.NotificationType.POST_COMMENT);
-            notificationDTO.setActionUrl("/post");
+            notificationDTO.setActionUrl("/post-comment");
             notificationDTO.setIsRead(false);
             notificationDTO.setUser(modelMapper.map(parentComment.getUser(), UserDTO.class));
             notificationDTO.setSourceUser(modelMapper.map(user, UserDTO.class));
             notificationDTO.setPost(modelMapper.map(parentComment.getPost(), PostDTO.class));
+            notificationDTO.setComment(modelMapper.map(savedReply, CommentDTO.class));
 
             notificationService.createNotification(notificationDTO);
         }

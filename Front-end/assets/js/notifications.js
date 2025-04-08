@@ -250,8 +250,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       const unreadClass = notification.isRead ? '' : 'unread';
       const readButtonStyle = notification.isRead ? 'display: none;' : '';
 
+      let actionUrl = null;
+
+      switch (notification.actionUrl) {
+        case '/post-like':
+          actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline.html#post-${notification.post?.postId}`;
+          break;
+        case '/post-comment':
+          // actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline.html#post-${notification.post?.postId}_comment-${notification.comment?.commentId}`;
+          actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline.html#post-${notification.post?.postId}`;
+          break;
+        case '/report-post':
+          actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/timeline.html#post-${notification.report?.reportedPost.postId}`;
+          break;
+        case '/report-user':
+          actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${notification.report?.reportedUser.userId}`;
+          break;
+        case '/friend-request':
+          actionUrl = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${notification.sourceUser?.userId}`;
+          break;
+        default:
+          actionUrl = null;
+          break;
+      }
+
       return `
-    <div class="notification-item ${unreadClass}" data-id="${notification.notificationId}">
+    <div class="notification-item ${unreadClass}" data-id="${notification.notificationId}" data-url="${actionUrl}">
       <div class="notification-avatar">
         <img src="${notification.sourceUser?.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" alt="User">
       </div>
@@ -276,6 +300,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function addNotificationHandlers() {
       document.querySelectorAll('.notification-item').forEach(item => {
         const notificationId = item.dataset.id;
+        const notificationUrl = item.dataset.url;
 
         // Handle click on notification content (excluding action buttons)
         item.addEventListener('click', async function(e) {
@@ -283,13 +308,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             await markAsRead(notificationId);
 
             // If there's an action URL, navigate to it
-
-            // const notification = notifications.find(n => n.notificationId === parseInt(notificationId));
-            // if (notification?.actionUrl) {
-            //   if (notification.actionUrl === '/post') {
-            //     window.location.href = `timeline.html#post-${notification.post.postId}`;
-            //   }
-            // }
+            if (notificationUrl) {
+              window.location.href = notificationUrl;
+            }
           }
         });
 

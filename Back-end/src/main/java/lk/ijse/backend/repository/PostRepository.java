@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
@@ -74,4 +75,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             @Param("privacy") Post.PrivacyLevel privacy,
             @Param("currentUserId") int currentUserId,
             Pageable pageable);
+
+    @Query("SELECT COUNT(p) FROM Post p WHERE p.createdAt < :date")
+    long countCreatedBefore(@Param("date") LocalDateTime date);
+
 }

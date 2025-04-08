@@ -127,7 +127,7 @@ public class FriendshipServiceImpl implements FriendshipService {
         notificationDTO.setTitle("New Friend Request!");
         notificationDTO.setContent(sender.getFirstName() + " " + sender.getLastName() + " sent you a friend request.");
         notificationDTO.setType(Notification.NotificationType.FRIEND_REQUEST);
-        notificationDTO.setActionUrl("/profile");
+        notificationDTO.setActionUrl("/friend-request");
         notificationDTO.setIsRead(false);
         notificationDTO.setUser(modelMapper.map(receiver, UserDTO.class));
         notificationDTO.setSourceUser(modelMapper.map(sender, UserDTO.class));

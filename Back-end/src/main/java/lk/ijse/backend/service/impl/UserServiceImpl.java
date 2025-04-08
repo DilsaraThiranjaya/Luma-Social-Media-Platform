@@ -138,18 +138,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         Report savedReport = reportRepository.save(report);
 
+        report.setReportId(savedReport.getReportId());
+
         // Send notification to admins
         userRepository.findByRole(User.Role.ADMIN).forEach(admin -> {
-            if (admin.getUserId() != reporter.getUserId()) {
+            if (admin.getUserId() != reporter.getUserId() && admin.getUserId() != reportedUser.getUserId()) {
                 NotificationDTO notificationDTO = new NotificationDTO();
                 notificationDTO.setTitle("New User Report!");
                 notificationDTO.setContent(reporter.getFirstName() + " " + reporter.getLastName() + " has reported a user.");
                 notificationDTO.setType(Notification.NotificationType.REPORT_UPDATE);
-                notificationDTO.setActionUrl("/profile");
+                notificationDTO.setActionUrl("/report-user");
                 notificationDTO.setIsRead(false);
                 notificationDTO.setUser(modelMapper.map(admin, UserDTO.class));
                 notificationDTO.setSourceUser(modelMapper.map(reporter, UserDTO.class));
-                notificationDTO.setReport(modelMapper.map(savedReport, ReportDTO.class));
+                notificationDTO.setReport(modelMapper.map(report, ReportDTO.class));
 
                 notificationService.createNotification(notificationDTO);
             }

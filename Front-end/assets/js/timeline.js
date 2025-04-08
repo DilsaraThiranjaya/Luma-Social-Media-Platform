@@ -1474,6 +1474,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         function createCommentElement(comment, depth) {
             const commentEl = document.createElement('div');
+            commentEl.id = `comment-${comment.commentId}`;
             commentEl.className = `comment-item my-2 ms-${depth * 3}`;
             commentEl.dataset.commentId = comment.commentId;
             commentEl.dataset.authorId = comment.user.userId;
