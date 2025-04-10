@@ -3,7 +3,6 @@ package lk.ijse.backend.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.Notification;
-import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.Report;
 import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.ReportRepository;
@@ -22,8 +21,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -158,6 +160,74 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         });
 
         return convertToDTO(savedReport);
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers(String status, String search) {
+        List<User> users;
+
+        if (status != null && search != null) {
+            users = userRepository.findByStatusAndEmailContainingOrFirstNameContainingOrLastNameContaining(
+                    User.Status.valueOf(status.toUpperCase()),
+                    search,
+                    search,
+                    search
+            );
+        } else if (status != null) {
+            users = userRepository.findByStatus(User.Status.valueOf(status.toUpperCase()));
+        } else if (search != null) {
+            users = userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(
+                    search,
+                    search,
+                    search
+            );
+        } else {
+            users = userRepository.findAll();
+        }
+
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateUserStatus(int userId, String status) {
+        User user = userRepository.findByUserId(userId);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+
+        user.setStatus(User.Status.valueOf(status.toUpperCase()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public Map<String, Object> getUserStats() {
+        Map<String, Object> stats = new HashMap<>();
+
+        // Total users count
+        long totalUsers = userRepository.count();
+        stats.put("totalUsers", totalUsers);
+
+        // Active users count
+        long activeUsers = userRepository.countByStatus(User.Status.ACTIVE);
+        stats.put("activeUsers", activeUsers);
+
+        // Suspended users count
+        long suspendedUsers = userRepository.countByStatus(User.Status.SUSPENDED);
+        stats.put("suspendedUsers", suspendedUsers);
+
+        // Recent users (last 30 days)
+        long recentUsers = userRepository.countByCreatedAtAfter(
+                LocalDateTime.now().minusDays(30)
+        );
+        stats.put("recentUsers", recentUsers);
+
+        // Online users
+        long onlineUsers = userRepository.countByIsOnlineTrue();
+        stats.put("onlineUsers", onlineUsers);
+
+        return stats;
     }
 
     private ReportDTO convertToDTO(Report savedReport) {

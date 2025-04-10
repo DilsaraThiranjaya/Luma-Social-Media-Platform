@@ -51,6 +51,17 @@
             </button>
             <h4>Users Management</h4>
           </div>
+
+          <!-- Search Bar -->
+          <div class="search-container border border-2 rounded-3" style="flex: 1 1 500px; max-width: 500px; border-color: rgba(139,12,125,0.61) !important;">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text"
+                   class="form-control search-input search-input-admin"
+                   placeholder="Search people and posts here..."
+                   id="mainSearchInput"
+                   autocomplete="off">
+          </div>
+
           <div class="topbar-right">
             <a href="../timeline.html" class="text-decoration-none">
               <button class="btn admin-back-btn">
@@ -58,6 +69,28 @@
                 <span>Back</span>
               </button>
             </a>
+          </div>
+        </div>
+
+        <!-- Search Overlay -->
+        <div class="search-overlay">
+          <div class="search-header">
+            <div class="container-fluid">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-search fs-4 text-muted me-3"></i>
+                <input type="text"
+                       class="search-input-full"
+                       placeholder="Search people and posts here..."
+                       id="fullSearchInput"
+                       autocomplete="off">
+                <button class="btn-close-search ms-auto">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="search-results-full container-fluid">
+            <!-- Search results will be dynamically inserted here -->
           </div>
         </div>
 
@@ -170,14 +203,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/admin/dashboard.js"></script>
-    <script>
-      // Load modals
-      fetch('../../assets/html/admin/modals.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('modalsContainer').innerHTML = html;
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/js/admin/users.js"></script>
+    <script src="../../assets/js/search.js"></script>
   </body>
 </html>

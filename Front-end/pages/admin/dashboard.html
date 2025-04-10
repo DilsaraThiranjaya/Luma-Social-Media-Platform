@@ -1,224 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Luma Admin | Dashboard</title>
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
     />
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
     />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="icon" href="../../assets/image/Luma-logo.jpeg" />
-    <link rel="stylesheet" href="../../assets/css/admin/dashboard.css" />
-    <link rel="stylesheet" href="../../assets/css/common.css" />
-  </head>
-  <body>
-    <div class="admin-container">
-      <!-- Sidebar -->
-      <nav class="admin-sidebar">
+    <link rel="icon" href="../../assets/image/Luma-logo.jpeg"/>
+    <link rel="stylesheet" href="../../assets/css/admin/dashboard.css"/>
+    <link rel="stylesheet" href="../../assets/css/common.css"/>
+</head>
+<body>
+<div class="admin-container">
+    <!-- Sidebar -->
+    <nav class="admin-sidebar">
         <div class="sidebar-header">
-          <img
-            src="../../assets/image/Luma-logo.jpeg"
-            alt="Luma Logo"
-            class="sidebar-logo"
-          />
-          <h5>Luma Admin</h5>
+            <img
+                    src="../../assets/image/Luma-logo.jpeg"
+                    alt="Luma Logo"
+                    class="sidebar-logo"
+            />
+            <h5>Luma Admin</h5>
         </div>
 
         <div class="sidebar-menu">
-          <a href="dashboard.html" class="menu-item active">
-            <i class="bi bi-grid-1x2-fill"></i>
-            <span>Dashboard</span>
-          </a>
-          <a href="users.html" class="menu-item">
-            <i class="bi bi-people-fill"></i>
-            <span>Users</span>
-          </a>
-          <a href="posts.html" class="menu-item">
-            <i class="bi bi-file-post"></i>
-            <span>Posts</span>
-          </a>
-          <a href="reports.html" class="menu-item">
-            <i class="bi bi-flag-fill"></i>
-            <span>Reports</span>
-          </a>
+            <a href="dashboard.html" class="menu-item active">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="bi bi-people-fill"></i>
+                <span>Users</span>
+            </a>
+            <a href="posts.html" class="menu-item">
+                <i class="bi bi-file-post"></i>
+                <span>Posts</span>
+            </a>
+            <a href="reports.html" class="menu-item">
+                <i class="bi bi-flag-fill"></i>
+                <span>Reports</span>
+            </a>
         </div>
-      </nav>
+    </nav>
 
-      <!-- Main Content -->
-      <main class="admin-main">
+    <!-- Main Content -->
+    <main class="admin-main">
         <!-- Top Bar -->
         <div class="admin-topbar">
-          <div class="topbar-left">
-            <button class="btn toggle-sidebar">
-              <i class="bi bi-list"></i>
-            </button>
-            <h4>Dashboard</h4>
-          </div>
-          <div class="topbar-right">
-            <a href="../timeline.html" class="text-decoration-none">
-              <button class="btn admin-back-btn">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Back</span>
-              </button>
-            </a>
-          </div>
+            <div class="topbar-left">
+                <button class="btn toggle-sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h4>Dashboard</h4>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container border border-2 rounded-3" style="flex: 1 1 500px; max-width: 500px; border-color: rgba(139,12,125,0.61) !important;">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text"
+                       class="form-control search-input search-input-admin"
+                       placeholder="Search people and posts here..."
+                       id="mainSearchInput"
+                       autocomplete="off">
+            </div>
+
+            <div class="topbar-right">
+                <a href="../timeline.html" class="text-decoration-none">
+                    <button class="btn admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Search Overlay -->
+        <div class="search-overlay">
+            <div class="search-header">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-search fs-4 text-muted me-3"></i>
+                        <input type="text"
+                               class="search-input-full"
+                               placeholder="Search people and posts here..."
+                               id="fullSearchInput"
+                               autocomplete="off">
+                        <button class="btn-close-search ms-auto">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-results-full container-fluid">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
         </div>
 
         <!-- Dashboard Content -->
         <div class="admin-content">
-          <!-- Stats Cards -->
-          <div class="row g-4 mb-4">
-            <div class="col-md-3">
-              <div class="stats-card">
-                <div class="stats-icon bg-primary">
-                  <i class="bi bi-people"></i>
+            <!-- Stats Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon bg-primary">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3 class="total-users">0</h3>
+                            <p>Total Users</p>
+                        </div>
+                        <div class="stats-trend user-growth">
+                            <i></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-info">
-                  <h3 class="total-users">0</h3>
-                  <p>Total Users</p>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon bg-success">
+                            <i class="bi bi-file-post"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3 class="total-posts">0</h3>
+                            <p>Total Posts</p>
+                        </div>
+                        <div class="stats-trend post-growth">
+                            <i></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-trend user-growth">
-                  <i></i>
-                  <span>0%</span>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon bg-warning">
+                            <i class="bi bi-flag"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3 class="active-reports">0</h3>
+                            <p>Active Reports</p>
+                        </div>
+                        <div class="stats-trend report-change">
+                            <i></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="col-md-3">
+                    <div class="stats-card">
+                        <div class="stats-icon bg-info">
+                            <i class="bi bi-activity"></i>
+                        </div>
+                        <div class="stats-info">
+                            <h3 class="user-activity">0%</h3>
+                            <p>User Activity</p>
+                        </div>
+                        <div class="stats-trend activity-growth">
+                            <i></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
-              <div class="stats-card">
-                <div class="stats-icon bg-success">
-                  <i class="bi bi-file-post"></i>
-                </div>
-                <div class="stats-info">
-                  <h3 class="total-posts">0</h3>
-                  <p>Total Posts</p>
-                </div>
-                <div class="stats-trend post-growth">
-                  <i></i>
-                  <span>0%</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="stats-card">
-                <div class="stats-icon bg-warning">
-                  <i class="bi bi-flag"></i>
-                </div>
-                <div class="stats-info">
-                  <h3 class="active-reports">0</h3>
-                  <p>Active Reports</p>
-                </div>
-                <div class="stats-trend report-change">
-                  <i></i>
-                  <span>0%</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="stats-card">
-                <div class="stats-icon bg-info">
-                  <i class="bi bi-activity"></i>
-                </div>
-                <div class="stats-info">
-                  <h3 class="user-activity">0%</h3>
-                  <p>User Activity</p>
-                </div>
-                <div class="stats-trend activity-growth">
-                  <i></i>
-                  <span>0%</span>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Charts Row -->
-          <div class="row g-4 mb-4">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">User Growth</h5>
-                  <div class="card-actions">
-                    <button class="btn btn-sm btn-light" data-period="weekly">
-                      Weekly
-                    </button>
-                    <button
-                      class="btn btn-sm btn-light active"
-                      data-period="monthly"
-                    >
-                      Monthly
-                    </button>
-                    <button class="btn btn-sm btn-light" data-period="yearly">
-                      Yearly
-                    </button>
-                  </div>
+            <!-- Charts Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">User Growth</h5>
+                            <div class="card-actions">
+                                <button class="btn btn-sm btn-light" data-period="weekly">
+                                    Weekly
+                                </button>
+                                <button
+                                        class="btn btn-sm btn-light active"
+                                        data-period="monthly"
+                                >
+                                    Monthly
+                                </button>
+                                <button class="btn btn-sm btn-light" data-period="yearly">
+                                    Yearly
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="userGrowthChart" height="300"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                  <canvas id="userGrowthChart" height="300"></canvas>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">User Demographics</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="demographicsChart" height="300"></canvas>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">User Demographics</h5>
-                </div>
-                <div class="card-body">
-                  <canvas id="demographicsChart" height="300"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Recent Activity -->
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">Recent Reports</h5>
-                  <a href="reports.html" class="btn btn-sm btn-primary"
-                    >View All</a
-                  >
-                </div>
-                <div class="card-body p-0">
-                  <div class="list-group list-group-flush recent-reports-list">
+            <!-- Recent Activity -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Recent Reports</h5>
+                            <a href="reports.html" class="btn btn-sm btn-primary"
+                            >View All</a
+                            >
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush recent-reports-list">
 
-                  </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">New Users</h5>
-                  <a href="users.html" class="btn btn-sm btn-primary"
-                    >View All</a
-                  >
-                </div>
-                <div class="card-body p-0">
-                  <div class="list-group list-group-flush new-users-list">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">New Users</h5>
+                            <a href="users.html" class="btn btn-sm btn-primary"
+                            >View All</a
+                            >
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="list-group list-group-flush new-users-list">
 
-                  </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </main>
-    </div>
+    </main>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../../assets/js/admin/dashboard.js"></script>
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../assets/js/admin/dashboard.js"></script>
+<script src="../../assets/js/search.js"></script>
+</body>
 </html>

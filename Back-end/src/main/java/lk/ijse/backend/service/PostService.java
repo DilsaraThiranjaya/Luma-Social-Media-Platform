@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
     int createPost(PostDTO postDTO);
@@ -35,4 +36,10 @@ public interface PostService {
     List<PostDTO> searchPosts(String query, int limit, String email);
 
     Page<PostDTO> getOtherUsersProfilePosts(int userId, String email, PageRequest pageable);
+
+    List<PostDTO> getAllPosts(String status, String type, String search);
+
+    void updatePostStatus(int postId, String status);
+
+    Map<String, Object> getPostStats();
 }

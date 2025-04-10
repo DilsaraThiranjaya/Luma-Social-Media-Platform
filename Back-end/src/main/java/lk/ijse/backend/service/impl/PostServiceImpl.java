@@ -19,8 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -408,6 +411,66 @@ public class PostServiceImpl implements PostService {
                 ).stream()
                 .map(post -> convertToDTO((Post) post, currentUserEmail))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostDTO> getAllPosts(String status, String type, String search) {
+        List<Post> posts;
+
+        if (status != null) {
+            posts = postRepository.findByStatus(Post.Status.valueOf(status.toUpperCase()));
+        } else if (type != null) {
+            posts = postRepository.findByMediaMediaType(PostMedia.MediaType.valueOf(type.toUpperCase()));
+        } else if (search != null) {
+            posts = postRepository.findByContentContaining(search);
+        } else {
+            posts = postRepository.findAll();
+        }
+
+        return posts.stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updatePostStatus(int postId, String status) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        post.setStatus(Post.Status.valueOf(status.toUpperCase()));
+        postRepository.save(post);
+    }
+
+    @Override
+    public Map<String, Object> getPostStats() {
+        Map<String, Object> stats = new HashMap<>();
+
+        // Total posts
+        long totalPosts = postRepository.count();
+        stats.put("totalPosts", totalPosts);
+
+        // Active posts
+        long activePosts = postRepository.countByStatus(Post.Status.ACTIVE);
+        stats.put("activePosts", activePosts);
+
+        // Inactive posts
+        long inactivePosts = postRepository.countByStatus(Post.Status.INACTIVE);
+        stats.put("inactivePosts", inactivePosts);
+
+        // Posts by media type
+        long imagePosts = postRepository.countByMediaMediaType(PostMedia.MediaType.IMAGE);
+        stats.put("imagePosts", imagePosts);
+
+        long videoPosts = postRepository.countByMediaMediaType(PostMedia.MediaType.VIDEO);
+        stats.put("videoPosts", videoPosts);
+
+        // Recent posts (last 24 hours)
+        long recentPosts = postRepository.countByCreatedAtAfter(
+                LocalDateTime.now().minusHours(24)
+        );
+        stats.put("recentPosts", recentPosts);
+
+        return stats;
     }
 
     private ReportDTO convertToDTO(Report savedReport, String reporterEmail) {

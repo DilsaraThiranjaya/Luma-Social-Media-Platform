@@ -270,11 +270,7 @@ function toggleUserStatus(userId, currentStatus) {
 }
 
 function viewUserProfile(userId) {
-    // Show user profile modal
-    const modal = new bootstrap.Modal(
-        document.getElementById("userProfileModal")
-    );
-    modal.show();
+    window.location.href = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${userId}` ;
 }
 
 // Post actions

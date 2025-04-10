@@ -1,6 +1,7 @@
 package lk.ijse.backend.repository;
 
 import lk.ijse.backend.entity.Post;
+import lk.ijse.backend.entity.PostMedia;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT p FROM Post p WHERE "
@@ -79,4 +81,13 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT COUNT(p) FROM Post p WHERE p.createdAt < :date")
     long countCreatedBefore(@Param("date") LocalDateTime date);
 
+    List<Post> findByStatus(Post.Status status);
+    List<Post> findByMediaMediaType(PostMedia.MediaType mediaType);
+    List<Post> findByContentContaining(String content);
+
+    long countByStatus(Post.Status status);
+    long countByMediaMediaType(PostMedia.MediaType mediaType);
+    long countByCreatedAtAfter(LocalDateTime date);
+
+    long countByCreatedAtBetween(LocalDateTime sixtyDaysAgo, LocalDateTime thirtyDaysAgo);
 }

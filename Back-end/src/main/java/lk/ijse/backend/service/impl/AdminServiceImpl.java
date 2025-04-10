@@ -35,16 +35,38 @@ public class AdminServiceImpl implements AdminService {
         long totalPosts = postRepository.count();
         long activeReports = reportRepository.countByStatus(Report.ReportStatus.PENDING);
 
-        // Calculate user activity (based on reactions, comments, posts in last 30 days)
-        LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-        long activeUsers = userRepository.countActiveUsersSince(thirtyDaysAgo);
-        double userActivity = (double) activeUsers / totalUsers * 100;
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime thirtyDaysAgo = now.minusDays(30);
+        LocalDateTime sixtyDaysAgo = now.minusDays(60);
+
+        // Current period counts (last 30 days)
+        long currentUsers = userRepository.countByCreatedAtBetween(thirtyDaysAgo, now);
+        long currentPosts = postRepository.countByCreatedAtBetween(thirtyDaysAgo, now);
+        long currentReports = reportRepository.countByCreatedAtBetween(thirtyDaysAgo, now);
+
+        // Previous period counts (30-60 days ago)
+        long previousUsers = userRepository.countByCreatedAtBetween(sixtyDaysAgo, thirtyDaysAgo);
+        long previousPosts = postRepository.countByCreatedAtBetween(sixtyDaysAgo, thirtyDaysAgo);
+        long previousReports = reportRepository.countByCreatedAtBetween(sixtyDaysAgo, thirtyDaysAgo);
 
         // Calculate growth rates
-        double userGrowthRate = calculateGrowthRate(userRepository.countCreatedBefore(thirtyDaysAgo), totalUsers);
-        double postGrowthRate = calculateGrowthRate(postRepository.countCreatedBefore(thirtyDaysAgo), totalPosts);
-        double reportDecreaseRate = calculateGrowthRate(reportRepository.countCreatedBefore(thirtyDaysAgo), activeReports);
-        double activityGrowthRate = calculateActivityGrowthRate(thirtyDaysAgo);
+        double userGrowthRate = calculateGrowthRate(previousUsers, currentUsers);
+        double postGrowthRate = calculateGrowthRate(previousPosts, currentPosts);
+        double reportGrowthRate = calculateGrowthRate(previousReports, currentReports);
+
+        // Report decrease rate is negative of growth rate (if reports decreased)
+        double reportDecreaseRate = -reportGrowthRate;
+
+        // User activity (active users in last 30 days)
+        long activeUsers = userRepository.countActiveUsersSince(thirtyDaysAgo);
+        double userActivity = totalUsers > 0 ? (activeUsers / (double) totalUsers) * 100 : 0;
+
+        // Activity growth rate (current vs previous period)
+        long currentActivity = reactionRepository.countByCreatedAtBetween(thirtyDaysAgo, now)
+                + commentRepository.countByCreatedAtBetween(thirtyDaysAgo, now);
+        long previousActivity = reactionRepository.countByCreatedAtBetween(sixtyDaysAgo, thirtyDaysAgo)
+                + commentRepository.countByCreatedAtBetween(sixtyDaysAgo, thirtyDaysAgo);
+        double activityGrowthRate = calculateGrowthRate(previousActivity, currentActivity);
 
         return DashboardStatsDTO.builder()
                 .totalUsers(totalUsers)

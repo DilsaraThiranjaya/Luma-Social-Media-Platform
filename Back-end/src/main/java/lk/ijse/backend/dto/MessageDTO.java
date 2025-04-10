@@ -28,15 +28,12 @@ public class MessageDTO {
     @URL(message = "Invalid media URL")
     private String mediaUrl;
 
-    @Null
     private LocalDateTime sentAt;
     private LocalDateTime readAt;
 
-    @NotNull(message = "Chat cannot be null")
-    private ChatDTO chat;
+    @NotNull(message = "Chat id cannot be null")
+    private int chatId;
 
     @NotNull(message = "Sender cannot be null")
     private UserDTO sender;
-
-    private List<NotificationDTO> notifications;
 }

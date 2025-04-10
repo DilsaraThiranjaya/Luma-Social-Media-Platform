@@ -14,13 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ChatParticipantDTO {
-
-    @NotNull(message = "Chat cannot be null")
-    private ChatDTO chat;
-
-    @NotNull(message = "User cannot be null")
+    private int chatId;
     private UserDTO user;
-
-    @Null
     private LocalDateTime joinedAt;
 }

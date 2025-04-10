@@ -11,4 +11,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Query("SELECT COUNT(c) FROM Comment c WHERE c.createdAt < :date")
     long countCreatedBefore(@Param("date") LocalDateTime date);
 
+//    @Query("SELECT COUNT(c) FROM Comment c WHERE c.createdAt BETWEEN ?1 AND ?2")
+    long countByCreatedAtBetween(LocalDateTime sixtyDaysAgo, LocalDateTime thirtyDaysAgo);
 }

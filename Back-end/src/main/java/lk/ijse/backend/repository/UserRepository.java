@@ -64,4 +64,18 @@ public interface UserRepository extends JpaRepository<User,String> {
 
     List<User> findTop5ByOrderByCreatedAtDesc();
 
+    List<User> findByStatus(User.Status status);
+
+    List<User> findByEmailContainingOrFirstNameContainingOrLastNameContaining(
+            String email, String firstName, String lastName);
+
+    List<User> findByStatusAndEmailContainingOrFirstNameContainingOrLastNameContaining(
+            User.Status status, String email, String firstName, String lastName);
+
+    long countByStatus(User.Status status);
+
+    long countByCreatedAtAfter(LocalDateTime date);
+
+    long countByIsOnlineTrue();
+
 }

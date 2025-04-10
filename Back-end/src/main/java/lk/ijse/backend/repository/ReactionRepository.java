@@ -21,4 +21,6 @@ public interface ReactionRepository extends JpaRepository<Reaction, Integer> {
     @Query("SELECT COUNT(r) FROM Reaction r WHERE r.createdAt < :date")
     long countCreatedBefore(@Param("date") LocalDateTime date);
 
+//    @Query("SELECT COUNT(r) FROM Reaction r WHERE r.createdAt BETWEEN ?1 AND ?2")
+    long countByCreatedAtBetween(LocalDateTime sixtyDaysAgo, LocalDateTime thirtyDaysAgo);
 }

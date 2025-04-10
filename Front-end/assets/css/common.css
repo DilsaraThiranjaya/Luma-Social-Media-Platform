@@ -221,6 +221,9 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
+.search-input-admin::placeholder {
+  color: rgb(71, 71, 71) !important;
+}
 .search-input:focus {
   background-color: var(--light-color);
   color: var(--text-color);

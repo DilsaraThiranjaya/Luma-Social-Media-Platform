@@ -83,13 +83,17 @@ public class WebSecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(
-                                "/api/v1/profile/*",
-                                "/api/v1/settings/*",
-                                "/api/v1/timeline/*",
-                                "/api/v1/search/*",
-                                "/api/v1/friends/*",
-                                "/api/v1/notifications/*",
-                                "/api/v1/dashboard/*").hasAnyRole("USER", "ADMIN")
+                                "/api/v1/profile/**",
+                                "/api/v1/settings/**",
+                                "/api/v1/timeline/**",
+                                "/api/v1/search/**",
+                                "/api/v1/friends/**",
+                                "/api/v1/notifications/**",
+                                "/api/v1/chats/**",
+                                "/api/v1/calls/**",
+                                "/api/v1/dashboard/**",
+                                "/api/v1/users/**",
+                                "/api/v1/posts/**").authenticated()
                         .requestMatchers(
                                 "/oauth2/**",
                                 "/login/**").permitAll()
