@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         function viewUserProfile(userId) {
-            window.location.href = `http://localhost:63342/Luma-Social-Media-Platform/Front-end/pages/profile-view.html?id=${userId}` ;
+            window.location.href = `../profile-view.html?id=${userId}` ;
         }
 
         function getStatusBadgeColor(status) {

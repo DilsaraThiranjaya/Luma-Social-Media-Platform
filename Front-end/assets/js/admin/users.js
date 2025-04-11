@@ -1,240 +1,280 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async () => {
+    const LOGIN_URL = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
     const BASE_URL = "http://localhost:8080/api/v1";
-    const authData = JSON.parse(sessionStorage.getItem('authData'));
+    let authData = JSON.parse(sessionStorage.getItem('authData'));
 
-    // Initialize the page
-    loadUserStats();
-    loadUsers();
+    // Auth handling utilities
+    const handleAuthError = async (message) => {
+        await Swal.fire({
+            title: "Access Denied!",
+            text: message,
+            icon: "error",
+            draggable: false
+        });
+        sessionStorage.removeItem('authData');
+        window.location.href = LOGIN_URL;
+    };
 
-    // Setup event listeners
-    setupSearchListener();
-    setupFilterListeners();
-    setupStatusToggleListeners();
-
-    // Load user statistics
-    async function loadUserStats() {
+    function isTokenExpired(token) {
         try {
-            const response = await fetch(`${BASE_URL}/users/stats`, {
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
-            });
-            const data = await response.json();
-
-            if (data.code === 'OK') {
-                updateStatsDisplay(data.content);
-            }
+            const {exp} = jwt_decode(token);
+            return Date.now() >= exp * 1000;
         } catch (error) {
-            throw error;
-            showToast('Error loading user statistics', 'error');
+            return true;
         }
     }
 
-// Update statistics display
-    function updateStatsDisplay(stats) {
-        document.getElementById('totalUsers').textContent = stats.totalUsers;
-        document.getElementById('activeUsers').textContent = stats.activeUsers;
-        document.getElementById('suspendedUsers').textContent = stats.suspendedUsers;
-        document.getElementById('recentUsers').textContent = stats.recentUsers;
-        document.getElementById('onlineUsers').textContent = stats.onlineUsers;
-    }
-
-// Load users with optional filters
-    async function loadUsers(status = null, search = null) {
+    async function refreshAuthToken() {
         try {
-            let url = `${BASE_URL}/users`;
-            const params = new URLSearchParams();
-
-            if (status) params.append('status', status);
-            if (search) params.append('search', search);
-
-            if (params.toString()) {
-                url += '?' + params.toString();
-            }
-
-            const response = await fetch(url, {
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
+            const response = await fetch(`${BASE_URL}/auth/refreshToken`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({refreshToken: authData.token})
             });
-            const data = await response.json();
 
-            if (data.code === 'OK') {
-                displayUsers(data.content);
-            }
+            if (!response.ok) throw new Error('Refresh failed');
+            const {data} = await response.json();
+
+            authData.token = data.token;
+            sessionStorage.setItem('authData', JSON.stringify(authData));
+            return data.token;
         } catch (error) {
-            throw error;
-            showToast('Error loading users', 'error');
+
         }
     }
 
-// Display users in the table
-    function displayUsers(users) {
-        const tbody = document.querySelector('table tbody');
-        tbody.innerHTML = '';
+    // Main initialization
+    if (authData?.token) {
+        try {
+            if (isTokenExpired(authData.token)) await refreshAuthToken();
+            initializeUI();
+        } catch (error) {
+            await handleAuthError("Session expired. Please log in again.");
+        }
+    } else {
+        await handleAuthError("You need to log in to access this page.");
+    }
 
-        users.forEach(user => {
-            const row = document.createElement('tr');
-            row.dataset.userId = user.userId;
+    async function initializeUI() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            iconColor: "white",
+            customClass: {popup: "colored-toast"},
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        });
 
-            row.innerHTML = `
+        try {
+            await loadUserStats();
+            await loadUsers();
+            setupEventListeners();
+        } catch (error) {
+            Toast.fire({icon: "error", title: error.message});
+        }
+
+        async function loadUserStats() {
+            try {
+                const response = await fetch(`${BASE_URL}/users/stats`, {
+                    headers: {'Authorization': `Bearer ${authData.token}`}
+                });
+                const {code, data, message} = await response.json();
+
+                if (code !== 200) throw new Error(message);
+                updateStatsDisplay(data);
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        function updateStatsDisplay(stats) {
+            document.getElementById('totalUsers').textContent = stats.totalUsers;
+            document.getElementById('activeUsers').textContent = stats.activeUsers;
+            document.getElementById('suspendedUsers').textContent = stats.suspendedUsers;
+            document.getElementById('recentUsers').textContent = stats.recentUsers;
+            // document.getElementById('onlineUsers').textContent = stats.onlineUsers;
+        }
+
+        async function loadUsers(status = null, search = null) {
+            try {
+                const params = new URLSearchParams();
+                if (status) params.append('status', status);
+                if (search) params.append('search', search);
+
+                const response = await fetch(`${BASE_URL}/users?${params}`, {
+                    headers: {'Authorization': `Bearer ${authData.token}`}
+                });
+                const {code, data: users, message} = await response.json();
+
+                if (code !== 200) throw new Error(message);
+                displayUsers(users);
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        function displayUsers(users) {
+            const tbody = document.querySelector('table tbody');
+            tbody.innerHTML = users.map(user => {
+                // Format dates
+                const joinDate = formatDate(user.createdAt);
+                const lastActive = user.lastLogin ? formatDate(user.lastLogin) : 'Never';
+
+                // Determine if current user is viewing their own row
+                const isCurrentUser = user.email === authData.email;
+
+                // Status badge with better visual hierarchy
+                const statusBadgeClass = user.status === 'ACTIVE'
+                    ? 'bg-success'
+                    : 'bg-danger';
+
+                return `
+        <tr data-user-id="${user.userId}" class="${isCurrentUser ? 'current-user' : ''}">
             <td>
                 <div class="d-flex align-items-center">
                     <img src="${user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
-                         alt="User" class="rounded-circle me-2" width="40">
+                         alt="${user.firstName} ${user.lastName}" 
+                         class="rounded-circle me-2" 
+                         width="40"
+                         height="40"
+                         onerror="this.src='../../assets/image/default-profile.jpg'">
                     <div>
                         <h6 class="mb-0">${user.firstName} ${user.lastName}</h6>
-                        <small class="text-muted">@${user.email.split('@')[0]}</small>
+                        <small class="text-muted">@${user.username || user.email.split('@')[0]}</small>
                     </div>
                 </div>
             </td>
-            <td>${user.email}</td>
-            <td><span class="badge ${user.status === 'ACTIVE' ? 'bg-success' : 'bg-danger'}">${user.status}</span></td>
-            <td>${formatDate(user.createdAt)}</td>
-            <td>${formatDate(user.lastLogin)}</td>
+            <td class="text-truncate" style="max-width: 200px;" title="${user.email}">
+                ${user.email}
+            </td>
             <td>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-light" onclick="viewUserProfile(${user.userId})">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-warning" 
-                            onclick="toggleUserStatus(${user.userId}, '${user.status}')"
-                            data-status="${user.status}">
-                        <i class="bi bi-toggle-${user.status === 'ACTIVE' ? 'on' : 'off'}"></i>
-                    </button>
+                <span class="badge ${statusBadgeClass} rounded-pill" style="min-width: 100px;">
+                    ${user.status}
+                </span>
+            </td>
+            <td>
+                <div class="d-flex flex-column">
+                    <span>${joinDate}</span>
                 </div>
             </td>
-        `;
-
-            tbody.appendChild(row);
-        });
-    }
-
-// Setup search functionality
-    function setupSearchListener() {
-        const searchInput = document.querySelector('.table-search');
-        let debounceTimer;
-
-        searchInput.addEventListener('input', function() {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                loadUsers(null, this.value);
-            }, 300);
-        });
-    }
-
-// Setup filter functionality
-    function setupFilterListeners() {
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const status = this.textContent.trim() === 'All Users' ? null : this.textContent.trim().toUpperCase();
-                loadUsers(status);
-            });
-        });
-    }
-
-    // Setup status toggle listeners
-    function setupStatusToggleListeners() {
-        document.addEventListener('click', async function(e) {
-            if (e.target.closest('.status-toggle')) {
-                const button = e.target.closest('.status-toggle');
-                const userId = button.dataset.userId;
-                const currentStatus = button.dataset.currentStatus;
-
-                try {
-                    const newStatus = currentStatus === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
-                    const response = await fetch(`${BASE_URL}/users/${userId}/status?status=${newStatus}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${authData.token}`,
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    const data = await response.json();
-
-                    if (data.code === 'OK') {
-                        showToast('User status updated successfully', 'success');
-                        // Reload users and stats to reflect changes
-                        loadUsers();
-                        loadUserStats();
-                    } else {
-                        throw new Error(data.message || 'Failed to update user status');
-                    }
-                } catch (error) {
-                    console.error('Error updating user status:', error);
-                    showToast('Error updating user status', 'error');
-                }
-            }
-        });
-    }
-
-// Toggle user status
-    async function toggleUserStatus(userId, currentStatus) {
-        try {
-            const newStatus = currentStatus === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
-
-            const response = await fetch(`${BASE_URL}/users/${userId}/status?status=${newStatus}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
-            });
-
-            const data = await response.json();
-
-            if (data.code === 'OK') {
-                showToast('User status updated successfully', 'success');
-                loadUsers(); // Reload the users list
-            }
-        } catch (error) {
-            throw error;
-            showToast('Error updating user status', 'error');
-        }
-    }
-
-// View user profile
-    function viewUserProfile(userId) {
-        // Implementation for viewing user profile in modal
-        const modal = new bootstrap.Modal(document.getElementById('userProfileModal'));
-        modal.show();
-    }
-
-// Utility functions
-    function formatDate(dateString) {
-        if (!dateString) return 'Never';
-        const date = new Date(dateString);
-        const now = new Date();
-        const diff = now - date;
-
-        if (diff < 86400000) { // Less than 24 hours
-            return `${Math.round(diff / 3600000)} hours ago`;
-        } else if (diff < 2592000000) { // Less than 30 days
-            return `${Math.round(diff / 86400000)} days ago`;
-        } else {
-            return date.toLocaleDateString();
-        }
-    }
-
-    function showToast(message, type = 'success') {
-        const toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-
-        toastContainer.innerHTML = `
-        <div class="toast" role="alert">
-            <div class="toast-body bg-${type} text-white">
-                ${message}
-            </div>
-        </div>
+            <td>
+                <div class="d-flex flex-column">
+                    <span>${lastActive.date || lastActive}</span>
+                    ${lastActive.time ? `<small class="text-muted">${lastActive.time}</small>` : ''}
+                </div>
+            </td>
+            <td>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-light view-profile" 
+                            data-user-id="${user.userId}"
+                            data-user-email="${user.email}"
+                            title="View Profile">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    ${!isCurrentUser ? `
+                    <button class="btn btn-sm ${user.status === 'ACTIVE' ? 'btn-warning' : 'btn-secondary'} status-toggle" 
+                            data-user-id="${user.userId}"
+                            data-current-status="${user.status}"
+                            title="${user.status === 'ACTIVE' ? 'Suspend User' : 'Activate User'}">
+                        <i class="bi bi-toggle-${user.status === 'ACTIVE' ? 'on' : 'off'}"></i>
+                    </button>` : ''}
+                </div>
+            </td>
+        </tr>
     `;
+            }).join('');
 
-        document.body.appendChild(toastContainer);
-        const toast = new bootstrap.Toast(toastContainer.querySelector('.toast'));
-        toast.show();
+            // Add event listeners after rendering
+            document.querySelectorAll('.view-profile').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const userId = e.currentTarget.dataset.userId;
+                    const email = e.currentTarget.dataset.userEmail;
+                    viewUserProfile(userId, email);
+                });
+            });
+        }
 
-        toastContainer.addEventListener('hidden.bs.toast', () => {
-            toastContainer.remove();
-        });
+        function setupEventListeners() {
+            // Search functionality
+            let searchTimeout;
+            document.querySelector('.table-search').addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    loadUsers(null, e.target.value);
+                }, 300);
+            });
+
+            // Filter functionality
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const status = e.target.textContent === 'All Users'
+                        ? null
+                        : e.target.textContent.toUpperCase().replace(' ', '_');
+                    loadUsers(status);
+                });
+            });
+
+            // Status toggle
+            document.addEventListener('click', async (e) => {
+                if (e.target.closest('.status-toggle')) {
+                    const button = e.target.closest('.status-toggle');
+                    const userId = button.dataset.userId;
+                    const currentStatus = button.dataset.currentStatus;
+                    const newStatus = currentStatus === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
+
+                    try {
+                        const response = await fetch(`${BASE_URL}/users/${userId}/status?status=${newStatus}`, {
+                            method: 'PUT',
+                            headers: {'Authorization': `Bearer ${authData.token}`}
+                        });
+                        const {code, message} = await response.json();
+
+                        if (code === 200) {
+                            button.dataset.currentStatus = newStatus;
+                            button.innerHTML = `
+        <i class="bi bi-toggle-${newStatus === 'ACTIVE' ? 'on' : 'off'}"></i>
+    `;
+                            button.className = `btn btn-sm ${newStatus === 'ACTIVE' ? 'btn-warning' : 'btn-secondary'} status-toggle`;
+                            button.title = newStatus === 'ACTIVE' ? 'Suspend User' : 'Activate User';
+
+                            // Update status badge with new styling
+                            const badge = button.closest('tr').querySelector('.badge');
+                            badge.className = `badge ${newStatus === 'ACTIVE' ? 'bg-success' : 'bg-danger'} rounded-pill`;
+                            badge.innerHTML = `
+        ${newStatus}
+    `;
+                            await loadUserStats();
+                        } else {
+                            throw new Error(message);
+                        }
+                    } catch (error) {
+                        throw error;
+                    }
+                }
+            });
+
+            // Sidebar toggle
+            document.querySelector('.toggle-sidebar').addEventListener('click', () => {
+                document.querySelector('.admin-sidebar').classList.toggle('show');
+                document.querySelector('.admin-main').classList.toggle('sidebar-hidden');
+            });
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            if (!dateString) return 'Never';
+            const date = new Date(dateString);
+            const options = {year: 'numeric', month: 'short', day: 'numeric'};
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        window.viewUserProfile = (userId, email) => {
+            if (email === authData.email) {
+                window.location.href = '../profile.html';
+            }
+            window.location.href = `../profile-view.html?id=${userId}`;
+        };
     }
 });

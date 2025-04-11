@@ -428,7 +428,7 @@ public class PostServiceImpl implements PostService {
         }
 
         return posts.stream()
-                .map(post -> modelMapper.map(post, PostDTO.class))
+                .map(post -> convertToDTO(post, null))
                 .collect(Collectors.toList());
     }
 

@@ -93,7 +93,8 @@ public class WebSecurityConfig {
                                 "/api/v1/calls/**",
                                 "/api/v1/dashboard/**",
                                 "/api/v1/users/**",
-                                "/api/v1/posts/**").authenticated()
+                                "/api/v1/posts/**",
+                                "/api/v1/reports/**").authenticated()
                         .requestMatchers(
                                 "/oauth2/**",
                                 "/login/**").permitAll()

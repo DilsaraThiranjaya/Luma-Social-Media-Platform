@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lk.ijse.backend.dto.ResponseDTO;
 import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.entity.User;
 import lk.ijse.backend.jwtmodels.AuthRequest;
 import lk.ijse.backend.jwtmodels.AuthResponse;
 import lk.ijse.backend.service.UserService;
@@ -56,6 +57,11 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
         }
 
+        if (loadedUser.getStatus() == User.Status.SUSPENDED) {
+            log.error("User is suspended for email: {}", authRequest.getEmail());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseDTO(VarList.Unauthorized, "User is suspended!", null));
+        }
+
         String token = jwtUtil.generateToken(loadedUser);
         if (token == null || token.isEmpty()) {
             log.error("Token generation failed for email: {}", authRequest.getEmail());
@@ -66,7 +72,7 @@ public class AuthController {
         authResponse.setEmail(loadedUser.getEmail());
         authResponse.setToken(token);
 
-
+        userService.updateLastLoginTime(authRequest.getEmail());
         log.info("User successfully signed in with email: {}", authRequest.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(VarList.OK, "User Successfully Logged In!", authResponse));
     }

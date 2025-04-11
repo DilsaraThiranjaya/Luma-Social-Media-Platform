@@ -230,6 +230,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return stats;
     }
 
+    @Override
+    public void updateLastLoginTime(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setLastLogin(LocalDateTime.now());
+            userRepository.save(user);
+        }
+    }
+
     private ReportDTO convertToDTO(Report savedReport) {
         ReportDTO reportDTO = modelMapper.map(savedReport, ReportDTO.class);
         reportDTO.setReporter(modelMapper.map(savedReport.getReporter(), UserDTO.class));

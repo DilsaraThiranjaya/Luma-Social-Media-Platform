@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,242 +11,241 @@
     <link rel="icon" href="../../assets/image/Luma-logo.jpeg" />
     <link rel="stylesheet" href="../../assets/css/admin/dashboard.css">
     <link rel="stylesheet" href="../../assets/css/common.css">
-  </head>
-  <body>
-    <div class="admin-container">
-      <!-- Sidebar -->
-      <nav class="admin-sidebar">
+</head>
+<body>
+<div class="admin-container">
+    <!-- Sidebar -->
+    <nav class="admin-sidebar">
         <div class="sidebar-header">
-          <img src="../../assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
-          <h5>Luma Admin</h5>
+            <img src="../../assets/image/Luma-logo.jpeg" alt="Luma Logo" class="sidebar-logo">
+            <h5>Luma Admin</h5>
         </div>
-        
-        <div class="sidebar-menu">
-          <a href="dashboard.html" class="menu-item">
-            <i class="bi bi-grid-1x2-fill"></i>
-            <span>Dashboard</span>
-          </a>
-          <a href="users.html" class="menu-item">
-            <i class="bi bi-people-fill"></i>
-            <span>Users</span>
-          </a>
-          <a href="posts.html" class="menu-item active">
-            <i class="bi bi-file-post"></i>
-            <span>Posts</span>
-          </a>
-          <a href="reports.html" class="menu-item">
-            <i class="bi bi-flag-fill"></i>
-            <span>Reports</span>
-          </a>
-        </div>
-      </nav>
 
-      <!-- Main Content -->
-      <main class="admin-main">
+        <div class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="users.html" class="menu-item">
+                <i class="bi bi-people-fill"></i>
+                <span>Users</span>
+            </a>
+            <a href="posts.html" class="menu-item active">
+                <i class="bi bi-file-post"></i>
+                <span>Posts</span>
+            </a>
+            <a href="reports.html" class="menu-item">
+                <i class="bi bi-flag-fill"></i>
+                <span>Reports</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="admin-main">
         <!-- Top Bar -->
         <div class="admin-topbar">
-          <div class="topbar-left">
-            <button class="btn toggle-sidebar">
-              <i class="bi bi-list"></i>
-            </button>
-            <h4>Posts Management</h4>
-          </div>
+            <div class="topbar-left">
+                <button class="btn toggle-sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h4>Posts Management</h4>
+            </div>
 
-          <!-- Search Bar -->
-          <div class="search-container border border-2 rounded-3" style="flex: 1 1 500px; max-width: 500px; border-color: rgba(139,12,125,0.61) !important;">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text"
-                   class="form-control search-input search-input-admin"
-                   placeholder="Search people and posts here..."
-                   id="mainSearchInput"
-                   autocomplete="off">
-          </div>
+            <!-- Search Bar -->
+            <div class="search-container border border-2 rounded-3" style="flex: 1 1 500px; max-width: 500px; border-color: rgba(139,12,125,0.61) !important;">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text"
+                       class="form-control search-input search-input-admin"
+                       placeholder="Search people and posts here..."
+                       id="mainSearchInput"
+                       autocomplete="off">
+            </div>
 
-          <div class="topbar-right">
-            <a href="../timeline.html" class="text-decoration-none">
-              <button class="btn admin-back-btn">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>Back</span>
-              </button>
-            </a>
-          </div>
+            <div class="topbar-right">
+                <a href="../timeline.html" class="text-decoration-none">
+                    <button class="btn admin-back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                </a>
+            </div>
         </div>
 
         <!-- Search Overlay -->
         <div class="search-overlay">
-          <div class="search-header">
-            <div class="container-fluid">
-              <div class="d-flex align-items-center">
-                <i class="bi bi-search fs-4 text-muted me-3"></i>
-                <input type="text"
-                       class="search-input-full"
-                       placeholder="Search people and posts here..."
-                       id="fullSearchInput"
-                       autocomplete="off">
-                <button class="btn-close-search ms-auto">
-                  <i class="bi bi-x-lg"></i>
-                </button>
-              </div>
+            <div class="search-header">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-search fs-4 text-muted me-3"></i>
+                        <input type="text"
+                               class="search-input-full"
+                               placeholder="Search people and posts here..."
+                               id="fullSearchInput"
+                               autocomplete="off">
+                        <button class="btn-close-search ms-auto">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="search-results-full container-fluid">
-            <!-- Search results will be dynamically inserted here -->
-          </div>
+            <div class="search-results-full container-fluid">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
         </div>
 
         <!-- Posts Content -->
         <div class="admin-content">
-          <!-- Posts Header -->
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="col-md-6 mb-3 mb-md-0">
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control table-search" placeholder="Search posts...">
-                  </div>
-                </div>
-                <div class="col-md-6 d-flex justify-content-md-end gap-2">
-                  <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-                      <i class="bi bi-funnel"></i> Filter
-                    </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">All Posts</a></li>
-                      <li><a class="dropdown-item" href="#">Active Posts</a></li>
-                      <li><a class="dropdown-item" href="#">Inactive Posts</a></li>
-                      <li><a class="dropdown-item" href="#">Reported Posts</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Posts Analytics -->
-          <div class="row g-4 mb-4">
-            <div class="col-md-8">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">Posts Activity</h5>
-                </div>
+            <!-- Posts Header -->
+            <div class="card mb-4">
                 <div class="card-body">
-                  <canvas id="postsAnalyticsChart" height="300"></canvas>
+                    <div class="row align-items-center">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control table-search" placeholder="Search posts...">
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-md-end gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="bi bi-funnel"></i> Filter
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" data-filter="status" data-value="">All Posts</a></li>
+                                    <li><a class="dropdown-item" data-filter="status" data-value="ACTIVE">Active Posts</a></li>
+                                    <li><a class="dropdown-item" data-filter="status" data-value="INACTIVE">Inactive Posts</a></li>
+                                    <li><a class="dropdown-item" data-filter="type" data-value="REPORTED">Reported Posts</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">Post Categories</h5>
-                </div>
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span>Photos</span>
-                    <span class="badge bg-primary">45%</span>
-                  </div>
-                  <div class="progress mb-4" style="height: 8px">
-                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span>Videos</span>
-                    <span class="badge bg-success">30%</span>
-                  </div>
-                  <div class="progress mb-4" style="height: 8px">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <span>Text</span>
-                    <span class="badge bg-info">25%</span>
-                  </div>
-                  <div class="progress" style="height: 8px">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Posts Table -->
-          <div class="card">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Post</th>
-                      <th>Author</th>
-                      <th>Type</th>
-                      <th>Engagement</th>
-                      <th>Status</th>
-                      <th>Posted Date</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-post-id="1">
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img src="https://source.unsplash.com/random/100x100?1" alt="Post" class="rounded me-2" width="40" height="40" style="object-fit: cover;">
-                          <div>
-                            <h6 class="mb-0">Summer Vacation Photos</h6>
-                            <small class="text-muted">Photo Album</small>
-                          </div>
+            <!-- Posts Analytics -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Posts Activity</h5>
                         </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img src="../../assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="30">
-                          <span>John Doe</span>
+                        <div class="card-body">
+                            <canvas id="postsAnalyticsChart" height="300"></canvas>
                         </div>
-                      </td>
-                      <td><span class="badge bg-primary">Photo</span></td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <i class="bi bi-heart-fill text-danger me-1"></i> 1.2k
-                          <i class="bi bi-chat-fill text-primary ms-2 me-1"></i> 234
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Post Categories</h5>
                         </div>
-                      </td>
-                      <td><span class="badge bg-success">Active</span></td>
-                      <td>2 hours ago</td>
-                      <td>
-                        <div class="d-flex gap-2">
-                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#postViewModal">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                          <button class="btn btn-sm btn-warning" data-action="toggle-status" data-status="active">
-                            <i class="bi bi-toggle-on"></i>
-                          </button>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Photos</span>
+                                <span class="badge bg-primary" data-stat="photos">0%</span>
+                            </div>
+                            <div class="progress mb-4" style="height: 8px">
+                                <div class="progress-bar" data-type="photos" role="progressbar" style="width: 0%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Videos</span>
+                                <span class="badge bg-success" data-stat="videos">0%</span>
+                            </div>
+                            <div class="progress mb-4" style="height: 8px">
+                                <div class="progress-bar bg-success" data-type="videos" role="progressbar" style="width: 0%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+<!--                            <div class="d-flex justify-content-between align-items-center mb-3">-->
+<!--                                <span>Text</span>-->
+<!--                                <span class="badge bg-info" data-stat="text">25%</span>-->
+<!--                            </div>-->
+<!--                            <div class="progress" style="height: 8px">-->
+<!--                                <div class="progress-bar bg-info" data-type="text" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                            </div>-->
                         </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- Posts Table -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Post</th>
+                                <th>Author</th>
+                                <th>Type</th>
+                                <th>Engagement</th>
+                                <th>Status</th>
+                                <th>Posted Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Posts will be dynamically loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </main>
-     </div>
+    </main>
+</div>
 
-    <!-- Include Modals -->
-    <div id="modalsContainer"></div>
+<!-- Post View Modal -->
+<div class="modal fade" id="postViewModal" tabindex="-1" aria-labelledby="postViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postViewModalLabel">Post Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Post details will be inserted here -->
+                <div class="post-content-container mb-4">
+                    <div class="post-author d-flex align-items-center mb-3">
+                        <img src="../../assets/image/default-profile.jpg" alt="Author" class="rounded-circle me-2" width="40">
+                        <div>
+                            <h6 class="mb-0">User Name</h6>
+                            <small class="text-muted">Posted date</small>
+                        </div>
+                    </div>
+                    <div class="post-text mb-3">
+                        Post content will appear here.
+                    </div>
+                    <div class="post-media mb-3">
+                        <!-- Media preview will be inserted here -->
+                    </div>
+                    <div class="post-stats d-flex gap-3">
+                        <div><i class="bi bi-heart-fill text-danger"></i> <span>0</span> Likes</div>
+                        <div><i class="bi bi-chat-fill text-primary"></i> <span>0</span> Comments</div>
+                        <div><i class="bi bi-share-fill text-info"></i> <span>0</span> Shares</div>
+                    </div>
+                </div>
+                <div class="post-comments">
+                    <h6 class="mb-3">Comments</h6>
+                    <div class="comments-list">
+                        <!-- Comments will be inserted here -->
+                        <div class="text-center text-muted">No comments yet</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/admin/posts.js"></script>
-    <script src="../../assets/js/search.js"></script>
-    <script>
-      // Load modals
-      fetch('../../assets/html/admin/modals.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('modalsContainer').innerHTML = html;
-        });
-    </script>
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../../assets/js/admin/posts.js"></script>
+<script src="../../assets/js/search.js"></script>
+</body>
 </html>

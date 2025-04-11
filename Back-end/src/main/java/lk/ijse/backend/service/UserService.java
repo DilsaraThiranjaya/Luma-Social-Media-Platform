@@ -1,5 +1,6 @@
 package lk.ijse.backend.service;
 
+import jakarta.validation.constraints.NotBlank;
 import lk.ijse.backend.dto.ReportDTO;
 import lk.ijse.backend.dto.ReportRequestDTO;
 import lk.ijse.backend.dto.UserDTO;
@@ -21,4 +22,6 @@ public interface UserService {
     void updateUserStatus(int userId, String status);
 
     Map<String, Object> getUserStats();
+
+    void updateLastLoginTime(String email);
 }

@@ -1,311 +1,403 @@
-// Posts Management JavaScript
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async () => {
+    const LOGIN_URL = "/Luma-Social-Media-Platform/Front-end/pages/login.html";
     const BASE_URL = "http://localhost:8080/api/v1";
-    const authData = JSON.parse(sessionStorage.getItem('authData'));
+    let authData = JSON.parse(sessionStorage.getItem('authData'));
+    let postsAnalyticsChart;
 
-    // Initialize the page
-    loadPostStats();
-    loadPosts();
-
-    // Setup event listeners
-    setupSearchListener();
-    setupFilterListeners();
-    setupChartUpdates();
-
-    // Load post statistics
-    async function loadPostStats() {
-        try {
-            const response = await fetch(`${BASE_URL}/posts/stats`, {
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
-            });
-            const data = await response.json();
-
-            if (data.code === 'OK') {
-                updateStatsDisplay(data.content);
-                updatePostsChart(data.content);
-            }
-        } catch (error) {
-            throw error;
-            showToast('Error loading post statistics', 'error');
-        }
-    }
-
-// Update statistics display
-    function updateStatsDisplay(stats) {
-        // Update post type distribution
-        const totalPosts = stats.totalPosts;
-        const imagePercentage = (stats.imagePosts / totalPosts * 100).toFixed(0);
-        const videoPercentage = (stats.videoPosts / totalPosts * 100).toFixed(0);
-        const textPercentage = (100 - imagePercentage - videoPercentage).toFixed(0);
-
-        document.querySelector('[data-stat="photos"]').textContent = `${imagePercentage}%`;
-        document.querySelector('[data-stat="videos"]').textContent = `${videoPercentage}%`;
-        document.querySelector('[data-stat="text"]').textContent = `${textPercentage}%`;
-
-        // Update progress bars
-        document.querySelector('.progress-bar[data-type="photos"]').style.width = `${imagePercentage}%`;
-        document.querySelector('.progress-bar[data-type="videos"]').style.width = `${videoPercentage}%`;
-        document.querySelector('.progress-bar[data-type="text"]').style.width = `${textPercentage}%`;
-    }
-
-// Load posts with optional filters
-    async function loadPosts(status = null, type = null, search = null) {
-        try {
-            let url = `${BASE_URL}/posts`;
-            const params = new URLSearchParams();
-
-            if (status) params.append('status', status);
-            if (type) params.append('type', type);
-            if (search) params.append('search', search);
-
-            if (params.toString()) {
-                url += '?' + params.toString();
-            }
-
-            const response = await fetch(url , {
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
-            });
-            const data = await response.json();
-
-            if (data.code === 'OK') {
-                displayPosts(data.content);
-            }
-        } catch (error) {
-            throw error;
-            showToast('Error loading posts', 'error');
-        }
-    }
-
-// Display posts in the table
-    function displayPosts(posts) {
-        const tbody = document.querySelector('table tbody');
-        tbody.innerHTML = '';
-
-        posts.forEach(post => {
-            const row = document.createElement('tr');
-            row.dataset.postId = post.postId;
-
-            const mediaPreview = post.media.length > 0
-                ? `<img src="${post.media[0].mediaUrl}" alt="Post" class="rounded me-2" width="40" height="40" style="object-fit: cover;">`
-                : '<i class="bi bi-file-text me-2"></i>';
-
-            row.innerHTML = `
-            <td>
-                <div class="d-flex align-items-center">
-                    ${mediaPreview}
-                    <div>
-                        <h6 class="mb-0">${truncateText(post.content, 50)}</h6>
-                        <small class="text-muted">${post.media.length > 0 ? post.media[0].mediaType : 'Text Post'}</small>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <img src="${post.user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
-                         alt="User" class="rounded-circle me-2" width="30">
-                    <span>${post.user.firstName} ${post.user.lastName}</span>
-                </div>
-            </td>
-            <td><span class="badge bg-${post.media.length > 0 ? 'primary' : 'info'}">${post.media.length > 0 ? post.media[0].mediaType : 'TEXT'}</span></td>
-            <td>
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-heart-fill text-danger me-1"></i> ${post.reactions.length}
-                    <i class="bi bi-chat-fill text-primary ms-2 me-1"></i> ${post.comments.length}
-                </div>
-            </td>
-            <td><span class="badge bg-${post.status === 'ACTIVE' ? 'success' : 'danger'}">${post.status}</span></td>
-            <td>${formatDate(post.createdAt)}</td>
-            <td>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-sm btn-light" onclick="viewPost(${post.postId})">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn btn-sm btn-warning" 
-                            onclick="togglePostStatus(${post.postId}, '${post.status}')"
-                            data-status="${post.status}">
-                        <i class="bi bi-toggle-${post.status === 'ACTIVE' ? 'on' : 'off'}"></i>
-                    </button>
-                    <button class="btn btn-sm btn-danger" onclick="deletePost(${post.postId})">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-            </td>
-        `;
-
-            tbody.appendChild(row);
+    // Auth handling utilities
+    const handleAuthError = async (message) => {
+        await Swal.fire({
+            title: "Access Denied!",
+            text: message,
+            icon: "error",
+            draggable: false
         });
-    }
+        sessionStorage.removeItem('authData');
+        window.location.href = LOGIN_URL;
+    };
 
-// Setup search functionality
-    function setupSearchListener() {
-        const searchInput = document.querySelector('.table-search');
-        let debounceTimer;
-
-        searchInput.addEventListener('input', function() {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                loadPosts(null, null, this.value);
-            }, 300);
-        });
-    }
-
-// Setup filter functionality
-    function setupFilterListeners() {
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const filterType = this.getAttribute('data-filter');
-                const filterValue = this.getAttribute('data-value');
-                loadPosts(filterType === 'status' ? filterValue : null,
-                    filterType === 'type' ? filterValue : null);
-            });
-        });
-    }
-
-// Toggle post status
-    async function togglePostStatus(postId, currentStatus) {
+    function isTokenExpired(token) {
         try {
-            const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-
-            const response = await fetch(`${BASE_URL}/posts/${postId}/status?status=${newStatus}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
-            });
-
-            const data = await response.json();
-
-            if (data.code === 'OK') {
-                showToast('Post status updated successfully', 'success');
-                loadPosts();
-                loadPostStats();
-            }
+            const { exp } = jwt_decode(token);
+            return Date.now() >= exp * 1000;
         } catch (error) {
-            throw error;
-            showToast('Error updating post status', 'error');
+            return true;
         }
     }
 
-// Delete post
-    async function deletePost(postId) {
-        if (!confirm('Are you sure you want to delete this post?')) return;
-
+    async function refreshAuthToken() {
         try {
-            const response = await fetch(`${BASE_URL}/posts/${postId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${authData.token}`
-                }
+            const response = await fetch(`${BASE_URL}/auth/refreshToken`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refreshToken: authData.token })
             });
 
-            const data = await response.json();
+            if (!response.ok) throw new Error('Refresh failed');
+            const { data } = await response.json();
 
-            if (data.code === 'OK') {
-                showToast('Post deleted successfully', 'success');
-                loadPosts();
-                loadPostStats();
-            }
+            authData.token = data.token;
+            sessionStorage.setItem('authData', JSON.stringify(authData));
+            return data.token;
         } catch (error) {
             throw error;
-            showToast('Error deleting post', 'error');
         }
     }
 
-// View post details
-    function viewPost(postId) {
-        const modal = new bootstrap.Modal(document.getElementById('postViewModal'));
-        modal.show();
+    // Main initialization
+    if (authData?.token) {
+        try {
+            if (isTokenExpired(authData.token)) await refreshAuthToken();
+            initializeUI();
+        } catch (error) {
+            await handleAuthError("Session expired. Please log in again.");
+        }
+    } else {
+        await handleAuthError("You need to log in to access this page.");
     }
 
-// Setup chart updates
-    function setupChartUpdates() {
-        const postsAnalyticsChart = new Chart(
-            document.getElementById('postsAnalyticsChart'),
-            {
+    async function initializeUI() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            iconColor: "white",
+            customClass: { popup: "colored-toast" },
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+        });
+
+        try {
+            initializePostsChart();
+            await loadPostStats();
+            await loadPosts();
+            setupEventListeners();
+        } catch (error) {
+            Toast.fire({ icon: "error", title: error.message });
+        }
+
+        async function loadPostStats() {
+            try {
+                const response = await fetch(`${BASE_URL}/posts/stats`, {
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const { code, data, message } = await response.json();
+
+                if (code !== 200) throw new Error(message);
+                updateStatsDisplay(data);
+                updatePostsChart(data);
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        function updateStatsDisplay(stats) {
+            // Update post type distribution
+            const totalPosts = stats.totalPosts;
+            const imagePercentage = (stats.imagePosts / totalPosts * 100).toFixed(0);
+            const videoPercentage = (stats.videoPosts / totalPosts * 100).toFixed(0);
+            const textPercentage = (100 - imagePercentage - videoPercentage).toFixed(0);
+
+            document.querySelector('[data-stat="photos"]').textContent = `${imagePercentage}%`;
+            document.querySelector('[data-stat="videos"]').textContent = `${videoPercentage}%`;
+            // document.querySelector('[data-stat="text"]').textContent = `${textPercentage}%`;
+
+            // Update progress bars
+            document.querySelector('.progress-bar[data-type="photos"]').style.width = `${imagePercentage}%`;
+            document.querySelector('.progress-bar[data-type="videos"]').style.width = `${videoPercentage}%`;
+            // document.querySelector('.progress-bar[data-type="text"]').style.width = `${textPercentage}%`;
+        }
+
+        function initializePostsChart() {
+            const ctx = document.getElementById('postsAnalyticsChart').getContext('2d');
+            postsAnalyticsChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                     datasets: [{
                         label: 'Posts',
                         data: [0, 0, 0, 0, 0, 0, 0],
-                        backgroundColor: '#600097'
+                        backgroundColor: '#600097',
+                        borderRadius: 4
                     }]
                 },
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: {
-                            display: false
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#600097',
+                            padding: 10,
+                            usePointStyle: true
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+                        },
+                        x: {
+                            grid: { display: false }
                         }
                     }
                 }
-            }
-        );
-
-        // Update chart data periodically
-        setInterval(() => {
-            updatePostsChart(postsAnalyticsChart);
-        }, 300000); // Update every 5 minutes
-    }
-
-// Update posts chart
-    function updatePostsChart(chart) {
-        // Simulate real data - in production, this would come from the backend
-        const newData = Array(7).fill(0).map(() => Math.floor(Math.random() * 50) + 10);
-        chart.data.datasets[0].data = newData;
-        chart.update();
-    }
-
-// Utility functions
-    function truncateText(text, maxLength) {
-        if (!text) return '';
-        return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
-    }
-
-    function formatDate(dateString) {
-        if (!dateString) return 'Unknown';
-        const date = new Date(dateString);
-        const now = new Date();
-        const diff = now - date;
-
-        if (diff < 3600000) { // Less than 1 hour
-            return `${Math.floor(diff / 60000)} minutes ago`;
-        } else if (diff < 86400000) { // Less than 24 hours
-            return `${Math.floor(diff / 3600000)} hours ago`;
-        } else {
-            return date.toLocaleDateString();
+            });
         }
-    }
 
-    function showToast(message, type = 'success') {
-        const toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        function updatePostsChart(stats) {
+            // In a real app, this would use actual weekly data from the backend
+            const newData = stats.weeklyPosts || Array(7).fill().map(() =>
+                Math.floor(Math.random() * 20) + 5
+            );
 
-        toastContainer.innerHTML = `
-        <div class="toast" role="alert">
-            <div class="toast-body bg-${type} text-white">
-                ${message}
-            </div>
-        </div>
-    `;
+            postsAnalyticsChart.data.datasets[0].data = newData;
+            postsAnalyticsChart.update();
+        }
 
-        document.body.appendChild(toastContainer);
-        const toast = new bootstrap.Toast(toastContainer.querySelector('.toast'));
-        toast.show();
+        async function loadPosts(status = null, type = null, search = null) {
+            try {
+                const params = new URLSearchParams();
+                if (status) params.append('status', status);
+                if (type) params.append('type', type);
+                if (search) params.append('search', search);
 
-        toastContainer.addEventListener('hidden.bs.toast', () => {
-            toastContainer.remove();
-        });
+                const response = await fetch(`${BASE_URL}/posts?${params}`, {
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const { code, data: posts, message } = await response.json();
+
+                if (code !== 200) throw new Error(message);
+                displayPosts(posts);
+            } catch (error) {
+                throw new Error('Failed to load posts');
+            }
+        }
+
+        function displayPosts(posts) {
+            const tbody = document.querySelector('table tbody');
+            tbody.innerHTML = posts.map(post => {
+                const mediaPreview = post.media.length > 0
+                    ? `<img src="${post.media[0].mediaUrl}" alt="Post media" 
+                         class="rounded me-2" width="40" height="40" 
+                         style="object-fit: cover;"
+                         onerror="this.src='../../assets/image/default-media.jpg'">`
+                    : '<i class="bi bi-file-text me-2 fs-1"></i>';
+
+                return `
+                    <tr data-post-id="${post.postId}">
+                        <td>
+                            <div class="d-flex align-items-center">
+                                ${mediaPreview}
+                                <div>
+                                    <h6 class="mb-0 small">${truncateText(post.content, 50)}</h6>
+                                    <small class="text-muted">${postTypeLabel(post)}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${post.user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
+                                     alt="${post.user.firstName} ${post.user.lastName}" 
+                                     class="rounded-circle me-2" width="30" height="30">
+                                <span>${post.user.firstName} ${post.user.lastName}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge ${postTypeBadgeClass(post)}">
+                                ${postTypeLabel(post)}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-heart-fill text-danger me-1"></i> ${post.reactions.length}
+                                <i class="bi bi-chat-fill text-primary ms-2 me-1"></i> ${post.comments.length}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge status-badge ${post.status === 'ACTIVE' ? 'bg-success' : 'bg-danger'} rounded-pill" style="min-width: 100px">
+                                ${post.status}
+                            </span>
+                        </td>
+                        <td>${formatDate(post.createdAt)}</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-light view-post" 
+                                        data-post-id="${post.postId}"
+                                        title="View Post">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                                ${post.user.email !== authData.email ? `
+                                <button class="btn btn-sm ${post.status === 'ACTIVE' ? 'btn-warning' : 'btn-secondary'} toggle-post-status" 
+                                        data-post-id="${post.postId}"
+                                        data-current-status="${post.status}"
+                                        title="${post.status === 'ACTIVE' ? 'Deactivate Post' : 'Activate Post'}">
+                                    <i class="bi bi-toggle-${post.status === 'ACTIVE' ? 'on' : 'off'}"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-post" 
+                                        data-post-id="${post.postId}"
+                                        title="Delete Post">
+                                    <i class="bi bi-trash"></i>
+                                </button>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            let searchTimeout;
+            document.querySelector('.table-search').addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    loadPosts(null, null, e.target.value);
+                }, 300);
+            });
+
+            // Filter functionality
+            document.querySelectorAll('.dropdown-item[data-filter]').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const filterType = e.currentTarget.getAttribute('data-filter');
+                    const filterValue = e.currentTarget.getAttribute('data-value');
+                    loadPosts(filterType === 'status' ? filterValue : null,
+                        filterType === 'type' ? filterValue : null);
+                });
+            });
+
+            // Post actions
+            document.addEventListener('click', async (e) => {
+                if (e.target.closest('.view-post')) {
+                    const postId = e.target.closest('.view-post').dataset.postId;
+                    viewPostDetails(postId);
+                }
+                else if (e.target.closest('.toggle-post-status')) {
+                    const button = e.target.closest('.toggle-post-status');
+                    const postId = button.dataset.postId;
+                    const currentStatus = button.dataset.currentStatus;
+                    await togglePostStatus(postId, currentStatus);
+                }
+                else if (e.target.closest('.delete-post')) {
+                    const postId = e.target.closest('.delete-post').dataset.postId;
+                    await deletePost(postId);
+                }
+            });
+
+            // Sidebar toggle
+            document.querySelector('.toggle-sidebar').addEventListener('click', () => {
+                document.querySelector('.admin-sidebar').classList.toggle('show');
+                document.querySelector('.admin-main').classList.toggle('sidebar-hidden');
+            });
+        }
+
+        async function togglePostStatus(postId, currentStatus) {
+            try {
+                const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+                const response = await fetch(`${BASE_URL}/posts/${postId}/status?status=${newStatus}`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const { code, message } = await response.json();
+
+                if (code === 200) {
+                    // Update UI immediately
+                    const row = document.querySelector(`tr[data-post-id="${postId}"]`);
+                    if (row) {
+                        const badge = row.querySelector('.status-badge');
+                        const button = row.querySelector('.toggle-post-status');
+
+                        badge.className = newStatus === 'ACTIVE'
+                            ? 'badge bg-success rounded-pill'
+                            : 'badge bg-danger rounded-pill';
+                        badge.textContent = newStatus;
+
+                        button.dataset.currentStatus = newStatus;
+                        button.innerHTML = `<i class="bi bi-toggle-${newStatus === 'ACTIVE' ? 'on' : 'off'}"></i>`;
+                        button.className = `btn btn-sm ${newStatus === 'ACTIVE' ? 'btn-warning' : 'btn-secondary'} toggle-post-status`;
+                        button.title = newStatus === 'ACTIVE' ? 'Deactivate Post' : 'Activate Post';
+                    }
+                    await loadPostStats();
+                } else {
+                    throw new Error(message);
+                }
+            } catch (error) {
+                Toast.fire({ icon: "error", title: error.message });
+            }
+        }
+
+        async function deletePost(postId) {
+            try {
+                const { isConfirmed } = await Swal.fire({
+                    title: 'Delete Post?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                });
+
+                if (!isConfirmed) return;
+
+                const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const { code, message } = await response.json();
+
+                if (code === 200) {
+                    await loadPosts();
+                    await loadPostStats();
+                } else {
+                    throw new Error(message);
+                }
+            } catch (error) {
+                Toast.fire({ icon: "error", title: error.message });
+            }
+        }
+
+        function viewPostDetails(postId) {
+            // In a real implementation, you would fetch post details and show them in a modal
+            // const modal = new bootstrap.Modal(document.getElementById('postViewModal'));
+            // modal.show();
+
+            window.location.href = `../timeline.html#post-${postId}`;
+        }
+
+        // Utility functions
+        function truncateText(text, maxLength) {
+            if (!text) return '';
+            return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown';
+            const date = new Date(dateString);
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function postTypeLabel(post) {
+            if (post.media.length === 0) return 'Text Post';
+            const type = post.media[0].mediaType;
+            return type === 'IMAGE' ? 'Photo' :
+                type === 'VIDEO' ? 'Video' :
+                    type.charAt(0) + type.slice(1).toLowerCase();
+        }
+
+        function postTypeBadgeClass(post) {
+            if (post.media.length === 0) return 'bg-info-light text-info';
+            const type = post.media[0].mediaType;
+            return type === 'IMAGE' ? 'bg-primary-light text-primary' :
+                type === 'VIDEO' ? 'bg-purple-light text-purple' :
+                    'bg-secondary-light text-secondary';
+        }
     }
 });

@@ -17,4 +17,9 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
     List<Report> findTop5ByOrderByCreatedAtDesc();
 
     long countByCreatedAtBetween(LocalDateTime sixtyDaysAgo, LocalDateTime thirtyDaysAgo);
+
+    List<Report> findByStatus(Report.ReportStatus status);
+    List<Report> findByDescriptionContaining(String search);
+    long countByType(Report.ReportType type);
+    long countByCreatedAtAfter(LocalDateTime date);
 }

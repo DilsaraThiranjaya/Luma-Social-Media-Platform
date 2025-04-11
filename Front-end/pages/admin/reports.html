@@ -116,19 +116,19 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <span>Total Reports</span>
-                    <span class="badge bg-primary">156</span>
+                    <span class="badge bg-primary" data-stat="total">0</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <span>Pending Review</span>
-                    <span class="badge bg-warning">23</span>
+                    <span class="badge bg-warning" data-stat="pending">0</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <span>Resolved</span>
-                    <span class="badge bg-success">98</span>
+                    <span class="badge bg-success" data-stat="resolved">0</span>
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     <span>Escalated</span>
-                    <span class="badge bg-danger">35</span>
+                    <span class="badge bg-danger" data-stat="escalated">0</span>
                   </div>
                 </div>
               </div>
@@ -159,48 +159,18 @@
               <div class="table-responsive">
                 <table class="table table-hover">
                   <thead>
-                    <tr>
-                      <th>Report ID</th>
-                      <th>Type</th>
-                      <th>Reported Content</th>
-                      <th>Reporter</th>
-                      <th>Status</th>
-                      <th>Date</th>
-                      <th>Actions</th>
-                    </tr>
+                  <tr>
+                    <th>Report ID</th>
+                    <th>Type</th>
+                    <th>Reported Content</th>
+                    <th>Reporter</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr data-report-id="REP001">
-                      <td>#REP001</td>
-                      <td><span class="badge bg-danger">Harassment</span></td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <i class="bi bi-file-post me-2"></i>
-                          <span>Inappropriate comment on post</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <img src="../../assets/image/Test-profile-img.jpg" alt="User" class="rounded-circle me-2" width="30">
-                          <span>Jane Smith</span>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-warning">Pending</span></td>
-                      <td>2 hours ago</td>
-                      <td>
-                        <div class="d-flex gap-2">
-                          <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#reportViewModal">
-                            <i class="bi bi-eye"></i>
-                          </button>
-                          <button class="btn btn-sm btn-success" data-action="resolve">
-                            <i class="bi bi-check-lg"></i>
-                          </button>
-                          <button class="btn btn-sm btn-danger" data-action="escalate">
-                            <i class="bi bi-exclamation-triangle"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                  <!-- Reports will be dynamically loaded here -->
                   </tbody>
                 </table>
               </div>
@@ -210,8 +180,62 @@
       </main>
     </div>
 
-    <!-- Include Modals -->
-    <div id="modalsContainer"></div>
+    <!-- Report View Modal -->
+    <div class="modal fade" id="reportViewModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Report Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="report-details">
+              <div class="mb-4">
+                <h6 class="text-muted mb-2">Report Information</h6>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Report ID:</strong> <span id="reportId"></span></p>
+                    <p><strong>Type:</strong> <span id="reportType"></span></p>
+                    <p><strong>Status:</strong> <span id="reportStatus"></span></p>
+                    <p><strong>Created:</strong> <span id="reportDate"></span></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Priority:</strong> <span id="reportPriority"></span></p>
+                    <p><strong>Reporter:</strong> <span id="reporterName"></span></p>
+                    <p><strong>Resolution Date:</strong> <span id="resolutionDate"></span></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h6 class="text-muted mb-2">Description</h6>
+                <p id="reportDescription"></p>
+              </div>
+
+              <div class="mb-4">
+                <h6 class="text-muted mb-2">Reported Content</h6>
+                <div id="reportedContent" class="reported-content-preview">
+                  <!-- Reported content will be displayed here -->
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <h6 class="text-muted mb-2">Resolution Notes</h6>
+                <textarea id="resolutionNotes" class="form-control" rows="3" placeholder="Add resolution notes..."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" id="resolveReportBtn">Resolve</button>
+            <button type="button" class="btn btn-danger" id="escalateReportBtn">Escalate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!--    &lt;!&ndash; Include Modals &ndash;&gt;-->
+<!--    <div id="modalsContainer"></div>-->
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -219,15 +243,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../../assets/js/admin/dashboard.js"></script>
+    <script src="../../assets/js/admin/reports.js"></script>
     <script src="../../assets/js/search.js"></script>
-    <script>
-      // Load modals
-      fetch('../../assets/html/admin/modals.html')
-        .then(response => response.text())
-        .then(html => {
-          document.getElementById('modalsContainer').innerHTML = html;
-        });
-    </script>
+<!--    <script>-->
+<!--      // Load modals-->
+<!--      fetch('../../assets/html/admin/modals.html')-->
+<!--        .then(response => response.text())-->
+<!--        .then(html => {-->
+<!--          document.getElementById('modalsContainer').innerHTML = html;-->
+<!--        });-->
+<!--    </script>-->
   </body>
 </html>
