@@ -203,31 +203,38 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Post details will be inserted here -->
                 <div class="post-content-container mb-4">
+                    <!-- Author Section -->
                     <div class="post-author d-flex align-items-center mb-3">
-                        <img src="../../assets/image/default-profile.jpg" alt="Author" class="rounded-circle me-2" width="40">
+                        <img id="postAuthorImg" src="../../assets/image/default-profile.jpg"
+                             alt="Author" class="rounded-circle me-2" width="50" height="50">
                         <div>
-                            <h6 class="mb-0">User Name</h6>
-                            <small class="text-muted">Posted date</small>
+                            <h6 class="mb-0" id="postAuthorName"></h6>
+                            <small class="text-muted" id="postDate"></small>
+                            <div class="text-muted small">
+                                <i class="bi" id="privacyIcon"></i>
+                                <span id="privacyText"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="post-text mb-3">
-                        Post content will appear here.
-                    </div>
-                    <div class="post-media mb-3">
-                        <!-- Media preview will be inserted here -->
-                    </div>
-                    <div class="post-stats d-flex gap-3">
-                        <div><i class="bi bi-heart-fill text-danger"></i> <span>0</span> Likes</div>
-                        <div><i class="bi bi-chat-fill text-primary"></i> <span>0</span> Comments</div>
-                        <div><i class="bi bi-share-fill text-info"></i> <span>0</span> Shares</div>
+
+                    <!-- Post Content -->
+                    <div class="post-text mb-3" id="postContent"></div>
+
+                    <!-- Media Container -->
+                    <div class="post-media mb-3" id="postMedia"></div>
+
+                    <!-- Stats -->
+                    <div class="post-stats d-flex gap-3 mb-3">
+                        <div class="reaction-container" id="postReactions"></div>
+                        <div class="comment-count"><span id="commentCount">0</span></div>
                     </div>
                 </div>
+
+                <!-- Comments Section -->
                 <div class="post-comments">
-                    <h6 class="mb-3">Comments</h6>
-                    <div class="comments-list">
-                        <!-- Comments will be inserted here -->
+                    <h6 class="mb-3 border-top pt-3">Comments</h6>
+                    <div class="comments-list" id="commentsList">
                         <div class="text-center text-muted">No comments yet</div>
                     </div>
                 </div>

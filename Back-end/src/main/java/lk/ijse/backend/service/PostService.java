@@ -42,4 +42,6 @@ public interface PostService {
     void updatePostStatus(int postId, String status);
 
     Map<String, Object> getPostStats();
+
+    Map<String, Object> getPostAnalytics();
 }

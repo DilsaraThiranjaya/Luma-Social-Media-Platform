@@ -19,11 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -471,6 +470,42 @@ public class PostServiceImpl implements PostService {
         stats.put("recentPosts", recentPosts);
 
         return stats;
+    }
+
+    @Override
+    public Map<String, Object> getPostAnalytics() {
+        Map<String, Object> analytics = new HashMap<>();
+        List<Long> dailyPosts = new ArrayList<>();
+
+        // Get current date and time
+        LocalDateTime now = LocalDateTime.now();
+
+        // Calculate posts for each day of the week
+        for (int i = 6; i >= 0; i--) {
+            LocalDateTime startOfDay = now.minusDays(i).with(LocalTime.MIN);
+            LocalDateTime endOfDay = now.minusDays(i).with(LocalTime.MAX);
+
+            long postsCount = postRepository.findAll().stream()
+                    .filter(post -> {
+                        LocalDateTime postDate = post.getCreatedAt();
+                        return !postDate.isBefore(startOfDay) && !postDate.isAfter(endOfDay);
+                    })
+                    .count();
+
+            dailyPosts.add(postsCount);
+        }
+
+        // Get day labels
+        List<String> labels = new ArrayList<>();
+        for (int i = 6; i >= 0; i--) {
+            DayOfWeek day = now.minusDays(i).getDayOfWeek();
+            labels.add(day.toString().substring(0, 3));
+        }
+
+        analytics.put("labels", labels);
+        analytics.put("data", dailyPosts);
+
+        return analytics;
     }
 
     private ReportDTO convertToDTO(Report savedReport, String reporterEmail) {

@@ -3,8 +3,11 @@ package lk.ijse.backend.service.impl;
 import lk.ijse.backend.dto.PostDTO;
 import lk.ijse.backend.dto.ReportDTO;
 import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.entity.Post;
 import lk.ijse.backend.entity.Report;
+import lk.ijse.backend.entity.User;
 import lk.ijse.backend.repository.ReportRepository;
+import lk.ijse.backend.repository.UserRepository;
 import lk.ijse.backend.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -37,12 +41,14 @@ public class ReportServiceImpl implements ReportService {
         }
 
         return reports.stream()
-                .map(report -> convertToDTO(report))
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void updateReportStatus(int reportId, String status) {
+    public void updateReportStatus(int reportId, String status, String email) {
+        User user = userRepository.findByEmail(email);
+
         Report report = reportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Report not found"));
 
@@ -50,6 +56,7 @@ public class ReportServiceImpl implements ReportService {
         report.setStatus(newStatus);
 
         if (newStatus == Report.ReportStatus.RESOLVED) {
+            report.setResolvedBy(user);
             report.setResolvedAt(LocalDateTime.now());
         }
 
@@ -60,38 +67,19 @@ public class ReportServiceImpl implements ReportService {
     public Map<String, Object> getReportStats() {
         Map<String, Object> stats = new HashMap<>();
 
-        // Total reports
-        long totalReports = reportRepository.count();
-        stats.put("totalReports", totalReports);
+        // Add type distribution
+        Map<String, Long> typeDistribution = new HashMap<>();
+        typeDistribution.put("SPAM", reportRepository.countByType(Report.ReportType.SPAM));
+        typeDistribution.put("HARASSMENT", reportRepository.countByType(Report.ReportType.HARASSMENT));
+        typeDistribution.put("INAPPROPRIATE", reportRepository.countByType(Report.ReportType.INAPPROPRIATE));
+        typeDistribution.put("OTHER", reportRepository.countByType(Report.ReportType.OTHER));
+        stats.put("typeDistribution", typeDistribution);
 
-        // Reports by status
-        long pendingReports = reportRepository.countByStatus(Report.ReportStatus.PENDING);
-        stats.put("pendingReports", pendingReports);
-
-        long resolvedReports = reportRepository.countByStatus(Report.ReportStatus.RESOLVED);
-        stats.put("resolvedReports", resolvedReports);
-
-        long escalatedReports = reportRepository.countByStatus(Report.ReportStatus.ESCALATED);
-        stats.put("escalatedReports", escalatedReports);
-
-        // Reports by type
-        long spamReports = reportRepository.countByType(Report.ReportType.SPAM);
-        stats.put("spamReports", spamReports);
-
-        long harassmentReports = reportRepository.countByType(Report.ReportType.HARASSMENT);
-        stats.put("harassmentReports", harassmentReports);
-
-        long inappropriateReports = reportRepository.countByType(Report.ReportType.INAPPROPRIATE);
-        stats.put("inappropriateReports", inappropriateReports);
-
-        long otherReports = reportRepository.countByType(Report.ReportType.OTHER);
-        stats.put("otherReports", otherReports);
-
-        // Recent reports (last 24 hours)
-        long recentReports = reportRepository.countByCreatedAtAfter(
-                LocalDateTime.now().minusHours(24)
-        );
-        stats.put("recentReports", recentReports);
+        // Add other stats
+        stats.put("totalReports", reportRepository.count());
+        stats.put("pendingReports", reportRepository.countByStatus(Report.ReportStatus.PENDING));
+        stats.put("resolvedReports", reportRepository.countByStatus(Report.ReportStatus.RESOLVED));
+        stats.put("escalatedReports", reportRepository.countByStatus(Report.ReportStatus.ESCALATED));
 
         return stats;
     }
@@ -100,7 +88,7 @@ public class ReportServiceImpl implements ReportService {
     public ReportDTO getReportById(int reportId) {
         Report report = reportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Report not found"));
-        return modelMapper.map(report, ReportDTO.class);
+        return convertToDTO(report);
     }
 
     @Override
@@ -120,11 +108,42 @@ public class ReportServiceImpl implements ReportService {
         reportDTO.setStatus(report.getStatus());
         reportDTO.setResolvedAt(report.getResolvedAt());
         reportDTO.setCreatedAt(report.getCreatedAt());
-        reportDTO.setReporter(modelMapper.map(report.getReporter(), UserDTO.class));
-        reportDTO.setReportedUser(modelMapper.map(report.getReportedUser(), UserDTO.class));
-        reportDTO.setReportedPost(modelMapper.map(report.getReportedPost(), PostDTO.class));
-        reportDTO.setResolvedBy(modelMapper.map(report.getResolvedBy(), UserDTO.class));
+        reportDTO.setReporter(convertToBasicUserDTO(report.getReporter()));
+
+        if (report.getReportedUser() != null) {
+            reportDTO.setReportedUser(convertToBasicUserDTO(report.getReportedUser()));
+        }
+        if (report.getReportedPost() != null) {
+            reportDTO.setReportedPost(convertToBasicPostDTO(report.getReportedPost()));
+        }
+        if (report.getResolvedBy() != null) {
+            reportDTO.setResolvedBy(convertToBasicUserDTO(report.getResolvedBy()));
+        }
+
         reportDTO.setResolutionNotes(report.getResolutionNotes());
+
         return reportDTO;
+    }
+
+    private UserDTO convertToBasicUserDTO(User user) {
+        if (user == null) return null;
+
+        return UserDTO.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .profilePictureUrl(user.getProfilePictureUrl())
+                .build();
+    }
+
+    private PostDTO convertToBasicPostDTO(Post post) {
+        if (post == null) return null;
+
+        return PostDTO.builder()
+                .postId(post.getPostId())
+                .content(post.getContent())
+                .user(convertToBasicUserDTO(post.getUser()))
+                .build();
     }
 }

@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         try {
-            initializePostsChart();
             await loadPostStats();
             await loadPosts();
+            await loadPostAnalytics();
             setupEventListeners();
         } catch (error) {
             Toast.fire({ icon: "error", title: error.message });
@@ -108,50 +108,50 @@ document.addEventListener('DOMContentLoaded', async () => {
             // document.querySelector('.progress-bar[data-type="text"]').style.width = `${textPercentage}%`;
         }
 
-        function initializePostsChart() {
-            const ctx = document.getElementById('postsAnalyticsChart').getContext('2d');
-            postsAnalyticsChart = new Chart(ctx, {
+        function updatePostsChart(analytics) {
+            const ctx = document.getElementById('postsAnalyticsChart');
+
+            if (!ctx) return;
+
+            // Destroy existing chart if it exists
+            if (window.postsChart) {
+                window.postsChart.destroy();
+            }
+
+            window.postsChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    labels: analytics.labels,
                     datasets: [{
                         label: 'Posts',
-                        data: [0, 0, 0, 0, 0, 0, 0],
+                        data: analytics.data,
                         backgroundColor: '#600097',
-                        borderRadius: 4
+                        borderColor: '#600097',
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false },
+                        legend: {
+                            display: false
+                        },
                         tooltip: {
-                            backgroundColor: '#600097',
-                            padding: 10,
-                            usePointStyle: true
+                            mode: 'index',
+                            intersect: false
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(0, 0, 0, 0.05)' }
-                        },
-                        x: {
-                            grid: { display: false }
+                            ticks: {
+                                stepSize: 1
+                            }
                         }
                     }
                 }
             });
-        }
-
-        function updatePostsChart(stats) {
-            // In a real app, this would use actual weekly data from the backend
-            const newData = stats.weeklyPosts || Array(7).fill().map(() =>
-                Math.floor(Math.random() * 20) + 5
-            );
-
-            postsAnalyticsChart.data.datasets[0].data = newData;
-            postsAnalyticsChart.update();
         }
 
         async function loadPosts(status = null, type = null, search = null) {
@@ -177,10 +177,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const tbody = document.querySelector('table tbody');
             tbody.innerHTML = posts.map(post => {
                 const mediaPreview = post.media.length > 0
-                    ? `<img src="${post.media[0].mediaUrl}" alt="Post media" 
-                         class="rounded me-2" width="40" height="40" 
-                         style="object-fit: cover;"
-                         onerror="this.src='../../assets/image/default-media.jpg'">`
+                    ? post.media[0].mediaType === 'IMAGE'
+                        ? `<img src="${post.media[0].mediaUrl}" alt="Post media" 
+             class="rounded me-2" width="40" height="40" 
+             style="object-fit: cover;"
+             onerror="this.src='../../assets/image/default-media.jpg'">`
+                        : '<i class="bi bi-camera-video me-2 fs-1"></i>'
                     : '<i class="bi bi-file-text me-2 fs-1"></i>';
 
                 return `
@@ -196,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </td>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="${post.user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
+                                <img src="${post.user.profilePictureUrl || '../../assets/image/Profile-picture.png'}" 
                                      alt="${post.user.firstName} ${post.user.lastName}" 
                                      class="rounded-circle me-2" width="30" height="30">
                                 <span>${post.user.firstName} ${post.user.lastName}</span>
@@ -243,6 +245,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </tr>
                 `;
             }).join('');
+        }
+
+        // Load post analytics
+        async function loadPostAnalytics() {
+            try {
+                const response = await fetch(`${BASE_URL}/posts/analytics`, {
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const data = await response.json();
+
+                if (data.code === 200) {
+                    updatePostsChart(data.data);
+                }
+            } catch (error) {
+                throw error;
+            }
         }
 
         function setupEventListeners() {
@@ -357,13 +375,105 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        function viewPostDetails(postId) {
-            // In a real implementation, you would fetch post details and show them in a modal
-            // const modal = new bootstrap.Modal(document.getElementById('postViewModal'));
-            // modal.show();
+        async function viewPostDetails(postId) {
+            try {
+                const response = await fetch(`${BASE_URL}/profile/posts/${postId}`, {
+                    headers: { 'Authorization': `Bearer ${authData.token}` }
+                });
+                const { code, data: post, message } = await response.json();
 
-            window.location.href = `../timeline.html#post-${postId}`;
+                if (code !== 200) throw new Error(message);
+
+                // Populate modal
+                const modal = new bootstrap.Modal(document.getElementById('postViewModal'));
+
+                // Author Info
+                document.getElementById('postAuthorImg').src = post.user.profilePictureUrl || '../../assets/image/Profile-picture.png';
+                document.getElementById('postAuthorName').textContent =
+                    `${post.user.firstName} ${post.user.lastName}`;
+                document.getElementById('postDate').textContent = formatDate(post.createdAt);
+
+                // Privacy
+                const privacyIcon = document.getElementById('privacyIcon');
+                const privacyText = document.getElementById('privacyText');
+                const privacyConfig = {
+                    PUBLIC: { icon: 'bi-globe', text: 'Public' },
+                    FRIENDS: { icon: 'bi-people-fill', text: 'Friends' },
+                    PRIVATE: { icon: 'bi-lock-fill', text: 'Only Me' }
+                };
+                const privacy = privacyConfig[post.privacy] || privacyConfig.PUBLIC;
+                privacyIcon.className = privacy.icon;
+                privacyText.textContent = privacy.text;
+
+                // Content
+                document.getElementById('postContent').textContent = post.content;
+
+                // Media
+                const mediaContainer = document.getElementById('postMedia');
+                mediaContainer.innerHTML = post.media.map(media => {
+                    if (media.mediaType === 'IMAGE') {
+                        return `<img src="${media.mediaUrl}" class="img-fluid rounded mb-2" 
+                          alt="Post media" style="max-height: 400px; object-fit: contain">`;
+                    }
+                    if (media.mediaType === 'VIDEO') {
+                        return `<video controls class="w-100 rounded mb-2" style="max-height: 400px">
+                          <source src="${media.mediaUrl}" type="video/mp4">
+                        </video>`;
+                    }
+                    return '';
+                }).join('');
+
+                // Reactions
+                const reactionsContainer = document.getElementById('postReactions');
+                const groupedReactions = post.reactions.reduce((acc, reaction) => {
+                    acc[reaction.type] = (acc[reaction.type] || 0) + 1;
+                    return acc;
+                }, {});
+
+                reactionsContainer.innerHTML = Object.entries(groupedReactions)
+                    .map(([type, count]) => `
+                <span class="me-3">
+                    <i class="bi ${REACTION_TYPES[type].fillIcon} ${REACTION_TYPES[type].color}"></i>
+                    ${count}
+                </span>
+            `).join('');
+
+                // Comments
+                const commentsList = document.getElementById('commentsList');
+                commentsList.innerHTML = post.comments.length > 0
+                    ? post.comments.map(comment => `
+                <div class="comment-item mb-3">
+                    <div class="d-flex align-items-start">
+                        <img src="${comment.user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
+                             class="rounded-circle me-2" width="30" height="30">
+                        <div class="flex-grow-1">
+                            <div class="comment-header">
+                                <strong>${comment.user.firstName} ${comment.user.lastName}</strong>
+                                <small class="text-muted ms-2">${formatDate(comment.createdAt)}</small>
+                            </div>
+                            <div class="comment-text">${comment.content}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('')
+                    : '<div class="text-center text-muted">No comments yet</div>';
+
+                document.getElementById('commentCount').innerHTML = `<i class="bi bi-chat-fill text-primary"></i> ${post.comments.length}`;
+                modal.show();
+
+            } catch (error) {
+                Toast.fire({ icon: "error", title: error.message });
+            }
         }
+
+        const REACTION_TYPES = {
+            LIKE: { fillIcon: 'bi-hand-thumbs-up-fill', color: 'text-primary' },
+            LOVE: { fillIcon: 'bi-heart-fill', color: 'text-danger' },
+            HAHA: { fillIcon: 'bi-emoji-laughing-fill', color: 'text-warning' },
+            WOW: { fillIcon: 'bi-emoji-surprise-fill', color: 'text-info' },
+            SAD: { fillIcon: 'bi-emoji-frown-fill', color: 'text-secondary' },
+            ANGRY: { fillIcon: 'bi-emoji-angry-fill', color: 'text-danger' }
+        };
 
         // Utility functions
         function truncateText(text, maxLength) {
@@ -396,7 +506,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (post.media.length === 0) return 'bg-info-light text-info';
             const type = post.media[0].mediaType;
             return type === 'IMAGE' ? 'bg-primary-light text-primary' :
-                type === 'VIDEO' ? 'bg-purple-light text-purple' :
+                type === 'VIDEO' ? 'bg-warning-light text-warning' :
                     'bg-secondary-light text-secondary';
         }
     }

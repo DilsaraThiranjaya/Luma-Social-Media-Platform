@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface ReportService {
     List<ReportDTO> getAllReports(String status, String search);
-    void updateReportStatus(int reportId, String status);
+    void updateReportStatus(int reportId, String status, String email);
     Map<String, Object> getReportStats();
     ReportDTO getReportById(int reportId);
     void updateResolutionNotes(int reportId, String notes);

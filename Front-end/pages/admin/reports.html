@@ -147,10 +147,10 @@
                 </div>
                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                   <div class="btn-group">
-                    <button class="btn btn-outline-primary active" data-filter="All">All</button>
-                    <button class="btn btn-outline-primary" data-filter="Pending">Pending</button>
-                    <button class="btn btn-outline-primary" data-filter="Resolved">Resolved</button>
-                    <button class="btn btn-outline-primary" data-filter="Escalated">Escalated</button>
+                    <button class="btn btn-outline-primary active" data-filter="ALL">All</button>
+                    <button class="btn btn-outline-primary" data-filter="PENDING">Pending</button>
+                    <button class="btn btn-outline-primary" data-filter="RESOLVED">Resolved</button>
+                    <button class="btn btn-outline-primary" data-filter="ESCALATED">Escalated</button>
                   </div>
                 </div>
               </div>
@@ -169,7 +169,7 @@
                     <th>Actions</th>
                   </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="reportsTableBody">
                   <!-- Reports will be dynamically loaded here -->
                   </tbody>
                 </table>
@@ -234,9 +234,6 @@
       </div>
     </div>
 
-<!--    &lt;!&ndash; Include Modals &ndash;&gt;-->
-<!--    <div id="modalsContainer"></div>-->
-
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -245,13 +242,5 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/admin/reports.js"></script>
     <script src="../../assets/js/search.js"></script>
-<!--    <script>-->
-<!--      // Load modals-->
-<!--      fetch('../../assets/html/admin/modals.html')-->
-<!--        .then(response => response.text())-->
-<!--        .then(html => {-->
-<!--          document.getElementById('modalsContainer').innerHTML = html;-->
-<!--        });-->
-<!--    </script>-->
   </body>
 </html>

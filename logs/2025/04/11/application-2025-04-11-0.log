@@ -1,0 +1,1185 @@
+2025-04-11 06:48:57.515 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 06:48:57.699 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 6776 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 06:48:57.700 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 06:48:59.131 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 06:49:00.377 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 06:49:00.515 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 125 ms. Found 11 JPA repository interfaces.
+2025-04-11 06:49:01.721 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 06:49:01.743 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 06:49:01.749 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 06:49:01.751 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 06:49:01.940 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 06:49:01.942 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4058 ms
+2025-04-11 06:49:02.286 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 06:49:02.759 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 06:49:02.875 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 06:49:03.639 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 06:49:03.675 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 06:49:04.480 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@54f373d4
+2025-04-11 06:49:04.482 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 06:49:04.547 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 06:49:04.548 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 06:49:04.569 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 06:49:08.599 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 06:49:08.977 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 06:49:09.414 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 06:49:15.808 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 06:49:40.317 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 06:49:40.332 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 06:49:40.342 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 44.013 seconds (process running for 45.973)
+2025-04-11 06:56:53.985 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 06:56:53.985 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 06:56:53.988 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 06:56:54.243 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:54.828 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:54.874 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:55.459 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:55.459 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:55.581 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:56:55.892 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.505 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.546 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.562 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.573 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.581 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.685 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.708 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.826 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.849 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:10.971 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 06:57:17.856 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 06:57:18.081 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 06:57:18.200 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 06:57:18.280 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 06:57:18.505 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 06:58:09.403 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 06:58:09.406 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 06:58:09.413 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 06:58:09.424 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 06:58:22.984 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 06:58:23.030 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 06:58:23.066 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 06:58:23.097 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 06:58:23.177 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 06:58:32.941 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 06:58:32.950 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 06:58:32.957 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 06:58:32.966 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 07:49:20.771 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 07:49:20.799 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 07:49:20.830 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 07:49:20.850 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 07:49:20.861 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-11 07:49:30.721 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 07:49:30.803 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 3016 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 07:49:30.803 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 07:49:31.486 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 07:49:32.463 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 07:49:32.570 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 99 ms. Found 11 JPA repository interfaces.
+2025-04-11 07:49:33.332 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 07:49:33.353 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 07:49:33.355 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 07:49:33.355 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 07:49:33.471 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 07:49:33.471 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2604 ms
+2025-04-11 07:49:33.683 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 07:49:33.773 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 07:49:33.830 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 07:49:34.206 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 07:49:34.249 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 07:49:34.800 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@23708f14
+2025-04-11 07:49:34.802 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 07:49:34.875 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 07:49:34.879 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 07:49:34.913 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 07:49:37.110 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 07:49:37.417 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 07:49:37.853 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 07:49:40.443 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 07:49:51.030 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 07:49:51.048 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 07:49:51.058 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 21.12 seconds (process running for 22.762)
+2025-04-11 07:50:23.660 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 07:50:23.661 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 07:50:23.663 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 07:50:23.980 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 07:50:23.980 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 07:50:24.013 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 07:50:24.056 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 07:50:29.741 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 07:50:29.775 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 07:50:29.861 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 07:50:30.080 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 07:50:30.312 [http-nio-8080-exec-8] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:01:18.666 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:01:29.444 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:01:59.200 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:01:59.214 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:01:59.220 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:01:59.231 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:05:19.575 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:05:19.576 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:05:19.584 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:05:19.593 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:05:21.701 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:05:21.708 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:05:21.714 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:05:21.718 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:20:18.693 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:20:18.732 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:20:30.611 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:20:30.629 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:20:36.903 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:20:36.916 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:22:46.348 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:22:46.468 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:26:12.337 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:26:12.499 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:26:12.527 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:26:12.532 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:26:52.288 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:26:52.299 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:27:16.665 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:27:16.682 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:27:16.733 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:27:16.741 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:29:53.468 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:29:53.540 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:29:53.580 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:29:53.624 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:29:53.699 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:29:57.230 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:29:57.248 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:29:57.272 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:29:57.285 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:32:21.602 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:32:21.695 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:32:21.715 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:32:21.721 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:32:25.340 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:32:25.387 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:32:25.429 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:32:25.460 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:32:25.528 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:32:27.591 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:32:27.609 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:32:27.630 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:32:27.637 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:32:29.368 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:32:29.410 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:32:29.443 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:32:29.466 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:32:29.531 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:32:36.683 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 08:32:36.691 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 08:32:36.721 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 08:32:36.849 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 08:32:36.879 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:32:38.311 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:32:38.355 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:32:38.393 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:32:38.415 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:32:38.474 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:32:44.858 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:32:44.868 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:32:44.883 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:32:44.887 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:32:53.836 [http-nio-8080-exec-3] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:32:54.855 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 08:32:54.856 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 08:32:54.878 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 08:32:54.981 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 08:32:55.001 [http-nio-8080-exec-8] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:34:47.968 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:34:47.996 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:34:48.014 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:34:48.020 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:34:54.220 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:34:54.267 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:34:54.296 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:34:54.320 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:34:54.373 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:34:55.640 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:34:55.658 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:34:55.685 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:34:55.690 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:34:57.775 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:34:57.818 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:34:57.849 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:34:57.875 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:34:57.931 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:34:59.525 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:34:59.537 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:34:59.554 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:34:59.557 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:36:55.616 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:36:55.661 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:36:55.699 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:36:55.727 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:36:55.807 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:36:57.824 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:36:57.837 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:36:57.854 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:36:57.859 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:38:44.120 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:38:44.161 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:38:44.197 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:38:44.227 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:38:44.289 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:38:45.279 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:38:45.300 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:38:45.314 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:38:45.319 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:38:47.339 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:38:47.374 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:38:47.403 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:38:47.429 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:38:47.483 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:38:48.690 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:38:48.697 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:38:48.722 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:38:48.729 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:38:50.145 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:38:50.188 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:38:50.220 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:38:50.245 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:38:50.300 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:38:53.269 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:38:53.285 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:38:53.314 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:38:53.318 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:38:55.559 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:38:55.595 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:38:55.621 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:38:55.648 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:38:55.700 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:38:57.208 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:38:57.220 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:38:57.251 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:38:57.255 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:39:14.174 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:39:14.319 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:39:14.346 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:39:14.351 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:39:42.311 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:39:42.324 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:39:42.341 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:39:42.345 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:39:54.453 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:39:54.477 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:39:54.509 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:39:54.513 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:40:10.045 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:40:10.058 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:40:10.081 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:40:10.089 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:40:31.317 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:40:31.326 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:40:31.351 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:40:31.355 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:40:49.772 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:40:49.805 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:40:49.835 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:40:49.858 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:40:49.909 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:40:51.437 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:40:51.448 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:40:51.463 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:40:51.467 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:40:52.799 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:40:52.829 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:40:52.859 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:40:52.889 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:40:52.941 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:40:57.857 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:40:57.867 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:40:57.881 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:40:57.885 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:41:35.256 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:41:35.265 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:41:35.281 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:41:35.285 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:41:38.687 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:41:38.723 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:41:38.753 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:41:38.779 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:41:38.835 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:41:42.489 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:41:42.497 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:41:42.514 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:41:42.517 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:08.146 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:42:08.161 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:42:08.178 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:42:08.183 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:21.440 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:42:21.449 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:42:21.468 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:42:21.473 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:27.874 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:42:27.883 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:42:27.899 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:42:27.903 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:44.805 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:42:44.812 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:42:44.834 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:42:44.841 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:55.819 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:42:55.828 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:42:55.848 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:42:55.853 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:42:59.264 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:42:59.299 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:42:59.328 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:42:59.345 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:42:59.398 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:43:02.492 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:43:02.499 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:43:02.515 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:43:02.519 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:44:01.866 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:44:01.873 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:44:01.893 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:44:01.897 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:44:13.369 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:44:13.378 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:44:13.403 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:44:13.407 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:44:23.883 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:44:23.897 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:44:23.915 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:44:23.920 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:44:37.274 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:44:37.283 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:44:37.303 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:44:37.306 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:44:50.120 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:44:50.131 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:44:50.162 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:44:50.166 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:45:01.255 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:45:01.324 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:45:01.362 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:45:01.390 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:45:01.461 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:47:19.241 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:47:19.457 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:47:19.499 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:47:19.525 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:47:19.600 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:47:23.457 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:47:23.465 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:47:23.488 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:47:23.494 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:47:28.696 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:47:28.753 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:47:28.785 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:47:28.807 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:47:28.872 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:47:34.465 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:47:34.474 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:47:34.506 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:47:34.513 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:47:44.130 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:47:44.172 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:47:44.203 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:47:44.226 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:47:44.296 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:47:45.697 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:47:45.707 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:47:45.735 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:47:45.738 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:47:58.725 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:47:58.737 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:48:01.772 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:48:01.776 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:48:05.835 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:48:05.838 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:48:06.962 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:48:06.966 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:48:28.991 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:48:28.995 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:50:13.117 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:50:13.141 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:50:13.176 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:50:13.184 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:50:15.849 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 1
+2025-04-11 08:50:15.871 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 1
+2025-04-11 08:50:15.921 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 1
+2025-04-11 08:50:15.968 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 1
+2025-04-11 08:50:16.006 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 08:50:16.014 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 1
+2025-04-11 08:50:16.015 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 1
+2025-04-11 08:50:16.026 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 08:50:16.030 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 1
+2025-04-11 08:50:16.051 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 1
+2025-04-11 08:50:16.066 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 1
+2025-04-11 08:50:16.130 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 1
+2025-04-11 08:50:16.139 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 1
+2025-04-11 08:50:16.192 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 1
+2025-04-11 08:51:25.201 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 08:51:25.244 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 08:51:25.278 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 08:51:25.300 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 08:51:25.354 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 08:51:28.011 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-11 08:51:28.012 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-11 08:51:28.027 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-11 08:51:28.036 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-11 08:51:28.049 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-11 08:51:28.053 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 3
+2025-04-11 08:51:28.055 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-11 08:51:28.064 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 08:51:28.068 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-11 08:51:28.078 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-11 08:51:28.085 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 08:51:28.093 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-11 08:51:28.118 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-11 08:51:28.129 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-11 08:51:50.142 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:51:50.147 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:51:50.158 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:51:50.161 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:54:30.825 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:54:30.831 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:54:30.850 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:54:30.852 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:54:53.256 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:54:53.258 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:54:53.709 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:54:53.712 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:01.952 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:01.955 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:04.026 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:04.029 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:05.959 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:05.963 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:24.711 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:24.714 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:27.596 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:27.600 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:29.721 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:29.724 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:30.217 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:30.220 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:31.295 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:31.297 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:40.990 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:40.993 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:41.911 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:41.914 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:43.443 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:43.446 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:43.752 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:43.755 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:45.904 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:45.908 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:46.247 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:46.251 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:47.266 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:47.269 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:47.687 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:47.690 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:48.248 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:48.251 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:50.829 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:50.833 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:52.275 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:52.280 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:55:58.503 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:55:58.506 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:56:01.559 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:56:01.562 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:56:02.521 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:56:02.524 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:56:04.564 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:56:04.567 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:56:39.910 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 08:56:40.186 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 08:56:53.785 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 08:56:53.793 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 08:56:53.883 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 08:56:53.887 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 08:56:56.852 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 08:56:56.852 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 08:56:56.867 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 08:56:56.956 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 08:56:56.983 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 08:56:58.475 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 09:04:55.146 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:04:55.161 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:04:55.174 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:04:55.178 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:09:15.832 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:09:15.972 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:09:15.987 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:09:15.992 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:09:53.061 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:09:53.072 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:09:53.111 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:09:53.115 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:11:14.674 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:11:14.682 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:11:14.702 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:11:14.706 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:15:30.371 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:15:30.380 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:15:30.401 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:15:30.405 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:16:56.984 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:56.996 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.006 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.012 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.025 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.120 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.156 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.239 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.250 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:16:57.327 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:18:01.137 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:18:01.160 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:18:01.172 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:18:01.174 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:18:28.072 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:18:28.081 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:18:28.096 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:18:28.100 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:18:59.895 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:18:59.954 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:18:59.969 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:18:59.976 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:19:35.576 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:19:35.589 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:19:35.607 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:19:35.610 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:22:06.336 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:22:06.344 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:22:06.367 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:22:06.369 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:22:25.422 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:22:25.424 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:22:25.434 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:22:25.519 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:22:33.798 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:33.989 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:33.994 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:34.095 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:34.101 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:34.115 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya2@gmail.com
+2025-04-11 09:22:34.194 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:25:10.172 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 09:25:10.189 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 09:25:10.202 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:25:10.207 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 09:25:10.218 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-11 09:25:21.452 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 09:25:21.543 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11160 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 09:25:21.544 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 09:25:22.174 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 09:25:23.201 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 09:25:23.380 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 159 ms. Found 11 JPA repository interfaces.
+2025-04-11 09:25:24.178 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 09:25:24.210 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:25:24.222 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 09:25:24.222 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 09:25:24.318 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 09:25:24.319 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2706 ms
+2025-04-11 09:25:24.583 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 09:25:24.653 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 09:25:24.691 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 09:25:25.038 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 09:25:25.070 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 09:25:25.412 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a99fa07
+2025-04-11 09:25:25.414 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 09:25:25.537 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 09:25:25.540 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 09:25:25.580 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 09:25:27.317 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 09:25:27.623 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:25:27.988 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 09:25:30.352 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 09:25:38.194 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:25:38.211 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 09:25:38.220 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 17.556 seconds (process running for 19.081)
+2025-04-11 09:25:52.806 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 09:25:52.807 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 09:25:52.808 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 09:25:52.953 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.327 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.349 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.502 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.502 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.594 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:25:53.742 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:02.523 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:26:02.632 [http-nio-8080-exec-8] ERROR l.i.b.controller.AuthController - User is suspended for email: dilsarathiranjaya2@gmail.com
+2025-04-11 09:26:11.158 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.248 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.255 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.368 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.384 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.414 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:11.505 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:26:14.456 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 09:26:14.528 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 09:26:14.575 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 09:26:14.614 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 09:26:14.755 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 09:26:16.283 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:26:16.296 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:26:16.313 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:26:16.320 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:26:29.911 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:26:29.957 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:26:35.484 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:26:35.493 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:26:35.516 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:26:35.521 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:26:51.738 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:26:51.748 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:27:37.339 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:27:37.350 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:27:37.375 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:27:37.386 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:30:51.879 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:30:51.890 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:31:05.107 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:31:05.125 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:31:05.246 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:31:05.252 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:33:20.709 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:33:20.727 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:33:20.840 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:33:20.848 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:33:24.128 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:33:24.141 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:33:24.159 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:33:24.190 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:33:56.800 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:33:56.812 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:33:56.883 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:33:56.893 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:34:00.003 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:00.015 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:00.033 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:00.052 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:02.631 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:02.641 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:02.655 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:02.665 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:21.415 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:21.428 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:21.450 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:34:21.455 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:34:23.576 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:23.585 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:23.599 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:23.610 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:24.848 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:24.858 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:24.869 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:24.879 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:27.127 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:27.134 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:27.147 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:27.158 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:28.402 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:28.410 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:28.421 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:28.431 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:30.092 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user status update request for user: 3
+2025-04-11 09:34:30.099 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 3
+2025-04-11 09:34:30.113 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:34:30.124 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:34:39.874 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:39.882 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:39.890 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:39.893 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:39.898 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:39.990 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:40.000 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:40.086 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:40.100 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:34:40.188 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:35:30.876 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:35:30.891 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:35:30.907 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:35:30.913 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:35:33.421 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 2
+2025-04-11 09:35:33.421 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 2
+2025-04-11 09:35:33.423 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 09:35:33.423 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:33.436 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 2
+2025-04-11 09:35:33.443 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 09:35:33.453 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 2
+2025-04-11 09:35:33.470 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:35:33.485 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:33.486 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:35:33.497 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:33.540 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:33.552 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:33.586 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:36.420 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 2
+2025-04-11 09:35:36.428 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:36.444 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 2
+2025-04-11 09:35:36.456 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 2
+2025-04-11 09:35:36.465 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 09:35:36.466 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 2
+2025-04-11 09:35:36.474 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:35:36.475 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 09:35:36.488 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:36.500 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:35:36.507 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:36.551 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:36.559 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 09:35:36.587 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 09:35:53.334 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 09:35:53.375 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 09:35:53.409 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 09:35:53.432 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 09:35:53.490 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 09:36:01.466 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:36:01.477 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:36:01.505 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:36:01.508 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:39:48.553 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 09:39:48.567 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 09:39:48.572 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:39:48.575 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 09:39:48.581 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-11 09:39:57.117 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 09:39:57.181 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 13364 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 09:39:57.182 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 09:39:57.570 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 09:39:58.428 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 09:39:58.589 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 148 ms. Found 11 JPA repository interfaces.
+2025-04-11 09:39:59.333 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 09:39:59.344 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:39:59.346 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 09:39:59.346 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 09:39:59.432 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 09:39:59.433 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2203 ms
+2025-04-11 09:39:59.628 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 09:39:59.680 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 09:39:59.714 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 09:39:59.983 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 09:40:00.014 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 09:40:00.385 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7598d675
+2025-04-11 09:40:00.387 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 09:40:00.429 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 09:40:00.430 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 09:40:00.446 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 09:40:02.084 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 09:40:02.419 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:40:02.814 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 09:40:05.235 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 09:40:16.535 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:40:16.553 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 09:40:16.564 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 20.018 seconds (process running for 20.898)
+2025-04-11 09:40:21.493 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 09:40:21.494 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 09:40:21.495 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 09:40:21.641 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.039 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.063 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.248 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.248 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.330 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:22.503 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 09:40:26.464 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 09:40:26.530 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 09:40:26.575 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 09:40:26.614 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 09:40:26.735 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 09:40:28.711 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 09:40:28.723 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 09:40:28.748 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 09:40:28.753 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 09:40:43.269 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 09:40:43.270 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 09:40:43.292 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 09:40:43.434 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 09:40:43.494 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 09:58:25.160 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 09:58:25.173 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 09:58:25.180 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:58:25.183 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 09:58:25.190 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-11 09:58:33.295 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 09:58:33.358 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12204 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 09:58:33.359 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 09:58:33.768 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 09:58:34.541 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 09:58:34.640 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 91 ms. Found 11 JPA repository interfaces.
+2025-04-11 09:58:35.423 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 09:58:35.436 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:58:35.437 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 09:58:35.438 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 09:58:35.531 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 09:58:35.531 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2125 ms
+2025-04-11 09:58:35.800 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 09:58:35.865 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 09:58:35.911 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 09:58:36.222 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 09:58:36.252 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 09:58:36.585 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2c5708e7
+2025-04-11 09:58:36.586 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 09:58:36.637 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 09:58:36.638 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 09:58:36.661 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 09:58:38.762 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 09:58:39.091 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 09:58:39.546 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 09:58:42.906 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 09:58:52.317 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 09:58:52.350 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 09:58:52.373 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 19.677 seconds (process running for 20.525)
+2025-04-11 10:00:51.134 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 10:00:51.137 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 10:00:51.141 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-11 10:00:51.508 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:00:51.547 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:01:05.937 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:01:05.951 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:08:19.761 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:08:19.778 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:08:28.096 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:08:28.109 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:09:34.791 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:09:34.818 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:12:46.804 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:12:46.824 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:13:16.609 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:13:16.626 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:13:40.167 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:13:40.411 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:16:56.050 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:16:56.067 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:16:56.132 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:16:56.572 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:22:12.035 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:22:12.074 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:22:33.567 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:22:33.585 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:22:33.624 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:22:33.798 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:24:06.305 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:24:06.326 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:24:06.365 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:24:06.534 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:24:30.645 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:24:30.657 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:24:30.704 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:24:30.854 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:24:41.701 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:24:41.722 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:24:41.761 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:24:41.908 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:25:26.098 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:25:26.158 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:25:26.185 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:25:26.330 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:26:51.032 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:26:51.076 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:26:51.099 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:26:51.245 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:27:27.438 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:27:27.454 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:27:27.515 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:27:27.661 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:28:29.638 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:28:29.653 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:28:29.685 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:28:29.821 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:31:53.703 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:31:53.719 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-11 10:31:53.743 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:31:53.837 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:31:57.865 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:31:57.871 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:31:57.948 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:31:58.030 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:32:16.556 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Updating post status for post ID: 17
+2025-04-11 10:32:16.626 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Post status updated for post ID: 17
+2025-04-11 10:32:16.654 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:32:16.670 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=1, activePosts=11}
+2025-04-11 10:32:21.687 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:32:21.700 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=1, activePosts=11}
+2025-04-11 10:32:21.729 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:32:21.813 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:33:47.198 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:33:47.214 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=1, activePosts=11}
+2025-04-11 10:33:47.255 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:33:47.388 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:33:51.426 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Updating post status for post ID: 16
+2025-04-11 10:33:51.435 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Post status updated for post ID: 16
+2025-04-11 10:33:51.448 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:33:51.466 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=2, activePosts=10}
+2025-04-11 10:35:23.849 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:35:23.865 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=2, activePosts=10}
+2025-04-11 10:35:23.900 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:35:24.035 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-11 10:35:29.741 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Updating post status for post ID: 15
+2025-04-11 10:35:29.751 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Post status updated for post ID: 15
+2025-04-11 10:35:29.771 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:35:29.810 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=3, activePosts=9}
+2025-04-11 10:35:43.989 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Deleting post with ID: 17
+2025-04-11 10:35:43.995 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234391/users/2/cover/users/2/cover/1743234391376.jpg
+2025-04-11 10:35:43.995 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234391/users/2/cover/users/2/cover/1743234391376.jpg
+2025-04-11 10:35:43.996 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/cover/users/2/cover/1743234391376
+2025-04-11 10:35:46.317 [http-nio-8080-exec-8] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/cover/users/2/cover/1743234391376
+2025-04-11 10:35:46.388 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Post deleted with ID: 17
+2025-04-11 10:35:46.401 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:35:46.462 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:35:46.480 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:35:46.511 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=2, activePosts=9}
+2025-04-11 10:35:56.934 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:35:56.942 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:35:56.957 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:35:57.010 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:05.982 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:06.014 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:08.400 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 2
+2025-04-11 10:36:08.420 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 2
+2025-04-11 10:36:08.422 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 2
+2025-04-11 10:36:08.431 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 2
+2025-04-11 10:36:08.433 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:08.441 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 10:36:08.459 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 10:36:08.470 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:08.472 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:36:08.529 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:36:08.548 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:36:08.567 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:36:08.579 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:36:08.599 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:36:23.005 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.209 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.214 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.311 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.317 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.335 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:23.382 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.417 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.422 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.429 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.435 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.436 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.463 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.483 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.503 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.514 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:28.529 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-04-11 10:36:35.320 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.415 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.421 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.493 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.502 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.517 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:35.581 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:36:38.560 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:36:38.637 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:36:38.669 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:36:38.696 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:36:38.778 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:36:40.096 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:36:40.106 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=2, activePosts=9}
+2025-04-11 10:36:40.131 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:36:40.207 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:36:43.045 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Updating post status for post ID: 15
+2025-04-11 10:36:43.053 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Post status updated for post ID: 15
+2025-04-11 10:36:43.063 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:36:43.075 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=1, activePosts=10}
+2025-04-11 10:36:44.333 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Updating post status for post ID: 16
+2025-04-11 10:36:44.341 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Post status updated for post ID: 16
+2025-04-11 10:36:44.352 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:36:44.363 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-11 10:37:02.682 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:02.684 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:02.695 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:02.774 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:20.289 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:20.305 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:21.958 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 2
+2025-04-11 10:37:21.982 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 2
+2025-04-11 10:37:21.991 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:37:22.027 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 10:37:22.040 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 2
+2025-04-11 10:37:22.040 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:37:22.047 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:22.054 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 2
+2025-04-11 10:37:22.061 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: 2
+2025-04-11 10:37:22.071 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-11 10:37:22.085 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:37:22.110 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:37:22.127 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 2
+2025-04-11 10:37:22.160 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 2
+2025-04-11 10:37:44.768 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:37:44.819 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:37:44.850 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:37:44.870 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:37:44.920 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:37:47.035 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:37:47.048 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:37:47.072 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:37:47.076 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:37:49.563 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:37:49.597 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:37:49.624 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:37:49.651 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:37:49.697 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:37:50.947 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:37:50.956 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:37:50.980 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:37:50.984 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:37:52.486 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:37:52.525 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:37:52.555 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:37:52.574 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:37:52.621 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:37:54.525 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:37:54.536 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:37:54.567 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:37:54.571 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:37:55.666 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:37:55.701 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:37:55.731 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:37:55.750 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:37:55.790 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:37:57.297 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:37:57.306 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:37:57.329 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:37:57.334 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:37:58.982 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-11 10:37:59.024 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-11 10:37:59.063 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-11 10:37:59.084 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-11 10:37:59.132 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-11 10:38:00.297 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:38:00.306 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:38:00.338 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:38:00.342 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:38:02.070 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:38:02.080 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-11 10:38:02.117 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:38:02.273 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:38:05.356 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:38:05.365 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:38:05.380 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:38:05.383 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:38:06.573 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:38:06.586 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-11 10:38:06.615 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:38:06.694 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:38:09.045 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-11 10:38:09.052 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-11 10:38:09.071 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-11 10:38:09.075 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-11 10:38:10.181 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:38:10.189 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-11 10:38:10.218 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:38:10.301 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:38:49.412 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-11 10:38:49.420 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-11 10:38:49.458 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:38:49.582 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:39:11.546 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: Di
+2025-04-11 10:39:11.550 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 0 posts
+2025-04-11 10:39:15.243 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:39:15.301 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:39:16.231 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: U
+2025-04-11 10:39:16.281 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 9 posts
+2025-04-11 10:39:16.671 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: Up
+2025-04-11 10:39:16.718 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 8 posts
+2025-04-11 10:39:28.266 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:39:28.326 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:39:29.428 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: Dil
+2025-04-11 10:39:29.430 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 0 posts
+2025-04-11 10:39:32.043 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-11 10:39:32.101 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-11 10:40:32.307 [http-nio-8080-exec-1] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-11 10:46:15.650 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 10:46:15.669 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 10:46:15.669 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 10:46:15.669 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 10:46:15.685 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-11 10:46:51.226 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-11 10:46:51.294 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 14572 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-11 10:46:51.294 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-11 10:46:51.753 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-11 10:46:52.371 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-11 10:46:52.461 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 81 ms. Found 11 JPA repository interfaces.
+2025-04-11 10:46:53.015 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-11 10:46:53.030 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-11 10:46:53.030 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-11 10:46:53.030 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-11 10:46:53.108 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-11 10:46:53.108 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1748 ms
+2025-04-11 10:46:53.234 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-11 10:46:53.312 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-11 10:46:53.359 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-11 10:46:53.626 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-11 10:46:53.657 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-11 10:46:53.987 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@24068086
+2025-04-11 10:46:53.987 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-11 10:46:54.018 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-11 10:46:54.018 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-11 10:46:54.049 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-11 10:46:55.715 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-11 10:46:56.012 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 10:46:56.360 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-11 10:46:58.400 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-11 10:47:08.618 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-11 10:47:08.642 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-11 10:47:08.659 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 18.038 seconds (process running for 18.909)
+2025-04-11 10:47:17.979 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-11 10:47:17.979 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-11 10:47:17.981 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-11 10:47:18.390 [http-nio-8080-exec-3] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-11 10:47:30.474 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-11 10:47:30.489 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-11 10:47:30.489 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-11 10:47:30.489 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-11 10:47:30.506 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

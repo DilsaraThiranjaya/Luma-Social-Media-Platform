@@ -45,6 +45,23 @@ public class PostController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/analytics")
+    public ResponseEntity<ResponseDTO> getPostAnalytics() {
+        log.info("Fetching post analytics");
+        try {
+            Map<String, Object> analytics = postService.getPostAnalytics();
+
+            log.info("Fetched post analytics: {}", analytics);
+            return ResponseEntity.ok()
+                    .body(new ResponseDTO(VarList.OK, "Post Analytics Retrieved Successfully!", analytics));
+        } catch (Exception e) {
+            log.error("Error fetching post analytics: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{postId}/status")
     public ResponseEntity<ResponseDTO> updatePostStatus(
             @PathVariable int postId,

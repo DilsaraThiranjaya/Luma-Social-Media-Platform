@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +30,11 @@ public class ReportController {
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String search
     ) {
+        log.info("Fetching reports with status: {}, search: {}", status, search);
         try {
             List<ReportDTO> reports = reportService.getAllReports(status, search);
+
+            log.info("Fetched {} reports", reports.size());
             return ResponseEntity.ok()
                     .body(new ResponseDTO(VarList.OK, "Reports Retrieved Successfully!", reports));
         } catch (Exception e) {
@@ -44,10 +48,16 @@ public class ReportController {
     @PutMapping("/{reportId}/status")
     public ResponseEntity<ResponseDTO> updateReportStatus(
             @PathVariable int reportId,
-            @RequestParam String status
+            @RequestParam String status,
+            Authentication authentication
     ) {
+        log.info("Updating report status for report ID: {}", reportId);
         try {
-            reportService.updateReportStatus(reportId, status);
+            String email = authentication.getName();
+
+            reportService.updateReportStatus(reportId, status, email);
+
+            log.info("Report status updated for report ID: {}", reportId);
             return ResponseEntity.ok()
                     .body(new ResponseDTO(VarList.OK, "Report Status Updated Successfully!", null));
         } catch (Exception e) {
@@ -60,8 +70,11 @@ public class ReportController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/stats")
     public ResponseEntity<ResponseDTO> getReportStats() {
+        log.info("Fetching report stats");
         try {
             Map<String, Object> stats = reportService.getReportStats();
+
+            log.info("Fetched report stats: {}", stats);
             return ResponseEntity.ok()
                     .body(new ResponseDTO(VarList.OK, "Report Stats Retrieved Successfully!", stats));
         } catch (Exception e) {
@@ -74,8 +87,11 @@ public class ReportController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{reportId}")
     public ResponseEntity<ResponseDTO> getReportById(@PathVariable int reportId) {
+        log.info("Fetching report with ID: {}", reportId);
         try {
             ReportDTO report = reportService.getReportById(reportId);
+
+            log.info("Fetched report with ID: {}", reportId);
             return ResponseEntity.ok()
                     .body(new ResponseDTO(VarList.OK, "Report Retrieved Successfully!", report));
         } catch (Exception e) {
@@ -91,8 +107,11 @@ public class ReportController {
             @PathVariable int reportId,
             @RequestBody String notes
     ) {
+        log.info("Updating resolution notes for report ID: {}", reportId);
         try {
             reportService.updateResolutionNotes(reportId, notes);
+
+            log.info("Resolution notes updated for report ID: {}", reportId);
             return ResponseEntity.ok()
                     .body(new ResponseDTO(VarList.OK, "Resolution Notes Updated Successfully!", null));
         } catch (Exception e) {
