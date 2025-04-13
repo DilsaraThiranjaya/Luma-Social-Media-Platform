@@ -202,6 +202,65 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     }
 
     @Override
+    public String uploadChatMedia(MultipartFile file, String mediaType, Integer userId) throws IOException {
+        log.info("Uploading {} for user {} in chat {}", mediaType, userId);
+
+        // Validation
+        if (file.isEmpty()) throw new IllegalArgumentException("File cannot be empty");
+
+        String contentType = file.getContentType();
+        Map<String, List<String>> allowedTypes = Map.of(
+                "IMAGE", List.of("image/jpeg", "image/png", "image/webp", "image/gif"),
+                "VIDEO", List.of("video/mp4", "video/quicktime"),
+                "AUDIO", List.of("audio/mpeg", "audio/mp4", "audio/wav")
+        );
+
+        if (!allowedTypes.containsKey(mediaType) || !allowedTypes.get(mediaType).contains(contentType)) {
+            throw new IllegalArgumentException("Invalid file type for " + mediaType);
+        }
+
+        // Size validation
+        Map<String, Long> sizeLimit = Map.of(
+                "IMAGE", 10_485_760L, // 10MB
+                "VIDEO", 52_428_800L, // 50MB
+                "AUDIO", 20_971_520L  // 20MB
+        );
+
+        if (file.getSize() > sizeLimit.get(mediaType)) {
+            throw new IllegalArgumentException(mediaType + " size exceeds " + (sizeLimit.get(mediaType) / 1_048_576) + "MB limit");
+        }
+
+        // Cloudinary configuration
+        String folder = String.format("chats/%s/%s", userId, mediaType.toLowerCase());
+        String publicId = String.format("%s/user_%d_%d", folder, userId, System.currentTimeMillis());
+
+        Map<String, Object> uploadOptions = new HashMap<>();
+        uploadOptions.put("public_id", publicId);
+        uploadOptions.put("folder", folder);
+
+        if (mediaType.equals("IMAGE")) {
+            uploadOptions.put("resource_type", "image");
+            uploadOptions.put("quality", "auto:good");
+            uploadOptions.put("width", 800);
+            uploadOptions.put("height", 600);
+            uploadOptions.put("crop", "limit");
+        } else if (mediaType.equals("VIDEO")) {
+            uploadOptions.put("resource_type", "video");
+            uploadOptions.put("format", "mp4");
+            uploadOptions.put("quality", "auto:low");
+            uploadOptions.put("chunk_size", 25_000_000);
+        } else if (mediaType.equals("AUDIO")) {
+            uploadOptions.put("resource_type", "auto");
+            uploadOptions.put("format", "mp3");
+        }
+
+        Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadOptions);
+
+        log.info("Chat media upload result: {}", uploadResult);
+        return (String) uploadResult.get("secure_url");
+    }
+
+    @Override
     public void deleteMedia(String publicUrl) {
         log.info("Deleting media from Cloudinary: {}", publicUrl);
 

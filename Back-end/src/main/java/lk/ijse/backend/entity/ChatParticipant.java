@@ -1,13 +1,11 @@
 package lk.ijse.backend.entity;
 
 import jakarta.persistence.*;
+import lk.ijse.backend.entity.Embeded.ChatParticipantId;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -32,13 +30,5 @@ public class ChatParticipant {
 
     @CreationTimestamp
     private LocalDateTime joinedAt;
-
-    @Embeddable
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ChatParticipantId implements Serializable {
-        private int chatId;
-        private int userId;
-    }
 }
+

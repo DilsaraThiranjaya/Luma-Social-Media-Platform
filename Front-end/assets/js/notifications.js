@@ -484,35 +484,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         badge.style.display = unreadCount > 0 ? 'block' : 'none';
       }
     }
-
-    // function showToast(message, type = 'success') {
-    //   const toast = document.createElement('div');
-    //   toast.className = 'toast position-fixed bottom-0 end-0 m-3';
-    //   toast.setAttribute('role', 'alert');
-    //   toast.setAttribute('aria-live', 'assertive');
-    //   toast.setAttribute('aria-atomic', 'true');
-    //
-    //   toast.innerHTML = `
-    //         <div class="toast-header ${type === 'error' ? 'bg-danger text-white' : ''}">
-    //             <i class="bi bi-bell-fill me-2"></i>
-    //             <strong class="me-auto">Notification</strong>
-    //             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-    //         </div>
-    //         <div class="toast-body">
-    //             ${message}
-    //         </div>
-    //     `;
-    //
-    //   document.body.appendChild(toast);
-    //   const bsToast = new bootstrap.Toast(toast, {
-    //     autohide: true,
-    //     delay: 3000
-    //   });
-    //   bsToast.show();
-    //
-    //   toast.addEventListener('hidden.bs.toast', () => {
-    //     toast.remove();
-    //   });
-    // }
   }
 });

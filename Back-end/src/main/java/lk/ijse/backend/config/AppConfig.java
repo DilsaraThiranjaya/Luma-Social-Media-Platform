@@ -12,6 +12,7 @@ import lk.ijse.backend.util.EmailSender;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Configuration
 public class AppConfig {

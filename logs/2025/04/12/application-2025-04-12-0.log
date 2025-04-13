@@ -1,0 +1,1117 @@
+2025-04-12 06:33:54.093 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 06:33:54.262 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 14004 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 06:33:54.264 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 06:33:55.259 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 06:33:57.781 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 06:33:58.173 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 374 ms. Found 11 JPA repository interfaces.
+2025-04-12 06:34:00.345 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 06:34:00.379 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:34:00.382 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 06:34:00.382 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 06:34:00.547 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 06:34:00.548 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 6154 ms
+2025-04-12 06:34:00.889 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 06:34:01.007 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 06:34:01.080 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 06:34:01.755 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 06:34:01.823 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 06:34:03.056 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7438c3d5
+2025-04-12 06:34:03.059 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 06:34:03.185 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 06:34:03.187 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 06:34:03.260 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 06:34:06.204 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 06:34:06.814 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 06:34:07.539 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 06:34:12.329 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 06:34:24.796 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:34:24.819 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 06:34:24.833 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 31.785 seconds (process running for 33.908)
+2025-04-12 06:42:09.790 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 06:42:09.812 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 06:42:09.822 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 06:42:09.826 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 06:42:09.840 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 06:42:20.395 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 06:42:20.492 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 5156 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 06:42:20.501 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 06:42:21.240 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 06:42:22.256 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 06:42:22.448 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 176 ms. Found 11 JPA repository interfaces.
+2025-04-12 06:42:23.301 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 06:42:23.314 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:42:23.316 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 06:42:23.316 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 06:42:23.405 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 06:42:23.406 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2822 ms
+2025-04-12 06:42:23.610 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 06:42:23.692 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 06:42:23.737 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 06:42:24.071 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 06:42:24.107 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 06:42:24.483 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46de118b
+2025-04-12 06:42:24.485 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 06:42:24.535 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 06:42:24.537 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 06:42:24.565 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 06:42:26.294 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 06:42:26.573 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 06:42:26.943 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 06:42:29.446 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 06:42:44.626 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:42:44.672 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 06:42:44.692 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 25.187 seconds (process running for 26.333)
+2025-04-12 06:47:03.233 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 06:47:03.233 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 06:47:03.236 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-12 06:47:03.467 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.031 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.061 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.620 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.622 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.760 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:04.948 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.276 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.297 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.299 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.304 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.317 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.402 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.419 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.521 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.537 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:08.619 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:47:11.787 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-12 06:47:11.878 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-12 06:47:11.953 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-12 06:47:11.996 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-12 06:47:12.167 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-12 06:47:16.850 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 06:47:16.864 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 06:47:16.883 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 06:47:16.888 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 06:47:19.610 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:47:19.639 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-12 06:47:19.673 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:47:19.849 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-12 06:48:08.568 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 06:48:08.610 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 06:48:08.631 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 06:48:08.638 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 06:48:10.316 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:48:10.329 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-12 06:48:10.361 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:48:10.454 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-12 06:49:21.366 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 06:49:21.388 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 06:49:21.398 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 06:49:21.403 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 06:49:21.660 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 06:49:29.050 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 06:49:29.120 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 800 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 06:49:29.120 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 06:49:29.707 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 06:49:30.494 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 06:49:30.605 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 103 ms. Found 11 JPA repository interfaces.
+2025-04-12 06:49:31.201 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 06:49:31.212 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:49:31.214 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 06:49:31.214 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 06:49:31.301 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 06:49:31.302 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2128 ms
+2025-04-12 06:49:31.484 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 06:49:31.553 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 06:49:31.596 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 06:49:31.911 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 06:49:31.944 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 06:49:32.340 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b8a0d03
+2025-04-12 06:49:32.343 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 06:49:32.390 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 06:49:32.391 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 06:49:32.410 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 06:49:33.992 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 06:49:34.274 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 06:49:34.669 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 06:49:36.952 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 06:49:45.404 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 06:49:45.420 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 06:49:45.430 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 17.114 seconds (process running for 18.434)
+2025-04-12 06:50:00.035 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 06:50:00.035 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 06:50:00.036 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-12 06:50:00.331 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:50:00.331 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:50:00.432 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:50:00.590 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:11.721 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to upload media for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:11.730 [http-nio-8080-exec-9] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading VIDEO for user 1
+2025-04-12 06:51:11.738 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to upload media for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:11.746 [http-nio-8080-exec-10] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Uploading VIDEO for user 1
+2025-04-12 06:51:26.916 [http-nio-8080-exec-9] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/1/video, signature=67da3c3d8bdf9a184cdbe1bb0892fc43f0bd946e, created_at=2025-04-12T01:21:20Z, asset_id=025039e5b26e4f666b1730140edf6e93, video={codec=h264, bit_rate=616515, dar=16:9, time_base=1/24000, level=31, pix_format=yuv420p, profile=High}, type=upload, public_id=posts/1/video/posts/1/video/1744420871730, duration=5.797458, bit_rate=619609, pages=0, original_filename=file, placeholder=false, playback_url=https://res.cloudinary.com/dmbxwetlk/video/upload/sp_auto/v1744420880/posts/1/video/posts/1/video/1744420871730.m3u8, audio={}, nb_frames=139, height=720, rotation=0, format=mp4, resource_type=video, secure_url=https://res.cloudinary.com/dmbxwetlk/video/upload/v1744420880/posts/1/video/posts/1/video/1744420871730.mp4, version_id=d8d7ca8b554f16380b8f5e57f4c81a4c, display_name=1744420871730, version=1744420880, frame_rate=23.976023976023978, url=http://res.cloudinary.com/dmbxwetlk/video/upload/v1744420880/posts/1/video/posts/1/video/1744420871730.mp4, tags=[], api_key=498997394873736, bytes=449020, width=1280, etag=18c0427fa1db3518931598e25edc2241}
+2025-04-12 06:51:26.918 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully uploaded media for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:34.250 [http-nio-8080-exec-10] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Upload result: {asset_folder=posts/1/video, signature=3e74e42863eddb192781cc3daf38d199134f8b80, created_at=2025-04-12T01:21:26Z, asset_id=110432f976a3cc8ded3dedf4096a2aab, video={codec=h264, bit_rate=1217464, dar=16:9, time_base=1/12288, level=31, pix_format=yuv420p, profile=High}, type=upload, public_id=posts/1/video/posts/1/video/1744420871747, duration=12.5, bit_rate=1219847, pages=0, original_filename=file, placeholder=false, playback_url=https://res.cloudinary.com/dmbxwetlk/video/upload/sp_auto/v1744420886/posts/1/video/posts/1/video/1744420871747.m3u8, audio={}, nb_frames=300, height=720, rotation=0, format=mp4, resource_type=video, secure_url=https://res.cloudinary.com/dmbxwetlk/video/upload/v1744420886/posts/1/video/posts/1/video/1744420871747.mp4, version_id=0d69407efae7cbaa2e39755ae7ab02ab, display_name=1744420871747, version=1744420886, frame_rate=24.0, url=http://res.cloudinary.com/dmbxwetlk/video/upload/v1744420886/posts/1/video/posts/1/video/1744420871747.mp4, tags=[], api_key=498997394873736, bytes=1906011, width=1280, etag=2a0ee70fbbefb8073adaae50042afa90}
+2025-04-12 06:51:34.251 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully uploaded media for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:34.419 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to create post for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:34.880 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully created post for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:34.898 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:34.997 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:43.564 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 18
+2025-04-12 06:51:44.028 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 18
+2025-04-12 06:51:48.279 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.302 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.306 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.386 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.415 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.472 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.487 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.614 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.630 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:51:48.720 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:53:32.000 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:53:32.097 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 06:53:36.178 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-12 06:53:36.256 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-12 06:53:36.301 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-12 06:53:36.346 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-12 06:53:36.470 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-12 06:53:39.702 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:53:39.720 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 06:53:39.750 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:53:39.852 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 06:53:39.874 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 06:53:39.902 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 06:54:21.638 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:54:21.668 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 06:54:21.736 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:54:21.895 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 06:54:22.033 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 06:54:22.060 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 06:54:39.356 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:54:39.397 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 06:54:39.440 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:54:39.593 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 06:54:39.628 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 06:54:39.659 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 06:59:02.720 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:59:02.784 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 06:59:02.853 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:59:02.980 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 06:59:03.009 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 06:59:03.037 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 06:59:14.220 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 06:59:14.237 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 06:59:14.270 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 06:59:14.409 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 06:59:14.441 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 06:59:14.466 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:01:33.380 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:01:33.410 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:01:33.449 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:01:33.588 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:01:33.623 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:01:33.646 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:01:49.712 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:01:49.724 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:01:49.748 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:01:49.836 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:01:49.859 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:01:49.881 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:02:25.911 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:02:25.923 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:02:25.949 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:02:26.038 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:02:26.061 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:02:26.084 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:03:29.015 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:03:29.055 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:03:29.095 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:03:29.213 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:03:29.254 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:03:29.283 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:05:12.690 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-12 07:05:12.802 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-12 07:05:12.847 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-12 07:05:12.891 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-12 07:05:12.994 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-12 07:05:18.298 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 07:05:18.311 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 07:05:18.327 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 07:05:18.332 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 07:05:21.854 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:05:21.870 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:05:21.903 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:05:21.980 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:05:22.005 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:05:22.032 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:32:54.740 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:32:54.795 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:32:54.873 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:32:55.062 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:32:55.107 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:32:55.134 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:33:02.133 [http-nio-8080-exec-7] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-04-12 07:33:04.865 [http-nio-8080-exec-9] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Request method 'GET' is not supported
+2025-04-12 07:33:37.353 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:33:37.514 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:33:37.571 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:33:37.747 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:33:37.782 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:33:37.804 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:33:40.225 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:33:40.270 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:36:50.687 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:36:50.880 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:36:50.964 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:36:51.186 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:36:51.235 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:36:51.258 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:38:59.149 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:38:59.185 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:45:33.286 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:45:33.310 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:45:33.379 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:45:33.511 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:45:33.540 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:45:33.557 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:49:54.420 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:49:54.456 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:52:59.199 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:52:59.230 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:52:59.410 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:52:59.669 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:52:59.837 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:52:59.856 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:53:05.266 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:53:05.299 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:54:17.455 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:54:17.643 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:54:17.690 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:54:17.826 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:54:17.864 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:54:17.885 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:54:19.680 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:54:19.708 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:54:38.276 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:54:38.440 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:54:38.495 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:54:38.645 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:54:38.688 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:54:38.706 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:54:40.620 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:54:40.640 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:54:58.653 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:54:58.833 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:54:59.150 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:54:59.331 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:54:59.516 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:54:59.539 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:55:01.564 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:55:01.598 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:56:21.749 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:56:21.890 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:56:21.940 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:56:22.092 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:56:22.144 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:56:22.160 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:56:25.058 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:56:25.094 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:58:06.578 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:58:06.857 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:58:06.890 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:58:07.182 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:58:07.314 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:58:07.348 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:58:09.624 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:58:09.657 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 07:59:45.262 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 07:59:45.284 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 07:59:45.402 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 07:59:45.565 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 07:59:45.602 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 07:59:45.622 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 07:59:47.997 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 07:59:48.031 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 08:00:39.739 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 08:00:39.838 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 08:00:39.946 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 08:00:40.119 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 08:00:40.160 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 08:00:40.177 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 08:00:42.844 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 08:00:42.874 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 08:00:55.505 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 08:00:55.575 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 08:00:55.712 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 08:00:55.873 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 08:00:56.099 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 08:00:56.117 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 08:00:58.224 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-12 08:00:58.247 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-12 08:01:22.216 [http-nio-8080-exec-4] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-12 08:01:33.333 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 08:01:33.342 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 08:01:33.380 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 08:01:33.507 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 08:01:33.528 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 08:01:33.553 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 08:01:36.866 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 18
+2025-04-12 08:01:36.872 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 18
+2025-04-12 08:02:01.950 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 08:02:01.965 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 08:02:02.016 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 08:02:02.147 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 08:02:02.208 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 08:02:02.226 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 08:02:04.480 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 8
+2025-04-12 08:02:04.489 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 8
+2025-04-12 08:02:11.069 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 18
+2025-04-12 08:02:11.078 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 18
+2025-04-12 08:02:21.320 [http-nio-8080-exec-7] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-12 08:11:11.921 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 08:11:11.934 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 08:11:11.948 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:11:11.952 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 08:11:11.957 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 08:11:19.256 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 08:11:19.322 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 5552 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 08:11:19.323 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 08:11:19.790 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 08:11:20.527 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 08:11:20.633 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 11 JPA repository interfaces.
+2025-04-12 08:11:21.207 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 08:11:21.221 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:11:21.222 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 08:11:21.222 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 08:11:21.307 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 08:11:21.307 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1937 ms
+2025-04-12 08:11:21.474 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 08:11:21.546 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 08:11:21.585 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 08:11:21.888 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 08:11:21.919 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 08:11:22.276 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@645d4639
+2025-04-12 08:11:22.278 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 08:11:22.323 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 08:11:22.324 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 08:11:22.353 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 08:11:23.894 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 08:11:24.169 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:11:24.434 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 08:11:26.580 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 08:11:34.946 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:11:34.964 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 08:11:34.972 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 16.347 seconds (process running for 17.317)
+2025-04-12 08:11:51.561 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 08:11:51.561 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 08:11:51.562 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-12 08:11:51.882 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:11:51.968 [http-nio-8080-exec-4] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-12 08:13:19.781 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 08:13:19.795 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 08:13:19.802 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:13:19.803 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 08:13:19.809 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 08:13:26.028 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 08:13:26.089 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 10596 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 08:13:26.090 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 08:13:26.484 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 08:13:27.168 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 08:13:27.270 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 94 ms. Found 11 JPA repository interfaces.
+2025-04-12 08:13:27.791 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 08:13:27.802 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:13:27.803 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 08:13:27.803 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 08:13:27.871 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 08:13:27.872 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1735 ms
+2025-04-12 08:13:28.001 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 08:13:28.070 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 08:13:28.098 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 08:13:28.327 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 08:13:28.354 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 08:13:28.650 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7286827b
+2025-04-12 08:13:28.652 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 08:13:28.691 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 08:13:28.692 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 08:13:28.707 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 08:13:30.102 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 08:13:30.360 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:13:30.688 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 08:13:32.784 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 08:13:40.505 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:13:40.520 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 08:13:40.528 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.067 seconds (process running for 15.911)
+2025-04-12 08:13:47.477 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 08:13:47.477 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 08:13:47.483 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-12 08:13:47.842 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:13:47.985 [http-nio-8080-exec-5] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-12 08:14:42.377 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 08:14:42.388 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 08:14:42.395 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:14:42.397 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 08:14:42.403 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 08:14:48.127 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 08:14:48.187 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 6984 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 08:14:48.189 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 08:14:48.602 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 08:14:49.324 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 08:14:49.424 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 93 ms. Found 11 JPA repository interfaces.
+2025-04-12 08:14:49.982 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 08:14:49.992 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:14:49.994 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 08:14:49.994 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 08:14:50.070 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 08:14:50.071 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1834 ms
+2025-04-12 08:14:50.214 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 08:14:50.277 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 08:14:50.309 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 08:14:50.544 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 08:14:50.570 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 08:14:50.871 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@395eb363
+2025-04-12 08:14:50.873 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 08:14:50.912 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 08:14:50.913 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 08:14:50.928 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 08:14:52.442 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 08:14:52.716 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:14:53.076 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 08:14:55.454 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 08:15:04.211 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:15:04.228 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 08:15:04.237 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 16.693 seconds (process running for 17.535)
+2025-04-12 08:15:06.550 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 08:15:06.550 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 08:15:06.552 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 08:15:06.897 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:15:06.995 [http-nio-8080-exec-4] ERROR l.i.b.controller.ReportController - Error fetching reports: source cannot be null
+2025-04-12 08:21:53.086 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 08:21:53.097 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 08:21:53.106 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:21:53.111 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 08:21:53.125 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 08:21:58.734 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 08:21:58.798 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 13156 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 08:21:58.799 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 08:21:59.183 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 08:21:59.920 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 08:22:00.015 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 87 ms. Found 11 JPA repository interfaces.
+2025-04-12 08:22:00.558 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 08:22:00.578 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:22:00.579 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 08:22:00.580 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 08:22:00.642 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 08:22:00.643 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1797 ms
+2025-04-12 08:22:00.774 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 08:22:00.838 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 08:22:00.867 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 08:22:01.092 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 08:22:01.116 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 08:22:01.404 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1fa18f87
+2025-04-12 08:22:01.407 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 08:22:01.446 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 08:22:01.446 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 08:22:01.461 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 08:22:02.850 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 08:22:03.121 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:22:03.427 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 08:22:05.377 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 08:22:13.338 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:22:13.355 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 08:22:13.362 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.281 seconds (process running for 16.077)
+2025-04-12 08:22:16.875 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 08:22:16.875 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 08:22:16.878 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-12 08:22:17.174 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:22:17.349 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 08:22:17.489 [http-nio-8080-exec-4] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-12 08:27:50.321 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 08:27:50.334 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 08:27:50.344 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:27:50.346 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 08:27:50.356 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 08:27:56.724 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 08:27:56.789 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11464 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 08:27:56.790 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 08:27:57.181 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 08:27:57.872 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 08:27:57.974 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 94 ms. Found 11 JPA repository interfaces.
+2025-04-12 08:27:58.506 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 08:27:58.515 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:27:58.517 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 08:27:58.517 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 08:27:58.594 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 08:27:58.594 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1756 ms
+2025-04-12 08:27:58.747 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 08:27:58.802 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 08:27:58.829 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 08:27:59.055 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 08:27:59.080 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 08:27:59.356 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@53a09566
+2025-04-12 08:27:59.359 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 08:27:59.395 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 08:27:59.396 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 08:27:59.411 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 08:28:00.794 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 08:28:01.047 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 08:28:01.339 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 08:28:03.418 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 08:28:11.313 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 08:28:11.331 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 08:28:11.342 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.181 seconds (process running for 16.008)
+2025-04-12 08:28:21.447 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 08:28:21.447 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 08:28:21.448 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-12 08:28:21.760 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:28:21.802 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 08:28:45.210 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 08:28:45.240 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:02:16.384 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 09:02:16.389 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 09:02:16.389 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:02:16.405 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 09:02:16.405 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 09:02:22.319 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 09:02:22.398 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 11720 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 09:02:22.399 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 09:02:22.900 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 09:02:23.679 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 09:02:23.807 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 117 ms. Found 11 JPA repository interfaces.
+2025-04-12 09:02:24.474 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 09:02:24.485 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:02:24.487 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 09:02:24.487 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 09:02:24.567 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 09:02:24.567 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2119 ms
+2025-04-12 09:02:24.738 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 09:02:24.815 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 09:02:24.854 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 09:02:25.133 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 09:02:25.164 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 09:02:25.565 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4e61a863
+2025-04-12 09:02:25.569 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 09:02:25.666 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 09:02:25.671 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 09:02:25.781 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 09:02:28.652 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 09:02:29.026 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:02:29.568 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 09:02:34.318 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 09:02:44.371 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:02:44.387 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 09:02:44.396 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 22.761 seconds (process running for 23.75)
+2025-04-12 09:03:25.556 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 09:03:25.556 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 09:03:25.558 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 09:03:25.934 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:03:25.966 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:07:32.368 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:07:32.398 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:07:54.112 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:07:54.131 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:08:26.744 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:08:26.763 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:08:36.447 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:08:36.472 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:09:12.639 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:09:12.660 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:09:30.314 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:09:30.330 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:10:19.684 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:10:19.701 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:11:24.778 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:11:24.793 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:11:37.579 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 09:11:37.626 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 09:11:37.663 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 09:11:37.914 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 09:11:37.950 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 09:11:37.993 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 09:11:41.645 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:11:41.657 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:12:24.108 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetching reports with status: PENDING, search: null
+2025-04-12 09:12:24.123 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:12:25.902 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: RESOLVED, search: null
+2025-04-12 09:12:25.905 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-12 09:12:28.008 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: ESCALATED, search: null
+2025-04-12 09:12:28.012 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-12 09:12:30.404 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: PENDING, search: null
+2025-04-12 09:12:30.417 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:12:37.349 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: h
+2025-04-12 09:12:37.357 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 09:12:37.695 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: hh
+2025-04-12 09:12:37.701 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 09:12:39.626 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: ha
+2025-04-12 09:12:39.629 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-12 09:12:41.931 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: h
+2025-04-12 09:12:41.937 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 09:12:42.921 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:12:42.930 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:12:44.882 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: s
+2025-04-12 09:12:44.885 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-12 09:12:46.716 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:12:46.725 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:15:44.756 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:15:44.770 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:15:47.448 [http-nio-8080-exec-5] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-12 09:15:50.272 [http-nio-8080-exec-6] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-12 09:15:52.630 [http-nio-8080-exec-8] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-12 09:15:58.864 [http-nio-8080-exec-10] ERROR l.i.b.a.AppWiseExceptionHandler - Error: Could not write JSON: Document nesting depth (1001) exceeds the maximum allowed (1000, from `StreamWriteConstraints.getMaxNestingDepth()`)
+2025-04-12 09:17:06.517 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 09:17:06.531 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 09:17:06.539 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:17:06.542 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 09:17:06.548 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 09:17:11.877 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 09:17:11.938 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 1948 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 09:17:11.939 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 09:17:12.324 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 09:17:12.933 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 09:17:13.025 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 84 ms. Found 11 JPA repository interfaces.
+2025-04-12 09:17:13.529 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 09:17:13.539 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:17:13.540 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 09:17:13.540 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 09:17:13.610 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 09:17:13.611 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1623 ms
+2025-04-12 09:17:13.742 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 09:17:13.803 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 09:17:13.829 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 09:17:14.049 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 09:17:14.073 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 09:17:14.339 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@24068086
+2025-04-12 09:17:14.348 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 09:17:14.383 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 09:17:14.385 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 09:17:14.398 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 09:17:15.717 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 09:17:15.976 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:17:16.290 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 09:17:18.255 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 09:17:25.502 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:17:25.517 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 09:17:25.526 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 14.198 seconds (process running for 14.983)
+2025-04-12 09:17:36.435 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 09:17:36.435 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 09:17:36.438 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-12 09:17:36.823 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:17:36.855 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:24:50.073 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:24:50.089 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:35:02.596 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 09:35:02.610 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 09:35:02.618 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:35:02.621 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 09:35:02.629 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 09:35:11.301 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 09:35:11.364 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 4424 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 09:35:11.365 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 09:35:11.773 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 09:35:12.531 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 09:35:12.636 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 98 ms. Found 11 JPA repository interfaces.
+2025-04-12 09:35:13.152 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 09:35:13.168 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:35:13.168 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 09:35:13.168 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 09:35:13.244 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 09:35:13.244 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1831 ms
+2025-04-12 09:35:13.373 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 09:35:13.418 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 09:35:13.455 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 09:35:13.656 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 09:35:13.695 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 09:35:13.966 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@506b083
+2025-04-12 09:35:13.983 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 09:35:14.013 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 09:35:14.013 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 09:35:14.038 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 09:35:15.467 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 09:35:15.757 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:35:16.086 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 09:35:18.138 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 09:35:25.891 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:35:25.907 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 09:35:25.924 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.231 seconds (process running for 16.261)
+2025-04-12 09:36:24.822 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 09:36:24.822 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 09:36:24.823 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-12 09:36:25.214 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:36:25.243 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:40:52.087 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:40:52.116 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:41:34.531 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:41:34.547 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:41:43.521 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:41:43.531 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:42:04.008 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:42:04.024 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:42:44.847 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:42:44.863 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:43:50.506 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:43:50.519 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:43:58.715 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:43:58.725 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:55:27.020 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 09:55:27.039 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 09:55:27.048 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:55:27.051 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 09:55:27.057 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 09:55:37.151 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 09:55:37.222 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 2736 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 09:55:37.223 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 09:55:37.816 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 09:55:38.738 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 09:55:38.867 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 115 ms. Found 11 JPA repository interfaces.
+2025-04-12 09:55:39.444 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 09:55:39.455 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:55:39.457 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 09:55:39.457 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 09:55:39.532 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 09:55:39.533 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2254 ms
+2025-04-12 09:55:39.756 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 09:55:39.807 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 09:55:39.834 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 09:55:40.066 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 09:55:40.090 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 09:55:40.387 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5eee3da9
+2025-04-12 09:55:40.389 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 09:55:40.425 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 09:55:40.426 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 09:55:40.442 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 09:55:41.907 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 09:55:42.238 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:55:42.668 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 09:55:45.149 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 09:55:53.597 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:55:53.612 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 09:55:53.620 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 17.485 seconds (process running for 19.181)
+2025-04-12 09:57:28.153 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 09:57:28.153 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 09:57:28.156 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 09:57:28.555 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 09:57:28.580 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=11, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=0, resolvedReports=0}
+2025-04-12 09:57:28.654 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:57:28.683 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:57:38.672 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 7
+2025-04-12 09:57:38.728 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 7
+2025-04-12 09:57:38.763 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:57:38.799 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:57:38.839 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 09:57:38.860 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=10, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=0}
+2025-04-12 09:58:11.296 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 09:58:11.388 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=10, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=0}
+2025-04-12 09:58:11.424 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:58:11.446 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:58:16.267 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 8
+2025-04-12 09:58:16.294 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 8
+2025-04-12 09:58:16.314 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:58:16.328 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:58:16.351 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 09:58:16.380 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=9, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=1}
+2025-04-12 09:59:16.617 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 09:59:16.630 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 09:59:16.636 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:59:16.639 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 09:59:16.649 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 09:59:22.492 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-12 09:59:22.555 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 7364 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-12 09:59:22.556 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-12 09:59:22.976 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-12 09:59:23.666 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 09:59:23.759 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 85 ms. Found 11 JPA repository interfaces.
+2025-04-12 09:59:24.315 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 09:59:24.324 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:59:24.326 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 09:59:24.326 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-12 09:59:24.395 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 09:59:24.396 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1789 ms
+2025-04-12 09:59:24.520 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 09:59:24.561 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-12 09:59:24.588 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 09:59:24.824 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 09:59:24.852 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 09:59:25.142 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5178345d
+2025-04-12 09:59:25.144 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 09:59:25.182 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-12 09:59:25.183 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-12 09:59:25.197 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 09:59:26.940 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 09:59:27.180 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 09:59:27.437 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 09:59:29.617 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-12 09:59:37.514 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-12 09:59:37.539 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 09:59:37.553 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.668 seconds (process running for 16.542)
+2025-04-12 09:59:48.882 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 09:59:48.882 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 09:59:48.884 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 09:59:49.160 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 09:59:49.185 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=9, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=1}
+2025-04-12 09:59:49.257 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 09:59:49.288 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 09:59:54.850 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 09:59:54.865 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:00:07.422 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 10
+2025-04-12 10:00:07.471 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 10
+2025-04-12 10:00:07.493 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:00:07.507 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:00:07.527 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:00:07.545 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:00:07.564 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 10:00:07.571 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:00:14.063 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:00:14.083 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:00:14.106 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:00:14.118 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:01:30.141 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:01:30.162 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:01:30.209 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:01:30.234 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:02:30.767 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:02:30.790 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=11, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=0, resolvedReports=0}
+2025-04-12 10:02:30.816 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:02:30.833 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:02:36.842 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 7
+2025-04-12 10:02:36.863 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 7
+2025-04-12 10:02:36.883 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:02:36.967 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:02:37.004 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:02:37.063 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=10, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=0}
+2025-04-12 10:02:45.980 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 8
+2025-04-12 10:02:46.034 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 8
+2025-04-12 10:02:46.052 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:02:46.068 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:02:46.109 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:02:46.125 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=9, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=1}
+2025-04-12 10:03:05.867 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 10:03:05.876 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:05:55.296 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:05:55.330 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=9, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=1}
+2025-04-12 10:05:55.368 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:05:55.383 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:05:58.264 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 10:05:58.279 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:06:32.926 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Updating resolution notes for report ID: 10
+2025-04-12 10:06:32.941 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Resolution notes updated for report ID: 10
+2025-04-12 10:06:32.961 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 10
+2025-04-12 10:06:32.973 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 10
+2025-04-12 10:06:32.989 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:06:32.998 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:06:33.014 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:06:33.027 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:06:33.040 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 10:06:33.045 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:08:41.714 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:08:41.793 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:08:41.819 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:08:41.835 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:08:49.694 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching report with ID: 11
+2025-04-12 10:08:49.701 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched report with ID: 11
+2025-04-12 10:08:56.974 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Updating resolution notes for report ID: 11
+2025-04-12 10:08:56.988 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Resolution notes updated for report ID: 11
+2025-04-12 10:08:57.011 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 11
+2025-04-12 10:08:57.026 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 11
+2025-04-12 10:08:57.046 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:08:57.061 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:08:57.082 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:08:57.101 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=3}
+2025-04-12 10:09:20.127 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:09:20.169 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=8, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=1, resolvedReports=2}
+2025-04-12 10:09:20.194 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:09:20.207 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:09:24.793 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching report with ID: 11
+2025-04-12 10:09:24.800 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched report with ID: 11
+2025-04-12 10:09:44.910 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report with ID: 10
+2025-04-12 10:09:44.914 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report with ID: 10
+2025-04-12 10:09:50.290 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 10
+2025-04-12 10:09:50.304 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 10
+2025-04-12 10:09:50.316 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:09:50.325 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:09:50.341 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:09:50.356 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=2, resolvedReports=2}
+2025-04-12 10:09:57.011 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: PENDING, search: null
+2025-04-12 10:09:57.025 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 7 reports
+2025-04-12 10:09:59.539 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: RESOLVED, search: null
+2025-04-12 10:09:59.550 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 2 reports
+2025-04-12 10:10:01.318 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: ESCALATED, search: null
+2025-04-12 10:10:01.327 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 2 reports
+2025-04-12 10:10:04.294 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:04.305 [http-nio-8080-exec-5] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:10:11.916 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: h
+2025-04-12 10:10:11.924 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 10:10:13.742 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:13.751 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:10:16.894 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: k
+2025-04-12 10:10:16.902 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 10:10:18.676 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:18.685 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:10:22.828 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: k
+2025-04-12 10:10:22.834 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 10:10:24.973 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:24.981 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:10:47.611 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:10:47.630 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=2, resolvedReports=2}
+2025-04-12 10:10:47.687 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:47.701 [http-nio-8080-exec-10] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:10:58.724 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: s
+2025-04-12 10:10:58.727 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-12 10:10:59.761 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:10:59.770 [http-nio-8080-exec-3] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:11:00.244 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: f
+2025-04-12 10:11:00.251 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 1 reports
+2025-04-12 10:11:01.448 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:11:01.456 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:11:20.297 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 10:11:20.314 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 10:11:20.341 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 10:11:20.548 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 10:11:20.578 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 10:11:20.610 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 10:11:26.821 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 10:11:26.834 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 10:11:26.847 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 10:11:26.852 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 10:11:30.888 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-12 10:11:30.942 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-12 10:11:30.975 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-12 10:11:31.003 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-12 10:11:31.078 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-12 10:11:49.969 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: weekly
+2025-04-12 10:11:57.379 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 10:11:57.391 [http-nio-8080-exec-1] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 10:11:57.425 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 10:11:57.431 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 10:11:58.310 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 10:11:58.325 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 10:11:58.353 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 10:11:58.486 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 10:11:58.522 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 10:11:58.562 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 10:12:00.195 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:12:00.210 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=2, resolvedReports=2}
+2025-04-12 10:12:00.229 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:12:00.237 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:12:02.316 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 10:12:02.328 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 10:12:02.359 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 10:12:02.459 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 10:12:02.481 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 10:12:02.505 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 10:12:04.116 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-12 10:12:04.134 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=2, resolvedReports=2}
+2025-04-12 10:12:04.162 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-12 10:12:04.177 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-12 10:12:08.463 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-12 10:12:08.477 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=1, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-12 10:12:08.511 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-12 10:12:08.604 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-12 10:12:08.627 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-12 10:12:08.645 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[1, 2, 0, 1, 0, 0, 1], labels=[SUN, MON, TUE, WED, THU, FRI, SAT]}
+2025-04-12 10:12:10.582 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-12 10:12:10.592 [http-nio-8080-exec-5] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-12 10:12:10.609 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-12 10:12:10.614 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-12 10:12:13.279 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-12 10:12:13.316 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-12 10:12:13.346 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-12 10:12:13.367 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-12 10:12:13.417 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-12 10:12:18.657 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 10:12:18.669 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-12 10:12:18.707 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-12 10:12:18.762 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-12 10:12:28.442 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 10:12:28.454 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 10:12:28.460 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 10:12:28.461 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 10:12:28.466 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

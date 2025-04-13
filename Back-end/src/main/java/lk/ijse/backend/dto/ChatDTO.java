@@ -30,12 +30,11 @@ public class ChatDTO {
     @URL(message = "Invalid group image URL")
     private String groupImageUrl;
 
-    @Null
-    private LocalDateTime createdAt;
-
     @NotNull(message = "Created by cannot be null")
     private UserDTO createdBy;
 
-    private List<ChatParticipantDTO> participants;
-    private List<MessageDTO> messages;
+
+    private List<UserDTO> participants;
+    private LocalDateTime createdAt;
+    private MessageDTO lastMessage;
 }

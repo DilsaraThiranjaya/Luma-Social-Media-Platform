@@ -13,5 +13,7 @@ public interface CloudinaryService {
 
     String uploadMedia(MultipartFile file, String mediaType, Integer userId) throws IOException;
 
+    String uploadChatMedia(MultipartFile file, String mediaType, Integer userId) throws IOException;
+
     void deleteMedia(String publicUrl);
 }

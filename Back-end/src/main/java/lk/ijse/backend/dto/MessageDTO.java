@@ -31,7 +31,6 @@ public class MessageDTO {
     private LocalDateTime sentAt;
     private LocalDateTime readAt;
 
-    @NotNull(message = "Chat id cannot be null")
     private int chatId;
 
     @NotNull(message = "Sender cannot be null")
