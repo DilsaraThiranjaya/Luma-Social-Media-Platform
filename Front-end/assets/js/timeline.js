@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             initializeRoleBasedAccess(getRoleFromToken(authData.token));
             initializeNavbarUserInfo();
             initializeLogout();
+            initializeNavBarStats();
         } catch (error) {
             await handleAuthError("Session expired. Please log in again.");
         }
@@ -151,6 +152,78 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Find the text node after the icon and update only the text
                 sideBarJoinedDate.childNodes[1].nodeValue = ` Joined on ${formattedJoinDate}`;
 
+            } else {
+                await Toast.fire({
+                    icon: "error",
+                    title: responseData.message
+                });
+                return;
+            }
+        } catch (error) {
+            await Toast.fire({
+                icon: "error",
+                title: error.message || "Failed to load user data"
+            });
+        }
+    }
+
+    function initializeNavBarStats() {
+        updateFriendsCount();
+        updateNotificationsCount();
+        document.getElementById('messageBadge').classList.add('d-none');
+    }
+
+    async function updateFriendsCount() {
+        try {
+            const response = await fetch(`${BASE_URL}/friendship/requests`, {
+                headers: {
+                    'Authorization': `Bearer ${authData.token}`
+                }
+            });
+            const responseData = await response.json();
+
+            if (responseData.code === 200 || responseData.code === 201) {
+                const friendRequestCount = responseData.data.length;
+
+                if (friendRequestCount > 0) {
+                    document.getElementById('friendsBadge').classList.remove('d-none');
+                    document.getElementById('friendsBadge').textContent = friendRequestCount;
+                } else {
+                    document.getElementById('friendsBadge').classList.add('d-none');
+                }
+            } else {
+                await Toast.fire({
+                    icon: "error",
+                    title: responseData.message
+                });
+                return;
+            }
+        } catch (error) {
+            await Toast.fire({
+                icon: "error",
+                title: error.message || "Failed to load user data"
+            });
+        }
+    }
+
+    async function updateNotificationsCount() {
+        try {
+            const response = await fetch(`${BASE_URL}/notifications/unread`, {
+                headers: {
+                    'Authorization': `Bearer ${authData.token}`
+                }
+            });
+            const responseData = await response.json();
+
+            if (responseData.code === 200 || responseData.code === 201) {
+                const notificationCount = responseData.data.length;
+
+                if (notificationCount > 0) {
+                    document.getElementById('notificationBadge').classList.remove('d-none');
+                    document.getElementById('notificationBadge').textContent = notificationCount;
+                } else {
+                    document.getElementById('notificationBadge').classList.add('d-none');
+                }
             } else {
                 await Toast.fire({
                     icon: "error",

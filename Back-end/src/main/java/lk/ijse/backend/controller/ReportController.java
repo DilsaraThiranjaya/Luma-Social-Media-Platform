@@ -2,7 +2,11 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.ReportDTO;
 import lk.ijse.backend.dto.ResponseDTO;
+import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.entity.AdminAction;
+import lk.ijse.backend.service.AdminService;
 import lk.ijse.backend.service.ReportService;
+import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,8 @@ import java.util.Map;
 @CrossOrigin("*")
 public class ReportController {
     private final ReportService reportService;
+    private final UserService userService;
+    private final AdminService adminService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +60,31 @@ public class ReportController {
         log.info("Updating report status for report ID: {}", reportId);
         try {
             String email = authentication.getName();
+            UserDTO user = userService.loadUserDetailsByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponseDTO(VarList.Unauthorized, "Unauthorized", null));
+            }
+
+            ReportDTO reportDTO = reportService.getReportById(reportId);
+            if (reportDTO == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "Report not found", null));
+            }
+
+            if (status.equals("RESOLVED")) {
+                if (reportDTO.getReportedPost() != null) {
+                    adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.REPORT_RESOLUTION, null, reportDTO.getReportedPost().getPostId(), null);
+                } else {
+                    adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.REPORT_RESOLUTION, reportDTO.getReportedUser().getUserId(), null, null);
+                }
+            } else {
+                if (reportDTO.getReportedPost() != null) {
+                    adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.REPORT_ESCALATION, null, reportDTO.getReportedPost().getPostId(), null);
+                } else {
+                    adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.REPORT_ESCALATION, reportDTO.getReportedUser().getUserId(), null, null);
+                }
+            }
 
             reportService.updateReportStatus(reportId, status, email);
 

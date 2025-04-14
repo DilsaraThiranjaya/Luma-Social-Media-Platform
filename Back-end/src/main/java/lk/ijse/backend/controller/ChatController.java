@@ -1,16 +1,15 @@
 package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.*;
+import lk.ijse.backend.entity.Message;
 import lk.ijse.backend.service.ChatService;
-import lk.ijse.backend.service.MessageService;
-import lk.ijse.backend.util.VarList;
+import lk.ijse.backend.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +21,43 @@ import java.util.List;
 @CrossOrigin("*")
 public class ChatController {
     private final ChatService chatService;
-    private final MessageService messageService;
+    private final CloudinaryService cloudinaryService;
+
+    @GetMapping("/{chatId}/messages")
+    public ResponseEntity<List<MessageDTO>> getChatMessages(@PathVariable Integer chatId) {
+        log.info("Getting messages for chat: {}", chatId);
+        return ResponseEntity.ok(chatService.getChatHistory(chatId));
+    }
+
+    @PostMapping(value = "/message", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MessageDTO> sendMessage(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam String content,
+            @RequestParam Integer chatId,
+            @RequestParam Integer senderId) {
+        log.info("Sending message: {}", content);
+
+        MessageDTO messageDTO = new MessageDTO();
+        messageDTO.setContent(content);
+        messageDTO.setChatId(chatId);
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(senderId);
+
+        messageDTO.setSender(userDTO);
+
+        if(file != null && !file.isEmpty()) {
+            String fileUrl = null;
+            try {
+                fileUrl = cloudinaryService.uploadChatMedia(file, "IMAGE", senderId);
+            } catch (IOException e) {
+                return ResponseEntity.badRequest().build();
+            }
+            messageDTO.setMediaUrl(fileUrl);
+            messageDTO.setMediaType(Message.MediaType.IMAGE);
+        }
+        return ResponseEntity.ok(chatService.sendMessage(messageDTO));
+    }
 
     @PostMapping("/private")
     public ResponseEntity<ChatDTO> createPrivateChat(@RequestParam Integer user1Id,

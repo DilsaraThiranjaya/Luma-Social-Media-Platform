@@ -46,7 +46,7 @@ public class AdminAction {
     private MarketplaceItem targetItem;
 
     public enum ActionType {
-        USER_BAN, POST_REMOVE, ITEM_REMOVE,
+        USER_BAN, USER_UNBAN, POST_BAN, POST_UNBAN, POST_REMOVE, ITEM_REMOVE,
         REPORT_ESCALATION, REPORT_RESOLUTION
     }
 }

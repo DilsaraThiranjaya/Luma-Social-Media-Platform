@@ -133,12 +133,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         <tr data-user-id="${user.userId}" class="${isCurrentUser ? 'current-user' : ''}">
             <td>
                 <div class="d-flex align-items-center">
-                    <img src="${user.profilePictureUrl || '../../assets/image/default-profile.jpg'}" 
+                    <img src="${user.profilePictureUrl || '../../assets/image/Profile-picture.png'}" 
                          alt="${user.firstName} ${user.lastName}" 
                          class="rounded-circle me-2" 
                          width="40"
                          height="40"
-                         onerror="this.src='../../assets/image/default-profile.jpg'">
+                         onerror="this.src='../../assets/image/Profile-picture.png'">
                     <div>
                         <h6 class="mb-0">${user.firstName} ${user.lastName}</h6>
                         <small class="text-muted">@${user.username || user.email.split('@')[0]}</small>

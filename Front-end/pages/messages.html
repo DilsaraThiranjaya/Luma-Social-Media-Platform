@@ -35,19 +35,19 @@
               </a>
               <a class="nav-link" href="friends.html" data-bs-toggle="tooltip" title="Friends">
                 <i class="fa-solid fa-user-group"></i>
-                <span class="badge rounded-pill bg-danger">7</span>
+                <span class="badge rounded-pill bg-danger" id="friendsBadge">0</span>
               </a>
-              <a class="nav-link" href="market.html" data-bs-toggle="tooltip" title="Market">
-                <i class="fa-solid fa-shop"></i>
-                <span class="badge rounded-pill bg-danger">2</span>
-              </a>
+<!--              <a class="nav-link" href="market.html" data-bs-toggle="tooltip" title="Market">-->
+<!--                <i class="fa-solid fa-shop"></i>-->
+<!--                <span class="badge rounded-pill bg-danger">2</span>-->
+<!--              </a>-->
               <a class="nav-link active" href="#" data-bs-toggle="tooltip" title="Messages">
                 <i class="fa-solid fa-message"></i>
-                <span class="badge rounded-pill bg-danger">3</span>
+                <span class="badge rounded-pill bg-danger" id="messageBadge">0</span>
               </a>
               <a class="nav-link" href="notifications.html" data-bs-toggle="tooltip" title="Notifications">
                 <i class="fa-solid fa-bell"></i>
-                <span class="badge rounded-pill bg-danger">5</span>
+                <span class="badge rounded-pill bg-danger" id="notificationBadge">0</span>
               </a>
             </div>
             <div class="navbar-nav nav-icons work-menu">
@@ -338,8 +338,12 @@
                     <button class="btn btn-danger" onclick="endCall()">End Call</button>
                   </div>
                   <div class="video-container">
-                    <div id="remote-video-container"></div>
-                    <div id="local-video-container"></div>
+                    <div id="remote-video-container">
+                      <video id="remote-video"></video>
+                    </div>
+                    <div id="local-video-container">
+                      <video id="local-video"></video>
+                    </div>
                   </div>
                 </div>
 

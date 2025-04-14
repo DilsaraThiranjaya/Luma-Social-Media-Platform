@@ -79,6 +79,7 @@ public class WebSecurityConfig {
                                 "/api/v1/auth/sendOtpCodeRegister",
                                 "/api/v1/auth/resetPassword",
                                 "/api/v1/auth/requestAdminAccess",
+                                "/ws-messages/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
@@ -90,11 +91,11 @@ public class WebSecurityConfig {
                                 "/api/v1/friends/**",
                                 "/api/v1/notifications/**",
                                 "/api/v1/chats/**",
-                                "/api/v1/calls/**",
                                 "/api/v1/dashboard/**",
                                 "/api/v1/users/**",
                                 "/api/v1/posts/**",
-                                "/api/v1/reports/**").authenticated()
+                                "/api/v1/reports/**",
+                                "/api/v1/admin-actions/**").authenticated()
                         .requestMatchers(
                                 "/oauth2/**",
                                 "/login/**").permitAll()

@@ -1,14 +1,16 @@
 package lk.ijse.backend.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lk.ijse.backend.dto.DashboardStatsDTO;
 import lk.ijse.backend.dto.PostDTO;
 import lk.ijse.backend.dto.ReportDTO;
 import lk.ijse.backend.dto.UserDTO;
-import lk.ijse.backend.entity.Report;
+import lk.ijse.backend.entity.*;
 import lk.ijse.backend.repository.*;
 import lk.ijse.backend.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class AdminServiceImpl implements AdminService {
     private final ReportRepository reportRepository;
     private final ReactionRepository reactionRepository;
     private final CommentRepository commentRepository;
+    private final AdminActionRepository adminActionRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -147,6 +150,150 @@ public class AdminServiceImpl implements AdminService {
                 .stream()
                 .map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void createAdminAction(Integer adminId, AdminAction.ActionType actionType,
+                                  Integer targetUserId, Integer targetPostId, Integer targetItemId) {
+
+        User admin = userRepository.findByUserId(adminId);
+        if (admin == null) {
+            throw new EntityNotFoundException("Admin user not found: " + adminId);
+        }
+        if (admin.getRole() != User.Role.ADMIN) {
+            throw new IllegalArgumentException("User with id " + adminId + " is not authorized as an admin");
+        }
+
+        // Determine and validate targets based on action type
+        User targetUser = null;
+        Post targetPost = null;
+        MarketplaceItem targetItem = null;
+
+        String description = null;
+
+        switch (actionType) {
+            case USER_BAN:
+                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+                targetUser = userRepository.findByUserId(targetUserId);
+                description = "User " + targetUser.getFirstName() + " " + targetUser.getLastName() + " has been banned.";
+                if (targetUser == null) {
+                    throw new EntityNotFoundException("Target user not found: " + targetUserId);
+                }
+                break;
+            case USER_UNBAN:
+                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+                targetUser = userRepository.findByUserId(targetUserId);
+                description = "User " + targetUser.getFirstName() + " " + targetUser.getLastName() + " has been unbanned.";
+                if (targetUser == null) {
+                    throw new EntityNotFoundException("Target user not found: " + targetUserId);
+                }
+                break;
+            case POST_BAN:
+                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+                targetPost = postRepository.findById(targetPostId)
+                        .orElseThrow(() -> new EntityNotFoundException("Target post not found: " + targetPostId));
+                description = "Post " + targetPost.getPostId() + " has been banned.";
+                break;
+            case POST_UNBAN:
+                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+                targetPost = postRepository.findById(targetPostId)
+                        .orElseThrow(() -> new EntityNotFoundException("Target post not found: " + targetPostId));
+                description = "Post " + targetPost.getPostId() + " has been unbanned.";
+                break;
+            case POST_REMOVE:
+                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+                targetPost = postRepository.findById(targetPostId)
+                        .orElseThrow(() -> new EntityNotFoundException("Target post not found: " + targetPostId));
+                description = "Post " + targetPost.getPostId() + " has been removed.";
+                break;
+            case ITEM_REMOVE:
+//                validateTargets(actionType, targetUserId, targetPostId, targetItemId);
+//                targetItem = marketplaceItemRepository.findById(targetItemId)
+//                        .orElseThrow(() -> new EntityNotFoundException("Target item not found: " + targetItemId));
+                break;
+            case REPORT_ESCALATION:
+                validateReportTargets(targetUserId, targetPostId, targetItemId);
+                if (targetUserId != null) {
+                    targetUser = userRepository.findByUserId(targetUserId);
+                    if (targetUser == null) {
+                        throw new EntityNotFoundException("Target user not found");
+                    }
+                    description = "User " + targetUser.getFirstName() + " " + targetUser.getLastName() + " report has been escalated.";
+                } else {
+                    targetPost = postRepository.findById(targetPostId).orElseThrow(() -> new EntityNotFoundException("Target post not found"));
+                    description = "Post " + targetPost.getPostId() + " report has been escalated.";
+                }
+                break;
+            case REPORT_RESOLUTION:
+                validateReportTargets(targetUserId, targetPostId, targetItemId);
+                if (targetUserId != null) {
+                    targetUser = userRepository.findByUserId(targetUserId);
+                    if (targetUser == null) {
+                        throw new EntityNotFoundException("Target user not found");
+                    }
+                    description = "User " + targetUser.getFirstName() + " " + targetUser.getLastName() + " report has been resolved.";
+                } else {
+                    targetPost = postRepository.findById(targetPostId).orElseThrow(() -> new EntityNotFoundException("Target post not found"));
+                    description = "Post " + targetPost.getPostId() + " report has been resolved.";
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported action type: " + actionType);
+        }
+
+        // Build and save the admin action
+        AdminAction adminAction = AdminAction.builder()
+                .actionType(actionType)
+                .description(description)
+                .admin(admin)
+                .targetUser(targetUser)
+                .targetPost(targetPost)
+                .targetItem(targetItem)
+                .build();
+
+        adminActionRepository.save(adminAction);
+    }
+
+    @Override
+    public List<AdminAction> getAllAdminActions() {
+        return adminActionRepository.findAll(Sort.by(Sort.Direction.DESC, "performedAt"));
+    }
+
+    private void validateTargets(AdminAction.ActionType actionType, Integer targetUserId, Integer targetPostId, Integer targetItemId) {
+        switch (actionType) {
+            case USER_BAN:
+            case USER_UNBAN:
+                if (targetUserId == null)
+                    throw new IllegalArgumentException("Target user ID is required for USER_BAN");
+                if (targetPostId != null || targetItemId != null)
+                    throw new IllegalArgumentException("USER_BAN must specify only a user target");
+                break;
+            case POST_BAN:
+            case POST_UNBAN:
+            case POST_REMOVE:
+                if (targetPostId == null)
+                    throw new IllegalArgumentException("Target post ID is required for " + actionType);
+                if (targetUserId != null || targetItemId != null)
+                    throw new IllegalArgumentException(actionType + " must specify only a post target");
+                break;
+            case ITEM_REMOVE:
+                if (targetItemId == null)
+                    throw new IllegalArgumentException("Target item ID is required for ITEM_REMOVE");
+                if (targetUserId != null || targetPostId != null)
+                    throw new IllegalArgumentException("ITEM_REMOVE must specify only an item target");
+                break;
+        }
+    }
+
+    private void validateReportTargets(Integer targetUserId, Integer targetPostId, Integer targetItemId) {
+        int targetCount = 0;
+        if (targetUserId != null) targetCount++;
+        if (targetPostId != null) targetCount++;
+        if (targetItemId != null) targetCount++;
+
+        if (targetCount != 1) {
+            throw new IllegalArgumentException("Report actions require exactly one target (user, post, or item)");
+        }
     }
 
     private double calculateGrowthRate(long previous, long current) {

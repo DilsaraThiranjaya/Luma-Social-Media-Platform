@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializeRoleBasedAccess(getRoleFromToken(authData.token));
       initializeLogout();
       initializeNavbarUserInfo();
+      initializeNavBarStats();
     } catch (error) {
       await handleAuthError("Session expired. Please log in again.");
     }
@@ -127,6 +128,78 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (user.profilePictureUrl) {
           document.getElementById('navProfileImg').src = user.profilePictureUrl;
           document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
+        }
+      } else {
+        await Toast.fire({
+          icon: "error",
+          title: responseData.message
+        });
+        return;
+      }
+    } catch (error) {
+      await Toast.fire({
+        icon: "error",
+        title: error.message || "Failed to load user data"
+      });
+    }
+  }
+
+  function initializeNavBarStats() {
+    updateFriendsCount();
+    updateNotificationsCount();
+    document.getElementById('messageBadge').classList.add('d-none');
+  }
+
+  async function updateFriendsCount() {
+    try {
+      const response = await fetch(`${BASE_URL}/friendship/requests`, {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+      const responseData = await response.json();
+
+      if (responseData.code === 200 || responseData.code === 201) {
+        const friendRequestCount = responseData.data.length;
+
+        if (friendRequestCount > 0) {
+          document.getElementById('friendsBadge').classList.remove('d-none');
+          document.getElementById('friendsBadge').textContent = friendRequestCount;
+        } else {
+          document.getElementById('friendsBadge').classList.add('d-none');
+        }
+      } else {
+        await Toast.fire({
+          icon: "error",
+          title: responseData.message
+        });
+        return;
+      }
+    } catch (error) {
+      await Toast.fire({
+        icon: "error",
+        title: error.message || "Failed to load user data"
+      });
+    }
+  }
+
+  async function updateNotificationsCount() {
+    try {
+      const response = await fetch(`${BASE_URL}/notifications/unread`, {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+      const responseData = await response.json();
+
+      if (responseData.code === 200 || responseData.code === 201) {
+        const notificationCount = responseData.data.length;
+
+        if (notificationCount > 0) {
+          document.getElementById('notificationBadge').classList.remove('d-none');
+          document.getElementById('notificationBadge').textContent = notificationCount;
+        } else {
+          document.getElementById('notificationBadge').classList.add('d-none');
         }
       } else {
         await Toast.fire({
@@ -520,22 +593,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error updating counters:', error);
       }
     }
-
-    // Search functionality
-    // const searchInput = document.querySelector('.search-input');
-    // searchInput.addEventListener('input', function() {
-    //   const searchTerm = this.value.toLowerCase();
-    //   document.querySelectorAll('.friend-card, .friend-request-card, .friend-suggestion-card').forEach(card => {
-    //     const name = card.querySelector('h6').textContent.toLowerCase();
-    //     const info = card.querySelector('p').textContent.toLowerCase();
-    //
-    //     if (name.includes(searchTerm) || info.includes(searchTerm)) {
-    //       card.style.display = '';
-    //     } else {
-    //       card.style.display = 'none';
-    //     }
-    //   });
-    // });
 
     // Grid/List View Toggle
     document.querySelectorAll('.btn-group[role="group"]').forEach(btnGroup => {

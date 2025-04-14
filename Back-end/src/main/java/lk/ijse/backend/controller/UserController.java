@@ -2,6 +2,8 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.ResponseDTO;
 import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.entity.AdminAction;
+import lk.ijse.backend.service.AdminService;
 import lk.ijse.backend.service.UserService;
 import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class UserController {
     private final UserService userService;
+    private final AdminService adminService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,10 +50,23 @@ public class UserController {
     @PutMapping("/{userId}/status")
     public ResponseEntity<ResponseDTO> updateUserStatus(
             @PathVariable int userId,
-            @RequestParam String status
+            @RequestParam String status,
+            Authentication authentication
     ) {
         log.info("Received user status update request for user: {}", userId);
         try {
+            UserDTO user = userService.loadUserDetailsByEmail(authentication.getName());
+            if (user == null) {
+                log.error("User not found for email: {}", authentication.getName());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseDTO(VarList.Not_Found, "User Not Found!", null));
+            }
+
+            if (status.equals("ACTIVE")) {
+                adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.USER_UNBAN, userId, null, null);
+            } else {
+                adminService.createAdminAction(user.getUserId(), AdminAction.ActionType.USER_BAN, userId, null, null);
+            }
             userService.updateUserStatus(userId, status);
 
             log.info("Successfully updated user status for user: {}", userId);

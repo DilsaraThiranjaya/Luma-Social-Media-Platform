@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       initializeRoleBasedAccess(getRoleFromToken(authData.token));
       initializeLogout();
       initializeNavbarUserInfo();
+      initializeNavBarStats();
     } catch (error) {
       await handleAuthError("Session expired. Please log in again.");
     }
@@ -127,6 +128,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (user.profilePictureUrl) {
           document.getElementById('navProfileImg').src = user.profilePictureUrl;
           document.getElementById('navBarProfileImg').src = user.profilePictureUrl;
+        }
+      } else {
+        await Toast.fire({
+          icon: "error",
+          title: responseData.message
+        });
+        return;
+      }
+    } catch (error) {
+      await Toast.fire({
+        icon: "error",
+        title: error.message || "Failed to load user data"
+      });
+    }
+  }
+
+  function initializeNavBarStats() {
+    updateFriendsCount();
+    document.getElementById('messageBadge').classList.add('d-none');
+  }
+
+  async function updateFriendsCount() {
+    try {
+      const response = await fetch(`${BASE_URL}/friendship/requests`, {
+        headers: {
+          'Authorization': `Bearer ${authData.token}`
+        }
+      });
+      const responseData = await response.json();
+
+      if (responseData.code === 200 || responseData.code === 201) {
+        const friendRequestCount = responseData.data.length;
+
+        if (friendRequestCount > 0) {
+          document.getElementById('friendsBadge').classList.remove('d-none');
+          document.getElementById('friendsBadge').textContent = friendRequestCount;
+        } else {
+          document.getElementById('friendsBadge').classList.add('d-none');
         }
       } else {
         await Toast.fire({

@@ -8,6 +8,7 @@ import lk.ijse.backend.service.ChatService;
 import lk.ijse.backend.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,40 @@ public class ChatServiceImpl implements ChatService {
     private final MessageRepository messageRepository;
     private final ChatParticipantRepository participantRepository;
     private final CloudinaryService cloudinaryService;
+    private final SimpMessagingTemplate messagingTemplate;
     private final ModelMapper modelMapper;
+
+    @Transactional
+    @Override
+    public MessageDTO sendMessage(MessageDTO messageDTO) {
+        Chat chat = chatRepository.findById(messageDTO.getChatId())
+                .orElseThrow(() -> new RuntimeException("Chat not found"));
+
+        User sender = userRepository.findByUserId(messageDTO.getSender().getUserId());
+        if (sender == null) throw new UsernameNotFoundException("User not found");
+
+        Message message = new Message();
+        message.setContent(messageDTO.getContent());
+        message.setMediaType(messageDTO.getMediaType());
+        message.setMediaUrl(messageDTO.getMediaUrl());
+        message.setChat(chat);
+        message.setSender(sender);
+        message.setSentAt(LocalDateTime.now());
+
+        Message savedMessage = messageRepository.save(message);
+        MessageDTO result = modelMapper.map(savedMessage, MessageDTO.class);
+
+        // Send via WebSocket
+        messagingTemplate.convertAndSend("/topic/chat/" + chat.getChatId(), result);
+        return result;
+    }
+
+    @Override
+    public List<MessageDTO> getChatHistory(Integer chatId) {
+        return messageRepository.findByChatChatIdOrderBySentAtAsc(chatId).stream()
+                .map(m -> modelMapper.map(m, MessageDTO.class))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public ChatDTO createPrivateChat(int user1Id, int user2Id) {

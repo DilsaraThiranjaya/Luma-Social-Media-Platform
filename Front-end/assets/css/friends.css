@@ -1,9 +1,23 @@
-/* Network Container */
+/* ----------------------------------------
+   VARIABLES
+   ---------------------------------------- */
+:root {
+  --primary-color: #600097;
+  --secondary-color: #9900ff;
+  --text-color: #333;
+  --text-muted: #6c757d;
+}
+
+/* ----------------------------------------
+   BASE LAYOUT
+   ---------------------------------------- */
 .network-container {
   padding: 1.5rem 0;
 }
 
-/* Friend Filters */
+/* ----------------------------------------
+   FRIEND FILTERS SIDEBAR
+   ---------------------------------------- */
 .friend-filters {
   position: sticky;
   top: 80px;
@@ -26,15 +40,25 @@
 
 .friend-filters .list-group-item.active {
   background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
   );
   border: none;
   color: #ffffff;
 }
 
-/* Friend Cards */
+.list-group-item .badge {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10%;
+  font-size: 0.65rem !important;
+}
+
+/* ----------------------------------------
+   FRIEND CARDS - COMMON STYLES
+   ---------------------------------------- */
 .friend-request-card,
 .friend-suggestion-card,
 .friend-card {
@@ -43,6 +67,7 @@
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease;
 }
 
 .friend-request-card:hover,
@@ -69,16 +94,57 @@
   font-size: 0.875rem;
 }
 
+.friend-card-footer {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* ----------------------------------------
+   MUTUAL FRIENDS BADGE
+   ---------------------------------------- */
+.mutual-friends {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mutual-friends i {
+  font-size: 0.875rem;
+  margin-right: 0.25rem;
+}
+
+/* ----------------------------------------
+   CARD HEADERS
+   ---------------------------------------- */
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card-header h5 {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
 .tab-pan .card {
   border-radius: 10px !important;
 }
 
-/* Button Styles */
+/* ----------------------------------------
+   BUTTONS
+   ---------------------------------------- */
 .btn-primary {
   background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
   );
   border: none;
   transition: transform 0.2s ease;
@@ -97,66 +163,18 @@
   background: #e9ecef;
 }
 
-/* Card Headers */
-.card-header {
-  background: transparent;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+.btn-action {
+  transition: all 0.2s ease;
 }
 
-.card-header h5 {
-  color: var(--text-color);
-  font-weight: 600;
+.btn-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card-title {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  margin-left: 1rem;
-  font-weight: 600;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-  .friend-filters {
-    position: static;
-    margin-bottom: 1.5rem;
-  }
-
-  .friend-profile-img {
-    height: 140px;
-  }
-}
-
-@media (max-width: 768px) {
-  .network-container {
-    padding: 1rem 0;
-  }
-
-  .friend-profile-img {
-    height: 120px;
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.friend-request-card,
-.friend-suggestion-card,
-.friend-card {
-  animation: fadeIn 0.5s ease;
-}
-
-/* Grid/List Button Styling */
+/* ----------------------------------------
+   GRID/LIST TOGGLE
+   ---------------------------------------- */
 .btn-group .btn.active {
   background-color: var(--primary-color);
   color: white;
@@ -167,7 +185,9 @@
   background-color: rgba(96, 0, 151, 0.1);
 }
 
-/*List View Styles */
+/* ----------------------------------------
+   LIST VIEW STYLES
+   ---------------------------------------- */
 .tab-content .row.list-view {
   display: flex;
   flex-direction: row;
@@ -233,56 +253,56 @@
   background: #f8f9fa;
 }
 
-/* Grid/List Toggle Buttons */
-.btn-group .btn.active {
-  background-color: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
-}
-
-/* Search Refinements */
+/* ----------------------------------------
+   SEARCH
+   ---------------------------------------- */
 .search-input:focus {
   box-shadow: 0 0 0 0.2rem rgba(96, 0, 151, 0.25);
 }
 
-/* Badge Styles */
-.list-group-item .badge {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 10%;
-  font-size: 0.65rem !important;
-}
-
+/* ----------------------------------------
+   BADGES
+   ---------------------------------------- */
 .badge {
   font-size: 0.75rem;
   padding: 0.35em 0.65em;
 }
 
-/* Mutual Friends Badge */
-.mutual-friends {
-  font-size: 0.75rem;
-  color: var(--text-muted);
+/* ----------------------------------------
+   ANIMATIONS
+   ---------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.mutual-friends i {
-  font-size: 0.875rem;
-  margin-right: 0.25rem;
+/* ----------------------------------------
+   MEDIA QUERIES
+   ---------------------------------------- */
+@media (max-width: 992px) {
+  .friend-filters {
+    position: static;
+    margin-bottom: 1.5rem;
+  }
+
+  .friend-profile-img {
+    height: 140px;
+  }
 }
 
-/* Action Buttons Hover Effects */
-.btn-action {
-  transition: all 0.2s ease;
-}
+@media (max-width: 768px) {
+  .network-container {
+    padding: 1rem 0;
+  }
 
-.btn-action:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Friend Card Footer */
-.friend-card-footer {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  .friend-profile-img {
+    height: 120px;
+  }
 }
