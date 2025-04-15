@@ -63,22 +63,23 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatDTO createPrivateChat(int user1Id, int user2Id) {
-        Chat existingChat = chatRepository.findPrivateChatBetweenUsers(user1Id, user2Id);
+    public ChatDTO createPrivateChat(String user1Email, int user2Id) {
+        User user1 = userRepository.findByEmail(user1Email);
+        if(user1 == null) throw new UsernameNotFoundException("User not found");
+
+        Chat existingChat = chatRepository.findPrivateChatBetweenUsers(user1.getUserId(), user2Id);
         if(existingChat != null) return convertToDto(existingChat);
 
         Chat chat = new Chat();
         chat.setType(Chat.ChatType.PRIVATE);
 
-        User user = userRepository.findByUserId(user1Id);
-        if(user == null) throw new UsernameNotFoundException("User not found");
-
-        chat.setCreatedBy(user);
+        chat.setCreatedBy(user1);
         chat.setCreatedAt(LocalDateTime.now());
 
         Chat savedChat = chatRepository.save(chat);
 
-        addParticipant(savedChat, user1Id);
+
+        addParticipant(savedChat, user1.getUserId());
         addParticipant(savedChat, user2Id);
 
         return convertToDto(savedChat);
@@ -109,8 +110,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public List<ChatDTO> getUserChats(int userId) {
-        return chatRepository.findByUserId(userId).stream()
+    public List<ChatDTO> getUserChats(String email) {
+        User user = userRepository.findByEmail(email);
+        if(user == null) throw new UsernameNotFoundException("User not found");
+
+        return chatRepository.findByUserId(user.getUserId()).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

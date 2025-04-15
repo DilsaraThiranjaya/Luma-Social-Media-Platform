@@ -290,8 +290,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.code === 200) {
           const friendsContainer = document.querySelector('#all-friends .row');
           friendsContainer.innerHTML = data.data.map(friend => `
-          <div class="col-md-6 col-lg-4">
-            <div class="friend-card" data-friend-id="${friend.user2.userId}">
+          <div class="col-md-6 col-lg-4 friend-card" data-friend-id="${friend.user2.userId}">
               <img src="${friend.user2.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" alt="Profile" class="friend-profile-img">
               <div class="friend-info">
                 <h6>${friend.user2.firstName} ${friend.user2.lastName}</h6>
@@ -305,7 +304,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
               </div>
             </div>
-          </div>
         `).join('');
 
           attachFriendOptionsHandlers();

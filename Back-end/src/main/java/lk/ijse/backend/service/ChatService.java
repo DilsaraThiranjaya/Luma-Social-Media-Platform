@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ChatService {
-    ChatDTO createPrivateChat(int user1Id, int user2Id);
+    ChatDTO createPrivateChat(String email, int userId);
 
     ChatDTO createGroupChat(GroupCreateDTO groupDTO, int creatorId) throws IOException;
 
-    List<ChatDTO> getUserChats(int userId);
+    List<ChatDTO> getUserChats(String userId);
 
     @Transactional
     MessageDTO sendMessage(MessageDTO messageDTO);

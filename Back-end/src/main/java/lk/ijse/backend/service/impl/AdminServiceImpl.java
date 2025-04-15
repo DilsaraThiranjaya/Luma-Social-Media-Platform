@@ -1,10 +1,7 @@
 package lk.ijse.backend.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import lk.ijse.backend.dto.DashboardStatsDTO;
-import lk.ijse.backend.dto.PostDTO;
-import lk.ijse.backend.dto.ReportDTO;
-import lk.ijse.backend.dto.UserDTO;
+import lk.ijse.backend.dto.*;
 import lk.ijse.backend.entity.*;
 import lk.ijse.backend.repository.*;
 import lk.ijse.backend.service.AdminService;
@@ -255,8 +252,34 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AdminAction> getAllAdminActions() {
-        return adminActionRepository.findAll(Sort.by(Sort.Direction.DESC, "performedAt"));
+    public List<AdminActionDTO> getAllAdminActions() {
+        List<AdminAction> performedAt = adminActionRepository.findAll(Sort.by(Sort.Direction.DESC, "performedAt"));
+        return convertToDTO(performedAt);
+    }
+
+    private List<AdminActionDTO> convertToDTO(List<AdminAction> performedAt) {
+        List<AdminActionDTO> adminActionDTOS = new ArrayList<>();
+
+        for (AdminAction adminAction : performedAt) {
+            AdminActionDTO adminActionDTO = new AdminActionDTO();
+            adminActionDTO.setActionId(adminAction.getActionId());
+            adminActionDTO.setActionType(adminAction.getActionType());
+            adminActionDTO.setDescription(adminAction.getDescription());
+            adminActionDTO.setPerformedAt(adminAction.getPerformedAt().toString());
+            adminActionDTO.setAdmin(modelMapper.map(adminAction.getAdmin(), UserDTO.class));
+
+            if (adminAction.getTargetUser() != null) {
+                adminActionDTO.setTargetUser(modelMapper.map(adminAction.getTargetUser(), UserDTO.class));
+            }
+
+            if (adminAction.getTargetPost() != null) {
+                adminActionDTO.setTargetPost(modelMapper.map(adminAction.getTargetPost(), PostDTO.class));
+            }
+
+            adminActionDTOS.add(adminActionDTO);
+        }
+
+        return adminActionDTOS;
     }
 
     private void validateTargets(AdminAction.ActionType actionType, Integer targetUserId, Integer targetPostId, Integer targetItemId) {

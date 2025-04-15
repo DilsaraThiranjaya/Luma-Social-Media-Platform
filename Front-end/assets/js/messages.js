@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       icon: "error",
       draggable: false
     });
-    sessionStorage.removeItem('authData');
-    window.location.href = LOGIN_URL;
+    // sessionStorage.removeItem('authData');
+    // window.location.href = LOGIN_URL;
   };
 
   const authData = JSON.parse(sessionStorage.getItem('authData'));
@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  function initializeUI() {
+  async function initializeUI() {
     // Toast configuration
     const Toast = Swal.mixin({
       toast: true,
@@ -193,123 +193,229 @@ document.addEventListener('DOMContentLoaded', async () => {
       timerProgressBar: true,
     });
 
-    // State variables
-    let selectedChatId = null;
-    let currentUserId = authData.userId;
-    let currentFile = null;
-    let stompClient = null;
-    let agoraClient = null;
-
-    // DOM elements
-    const messageInput = document.querySelector('.chat-input-container input');
-    const sendButton = document.querySelector('.chat-input-container .btn-primary');
-    const attachButton = document.querySelector('.chat-input-container .bi-paperclip').parentElement;
-    const emojiButton = document.querySelector('.chat-input-container .bi-emoji-smile').parentElement;
-    const newGroupChatBtn = document.getElementById('newGroupChatBtn');
-    const chatItems = document.querySelectorAll('.chat-item');
-
-    // Initialize tooltips
-    const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-    tooltips.forEach(tooltip => new bootstrap.Tooltip(tooltip));
+    // Initialize
+    try {
+      await loadFriendsAndChats();
+      connectWebSocket();
+    } catch (error) {
+        Toast.fire({
+            icon: "error",
+            title: error.message
+        })
+    }
 
     // Initialize WebSocket connection
-    function connectWebSocket(chatId) {
-      if (stompClient && stompClient.connected) {
-        stompClient.disconnect();
-      }
+    let stompClient = null;
 
-      const socket = new SockJS(`http://localhost:8080/ws-messages`);
-      const stompClient = Stomp.over(socket);
+    function connectWebSocket() {
+      const socket = new SockJS(`${BASE_URL}/ws-messages`);
+      stompClient = Stomp.over(socket);
 
-
-      stompClient.connect({}, function(frame) {
-        stompClient.subscribe(`/topic/chat/${chatId}`, function(message) {
+      stompClient.connect({}, function () {
+        // Subscribe to user's chat channel
+        stompClient.subscribe(`/topic/user/${currentUserId}/chat`, function (message) {
           const msg = JSON.parse(message.body);
-          addMessageToUI(msg, msg.sender.userId !== currentUserId);
+          handleNewMessage(msg);
         });
-      }, function(error) {
+      }, function (error) {
         console.error('WebSocket connection error:', error);
-        setTimeout(() => connectWebSocket(chatId), 5000);
+        setTimeout(connectWebSocket, 5000);
       });
     }
 
-    // Initialize Agora for calls
-    function initializeAgoraCall() {
-      agoraClient = AgoraRTC.createClient({ mode: 'rtc', codec: 'vp8' });
-      agoraClient.init('428728982af04de9902f5f12ffd88b21');
-    }
-
-    // Message handling
-    function sendMessage() {
-      const message = messageInput.value.trim();
-      if (message || currentFile) {
-        const formData = new FormData();
-        if (currentFile) formData.append('file', currentFile);
-        formData.append('content', message);
-        formData.append('chatId', selectedChatId);
-        formData.append('senderId', currentUserId);
-
-        fetch(`${BASE_URL}/chats/message`, {
-          method: 'POST',
+    // Load friends and create private chats
+    async function loadFriendsAndChats() {
+      try {
+        // Get friends list
+        const friendsResponse = await fetch(`${BASE_URL}/friendship/friends`, {
           headers: {
             'Authorization': `Bearer ${authData.token}`
-          },
-          body: formData
-        }).then(response => {
-          if (!response.ok) throw new Error('Failed to send message');
-          return response.json();
-        }).then(data => {
-          addMessageToUI(data, true);
-          messageInput.value = '';
-          currentFile = null;
-        }).catch(error => {
-          Toast.fire({
-            icon: "error",
-            title: error.message || "Failed to send message"
-          });
+          }
+        });
+
+        if (!friendsResponse.ok) throw new Error('Failed to fetch friends');
+        const friendsData = await friendsResponse.json();
+
+        // Get existing chats
+        const chatsResponse = await fetch(`${BASE_URL}/chats/chats`, {
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        if (!chatsResponse.ok) throw new Error('Failed to fetch chats');
+        const chatsData = await chatsResponse.json();
+
+        let privateChats = [];
+        let groupChats = [];
+        // Process private chats
+        if (chatsData.length > 0) {
+          privateChats = chatsData.data.filter(chat => chat.type === 'PRIVATE');
+          groupChats = chatsData.data.filter(chat => chat.type === 'GROUP');
+        }
+
+        // Create private chat elements
+        const privateChatsContainer = document.getElementById('private-chats-list');
+        const noPrivateChats = document.getElementById('no-private-chats');
+
+        if (privateChats.length > 0) {
+          noPrivateChats.style.display = 'none';
+          privateChatsContainer.innerHTML = privateChats.map(chat => createChatElement(chat)).join('');
+        }
+
+        // Create group chat elements
+        const groupChatsContainer = document.getElementById('group-chats-list');
+        const noGroupChats = document.getElementById('no-group-chats');
+
+        if (groupChats.length > 0) {
+          noGroupChats.style.display = 'none';
+          groupChatsContainer.innerHTML = groupChats.map(chat => createChatElement(chat)).join('');
+        }
+
+        // Create private chats for friends without existing chats
+        for (const friend of friendsData.data) {
+          if (!privateChats.some(chat =>
+              chat.participants.some(p => p.userId === friend.userId))) {
+            if (friend.user1.email !== authData.email) {
+              await createPrivateChat(friend.user1.userId);
+            } else {
+              await createPrivateChat(friend.user2.userId);
+            }
+          }
+        }
+
+        // Add click handlers
+        document.querySelectorAll('.chat-item').forEach(item => {
+          item.addEventListener('click', () => selectChat(item.dataset.chatId));
+        });
+      } catch (error) {
+        console.error('Error loading chats:', error);
+        Toast.fire({
+          icon: "error",
+          title: "Failed to load chats"
         });
       }
     }
 
-    // UI Update functions
-    function addMessageToUI(message, isReceived) {
-      const messagesContainer = document.querySelector('.chat-messages');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `message ${isReceived ? 'received' : 'sent'}`;
+    function createChatElement(chat) {
+      const otherParticipant = chat.type === 'PRIVATE'
+          ? chat.participants.find(p => p.userId !== currentUserId)
+          : null;
 
-      const time = new Date(message.sentAt).toLocaleTimeString('en-US', {
+      const name = chat.type === 'PRIVATE'
+          ? `${otherParticipant.firstName} ${otherParticipant.lastName}`
+          : chat.groupName;
+
+      const image = chat.type === 'PRIVATE'
+          ? otherParticipant.profilePictureUrl || '../assets/image/Profile-picture.png'
+          : chat.groupImageUrl || '../assets/image/Profile-picture.png';
+
+      const lastMessage = chat.lastMessage
+          ? `<p class="mb-0 text-truncate">${chat.lastMessage.content}</p>`
+          : '<p class="mb-0 text-muted">No messages yet</p>';
+
+      return `
+      <div class="chat-item" data-chat-id="${chat.chatId}" data-chat-type="${chat.type}">
+        <div class="d-flex align-items-center">
+          <div class="position-relative">
+            <img src="${image}" alt="${name}" class="rounded-circle">
+            ${otherParticipant?.isOnline ? '<span class="online-indicator"></span>' : ''}
+          </div>
+          <div class="chat-info">
+            <h6 class="mb-0">${name}</h6>
+            ${lastMessage}
+          </div>
+          <div class="chat-meta">
+            ${chat.lastMessage ? `
+              <span class="time">${formatTime(chat.lastMessage.sentAt)}</span>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+    `;
+    }
+
+    async function createPrivateChat(userId) {
+      try {
+        const response = await fetch(`${BASE_URL}/chats/private?userId=${userId}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to create private chat');
+        return await response.json();
+      } catch (error) {
+        console.error('Error creating private chat:', error);
+      }
+    }
+
+    async function selectChat(chatId) {
+      try {
+        // Load chat messages
+        const response = await fetch(`${BASE_URL}/chats/${chatId}/messages`, {
+          headers: {
+            'Authorization': `Bearer ${authData.token}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to load messages');
+        const messages = await response.json();
+
+        // Update UI
+        document.getElementById('initial-state').style.display = 'none';
+        document.getElementById('active-chat').style.display = 'block';
+
+        // Update chat header
+        const chatItem = document.querySelector(`.chat-item[data-chat-id="${chatId}"]`);
+        const chatName = chatItem.querySelector('h6').textContent;
+        const chatImage = chatItem.querySelector('img').src;
+        const isOnline = chatItem.querySelector('.online-indicator') !== null;
+
+        updateChatHeader(chatName, chatImage, isOnline);
+
+        // Display messages
+        const messagesContainer = document.querySelector('.chat-messages');
+        messagesContainer.innerHTML = messages.data
+            .map(msg => createMessageElement(msg))
+            .join('');
+
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      } catch (error) {
+        console.error('Error selecting chat:', error);
+        Toast.fire({
+          icon: "error",
+          title: "Failed to load chat"
+        });
+      }
+    }
+
+    function createMessageElement(message) {
+      const isSent = message.sender.userId === currentUserId;
+      const time = formatTime(message.sentAt);
+
+      return `
+      <div class="message ${isSent ? 'sent' : 'received'}">
+        <div class="message-content">
+          ${message.mediaUrl
+          ? `<img src="${message.mediaUrl}" alt="Shared image" class="message-image">`
+          : ''
+      }
+          <p>${message.content}</p>
+          <span class="message-time">${time}</span>
+          ${isSent ? '<span class="message-status"><i class="bi bi-check2-all"></i></span>' : ''}
+        </div>
+      </div>
+    `;
+    }
+
+    function formatTime(timestamp) {
+      return new Date(timestamp).toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
         hour12: true
       });
-
-      let contentHTML = '';
-      if (message.mediaType === 'IMAGE') {
-        contentHTML = `<img src="${message.mediaUrl}" alt="Shared image" class="message-image">`;
-      } else {
-        contentHTML = `<p>${message.content}</p>`;
-      }
-
-      messageDiv.innerHTML = `
-        <div class="message-content">
-          ${contentHTML}
-          <span class="message-time">${time}</span>
-          ${!isReceived ? '<span class="message-status"><i class="bi bi-check2"></i></span>' : ''}
-        </div>
-      `;
-
-      messagesContainer.appendChild(messageDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-      if (!isReceived) {
-        const status = messageDiv.querySelector('.message-status i');
-        setTimeout(() => {
-          status.className = 'bi bi-check2-all';
-          setTimeout(() => {
-            status.className = 'bi bi-check2-all text-primary';
-          }, 1000);
-        }, 1000);
-      }
     }
 
     function updateChatHeader(name, imgSrc, isOnline) {
@@ -321,465 +427,141 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       userImg.src = imgSrc;
       userName.textContent = name;
+      statusText.textContent = isOnline ? 'Online' : 'Offline';
 
       if (isOnline) {
-        statusText.textContent = 'Online';
         if (!onlineIndicator) {
           const indicator = document.createElement('span');
           indicator.className = 'online-indicator';
           userImg.parentElement.appendChild(indicator);
         }
       } else {
-        statusText.textContent = 'Offline';
-        if (onlineIndicator) {
-          onlineIndicator.remove();
-        }
+        onlineIndicator?.remove();
       }
     }
 
-    function showTypingIndicator() {
-      const messagesContainer = document.querySelector('.chat-messages');
-      const typingDiv = document.createElement('div');
-      typingDiv.className = 'message received';
-      typingDiv.innerHTML = `
-        <div class="typing-indicator">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      `;
-      messagesContainer.appendChild(typingDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-      setTimeout(() => typingDiv.remove(), 2000);
-    }
-
-    // Event listeners
-    chatItems.forEach(item => {
-      item.addEventListener('click', function() {
-        chatItems.forEach(chat => chat.classList.remove('active'));
-        this.classList.add('active');
-
-        const userName = this.querySelector('h6').textContent;
-        const userImg = this.querySelector('img').src;
-        const isOnline = this.querySelector('.online-indicator') !== null;
-        selectedChatId = this.dataset.chatId;
-
-        updateChatHeader(userName, userImg, isOnline);
-        connectWebSocket(selectedChatId);
-
-        const unreadCount = this.querySelector('.unread-count');
-        if (unreadCount) unreadCount.remove();
-      });
-    });
-
-    messageInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') sendMessage();
-    });
-
-    sendButton.addEventListener('click', sendMessage);
-
-    attachButton.addEventListener('click', function() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
-      input.click();
-
-      input.onchange = function(e) {
-        currentFile = e.target.files[0];
-        if (currentFile) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            // Show preview before sending
-            const preview = document.createElement('div');
-            preview.className = 'message-preview';
-            preview.innerHTML = `
-              <img src="${e.target.result}" alt="Preview" style="max-width: 200px; max-height: 200px;">
-              <button class="btn btn-sm btn-danger mt-2" id="cancelUpload">Cancel</button>
-            `;
-            document.querySelector('.chat-input-container').before(preview);
-
-            document.getElementById('cancelUpload').addEventListener('click', () => {
-              currentFile = null;
-              preview.remove();
-            });
-          };
-          reader.readAsDataURL(currentFile);
-        }
-      };
-    });
-
-    // Emoji picker
-    function createEmojiPicker() {
-      const emojiContainer = document.createElement('div');
-      emojiContainer.className = 'emoji-picker';
-      emojiContainer.style.cssText = `
-        position: absolute;
-        bottom: 100%;
-        left: 0;
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 0.5rem;
-        margin-bottom: 0.5rem;
-        z-index: 1000;
-      `;
-
-      const emojis = ['😀', '😂', '😊', '😍', '🥰', '😎', '😇', '🤔', '😄', '😅', '😉', '😋', '😘', '🥳', '😮', '😢', '😡', '👍', '👎', '❤️', '🔥', '✨', '🎉', '👏', '🙏', '💯', '💪', '🤝', '🫡', '🙌'];
-
-      emojis.forEach(emoji => {
-        const emojiSpan = document.createElement('span');
-        emojiSpan.textContent = emoji;
-        emojiSpan.style.cssText = `
-          font-size: 1.5rem;
-          cursor: pointer;
-          text-align: center;
-          transition: transform 0.2s;
-        `;
-        emojiSpan.addEventListener('click', () => {
-          messageInput.value += emoji;
-          messageInput.focus();
-        });
-        emojiSpan.addEventListener('mouseover', () => {
-          emojiSpan.style.transform = 'scale(1.2)';
-        });
-        emojiSpan.addEventListener('mouseout', () => {
-          emojiSpan.style.transform = 'scale(1)';
-        });
-        emojiContainer.appendChild(emojiSpan);
-      });
-
-      return emojiContainer;
-    }
-
-    let emojiPicker = null;
-    emojiButton.addEventListener('click', function() {
-      if (emojiPicker) {
-        emojiPicker.remove();
-        emojiPicker = null;
-      } else {
-        emojiPicker = createEmojiPicker();
-        this.parentElement.appendChild(emojiPicker);
-
-        document.addEventListener('click', function closeEmojiPicker(e) {
-          if (!emojiPicker.contains(e.target) && e.target !== emojiButton) {
-            emojiPicker.remove();
-            emojiPicker = null;
-            document.removeEventListener('click', closeEmojiPicker);
-          }
-        });
-      }
-    });
-
-    // Group chat functionality
-    if (newGroupChatBtn) {
-      newGroupChatBtn.addEventListener('click', createNewGroupChat);
-    }
-
-    function createNewGroupChat() {
-      const modalHTML = `
-        <div class="modal fade" id="createGroupModal" tabindex="-1" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Create New Group Chat</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="createGroupForm">
-                  <div class="mb-3">
-                    <label for="groupName" class="form-label">Group Name</label>
-                    <input type="text" class="form-control" id="groupName" required>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">Group Members</label>
-                    <div class="input-group mb-2">
-                      <input type="text" class="form-control" id="memberSearch" placeholder="Search friends">
-                      <button class="btn btn-primary" type="button" id="searchMemberBtn">
-                        <i class="bi bi-search"></i>
-                      </button>
-                    </div>
-                    <div class="selected-members border rounded p-2 mb-2" style="min-height: 50px;">
-                      <div class="d-flex flex-wrap gap-2" id="selectedMembersList"></div>
-                    </div>
-                    <div class="member-results border rounded p-2" style="max-height: 200px; overflow-y: auto;">
-                      <div id="memberSearchResults"></div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="groupImage" class="form-label">Group Image (Optional)</label>
-                    <input type="file" class="form-control" id="groupImage" accept="image/*">
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="createGroupBtn">Create Group</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      if (!document.getElementById('createGroupModal')) {
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-      }
-
-      const modal = new bootstrap.Modal(document.getElementById('createGroupModal'));
-      modal.show();
-
-      // Load friends list
-      fetchFriendsForGroup();
-    }
-
-    async function fetchFriendsForGroup() {
+    // Initialize Agora for calls
+    async function initializeAgoraCall(isVideo) {
       try {
-        const response = await fetch(`${BASE_URL}/friendship/friends`, {
-          headers: {
-            'Authorization': `Bearer ${authData.token}`
-          }
-        });
+        const agoraClient = AgoraRTC.createClient({mode: 'rtc', codec: 'vp8'});
+        const appId = '428728982af04de9902f5f12ffd88b21';
+        const channelName = selectedChatId.toString();
 
-        if (!response.ok) throw new Error('Failed to fetch friends');
+        // Create local tracks
+        const [audioTrack, videoTrack] = isVideo
+            ? await AgoraRTC.createMicrophoneAndCameraTracks()
+            : [await AgoraRTC.createMicrophoneAudioTrack(), null];
 
-        const friends = await response.json();
-        const resultsContainer = document.getElementById('memberSearchResults');
-
-        resultsContainer.innerHTML = friends.data.map(friend => `
-          <div class="member-item d-flex align-items-center p-2 border-bottom" 
-               data-id="${friend.userId}" data-name="${friend.firstName} ${friend.lastName}">
-            <div class="position-relative">
-              <img src="${friend.profilePictureUrl || '../assets/image/Test-profile-img.jpg'}" 
-                   alt="Profile" class="rounded-circle me-2" style="width: 32px; height: 32px;">
-            </div>
-            <span>${friend.firstName} ${friend.lastName}</span>
-            <button class="btn btn-sm btn-primary ms-auto add-member-btn">Add</button>
-          </div>
-        `).join('');
-
-        setupGroupCreationListeners();
-      } catch (error) {
-        Toast.fire({
-          icon: "error",
-          title: error.message || "Failed to load friends"
-        });
-      }
-    }
-
-    function setupGroupCreationListeners() {
-      document.querySelectorAll('.add-member-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          const memberItem = this.closest('.member-item');
-          const memberId = memberItem.dataset.id;
-          const memberName = memberItem.dataset.name;
-
-          if (document.querySelector(`.selected-member[data-id="${memberId}"]`)) return;
-
-          const selectedMemberHTML = `
-            <div class="selected-member badge bg-primary d-flex align-items-center p-2" data-id="${memberId}">
-              ${memberName}
-              <button type="button" class="btn-close btn-close-white ms-2 remove-member-btn" aria-label="Remove"></button>
-            </div>
-          `;
-
-          document.getElementById('selectedMembersList').insertAdjacentHTML('beforeend', selectedMemberHTML);
-
-          document.querySelector(`.selected-member[data-id="${memberId}"] .remove-member-btn`)
-              .addEventListener('click', function() {
-                this.closest('.selected-member').remove();
-              });
-        });
-      });
-
-      document.getElementById('searchMemberBtn').addEventListener('click', function() {
-        const searchTerm = document.getElementById('memberSearch').value.toLowerCase();
-        document.querySelectorAll('.member-item').forEach(item => {
-          const name = item.dataset.name.toLowerCase();
-          item.style.display = name.includes(searchTerm) ? 'flex' : 'none';
-        });
-      });
-
-      document.getElementById('memberSearch').addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') document.getElementById('searchMemberBtn').click();
-      });
-
-      document.getElementById('createGroupBtn').addEventListener('click', async function() {
-        const groupName = document.getElementById('groupName').value.trim();
-        const selectedMembers = document.querySelectorAll('.selected-member');
-        const groupImage = document.getElementById('groupImage').files[0];
-
-        if (!groupName) {
-          Toast.fire({
-            icon: "error",
-            title: "Please enter a group name"
-          });
-          return;
-        }
-
-        if (selectedMembers.length < 1) {
-          Toast.fire({
-            icon: "error",
-            title: "Please add at least 1 member"
-          });
-          return;
-        }
-
-        const memberIds = Array.from(selectedMembers).map(member => member.dataset.id);
-        const formData = new FormData();
-
-        formData.append('groupName', groupName);
-        formData.append('participantIds', JSON.stringify(memberIds));
-        if (groupImage) formData.append('groupImage', groupImage);
-
-        try {
-          const response = await fetch(`${BASE_URL}/chats/group`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${authData.token}`
-            },
-            body: formData
-          });
-
-          if (!response.ok) throw new Error('Failed to create group');
-
-          const groupChat = await response.json();
-          createGroupInUI(groupChat.data);
-
-          bootstrap.Modal.getInstance(document.getElementById('createGroupModal')).hide();
-          Toast.fire({
-            icon: "success",
-            title: "Group created successfully!"
-          });
-        } catch (error) {
-          Toast.fire({
-            icon: "error",
-            title: error.message || "Failed to create group"
-          });
-        }
-      });
-    }
-
-    function createGroupInUI(groupChat) {
-      const newGroupHTML = `
-        <div class="chat-item" data-chat-id="${groupChat.chatId}">
-          <div class="d-flex align-items-center">
-            <div class="position-relative">
-              <img src="${groupChat.groupImageUrl || '../assets/image/Test-profile-img.jpg'}" 
-                   alt="Group" class="rounded-circle">
-            </div>
-            <div class="chat-info">
-              <h6 class="mb-0">${groupChat.groupName}</h6>
-              <p class="mb-0">You created this group</p>
-            </div>
-            <div class="chat-meta">
-              <span class="time">now</span>
-            </div>
-          </div>
-        </div>
-      `;
-
-      const groupChatsList = document.querySelector('#group-chats .chat-list');
-      groupChatsList.insertAdjacentHTML('afterbegin', newGroupHTML);
-
-      const newGroup = groupChatsList.querySelector('.chat-item:first-child');
-      newGroup.addEventListener('click', function() {
-        document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
-        this.classList.add('active');
-        selectedChatId = this.dataset.chatId;
-
-        updateChatHeader(groupChat.groupName,
-            groupChat.groupImageUrl || '../assets/image/Test-profile-img.jpg',
-            false);
-        connectWebSocket(selectedChatId);
-
-        // Clear and load messages for this group
-        const chatMessages = document.querySelector('.chat-messages');
-        chatMessages.innerHTML = `
-          <div class="message-date-divider">
-            <span>Today</span>
-          </div>
-          <div class="d-flex justify-content-center my-4">
-            <div class="text-center text-muted">
-              <div class="mb-2">
-                <i class="bi bi-people-fill fs-1"></i>
-              </div>
-              <p>Group created. Say hello!</p>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // Call functionality
-    function startCall(isVideo) {
-      const channelName = selectedChatId.toString();
-
-      agoraClient.join(null, channelName, null, (uid) => {
-        if (isVideo) {
-          const localStream = AgoraRTC.createStream({
-            audio: true,
-            video: true,
-            uid: uid
-          });
-
-          localStream.init(() => {
-            document.getElementById('local-video').srcObject = localStream;
-            agoraClient.publish(localStream);
-          });
-        }
-
-        agoraClient.on('stream-added', (evt) => {
-          agoraClient.subscribe(evt.stream, (err) => console.log(err));
-        });
-
-        agoraClient.on('stream-subscribed', (evt) => {
-          const remoteStream = evt.stream;
-          document.getElementById('remote-video').srcObject = remoteStream;
-        });
+        // Join the channel
+        const uid = await agoraClient.join(appId, channelName, null, null);
 
         // Show call UI
         document.getElementById('call-container').style.display = 'block';
         document.getElementById('call-title').textContent =
-            `Call with ${document.querySelector('.chat-header h6').textContent}`;
-      });
-    }
+            `${isVideo ? 'Video' : 'Voice'} Call with ${document.querySelector('.chat-header h6').textContent}`;
 
-    function endCall() {
-      agoraClient.leave(() => {
-        document.getElementById('call-container').style.display = 'none';
-        const localVideo = document.getElementById('local-video');
-        const remoteVideo = document.getElementById('remote-video');
+        // Add call controls
+        const callControls = document.createElement('div');
+        callControls.className = 'call-controls';
+        callControls.innerHTML = `
+        <button class="btn btn-light mx-2" id="toggleAudio">
+          <i class="bi bi-mic-fill"></i>
+        </button>
+        ${isVideo ? `
+          <button class="btn btn-light mx-2" id="toggleVideo">
+            <i class="bi bi-camera-video-fill"></i>
+          </button>
+        ` : ''}
+        <button class="btn btn-danger mx-2" id="endCallBtn">
+          <i class="bi bi-telephone-x-fill"></i>
+        </button>
+      `;
+        document.querySelector('.call-header').appendChild(callControls);
 
-        if (localVideo.srcObject) {
-          localVideo.srcObject.getTracks().forEach(track => track.stop());
-          localVideo.srcObject = null;
+        // Publish local tracks
+        await agoraClient.publish(audioTrack);
+        if (isVideo && videoTrack) {
+          await agoraClient.publish(videoTrack);
+          videoTrack.play('local-video-container');
         }
 
-        if (remoteVideo.srcObject) {
-          remoteVideo.srcObject.getTracks().forEach(track => track.stop());
-          remoteVideo.srcObject = null;
+        // Handle remote user events
+        agoraClient.on('user-published', async (remoteUser, mediaType) => {
+          await agoraClient.subscribe(remoteUser, mediaType);
+
+          if (mediaType === 'audio') {
+            remoteUser.audioTrack.play();
+          }
+          if (mediaType === 'video') {
+            remoteUser.videoTrack.play('remote-video-container');
+          }
+        });
+
+        // Handle user unpublished
+        agoraClient.on('user-unpublished', async (remoteUser, mediaType) => {
+          if (mediaType === 'audio') {
+            remoteUser.audioTrack?.stop();
+          }
+          if (mediaType === 'video') {
+            remoteUser.videoTrack?.stop();
+          }
+        });
+
+        // Setup control buttons
+        document.getElementById('toggleAudio')?.addEventListener('click', async () => {
+          if (audioTrack.enabled) {
+            await audioTrack.setEnabled(false);
+            document.querySelector('#toggleAudio i').className = 'bi bi-mic-mute-fill';
+          } else {
+            await audioTrack.setEnabled(true);
+            document.querySelector('#toggleAudio i').className = 'bi bi-mic-fill';
+          }
+        });
+
+        if (isVideo) {
+          document.getElementById('toggleVideo')?.addEventListener('click', async () => {
+            if (videoTrack.enabled) {
+              await videoTrack.setEnabled(false);
+              document.querySelector('#toggleVideo i').className = 'bi bi-camera-video-off-fill';
+            } else {
+              await videoTrack.setEnabled(true);
+              document.querySelector('#toggleVideo i').className = 'bi bi-camera-video-fill';
+            }
+          });
         }
-      });
+
+        // Handle end call
+        const endCall = async () => {
+          audioTrack?.close();
+          videoTrack?.close();
+          await agoraClient.leave();
+          document.getElementById('call-container').style.display = 'none';
+          document.querySelector('.call-controls')?.remove();
+        };
+
+        document.getElementById('endCallBtn').addEventListener('click', endCall);
+
+        // Handle user leaving
+        agoraClient.on('user-left', endCall);
+
+        return {agoraClient, audioTrack, videoTrack};
+      } catch (error) {
+        console.error('Error in call:', error);
+        await Swal.fire({
+          icon: 'error',
+          title: 'Call Failed',
+          text: 'Failed to establish the call. Please try again.',
+        });
+      }
     }
 
-    // Initialize call buttons
+    // Call button event listeners
     document.querySelector('.chat-actions .bi-telephone').parentElement.addEventListener('click', () => {
-      initializeAgoraCall();
-      startCall(false);
+      initializeAgoraCall(false);
     });
 
     document.querySelector('.chat-actions .bi-camera-video').parentElement.addEventListener('click', () => {
-      initializeAgoraCall();
-      startCall(true);
+      initializeAgoraCall(true);
     });
-
-    document.getElementById('endCallBtn').addEventListener('click', endCall);
-
-    // Initialize scroll position
-    document.querySelector('.chat-messages').scrollTop =
-        document.querySelector('.chat-messages').scrollHeight;
   }
 });

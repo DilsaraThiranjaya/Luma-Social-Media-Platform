@@ -595,6 +595,22 @@
   align-items: center;
 }
 
+.call-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.call-controls .btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
 .video-container {
   position: relative;
   height: calc(100% - 60px);
@@ -631,4 +647,19 @@
   border: 2px solid white;
   border-radius: 8px;
   object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .call-controls .btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  #local-video-container {
+    width: 120px;
+    height: 90px;
+    bottom: 10px;
+    right: 10px;
+  }
 }

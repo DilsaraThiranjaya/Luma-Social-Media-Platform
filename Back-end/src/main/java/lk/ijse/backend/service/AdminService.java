@@ -1,5 +1,6 @@
 package lk.ijse.backend.service;
 
+import lk.ijse.backend.dto.AdminActionDTO;
 import lk.ijse.backend.dto.DashboardStatsDTO;
 import lk.ijse.backend.dto.ReportDTO;
 import lk.ijse.backend.dto.UserDTO;
@@ -16,5 +17,5 @@ public interface AdminService {
     List<UserDTO> getNewUsers();
     void createAdminAction(Integer adminId, AdminAction.ActionType actionType,
                            Integer targetUserId, Integer targetPostId, Integer targetItemId);
-    List<AdminAction> getAllAdminActions();
+    List<AdminActionDTO> getAllAdminActions();
 }

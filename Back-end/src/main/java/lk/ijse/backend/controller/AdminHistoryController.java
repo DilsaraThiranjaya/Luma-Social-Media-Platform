@@ -31,13 +31,10 @@ public class AdminHistoryController {
     public ResponseEntity<ResponseDTO> getAllAdminActions() {
         log.info("Getting all admin actions");
         try {
-            List<AdminAction> actions = adminService.getAllAdminActions();
-            List<AdminActionDTO> dtos = actions.stream()
-                    .map(action -> modelMapper.map(action, AdminActionDTO.class))
-                    .collect(Collectors.toList());
+            List<AdminActionDTO> actions = adminService.getAllAdminActions();
 
             log.info("Successfully retrieved all admin actions");
-            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Success", dtos));
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Success", actions));
         } catch (Exception e) {
             log.error("Error retrieving actions", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

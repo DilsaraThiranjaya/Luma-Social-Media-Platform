@@ -1,0 +1,1006 @@
+2025-04-14 06:03:08.527 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-14 06:03:08.625 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 1884 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-14 06:03:08.626 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 06:03:09.471 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-14 06:03:10.890 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 06:03:11.149 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 236 ms. Found 13 JPA repository interfaces.
+2025-04-14 06:03:12.354 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-14 06:03:12.390 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-14 06:03:12.392 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 06:03:12.392 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 06:03:12.577 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 06:03:12.578 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3887 ms
+2025-04-14 06:03:12.943 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 06:03:13.146 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 06:03:13.211 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 06:03:13.630 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 06:03:13.667 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 06:03:14.249 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@18ca9277
+2025-04-14 06:03:14.250 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 06:03:14.329 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 06:03:14.332 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 06:03:14.361 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 06:03:16.084 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 06:03:16.432 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 06:03:16.843 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-14 06:03:19.309 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-14 06:03:28.989 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-04-14 06:03:28.990 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@52f13597]]
+2025-04-14 06:03:28.991 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-04-14 06:03:28.991 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-14 06:03:29.009 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-14 06:03:29.020 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 21.38 seconds (process running for 23.734)
+2025-04-14 06:04:05.022 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-14 06:04:05.022 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-14 06:04:05.023 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-14 06:04:05.189 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:05.661 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:05.686 [http-nio-8080-exec-4] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:06.192 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:06.192 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:06.289 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:06.458 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 06:04:29.048 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2025-04-14 06:34:29.322 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2025-04-14 06:40:21.265 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 06:40:21.281 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 06:40:21.285 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-04-14 06:40:21.286 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@52f13597]]
+2025-04-14 06:40:21.286 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-04-14 06:40:21.291 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 06:40:21.295 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 06:40:21.301 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-14 06:40:35.444 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-14 06:40:35.524 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12708 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-14 06:40:35.524 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 06:40:36.097 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-14 06:40:36.797 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 06:40:36.905 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 100 ms. Found 13 JPA repository interfaces.
+2025-04-14 06:40:37.548 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-14 06:40:37.579 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-14 06:40:37.582 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 06:40:37.583 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 06:40:37.671 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 06:40:37.671 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2093 ms
+2025-04-14 06:40:37.881 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 06:40:37.970 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 06:40:38.055 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 06:40:38.397 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 06:40:38.429 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 06:40:38.827 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33891646
+2025-04-14 06:40:38.830 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 06:40:38.885 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 06:40:38.887 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 06:40:38.905 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 06:40:40.410 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 06:40:40.669 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 06:40:40.994 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-14 06:40:43.065 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-14 06:40:51.596 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-04-14 06:40:51.597 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7b211214]]
+2025-04-14 06:40:51.597 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-04-14 06:40:51.598 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-14 06:40:51.613 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-14 06:40:51.622 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 16.879 seconds (process running for 18.261)
+2025-04-14 06:41:51.597 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2025-04-14 07:08:54.939 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 07:08:54.949 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 07:08:54.949 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-04-14 07:08:54.949 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7b211214]]
+2025-04-14 07:08:54.949 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-04-14 07:08:54.949 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 07:08:54.958 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 07:08:54.961 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-14 07:09:04.118 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-14 07:09:04.179 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 4368 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-14 07:09:04.179 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 07:09:04.599 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-14 07:09:05.380 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 07:09:05.478 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 92 ms. Found 13 JPA repository interfaces.
+2025-04-14 07:09:06.029 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-14 07:09:06.039 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-14 07:09:06.039 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 07:09:06.039 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 07:09:06.099 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 07:09:06.099 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1870 ms
+2025-04-14 07:09:06.229 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 07:09:06.277 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 07:09:06.309 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 07:09:06.539 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 07:09:06.559 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 07:09:06.849 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@86377d5
+2025-04-14 07:09:06.849 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 07:09:06.892 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 07:09:06.892 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 07:09:06.907 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 07:09:08.259 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 07:09:08.509 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 07:09:08.809 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-14 07:09:10.989 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-14 07:09:18.639 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-04-14 07:09:18.639 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@696572ca]]
+2025-04-14 07:09:18.639 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-04-14 07:09:18.639 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-14 07:09:18.659 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-14 07:09:18.668 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.125 seconds (process running for 16.095)
+2025-04-14 07:09:59.450 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-14 07:09:59.450 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-14 07:09:59.450 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-04-14 07:09:59.649 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.159 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.199 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.648 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.649 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.746 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:00.915 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:10:18.639 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2025-04-14 07:18:53.484 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:53.619 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:53.638 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:54.551 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:54.727 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:54.751 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:18:54.782 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.141 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.150 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.154 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.158 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.166 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.169 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.181 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.188 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.203 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:11.203 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.229 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.335 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.338 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.451 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.457 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.480 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:16.573 [http-nio-8080-exec-10] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:18.086 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:18.088 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:19:18.105 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:18.149 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Successfully fetched 13 notifications
+2025-04-14 07:19:31.747 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 07:19:31.831 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 07:19:31.880 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 07:19:31.915 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 07:19:32.000 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 07:19:40.873 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:40.879 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:40.902 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:19:40.998 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:30:06.222 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:30:06.222 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:30:06.242 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:30:06.254 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:30:06.259 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 13 notifications
+2025-04-14 07:30:06.262 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:52.775 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:39:52.780 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:52.793 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:52.813 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:52.825 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Successfully fetched 13 notifications
+2025-04-14 07:39:52.839 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.190 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.204 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.205 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.211 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.232 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:39:57.234 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:39:57.244 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 07:39:57.324 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.591 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.699 [http-nio-8080-exec-9] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.701 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.807 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.816 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.832 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.838 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.839 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:40:02.843 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:02.846 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 07:40:02.912 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:40:11.170 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.291 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.300 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.441 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.456 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.472 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.477 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.500 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 2 friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:11.522 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya2@gmail.com, type: null
+2025-04-14 07:40:11.536 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 2 unread notifications
+2025-04-14 07:40:11.588 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:18.647 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2025-04-14 07:40:35.331 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 13
+2025-04-14 07:40:35.851 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 13
+2025-04-14 07:40:37.380 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 13
+2025-04-14 07:40:37.394 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 13
+2025-04-14 07:40:40.433 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add comment for post ID: 13
+2025-04-14 07:40:40.470 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added comment for post ID: 13
+2025-04-14 07:40:40.480 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 13
+2025-04-14 07:40:40.494 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 13
+2025-04-14 07:40:46.839 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.841 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.850 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.851 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 2 friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.854 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.854 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.860 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.861 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.870 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:46.881 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:51.293 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Declining friend request from user: dilsarathiranjaya2@gmail.com to user: 1
+2025-04-14 07:40:51.311 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Friend request declined from user: dilsarathiranjaya2@gmail.com to user: 1
+2025-04-14 07:40:51.326 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:51.347 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:52.402 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Accepting friend request from user: dilsarathiranjaya2@gmail.com to user: 2
+2025-04-14 07:40:52.422 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Friend request accepted from user: dilsarathiranjaya2@gmail.com to user: 2
+2025-04-14 07:40:52.431 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:52.431 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:52.446 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 1 friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:52.455 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.081 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.094 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.097 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 1 friends for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.105 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.108 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.113 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.123 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.124 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.128 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:40:57.135 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend suggestions for user: dilsarathiranjaya2@gmail.com
+2025-04-14 07:41:00.484 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Sending friend request from user: dilsarathiranjaya2@gmail.com to user: 1
+2025-04-14 07:41:00.520 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Friend request sent successfully from user: dilsarathiranjaya2@gmail.com to user: 1
+2025-04-14 07:41:05.100 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.209 [http-nio-8080-exec-8] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.212 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.316 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.330 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.346 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.348 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.356 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:05.361 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:41:05.380 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:41:05.421 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:06.982 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:41:06.990 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:06.991 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:06.999 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:07.003 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:07.011 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 16 notifications
+2025-04-14 07:41:23.262 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:23.262 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:23.267 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:41:23.269 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:23.274 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:23.280 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:41:23.290 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:41:23.350 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.345 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.354 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.369 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.379 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.387 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:23.397 [http-nio-8080-exec-5] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:47:23.410 [http-nio-8080-exec-5] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:47:23.455 [http-nio-8080-exec-6] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.618 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.629 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.633 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.633 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.638 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.638 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.639 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.653 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.654 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:47:26.664 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:47:26.664 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.682 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.683 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:26.684 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.447 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.556 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.562 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.666 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.685 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.685 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:47:34.694 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:47:34.701 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.704 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.712 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:34.766 [http-nio-8080-exec-2] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:36.169 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:36.170 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:36.176 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:47:36.177 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:36.181 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:47:36.210 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Successfully fetched 16 notifications
+2025-04-14 07:51:39.909 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:39.918 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:39.918 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:39.927 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:39.929 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:51:39.933 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:39.943 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:51:40.027 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.613 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.620 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.627 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.633 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.636 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:41.636 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:51:41.652 [http-nio-8080-exec-8] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:51:41.722 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:46.965 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 18
+2025-04-14 07:51:46.974 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 18
+2025-04-14 07:51:52.013 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.014 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.022 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.024 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.025 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.029 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.036 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.041 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.042 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.054 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:51:52.054 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.064 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.066 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:51:52.067 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:52:18.372 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.481 [http-nio-8080-exec-6] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.485 [http-nio-8080-exec-3] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.582 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.604 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.608 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 07:52:18.611 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 1 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.619 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.621 [http-nio-8080-exec-4] INFO  l.i.b.c.NotificationController - Successfully fetched 3 unread notifications
+2025-04-14 07:52:18.633 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 07:52:18.711 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 07:55:23.398 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 07:55:23.439 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 07:55:23.478 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 07:55:23.504 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 07:55:23.577 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 07:55:25.459 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 07:55:25.471 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 07:55:25.495 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-14 07:55:25.505 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-14 07:55:27.775 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 07:55:27.789 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=11, videoPosts=2, inactivePosts=0, activePosts=12}
+2025-04-14 07:55:27.815 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 07:55:27.918 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-14 07:55:27.946 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 07:55:27.967 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post analytics: {data=[0, 1, 0, 0, 1, 0, 0], labels=[TUE, WED, THU, FRI, SAT, SUN, MON]}
+2025-04-14 07:55:41.185 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 07:55:41.209 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=7, typeDistribution={OTHER=1, HARASSMENT=4, INAPPROPRIATE=5, SPAM=1}, totalReports=11, escalatedReports=2, resolvedReports=2}
+2025-04-14 07:55:41.229 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 07:55:41.242 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 11 reports
+2025-04-14 08:10:18.650 [MessageBroker-2] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 3, active threads = 1, queued tasks = 0, completed tasks = 2]
+2025-04-14 08:40:18.663 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 4, active threads = 1, queued tasks = 0, completed tasks = 3]
+2025-04-14 09:10:18.679 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 4, active threads = 1, queued tasks = 0, completed tasks = 4]
+2025-04-14 09:21:39.488 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 09:21:39.502 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 09:21:39.508 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-04-14 09:21:39.509 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@696572ca]]
+2025-04-14 09:21:39.509 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-04-14 09:21:39.550 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 09:21:39.568 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 09:21:39.578 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-14 09:21:48.383 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-14 09:21:48.456 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 12612 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-14 09:21:48.457 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 09:21:49.001 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-14 09:21:49.765 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 09:21:49.867 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 94 ms. Found 14 JPA repository interfaces.
+2025-04-14 09:21:50.432 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-14 09:21:50.447 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-14 09:21:50.448 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 09:21:50.449 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 09:21:50.512 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 09:21:50.513 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2002 ms
+2025-04-14 09:21:50.658 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 09:21:50.736 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 09:21:50.770 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 09:21:51.042 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 09:21:51.072 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 09:21:51.446 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@432eb882
+2025-04-14 09:21:51.448 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 09:21:51.493 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 09:21:51.494 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 09:21:51.509 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 09:21:52.959 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 09:21:53.226 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 09:21:53.487 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-14 09:22:01.830 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-14 09:22:03.489 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-04-14 09:22:03.489 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7f91187c]]
+2025-04-14 09:22:03.490 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-04-14 09:22:03.490 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-14 09:22:03.506 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-14 09:22:03.514 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 15.818 seconds (process running for 16.847)
+2025-04-14 09:22:34.590 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 09:22:34.604 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 09:22:34.607 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-04-14 09:22:34.607 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@7f91187c]]
+2025-04-14 09:22:34.607 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-04-14 09:22:34.614 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 09:22:34.617 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 09:22:34.627 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-14 09:22:37.741 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-04-14 09:22:37.804 [main] INFO  lk.ijse.backend.BackEndApplication - Starting BackEndApplication using Java 21.0.1 with PID 14192 (C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform\Back-end\target\classes started by TRON in C:\Users\TRON\Documents\IdeaProjects\AAD\Spring\Luma-Social-Media-Platform)
+2025-04-14 09:22:37.805 [main] INFO  lk.ijse.backend.BackEndApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-14 09:22:38.212 [main] INFO  o.s.c.i.s.PropertySourceProcessor - Properties location [classpath:otherprops.properties] not resolvable: class path resource [otherprops.properties] cannot be opened because it does not exist
+2025-04-14 09:22:39.014 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-14 09:22:39.138 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 113 ms. Found 14 JPA repository interfaces.
+2025-04-14 09:22:39.815 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-14 09:22:39.842 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-14 09:22:39.845 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-14 09:22:39.845 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-14 09:22:39.917 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-14 09:22:39.917 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2065 ms
+2025-04-14 09:22:40.108 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-14 09:22:40.174 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-14 09:22:40.211 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-14 09:22:40.512 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-14 09:22:40.543 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-14 09:22:40.886 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@a63643e
+2025-04-14 09:22:40.888 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-14 09:22:40.931 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-04-14 09:22:40.933 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-04-14 09:22:40.949 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-14 09:22:42.743 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-14 09:22:46.195 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 09:22:46.531 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-14 09:22:54.859 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userServiceImpl
+2025-04-14 09:22:56.320 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2025-04-14 09:22:56.321 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@13df2251]]
+2025-04-14 09:22:56.321 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2025-04-14 09:22:56.322 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-14 09:22:56.416 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-14 09:22:56.425 [main] INFO  lk.ijse.backend.BackEndApplication - Started BackEndApplication in 19.278 seconds (process running for 20.091)
+2025-04-14 09:23:56.322 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2025-04-14 09:25:07.118 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-14 09:25:07.118 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-14 09:25:07.119 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-14 09:25:07.460 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:07.460 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:07.460 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:07.460 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:07.485 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:07.485 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:25:07.621 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:07.719 [http-nio-8080-exec-5] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.123 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.335 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.346 [http-nio-8080-exec-2] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.458 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.470 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.484 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.491 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.492 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:11.504 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:11.512 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:25:11.557 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.260 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.266 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.267 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.279 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.280 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.292 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:27.297 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.298 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.300 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.312 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:25:27.316 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.334 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.337 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:27.345 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.517 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.645 [http-nio-8080-exec-7] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.649 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.760 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.764 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.765 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:38.775 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.776 [http-nio-8080-exec-2] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:25:38.795 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.817 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:38.849 [http-nio-8080-exec-1] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:40.051 [http-nio-8080-exec-5] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:40.054 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:40.060 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:40.062 [http-nio-8080-exec-5] INFO  l.i.b.c.NotificationController - Successfully fetched 0 notifications
+2025-04-14 09:25:40.066 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:40.074 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.249 [http-nio-8080-exec-3] INFO  l.i.b.controller.SettingsController - Received account settings fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.267 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.267 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.268 [http-nio-8080-exec-3] INFO  l.i.b.controller.SettingsController - Successfully retrieved account settings for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.275 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.286 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:25:48.288 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:25:48.296 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:26:01.398 [http-nio-8080-exec-8] INFO  l.i.b.controller.SettingsController - Fetching blocked users for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:26:01.407 [http-nio-8080-exec-8] INFO  l.i.b.controller.SettingsController - Successfully retrieved blocked users for: dilsarathiranjaya3@gmail.com
+2025-04-14 09:26:06.908 [http-nio-8080-exec-5] INFO  l.i.b.controller.SettingsController - Fetching blocked users for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:26:06.915 [http-nio-8080-exec-5] INFO  l.i.b.controller.SettingsController - Successfully retrieved blocked users for: dilsarathiranjaya3@gmail.com
+2025-04-14 09:26:11.353 [http-nio-8080-exec-9] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 09:26:11.415 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 09:26:11.462 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 09:26:11.496 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 09:26:11.522 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 09:27:28.569 [http-nio-8080-exec-6] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 09:27:28.624 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 09:27:28.683 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 09:27:28.728 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 09:27:28.750 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 09:27:42.057 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 09:27:42.075 [http-nio-8080-exec-2] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 09:27:42.104 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-14 09:27:42.112 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-14 09:27:47.405 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:27:47.421 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-14 09:27:47.447 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:27:47.511 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-14 09:27:47.536 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:27:47.549 [http-nio-8080-exec-4] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:28:03.963 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:28:03.978 [http-nio-8080-exec-2] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=0, typeDistribution={OTHER=0, HARASSMENT=0, INAPPROPRIATE=0, SPAM=0}, totalReports=0, escalatedReports=0, resolvedReports=0}
+2025-04-14 09:28:03.999 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:28:04.002 [http-nio-8080-exec-7] INFO  l.i.b.controller.ReportController - Fetched 0 reports
+2025-04-14 09:28:17.595 [http-nio-8080-exec-3] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:28:17.603 [http-nio-8080-exec-3] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:28:26.814 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:26.827 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:26.833 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:28:26.844 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:26.847 [http-nio-8080-exec-7] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:28:26.849 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:26.856 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:26.887 [http-nio-8080-exec-9] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:48.647 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Received report creation request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:48.717 [http-nio-8080-exec-3] INFO  l.i.b.controller.TimelineController - Report submitted for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.813 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.814 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.821 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.823 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.825 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:28:55.828 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.832 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:28:55.832 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.845 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.848 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.856 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.857 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.858 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:28:55.912 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:00.388 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:00.391 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:00.391 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:29:00.406 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:29:00.408 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:00.415 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:00.419 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:00.423 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:00.428 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-14 09:29:00.428 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:00.439 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:00.441 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-14 09:29:00.446 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: 3
+2025-04-14 09:29:00.459 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:00.464 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-14 09:29:00.477 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:00.489 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:00.496 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:04.430 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-14 09:29:04.431 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:04.437 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:04.442 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: 3
+2025-04-14 09:29:04.442 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:04.446 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:04.453 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-14 09:29:04.461 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:04.472 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:04.472 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-14 09:29:04.489 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:04.493 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:04.494 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:29:04.494 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:04.504 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:29:04.504 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:04.510 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:04.513 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:06.986 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-14 09:29:06.986 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:06.993 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:06.996 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-14 09:29:07.002 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:29:07.002 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-14 09:29:07.006 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: 3
+2025-04-14 09:29:07.009 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:29:07.013 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:07.017 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:07.019 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:07.024 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:07.025 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:29:07.037 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:07.040 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:07.049 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:07.063 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:29:07.073 [http-nio-8080-exec-7] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:29:23.446 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received report creation request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:23.461 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Report submitted for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:29:34.680 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.797 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.803 [http-nio-8080-exec-5] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.907 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.922 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.938 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.951 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.951 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya4@gmail.com, type: null
+2025-04-14 09:29:34.955 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:34.955 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:29:34.984 [http-nio-8080-exec-8] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:29:38.937 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 3
+2025-04-14 09:29:39.447 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 3
+2025-04-14 09:29:40.286 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-14 09:29:40.297 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-14 09:29:42.842 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add comment for post ID: 3
+2025-04-14 09:29:42.890 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added comment for post ID: 3
+2025-04-14 09:29:42.900 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 3
+2025-04-14 09:29:42.909 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 3
+2025-04-14 09:29:47.489 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 4
+2025-04-14 09:29:47.512 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 4
+2025-04-14 09:29:48.566 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 4
+2025-04-14 09:29:48.578 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 4
+2025-04-14 09:29:50.690 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to add comment for post ID: 4
+2025-04-14 09:29:50.713 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully added comment for post ID: 4
+2025-04-14 09:29:50.721 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get post with ID: 4
+2025-04-14 09:29:50.731 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved post with ID: 4
+2025-04-14 09:29:55.495 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to add reaction for post ID: 9
+2025-04-14 09:29:55.522 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully added reaction for post ID: 9
+2025-04-14 09:30:03.705 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.708 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.721 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.723 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.726 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.730 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.735 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.737 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.742 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.747 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.753 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya4@gmail.com, type: null
+2025-04-14 09:30:03.753 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.757 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:03.758 [http-nio-8080-exec-1] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:30:08.623 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-14 09:30:08.627 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:30:08.637 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:30:08.640 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-14 09:30:08.651 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-14 09:30:08.654 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:08.656 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya4@gmail.com, type: null
+2025-04-14 09:30:08.660 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: 3
+2025-04-14 09:30:08.660 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 0 unread notifications
+2025-04-14 09:30:08.668 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:08.670 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya4@gmail.com and 3
+2025-04-14 09:30:08.670 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:08.675 [http-nio-8080-exec-7] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:08.677 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya4@gmail.com and 3
+2025-04-14 09:30:08.683 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:30:08.688 [http-nio-8080-exec-4] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:30:08.699 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:30:08.703 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:30:24.871 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Received report creation request for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:24.888 [http-nio-8080-exec-6] INFO  l.i.b.controller.ProfileController - Report submitted for email: dilsarathiranjaya4@gmail.com
+2025-04-14 09:30:40.524 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - Received sign-in request for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.626 [http-nio-8080-exec-1] INFO  l.i.b.controller.AuthController - User successfully signed in with email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.630 [http-nio-8080-exec-10] INFO  l.i.b.controller.AuthController - Checking 2FA status for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.702 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.707 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.712 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.713 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:30:40.716 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.730 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:40.733 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:30:40.786 [http-nio-8080-exec-7] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:42.820 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:30:42.821 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:42.826 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:42.829 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:42.837 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 6 notifications
+2025-04-14 09:30:42.844 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.771 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.771 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.771 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.777 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.781 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved 2 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.784 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.785 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.789 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.789 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.798 [http-nio-8080-exec-3] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:30:47.806 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.812 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.814 [http-nio-8080-exec-9] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:30:47.819 [http-nio-8080-exec-3] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:30:52.533 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 09:30:52.569 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 09:30:52.602 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 09:30:52.626 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 09:30:52.655 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 09:30:56.125 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 09:30:56.132 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 09:30:56.149 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-14 09:30:56.151 [http-nio-8080-exec-10] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-14 09:30:57.264 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:30:57.273 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-14 09:30:57.310 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:30:57.364 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-14 09:30:57.380 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:30:57.385 [http-nio-8080-exec-3] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:30:59.183 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 09:30:59.188 [http-nio-8080-exec-6] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 09:30:59.209 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-14 09:30:59.212 [http-nio-8080-exec-7] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-14 09:31:01.054 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 09:31:01.084 [http-nio-8080-exec-5] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 09:31:01.112 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 09:31:01.131 [http-nio-8080-exec-3] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 09:31:01.151 [http-nio-8080-exec-7] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 09:31:02.553 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:31:02.560 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-14 09:31:02.588 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:31:02.642 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-14 09:31:02.655 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:31:02.661 [http-nio-8080-exec-1] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:31:05.039 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:31:05.047 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=3, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=0}
+2025-04-14 09:31:05.067 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:31:05.071 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:31:21.752 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Updating report status for report ID: 3
+2025-04-14 09:31:21.786 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Report status updated for report ID: 3
+2025-04-14 09:31:21.798 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:31:21.803 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:31:21.814 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:31:21.824 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=2, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=1}
+2025-04-14 09:31:28.079 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 09:31:28.086 [http-nio-8080-exec-4] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 09:31:28.117 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Received user fetch request
+2025-04-14 09:31:28.120 [http-nio-8080-exec-8] INFO  l.i.b.controller.UserController - Successfully retrieved users
+2025-04-14 09:31:31.485 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Received user status update request for user: 2
+2025-04-14 09:31:31.503 [http-nio-8080-exec-9] INFO  l.i.b.controller.UserController - Successfully updated user status for user: 2
+2025-04-14 09:31:31.513 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Received user stats fetch request
+2025-04-14 09:31:31.519 [http-nio-8080-exec-3] INFO  l.i.b.controller.UserController - Successfully retrieved user stats
+2025-04-14 09:31:33.829 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:31:33.840 [http-nio-8080-exec-7] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=0, activePosts=12}
+2025-04-14 09:31:33.884 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:31:33.949 [http-nio-8080-exec-10] INFO  l.i.b.controller.PostController - Fetched 12 posts
+2025-04-14 09:31:33.963 [http-nio-8080-exec-5] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:31:33.970 [http-nio-8080-exec-5] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:31:41.480 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Updating post status for post ID: 14
+2025-04-14 09:31:41.530 [http-nio-8080-exec-2] INFO  l.i.b.controller.PostController - Post status updated for post ID: 14
+2025-04-14 09:31:41.541 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:31:41.550 [http-nio-8080-exec-3] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=12, recentPosts=0, imagePosts=12, videoPosts=0, inactivePosts=1, activePosts=11}
+2025-04-14 09:31:48.811 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Deleting post with ID: 16
+2025-04-14 09:31:48.817 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234376/users/2/profile/users/2/profile/1743234375832.jpg
+2025-04-14 09:31:48.817 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743234376/users/2/profile/users/2/profile/1743234375832.jpg
+2025-04-14 09:31:48.817 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/profile/users/2/profile/1743234375832
+2025-04-14 09:31:50.984 [http-nio-8080-exec-1] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/profile/users/2/profile/1743234375832
+2025-04-14 09:31:51.015 [http-nio-8080-exec-1] ERROR l.i.b.controller.PostController - Error deleting post: Target post not found: 16
+2025-04-14 09:31:59.911 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:31:59.918 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=1, activePosts=10}
+2025-04-14 09:31:59.946 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:31:59.996 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched 11 posts
+2025-04-14 09:32:00.012 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:32:00.021 [http-nio-8080-exec-9] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:32:07.175 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Updating post status for post ID: 14
+2025-04-14 09:32:07.193 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Post status updated for post ID: 14
+2025-04-14 09:32:07.203 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:32:07.211 [http-nio-8080-exec-1] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=11, recentPosts=0, imagePosts=11, videoPosts=0, inactivePosts=0, activePosts=11}
+2025-04-14 09:32:18.659 [http-nio-8080-exec-4] INFO  l.i.b.controller.PostController - Deleting post with ID: 14
+2025-04-14 09:32:18.663 [http-nio-8080-exec-4] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media from Cloudinary: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233037/users/2/profile/users/2/profile/1743233036722.jpg
+2025-04-14 09:32:18.663 [http-nio-8080-exec-4] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracting public ID from URL: https://res.cloudinary.com/dmbxwetlk/image/upload/v1743233037/users/2/profile/users/2/profile/1743233036722.jpg
+2025-04-14 09:32:18.663 [http-nio-8080-exec-4] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Extracted public ID: users/2/profile/users/2/profile/1743233036722
+2025-04-14 09:32:20.106 [http-nio-8080-exec-4] INFO  l.i.b.s.impl.CloudinaryServiceImpl - Deleting media with public ID: users/2/profile/users/2/profile/1743233036722
+2025-04-14 09:32:20.128 [http-nio-8080-exec-4] ERROR l.i.b.controller.PostController - Error deleting post: Target post not found: 14
+2025-04-14 09:32:24.937 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetching post stats
+2025-04-14 09:32:24.945 [http-nio-8080-exec-8] INFO  l.i.b.controller.PostController - Fetched post stats: {totalPosts=10, recentPosts=0, imagePosts=10, videoPosts=0, inactivePosts=0, activePosts=10}
+2025-04-14 09:32:24.968 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetching posts with status: null, type: null, search: null
+2025-04-14 09:32:25.022 [http-nio-8080-exec-9] INFO  l.i.b.controller.PostController - Fetched 10 posts
+2025-04-14 09:32:25.036 [http-nio-8080-exec-6] INFO  l.i.b.controller.PostController - Fetching post analytics
+2025-04-14 09:32:25.042 [http-nio-8080-exec-6] ERROR l.i.b.controller.PostController - Error fetching post analytics: Cannot invoke "java.time.LocalDateTime.isBefore(java.time.chrono.ChronoLocalDateTime)" because "postDate" is null
+2025-04-14 09:35:09.461 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:35:09.475 [http-nio-8080-exec-1] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=2, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=1}
+2025-04-14 09:35:09.503 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:35:09.512 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:35:13.828 [http-nio-8080-exec-8] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:35:13.846 [http-nio-8080-exec-8] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:35:22.621 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:35:22.630 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=2, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=1}
+2025-04-14 09:35:22.651 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:35:22.661 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:35:24.359 [http-nio-8080-exec-1] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:35:24.364 [http-nio-8080-exec-1] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:36:20.298 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:36:20.310 [http-nio-8080-exec-4] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=2, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=1}
+2025-04-14 09:36:20.337 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:36:20.342 [http-nio-8080-exec-8] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:36:21.470 [http-nio-8080-exec-9] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:36:21.480 [http-nio-8080-exec-9] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:36:30.101 [http-nio-8080-exec-6] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:36:30.110 [http-nio-8080-exec-6] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:38:02.128 [http-nio-8080-exec-10] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:38:02.137 [http-nio-8080-exec-10] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:38:51.756 [http-nio-8080-exec-5] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:38:51.767 [http-nio-8080-exec-5] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:39:27.117 [http-nio-8080-exec-9] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:39:27.126 [http-nio-8080-exec-9] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:48:34.656 [http-nio-8080-exec-7] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:48:34.667 [http-nio-8080-exec-7] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:51:35.456 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:35.479 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:40.704 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:40.716 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:41.151 [http-nio-8080-exec-9] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:41.160 [http-nio-8080-exec-9] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:42.543 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:42.554 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:46.169 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:46.179 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:49.006 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:49.017 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:52.054 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:52.062 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:53.737 [http-nio-8080-exec-9] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:53.745 [http-nio-8080-exec-9] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:54.632 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:54.642 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:56.089 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:56.099 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:57.655 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:57.664 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:58.401 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:51:58.409 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:04.682 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetching report stats
+2025-04-14 09:52:04.690 [http-nio-8080-exec-9] INFO  l.i.b.controller.ReportController - Fetched report stats: {pendingReports=2, typeDistribution={OTHER=0, HARASSMENT=1, INAPPROPRIATE=1, SPAM=1}, totalReports=3, escalatedReports=0, resolvedReports=1}
+2025-04-14 09:52:04.755 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetching reports with status: null, search: null
+2025-04-14 09:52:04.759 [http-nio-8080-exec-6] INFO  l.i.b.controller.ReportController - Fetched 3 reports
+2025-04-14 09:52:08.122 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:08.132 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.930 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.956 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.969 [http-nio-8080-exec-9] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.980 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:52:37.982 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.986 [http-nio-8080-exec-3] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.994 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:37.997 [http-nio-8080-exec-6] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:52:40.194 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.199 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.199 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.200 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.205 [http-nio-8080-exec-8] INFO  l.i.b.c.FriendshipController - Retrieved 1 friends for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.205 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:52:40.207 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieving friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.209 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.212 [http-nio-8080-exec-1] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend suggestions for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.217 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieving friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.217 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.221 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:40.223 [http-nio-8080-exec-9] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:52:40.231 [http-nio-8080-exec-4] INFO  l.i.b.c.FriendshipController - Retrieved friendship counts for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:47.399 [http-nio-8080-exec-5] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:47.407 [http-nio-8080-exec-5] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:50.372 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:50.384 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:50.684 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:50.694 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:51.894 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:51.903 [http-nio-8080-exec-6] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:52.630 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:52.639 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:53.788 [http-nio-8080-exec-5] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:53.799 [http-nio-8080-exec-5] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:55.847 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:55.855 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:57.361 [http-nio-8080-exec-3] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:52:57.370 [http-nio-8080-exec-3] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:16.650 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:16.686 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:24.996 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Received user profile info fetch request for user: 3
+2025-04-14 09:53:24.996 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:53:25.000 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieving friends for user: 3
+2025-04-14 09:53:25.002 [http-nio-8080-exec-3] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:53:25.007 [http-nio-8080-exec-10] INFO  l.i.b.c.FriendshipController - Retrieved 1 friends for user: 3
+2025-04-14 09:53:25.010 [http-nio-8080-exec-8] INFO  l.i.b.controller.ProfileController - Successfully retrieved user profile info for user: 3
+2025-04-14 09:53:25.022 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:53:25.022 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Checking friendship between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:53:25.028 [http-nio-8080-exec-6] INFO  l.i.b.c.FriendshipController - Friendship checked successfully between users: dilsarathiranjaya3@gmail.com and 3
+2025-04-14 09:53:25.028 [http-nio-8080-exec-1] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:53:25.038 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:25.041 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:25.045 [http-nio-8080-exec-2] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:25.048 [http-nio-8080-exec-5] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:25.054 [http-nio-8080-exec-3] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:53:25.058 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Received request to get posts for user: 3
+2025-04-14 09:53:25.064 [http-nio-8080-exec-10] INFO  l.i.b.controller.ProfileController - Successfully retrieved posts for user: 3
+2025-04-14 09:53:25.071 [http-nio-8080-exec-3] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:53:44.510 [http-nio-8080-exec-2] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:44.518 [http-nio-8080-exec-2] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:44.862 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:44.871 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:46.503 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:46.513 [http-nio-8080-exec-8] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:52.040 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:52.049 [http-nio-8080-exec-4] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:55.088 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:55.096 [http-nio-8080-exec-1] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:56.200 [http-nio-8080-exec-2] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:56.211 [http-nio-8080-exec-2] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:56.330 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2025-04-14 09:53:58.427 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Received request to search for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:53:58.437 [http-nio-8080-exec-10] INFO  l.i.b.controller.SearchController - Successfully searched for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:38.342 [http-nio-8080-exec-8] INFO  l.i.b.controller.DashboardController - Fetching dashboard statistics
+2025-04-14 09:54:38.379 [http-nio-8080-exec-4] INFO  l.i.b.controller.DashboardController - Fetching user growth data for period: monthly
+2025-04-14 09:54:38.415 [http-nio-8080-exec-1] INFO  l.i.b.controller.DashboardController - Fetching user demographics data
+2025-04-14 09:54:38.439 [http-nio-8080-exec-2] INFO  l.i.b.controller.DashboardController - Fetching recent reports
+2025-04-14 09:54:38.461 [http-nio-8080-exec-10] INFO  l.i.b.controller.DashboardController - Fetching new users
+2025-04-14 09:54:40.369 [http-nio-8080-exec-8] INFO  l.i.b.c.AdminHistoryController - Getting all admin actions
+2025-04-14 09:54:40.378 [http-nio-8080-exec-8] INFO  l.i.b.c.AdminHistoryController - Successfully retrieved all admin actions
+2025-04-14 09:54:55.484 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Received request to get posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:55.502 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Received profile info fetch request for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:55.506 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieving friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:55.510 [http-nio-8080-exec-5] INFO  l.i.b.c.FriendshipController - Retrieved 0 friend requests for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:55.512 [http-nio-8080-exec-2] INFO  l.i.b.controller.ProfileController - Successfully retrieved profile info for user: dilsarathiranjaya3@gmail.com
+2025-04-14 09:54:55.521 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Fetching unread notifications for user: dilsarathiranjaya3@gmail.com, type: null
+2025-04-14 09:54:55.537 [http-nio-8080-exec-10] INFO  l.i.b.c.NotificationController - Successfully fetched 6 unread notifications
+2025-04-14 09:54:55.541 [http-nio-8080-exec-4] INFO  l.i.b.controller.TimelineController - Successfully retrieved posts for email: dilsarathiranjaya3@gmail.com
+2025-04-14 09:55:02.256 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-14 09:55:02.267 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-14 09:55:02.270 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-04-14 09:55:02.270 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@13df2251]]
+2025-04-14 09:55:02.270 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-04-14 09:55:02.275 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-14 09:55:02.278 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-14 09:55:02.283 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

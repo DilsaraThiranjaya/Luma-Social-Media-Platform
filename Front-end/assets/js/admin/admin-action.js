@@ -144,10 +144,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         function getTargetDetails(action) {
             // Handle cases where target might be in description
-            if (action.description) {
-                if (action.description.includes('User')) return action.description.split('User')[1];
-                if (action.description.includes('Post')) return action.description.split('Post')[1];
-                if (action.description.includes('Item')) return action.description.split('Item')[1];
+            if (action.actionType.includes('USER')) return action.targetUser.firstName + ' ' + action.targetUser.lastName;
+            if (action.actionType.includes('POST')) return 'Post #' + action.targetPost.postId;
+            if (action.actionType.includes('REPORT')) {
+                if (action.targetUser != null ) return action.targetUser.firstName + ' ' + action.targetUser.lastName;
+                if (action.targetPost != null) return 'Post #' + action.targetPost.postId;
             }
             return 'System Action';
         }

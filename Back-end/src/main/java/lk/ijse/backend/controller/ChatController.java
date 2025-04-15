@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,10 +61,10 @@ public class ChatController {
     }
 
     @PostMapping("/private")
-    public ResponseEntity<ChatDTO> createPrivateChat(@RequestParam Integer user1Id,
-                                                     @RequestParam Integer user2Id) {
-        log.info("Creating private chat between {} and {}", user1Id, user2Id);
-        return ResponseEntity.ok(chatService.createPrivateChat(user1Id, user2Id));
+    public ResponseEntity<ChatDTO> createPrivateChat(@RequestParam Integer userId, Authentication authentication) {
+        String email = authentication.getName();
+        log.info("Creating private chat between {} and {}", userId, email);
+        return ResponseEntity.ok(chatService.createPrivateChat(email, userId));
     }
 
     @PostMapping(value = "/group", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -77,9 +78,11 @@ public class ChatController {
         }
     }
 
-    @GetMapping("/{userId}/chats")
-    public ResponseEntity<List<ChatDTO>> getUserChats(@PathVariable Integer userId) {
-        log.info("Getting chats for user: {}", userId);
-        return ResponseEntity.ok(chatService.getUserChats(userId));
+    @GetMapping("/chats")
+    public ResponseEntity<List<ChatDTO>> getUserChats(Authentication authentication) {
+        String email = authentication.getName();
+
+        log.info("Getting chats for user: {}", email);
+        return ResponseEntity.ok(chatService.getUserChats(email));
     }
 }

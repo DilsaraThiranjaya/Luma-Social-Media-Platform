@@ -174,26 +174,18 @@ public class FriendshipServiceImpl implements FriendshipService {
     public FriendshipDTO blockUser(String userEmail, int blockedUserId) throws Exception {
         User user = userRepository.findByEmail(userEmail);
         User blockedUser = userRepository.findByUserId(blockedUserId);
-        Optional<Friendship> existingFriendship = friendshipRepository.findByUsers(user.getUserId(), blockedUserId);
 
-        Friendship friendship;
-        if (existingFriendship.isPresent()) {
-            friendship = existingFriendship.get();
+        // Delete existing friendship if it exists
+        friendshipRepository.findByUsers(user.getUserId(), blockedUserId)
+                .ifPresent(friendship -> friendshipRepository.delete(friendship));
 
-            friendship.setUser1(user);
-            friendship.setUser2(blockedUser);
-        } else {
-            if (blockedUser == null) {
-                throw new EntityNotFoundException("User not found");
-            }
-
-            friendship = new Friendship();
-            friendship.setId(new FriendshipId(user.getUserId(), blockedUserId));
-            friendship.setUser1(user);
-            friendship.setUser2(blockedUser);
-        }
-
+        // Always create a new instance
+        Friendship friendship = new Friendship();
+        friendship.setId(new FriendshipId(user.getUserId(), blockedUserId));
+        friendship.setUser1(user);
+        friendship.setUser2(blockedUser);
         friendship.setStatus(Friendship.FriendshipStatus.BLOCKED);
+
         Friendship savedFriendship = friendshipRepository.save(friendship);
         return modelMapper.map(savedFriendship, FriendshipDTO.class);
     }
