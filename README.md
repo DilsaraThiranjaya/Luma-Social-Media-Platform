@@ -191,7 +191,7 @@ Luma-Social-Media-Platform/
 - Mini-Game Integration (Speed Shifters 2D)
 
 ## 🎥 Demo Video
-[[YouTube Demo Link]](https://youtu.be/M6UtgESC8C4?si=ok21Omd3DdX86tZ9)
+[[YouTube Demo Link]](https://youtu.be/kJSpN3zmJBs?si=yGztiR_z_Uu4Y5z2)
 
 ## 👥 Contributors
 - Dilsara Thiranjaya
