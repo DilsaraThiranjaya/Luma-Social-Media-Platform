@@ -33,6 +33,7 @@ public class ChatDTO {
     @NotNull(message = "Created by cannot be null")
     private UserDTO createdBy;
 
+    private int unreadCount;
 
     private List<UserDTO> participants;
     private LocalDateTime createdAt;

@@ -71,6 +71,7 @@ public class AuthController {
         AuthResponse authResponse = new AuthResponse();
         authResponse.setEmail(loadedUser.getEmail());
         authResponse.setToken(token);
+        authResponse.setUserId(loadedUser.getUserId());
 
         userService.updateLastLoginTime(authRequest.getEmail());
         log.info("User successfully signed in with email: {}", authRequest.getEmail());
@@ -115,6 +116,7 @@ public class AuthController {
                     AuthResponse authResponse = new AuthResponse();
                     authResponse.setEmail(userDTO.getEmail());
                     authResponse.setToken(token);
+                    authResponse.setUserId(userDTO.getUserId());
 
                     log.info("User successfully signed up with email: {}", userDTO.getEmail());
                     return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDTO(VarList.Created, "User Successfully Registered!", authResponse));

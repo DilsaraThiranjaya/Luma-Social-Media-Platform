@@ -372,6 +372,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     throw new Error("Passwords do not match");
                 }
 
+                // Check if all password requirements are met
+                const requirements = {
+                    length: password.length >= 8,
+                    uppercase: /[A-Z]/.test(password),
+                    lowercase: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password),
+                };
+
+                const allRequirementsMet = Object.values(requirements).every(Boolean);
+
+                if (!allRequirementsMet) {
+                    await Toast.fire({
+                        icon: "error",
+                        title: "Password doesn't meet all requirements"
+                    });
+                    return;
+                }
+
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating...';
 
@@ -393,7 +412,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 sessionStorage.setItem("authData", JSON.stringify({
                     email: data.data.email,
-                    token: data.data.token
+                    token: data.data.token,
+                    userId: data.data.userId
                 }));
 
                 Toast.fire({ icon: "success", title: "Registration successful!" });

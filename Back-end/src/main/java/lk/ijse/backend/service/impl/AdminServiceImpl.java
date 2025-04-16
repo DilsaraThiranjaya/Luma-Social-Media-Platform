@@ -266,14 +266,27 @@ public class AdminServiceImpl implements AdminService {
             adminActionDTO.setActionType(adminAction.getActionType());
             adminActionDTO.setDescription(adminAction.getDescription());
             adminActionDTO.setPerformedAt(adminAction.getPerformedAt().toString());
-            adminActionDTO.setAdmin(modelMapper.map(adminAction.getAdmin(), UserDTO.class));
+
+            UserDTO admin = new UserDTO();
+            admin.setUserId(adminAction.getAdmin().getUserId());
+            admin.setFirstName(adminAction.getAdmin().getFirstName());
+            admin.setLastName(adminAction.getAdmin().getLastName());
+            admin.setProfilePictureUrl(adminAction.getAdmin().getProfilePictureUrl());
+            adminActionDTO.setAdmin(admin);
 
             if (adminAction.getTargetUser() != null) {
-                adminActionDTO.setTargetUser(modelMapper.map(adminAction.getTargetUser(), UserDTO.class));
+                UserDTO targetUser = new UserDTO();
+                targetUser.setUserId(adminAction.getTargetUser().getUserId());
+                targetUser.setFirstName(adminAction.getTargetUser().getFirstName());
+                targetUser.setLastName(adminAction.getTargetUser().getLastName());
+                targetUser.setProfilePictureUrl(adminAction.getTargetUser().getProfilePictureUrl());
+                adminActionDTO.setTargetUser(targetUser);
             }
 
             if (adminAction.getTargetPost() != null) {
-                adminActionDTO.setTargetPost(modelMapper.map(adminAction.getTargetPost(), PostDTO.class));
+                PostDTO targetPost = new PostDTO();
+                targetPost.setPostId(adminAction.getTargetPost().getPostId());
+                adminActionDTO.setTargetPost(targetPost);
             }
 
             adminActionDTOS.add(adminActionDTO);

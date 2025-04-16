@@ -10,7 +10,7 @@
     <link rel="icon" href="../assets/image/Luma-logo.jpeg">
     <link rel="stylesheet" href="../assets/css/messages.css">
     <link rel="stylesheet" href="../assets/css/common.css">
-    <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.19.3.js"></script>
+<!--    <script src="https://download.agora.io/sdk/release/AgoraRTC_N-4.19.3.js"></script>-->
   </head>
   <body>
     <div id="app">
@@ -125,12 +125,8 @@
                 <div class="tab-content">
                   <!-- Private Chats -->
                   <div class="tab-pane fade show active" id="private-chats">
-                    <div class="chat-list" id="private-chats-list">
-                      <!-- Private chats will be loaded here -->
-                      <div class="text-center p-4 text-muted" id="no-private-chats">
-                        <i class="bi bi-chat-dots fs-1"></i>
-                        <p class="mt-2">No private chats yet</p>
-                      </div>
+                    <div class="chat-list">
+                      <!-- Private chats will be loaded here dynamically -->
                     </div>
                   </div>
 
@@ -141,12 +137,8 @@
                         <i class="bi bi-plus-circle me-2"></i>Create New Group
                       </button>
                     </div>
-                    <div class="chat-list" id="group-chats-list">
-                      <!-- Group chats will be loaded here -->
-                      <div class="text-center p-4 text-muted" id="no-group-chats">
-                        <i class="bi bi-people fs-1"></i>
-                        <p class="mt-2">No group chats yet</p>
-                      </div>
+                    <div class="chat-list">
+                      <!-- Group chats will be loaded here dynamically -->
                     </div>
                   </div>
                 </div>
@@ -156,70 +148,51 @@
             <!-- Chat Window -->
             <div class="col-md-8">
               <div class="chat-window">
-                <!-- Initial State -->
-                <div id="initial-state" class="d-flex flex-column align-items-center justify-content-center h-100 text-center text-muted">
-                  <i class="bi bi-chat-text fs-1 mb-3"></i>
-                  <h5>Select a chat to start messaging</h5>
-                  <p class="small">Choose from your private or group conversations</p>
-                </div>
-
-                <!-- Active Chat State -->
-                <div id="active-chat" style="display: none;">
-                  <!-- Chat Header -->
-                  <div class="chat-header">
-                    <div class="d-flex align-items-center">
-                      <div class="position-relative">
-                        <img src="../assets/image/Profile-picture.png" alt="Profile" class="rounded-circle">
-                        <span class="online-indicator"></span>
-                      </div>
-                      <div class="chat-user-info">
-                        <h6 class="mb-0"></h6>
-                        <small class="text-muted">Offline</small>
-                      </div>
+                <!-- Chat Header -->
+                <div class="chat-header">
+                  <div class="d-flex align-items-center">
+                    <div class="position-relative">
+                      <img src="../assets/image/Test-profile-img.jpg" alt="Profile" class="rounded-circle">
+                      <span class="online-indicator"></span>
                     </div>
-                    <div class="chat-actions">
-                      <button class="btn btn-light" data-bs-toggle="tooltip" title="Voice Call">
-                        <i class="bi bi-telephone"></i>
-                      </button>
-                      <button class="btn btn-light" data-bs-toggle="tooltip" title="Video Call">
-                        <i class="bi bi-camera-video"></i>
-                      </button>
-                      <button class="btn btn-light" data-bs-toggle="tooltip" title="More Options">
-                        <i class="bi bi-three-dots-vertical"></i>
-                      </button>
+                    <div class="chat-user-info">
+                      <h6 class="mb-0">Select a chat</h6>
+                      <small class="text-muted">No chat selected</small>
                     </div>
                   </div>
-
-                  <!-- Chat Messages -->
-                  <div class="chat-messages">
-                    <!-- Messages will be loaded here -->
-                  </div>
-
-                  <!-- Chat Input -->
-                  <div class="chat-input-container">
-                    <button class="btn btn-light" data-bs-toggle="tooltip" title="Add Emoji">
-                      <i class="bi bi-emoji-smile"></i>
+                  <div class="chat-actions">
+                    <button class="btn btn-light" data-bs-toggle="tooltip" title="Voice Call">
+                      <i class="bi bi-telephone"></i>
                     </button>
-                    <button class="btn btn-light" data-bs-toggle="tooltip" title="Attach File">
-                      <i class="bi bi-paperclip"></i>
+                    <button class="btn btn-light" data-bs-toggle="tooltip" title="Video Call">
+                      <i class="bi bi-camera-video"></i>
                     </button>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Type a message...">
-                      <button class="btn btn-primary">
-                        <i class="bi bi-send"></i>
-                      </button>
-                    </div>
+                    <button class="btn btn-light" data-bs-toggle="tooltip" title="More Options">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </button>
                   </div>
                 </div>
 
-                <!-- Call Container -->
-                <div id="call-container" style="display: none;">
-                  <div class="call-header">
-                    <h5 id="call-title"></h5>
+                <!-- Chat Messages -->
+                <div class="chat-messages">
+                  <div class="message-date-divider">
+                    <span>Select a chat to start messaging</span>
                   </div>
-                  <div class="video-container">
-                    <div id="remote-video-container"></div>
-                    <div id="local-video-container"></div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                  <button class="btn btn-light" data-bs-toggle="tooltip" title="Add Emoji">
+                    <i class="bi bi-emoji-smile"></i>
+                  </button>
+                  <button class="btn btn-light" data-bs-toggle="tooltip" title="Attach File">
+                    <i class="bi bi-paperclip"></i>
+                  </button>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Type a message..." disabled>
+                    <button class="btn btn-primary" disabled>
+                      <i class="bi bi-send"></i>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -234,6 +207,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/js/messages.js"></script>

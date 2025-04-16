@@ -1,88 +1,180 @@
 package lk.ijse.backend.controller;
 
-import lk.ijse.backend.dto.*;
-import lk.ijse.backend.entity.Message;
+import lk.ijse.backend.dto.ChatDTO;
+import lk.ijse.backend.dto.GroupCreateDTO;
+import lk.ijse.backend.dto.MessageDTO;
+import lk.ijse.backend.dto.ResponseDTO;
 import lk.ijse.backend.service.ChatService;
-import lk.ijse.backend.service.CloudinaryService;
+import lk.ijse.backend.util.VarList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/chats")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 public class ChatController {
     private final ChatService chatService;
-    private final CloudinaryService cloudinaryService;
+    private final SimpMessagingTemplate messagingTemplate;
+
+    @GetMapping
+    public ResponseEntity<ResponseDTO> getUserChats(Authentication authentication) {
+        log.info("Getting chats for user: {}", authentication.getName());
+        try {
+            int userId = Integer.parseInt(authentication.getName());
+            List<ChatDTO> chats = chatService.getUserChats(userId);
+
+            log.info("Chats retrieved successfully for user: {}", authentication.getName());
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Chats retrieved successfully", chats));
+        } catch (Exception e) {
+            log.error("Error retrieving user chats: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ResponseDTO> getChat(@PathVariable int chatId, Authentication authentication) {
+        log.info("Getting chat with ID: {}", chatId);
+        try {
+            int userId = Integer.parseInt(authentication.getName());
+            ChatDTO chat = chatService.getChat(chatId, userId);
+
+            log.info("Chat retrieved successfully with ID: {}", chatId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Chat retrieved successfully", chat));
+        } catch (Exception e) {
+
+            log.error("Error retrieving chat with ID: {}", chatId);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/private/{userId}")
+    public ResponseEntity<ResponseDTO> createPrivateChat(@PathVariable int userId, Authentication authentication) {
+        log.info("Creating private chat between user {} and user {}", authentication.getName(), userId);
+        try {
+            int currentUserId = Integer.parseInt(authentication.getName());
+            ChatDTO chat = chatService.createPrivateChat(currentUserId, userId);
+
+            log.info("Private chat created successfully between user {} and user {}", currentUserId, userId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.Created, "Private chat created successfully", chat));
+        } catch (Exception e) {
+            log.error("Error creating private chat: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/group")
+    public ResponseEntity<ResponseDTO> createGroupChat(@RequestBody GroupCreateDTO createGroupChatDTO,
+                                                       Authentication authentication) {
+        log.info("Creating group chat: {}", createGroupChatDTO);
+        try {
+            int creatorId = Integer.parseInt(authentication.getName());
+            ChatDTO chat = chatService.createGroupChat(createGroupChatDTO, creatorId);
+
+            log.info("Group chat created successfully: {}", chat);
+            return ResponseEntity.ok(new ResponseDTO(VarList.Created, "Group chat created successfully", chat));
+        } catch (Exception e) {
+            log.error("Error creating group chat: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/{chatId}/participants/{userId}")
+    public ResponseEntity<ResponseDTO> addParticipant(@PathVariable int chatId, @PathVariable int userId) {
+        log.info("Adding participant {} to chat {}", userId, chatId);
+        try {
+            chatService.addParticipant(chatId, userId);
+
+            log.info("Participant added successfully to chat {}", chatId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Participant added successfully", null));
+        } catch (Exception e) {
+            log.error("Error adding participant: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @DeleteMapping("/{chatId}/participants/{userId}")
+    public ResponseEntity<ResponseDTO> removeParticipant(@PathVariable int chatId, @PathVariable int userId) {
+        log.info("Removing participant {} from chat {}", userId, chatId);
+        try {
+            chatService.removeParticipant(chatId, userId);
+
+            log.info("Participant removed successfully from chat {}", chatId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Participant removed successfully", null));
+        } catch (Exception e) {
+            log.error("Error removing participant: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @MessageMapping("/chat.send")
+    public void sendMessage(@Payload MessageDTO message) {
+        log.info("Received message: {}", message);
+        MessageDTO savedMessage = chatService.sendMessage(message);
+        messagingTemplate.convertAndSend("/topic/chat." + message.getChatId(), savedMessage);
+    }
 
     @GetMapping("/{chatId}/messages")
-    public ResponseEntity<List<MessageDTO>> getChatMessages(@PathVariable Integer chatId) {
-        log.info("Getting messages for chat: {}", chatId);
-        return ResponseEntity.ok(chatService.getChatHistory(chatId));
-    }
-
-    @PostMapping(value = "/message", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MessageDTO> sendMessage(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam String content,
-            @RequestParam Integer chatId,
-            @RequestParam Integer senderId) {
-        log.info("Sending message: {}", content);
-
-        MessageDTO messageDTO = new MessageDTO();
-        messageDTO.setContent(content);
-        messageDTO.setChatId(chatId);
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(senderId);
-
-        messageDTO.setSender(userDTO);
-
-        if(file != null && !file.isEmpty()) {
-            String fileUrl = null;
-            try {
-                fileUrl = cloudinaryService.uploadChatMedia(file, "IMAGE", senderId);
-            } catch (IOException e) {
-                return ResponseEntity.badRequest().build();
-            }
-            messageDTO.setMediaUrl(fileUrl);
-            messageDTO.setMediaType(Message.MediaType.IMAGE);
-        }
-        return ResponseEntity.ok(chatService.sendMessage(messageDTO));
-    }
-
-    @PostMapping("/private")
-    public ResponseEntity<ChatDTO> createPrivateChat(@RequestParam Integer userId, Authentication authentication) {
-        String email = authentication.getName();
-        log.info("Creating private chat between {} and {}", userId, email);
-        return ResponseEntity.ok(chatService.createPrivateChat(email, userId));
-    }
-
-    @PostMapping(value = "/group", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ChatDTO> createGroupChat(@ModelAttribute GroupCreateDTO groupDTO,
-                                                   @RequestParam Integer creatorId) {
-        log.info("Creating group chat: {}", groupDTO);
+    public ResponseEntity<ResponseDTO> getChatMessages(@PathVariable int chatId, Authentication authentication) {
+        log.info("Getting messages for chat {}", chatId);
         try {
-            return ResponseEntity.ok(chatService.createGroupChat(groupDTO, creatorId));
-        } catch (IOException e) {
-            return ResponseEntity.badRequest().body(null);
+            int userId = Integer.parseInt(authentication.getName());
+            List<MessageDTO> messages = chatService.getChatMessages(chatId, userId);
+
+            log.info("Messages retrieved successfully for chat {}", chatId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Messages retrieved successfully", messages));
+        } catch (Exception e) {
+            log.error("Error retrieving messages: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
         }
     }
 
-    @GetMapping("/chats")
-    public ResponseEntity<List<ChatDTO>> getUserChats(Authentication authentication) {
-        String email = authentication.getName();
+    @PostMapping("/{chatId}/messages/read")
+    public ResponseEntity<ResponseDTO> markMessagesAsRead(@PathVariable int chatId, Authentication authentication) {
+        log.info("Marking messages as read for chat {}", chatId);
+        try {
+            int userId = Integer.parseInt(authentication.getName());
+            chatService.markMessagesAsRead(chatId, userId);
 
-        log.info("Getting chats for user: {}", email);
-        return ResponseEntity.ok(chatService.getUserChats(email));
+            log.info("Messages marked as read for chat {}", chatId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Messages marked as read", null));
+        } catch (Exception e) {
+            log.error("Error marking messages as read: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
+    }
+
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<ResponseDTO> deleteMessage(@PathVariable int messageId, Authentication authentication) {
+        log.info("Deleting message with ID: {}", messageId);
+        try {
+            int userId = Integer.parseInt(authentication.getName());
+            chatService.deleteMessage(messageId, userId);
+
+            log.info("Message deleted successfully with ID: {}", messageId);
+            return ResponseEntity.ok(new ResponseDTO(VarList.OK, "Message deleted successfully", null));
+        } catch (Exception e) {
+            log.error("Error deleting message: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDTO(VarList.Internal_Server_Error, e.getMessage(), null));
+        }
     }
 }

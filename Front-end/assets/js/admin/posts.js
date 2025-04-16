@@ -326,8 +326,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const button = row.querySelector('.toggle-post-status');
 
                         badge.className = newStatus === 'ACTIVE'
-                            ? 'badge bg-success rounded-pill'
-                            : 'badge bg-danger rounded-pill';
+                            ? 'badge bg-success rounded-pill status-badge'
+                            : 'badge bg-danger rounded-pill status-badge';
                         badge.textContent = newStatus;
 
                         button.dataset.currentStatus = newStatus;

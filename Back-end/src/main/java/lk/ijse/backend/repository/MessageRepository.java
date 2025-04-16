@@ -1,10 +1,12 @@
 package lk.ijse.backend.repository;
 
+import lk.ijse.backend.entity.Chat;
 import lk.ijse.backend.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -29,4 +31,9 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     @Query("SELECT m FROM Message m WHERE m.chat.chatId = :chatId ORDER BY m.sentAt DESC LIMIT 1")
     Message findLastMessageByChatId(Integer chatId);
+
+    Collection<Message> findByChatOrderBySentAtDesc(Chat chat);
+
+    @Query("SELECT m FROM Message m WHERE m.chat.id = :chatId AND m.readAt IS NULL AND m.sender.id != :userId")
+    List<Message> findUnreadMessages(int chatId, int userId);
 }

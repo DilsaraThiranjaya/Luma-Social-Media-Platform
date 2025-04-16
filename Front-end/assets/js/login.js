@@ -154,7 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     sessionStorage.setItem("authData", JSON.stringify({
                         email: responseData.data.email,
-                        token: responseData.data.token
+                        token: responseData.data.token,
+                        userId: responseData.data.userId
                     }));
                     window.location.href = DIRECTORY_URL;
                 }
