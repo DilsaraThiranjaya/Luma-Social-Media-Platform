@@ -1,7 +1,7 @@
 # 🌐 LUMA - Modern Social Media Platform
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x400?text=LUMA+Social+Media+Platform" alt="LUMA Banner">
+  <img src="https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/6cc407e43a651eaba868539dbc5c745b16f854af/Front-end/assets/image/Luma-logo.jpeg" alt="LUMA Banner">
   <br>
   <strong>Connect • Share • Engage</strong>
 </div>
