@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize login-specific functionality
 
-    // handleGoogleCallback();
+    handleGoogleCallback();
     handleRememberMe();
     setupOTPInputs();
     setupLoginFormSubmission();
@@ -26,30 +26,30 @@ document.addEventListener("DOMContentLoaded", function () {
     setupSocialButtonAnimations();
     setupInputFocusEffects();
 
-    // // Handle Google OAuth callback
-    // function handleGoogleCallback() {
-    //   const urlParams = new URLSearchParams(window.location.search);
-    //   const token = urlParams.get("token");
-    //   const error = urlParams.get("error");
-    //
-    //   const existingAuthData = JSON.parse(sessionStorage.getItem('authData')) || {};
-    //
-    //   if (token) {
-    //     const newAuthData = {...existingAuthData, token: token};
-    //     sessionStorage.setItem('authData', JSON.stringify(newAuthData));
-    //     Toast.fire({
-    //       icon: "success",
-    //       title: "Successfully logged in."
-    //     })
-    //     window.location.href = DIRECTORY_URL;
-    //   } else if (error) {
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: error
-    //     });
-    //   }
-    // }
-    //
+    // Handle Google OAuth callback
+    function handleGoogleCallback() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      const error = urlParams.get("error");
+
+      const existingAuthData = JSON.parse(sessionStorage.getItem('authData')) || {};
+
+      if (token) {
+        const newAuthData = {...existingAuthData, token: token};
+        sessionStorage.setItem('authData', JSON.stringify(newAuthData));
+        Toast.fire({
+          icon: "success",
+          title: "Successfully logged in."
+        })
+        window.location.href = DIRECTORY_URL;
+      } else if (error) {
+        Toast.fire({
+          icon: "error",
+          title: error
+        });
+      }
+    }
+
 
     // Remember Me functionality
     function handleRememberMe() {
