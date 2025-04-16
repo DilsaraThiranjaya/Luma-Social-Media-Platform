@@ -1,13 +1,15 @@
 # 🌐 LUMA - Modern Social Media Platform
 
 <div align="center">
-  <img src="https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/6cc407e43a651eaba868539dbc5c745b16f854af/Front-end/assets/image/Luma-logo.jpeg" alt="LUMA Banner">
+  <img src="https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/6cc407e43a651eaba868539dbc5c745b16f854af/Front-end/assets/image/Luma-logo.jpeg" 
+       alt="LUMA Banner" 
+       style="max-width: 100%; height: auto; width: 100px;">
   <br>
   <strong>Connect • Share • Engage</strong>
 </div>
 
 ## 🚀 Project Overview
-**LUMA** is a full-stack social media platform built with **Spring Boot 3.2** and **Java 17**, designed to revolutionize digital interactions. Featuring real-time messaging, dynamic content sharing, and robust security, LUMA offers a modern solution for social networking with over 30+ integrated features.
+**LUMA** is a full-stack social media platform built with **Spring Boot 3.4** and **Java 21**, designed to revolutionize digital interactions. Featuring real-time messaging, dynamic content sharing, and robust security, LUMA offers a modern solution for social networking with over 30+ integrated features.
 
 ## 🌟 Key Features
 
@@ -21,31 +23,24 @@
 - **Post Creation**: Rich text with images/videos (Cloudinary integration)
 - **Social Interactions**: 6 Reaction types (❤️ 😲 😠) & nested comments
 - **Real-Time Chat**: WebSocket-powered private/group messaging
-- **Marketplace**: Buy/Sell items with negotiation system
 - **Activity Feed**: Personalized content with advanced filtering
 
 ### 🛡️ Security & Moderation
-- 🚨 Content Reporting System (4 report types)
+- 🚨 Content Reporting System (2 report types)
 - 📊 Admin Dashboard with user/content analytics
 - 🤖 Automated Moderation Actions (ban, suspend, remove)
 - 📈 Activity Logging & Audit Trails
 
-### 🔔 Enhanced Features
-- 📱 Responsive Progressive Web App (PWA)
-- 🔔 Real-Time Notifications (WebSocket)
-- 🔍 Advanced Search with fuzzy matching
-- 📅 Event Creation & RSVP System
-
 ## 🛠️ Technical Stack
-- **Backend**: Spring Boot 3.2, Hibernate 6, WebSockets (STOMP)
-- **Database**: MySQL 8.0 (200+ indexed columns)
+- **Backend**: Spring Boot 3.4, Hibernate 6, WebSockets (STOMP)
+- **Database**: MySQL 8.0
 - **Security**: JWT, Spring Security, OAuth2 (Google)
 - **Cloud**: Cloudinary Media Storage, RESTful API
-- **Frontend**: Bootstrap 5, JavaScript (ES6+), Thymeleaf
+- **Frontend**: Bootstrap 5, JavaScript (ES6+)
 - **Tools**: Maven, Lombok, ModelMapper, Swagger UI
 
 ## 🗃️ Database Schema Highlights
-![Database Schema](https://via.placeholder.com/600x400?text=ER+Diagram+Preview)
+![Database Schema](https://www.mermaidchart.com/raw/fb8ed486-0f71-4783-96fa-92499ef5b607?theme=dark&version=v0.1&format=svg)
 
 **Core Tables**:
 - `users` (25+ fields including privacy controls)
@@ -53,7 +48,7 @@
 - `comments` (supporting nested replies)
 - `reactions` (6 distinct interaction types)
 - `chats` (group/private with message history)
-- `reports` (automated escalation system)
+- `reports` (content flagging with severity tracking)
 
 ## ⚙️ Setup Instructions
 
@@ -88,15 +83,25 @@
    ```
 
 ## 📸 Application Preview
-| Feature | Screenshot |
+| Page | Screenshot |
 |---------|------------|
-| News Feed | [Feed] |
-| Post Creation | [Post] |
-| Real-Time Chat | [Chat] |
-| Admin Dashboard | [Admin] |
-
-## 🎥 Demo Video
-[Watch Demo]
+| Login | ![Login](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/1.png?raw=true) |
+| Register | ![Register](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/2.png?raw=true) |
+| Forgot Password | ![Forgot Password](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/3.png?raw=true) |
+| Admin Access | ![Admin Access](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/4.png?raw=true) |
+| Timeline | ![Timeline](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/5.png?raw=true) |
+| Friends | ![Friends](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/6.png?raw=true) |
+| Messages | ![Messages](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/7.png?raw=true) |
+| Notifications | ![Notifications](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/8.png?raw=true) |
+| Profile | ![Profile](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/9.png?raw=true) |
+| Profile View | ![Profile View](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/10.png?raw=true) |
+| Search | ![Search](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/11.png?raw=true) |
+| Settings & Privacy | ![Settings & Privacy](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/12.png?raw=true) |
+| Dashboard | ![Dashboard](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/13.png?raw=true) |
+| Users | ![Users](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/14.png?raw=true) |
+| Posts | ![Posts](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/15.png?raw=true) |
+| Reports | ![Reports](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/16.png?raw=true) |
+| Admin History | ![Admin History](https://github.com/DilsaraThiranjaya/Luma-Social-Media-Platform/blob/fe0dd830b56ec362349521650f6d378e07d8e21f/readme-images/17.png?raw=true) |
 
 ## 🔐 Security Implementation
 ```java
@@ -119,40 +124,12 @@ public class JwtUtil {
 
 ## 🖥️ Frontend Highlights
 Key Components:
-
-- Responsive UI: Bootstrap 5 with custom theme
-- Real-Time Updates: WebSocket integration
+- Custom UI theme with Bootstrap 5
 
 Interactive Features:
-- Emoji picker with 1500+ options
-- Drag & Drop media uploads
+- Emoji picker with 100+ options
 - Reaction animations
 - Nested comment system
-
-Modular Components:
-
-```html
-<!-- Post Component -->
-<div class="post-card">
-  <div class="post-header">
-    <img :src="user.profilePic" class="profile-img">
-    <div class="post-meta">
-      <h5>{{ user.name }}</h5>
-      <span>{{ formattedDate }}</span>
-    </div>
-  </div>
-  <div class="post-content">
-    {{ content }}
-    <div class="post-media">
-      <img v-for="media in media" :src="media.url">
-    </div>
-  </div>
-  <div class="post-actions">
-    <ReactionButton @react="handleReaction"/>
-    <CommentButton @click="toggleComments"/>
-  </div>
-</div>
-```
 
 ## 📦 Project Structure
 ```
@@ -208,15 +185,13 @@ Luma-Social-Media-Platform/
 ```
 
 ## 🚨 Advanced Features
-- Real-Time Notifications using WebSockets
 - Activity Logging with Custom Logger
 - Automated Email Service Integration
 - Comprehensive Admin Analytics Dashboard
-- Marketplace with Negotiation System
 - Mini-Game Integration (Speed Shifters 2D)
 
-## 👥 Contributors
-- Your Name
+## 🎥 Demo Video
+[[YouTube Demo Link]](https://youtu.be/M6UtgESC8C4?si=ok21Omd3DdX86tZ9)
 
-## 📄 License
-MIT License - See LICENSE for details
+## 👥 Contributors
+- Dilsara Thiranjaya
